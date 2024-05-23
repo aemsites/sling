@@ -38,6 +38,30 @@ function buildHeroBlock(main) {
     main.prepend(section);
   }
 }
+/**
+ * Create an HTML tag in one line of code
+ * @param {string} tag Tag to create
+ * @param {object} attributes Key/value object of attributes
+ * @param {Element} html html to append to tag
+ * @returns {HTMLElement} The created tag
+ */
+export function createTag(tag, attributes, html = undefined) {
+  const element = document.createElement(tag);
+  if (html) {
+    if (html instanceof HTMLElement || html instanceof SVGElement) {
+      element.append(html);
+    } else {
+      element.insertAdjacentHTML('beforeend', html);
+    }
+  }
+  if (attributes) {
+    Object.entries(attributes)
+      .forEach(([key, val]) => {
+        element.setAttribute(key, val);
+      });
+  }
+  return element;
+}
 
 /**
  * load fonts.css and set a session storage flag
@@ -82,7 +106,7 @@ async function loadTemplate(main) {
       );
     }
   } catch (err) {
-    console.log(`Filed to load template with error : ${err}`);
+    console.log(`Failed to load template with error : ${err}`);
   }
 }
 /**
