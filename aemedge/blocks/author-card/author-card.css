@@ -1,0 +1,13 @@
+.author-card.block > div > div {
+    background-color: #fff;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    margin: 0 0 0 8px;
+    max-width: 168px;
+    min-height: 286px;
+    text-align: center;
+    word-break: break-word;
+    box-shadow: 0 5px 15px 0 rgb(0 0 0 / 14%);
+}
