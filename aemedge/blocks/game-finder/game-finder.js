@@ -1,4 +1,3 @@
 export default function decorate(block) {
-  console.log('Game Finder Block to be implemented , Markup :');
-  console.log(block.outerHTML);
+  console.log(`TO BE IMPLEMENTED : Game Finder Block ${block}`);
 }
