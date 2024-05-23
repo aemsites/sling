@@ -11,10 +11,12 @@ import {
   waitForLCP,
   loadBlocks,
   loadCSS,
+  getMetadata,
 } from './aem.js';
 
 const LCP_BLOCKS = []; // add your LCP blocks to the list
-
+const TEMPLATES = ['blog-article']; // add your templates here
+const TEMPLATE_META = 'template';
 /**
  * Builds hero block and prepends to main in a new section.
  * @param {Element} main The container element
@@ -41,7 +43,41 @@ async function loadFonts() {
     // do nothing
   }
 }
+/**
+ * Sanitizes a string for use as class name.
+ * @param {string} name The unsanitized string
+ * @returns {string} The class name
+ */
+export function toClassName(name) {
+  return typeof name === 'string'
+    ? name
+      .toLowerCase()
+      .replace(/[^0-9a-z]/gi, '-')
+      .replace(/-+/g, '-')
+      .replace(/^-|-$/g, '')
+    : '';
+}
+/**
+ * load the template specific js and css
+ */
+async function loadTemplate(main) {
+  try {
+    const template = getMetadata(TEMPLATE_META) ? toClassName(getMetadata(TEMPLATE_META)) : null;
 
+    if (template && TEMPLATES.includes(template)) {
+      const templateJS = await import(`../templates/${template}/${template}.js`);
+      // invoke the default export from template js
+      if (templateJS.default) {
+        await templateJS.default(main);
+      }
+      loadCSS(
+        `${window.hlx.codeBasePath}/templates/${template}/${template}.css`,
+      );
+    }
+  } catch (err) {
+    console.log(`Filed to load template with error : ${err}`);
+  }
+}
 /**
  * Builds all synthetic blocks in a container element.
  * @param {Element} main The container element
@@ -78,6 +114,7 @@ async function loadEager(doc) {
   decorateTemplateAndTheme();
   const main = doc.querySelector('main');
   if (main) {
+    await loadTemplate(main);
     decorateMain(main);
     document.body.classList.add('appear');
     await waitForLCP(LCP_BLOCKS);
