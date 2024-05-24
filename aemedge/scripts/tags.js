@@ -1,5 +1,3 @@
-import ffetch from './ffetch.js';
-
 const tagsEndpoint = '/tags.json';
 let tagsPromise;
 const titleToName = ((name) => name.toLowerCase().replace(' ', '-'));
@@ -8,12 +6,13 @@ const fetchTags = (() => {
     tagsPromise = new Promise((resolve, reject) => {
       (async () => {
         try {
-          const tagsJson = await ffetch(tagsEndpoint).all();
+          const response = await fetch(tagsEndpoint);
+          const tagsJson = await response.json();
           const tags = {};
           let root;
           let l1;
           let l2;
-          tagsJson.forEach((row) => {
+          tagsJson.data.forEach((row) => {
             if (row.root) {
               root = row.root;
               tags[root] = {
