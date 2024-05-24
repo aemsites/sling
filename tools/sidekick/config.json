@@ -1,0 +1,21 @@
+{
+    "project": "Sling",
+    "plugins": [
+      {
+        "id": "library",
+        "title": "Library",
+        "environments": [
+          "edit"
+        ],
+        "url": "/tools/sidekick/library/library.html"
+      },
+      {
+        "id": "tagger",
+        "title": "Tagger",
+        "environments": [
+          "edit"
+        ],
+        "url": "/tools/sidekick/tagger/tagger.html"
+      }
+    ]
+  }

@@ -1,0 +1,158 @@
+
+main {
+    font-family: system-ui, Arial;
+    padding: 20px;
+    font-size: 1.3rem;
+    line-height: 1.2em;
+}
+
+main .intro {
+    font-size: 1.2rem;
+}
+
+main input {
+    width: 100%;
+    font-size: 2rem;
+    border: none;
+    border-bottom: solid 1px grey;
+    padding-top: 5px;
+    font-family: inherit;
+}
+
+main .filter {
+    padding: 20px 10px;
+}
+
+#selected {
+    position: fixed;
+    bottom: 0;
+    background-color: #f2f7f8;
+    padding-bottom: 20px;
+    width: 100%;
+    box-sizing: border-box;
+    left: 0;
+    display: grid;
+    gap: 1rem
+}
+
+#selected button {
+    background-color: #F25749;
+    color: white;
+    border: 1px solid white;
+    font-size: 13px;
+}
+
+main #selected button {
+    border-radius: 1em;
+    padding: 5px 20px;
+}
+
+#selected button:disabled {
+    background-color: #ccc;
+    color: grey;
+}
+
+main #selected {
+    padding: 30px;
+}
+
+#results {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    padding-bottom: 150px;
+}
+
+#results > .category {
+    user-select: none;
+    display: flex;
+    flex-direction: column;
+}
+
+#results > .subcategory {
+    user-select: none;
+    display: flex;
+    flex-direction: column;
+}
+
+main > div > span,
+main > div > div > span {
+    white-space: nowrap;
+    margin: 6px 4px;
+}
+
+span.tag {
+    color: white;
+    padding: 2px 20px;
+    border-radius: 10px;
+    font-size: 16px;
+}
+
+.tag {
+    padding-top: 5px;
+}
+
+.selected span.tag {
+    background-color: #888;
+    color: lightgrey;
+}
+
+.tag.cat-0 {
+    background-color: #0d66d0;
+}
+
+.tag.cat-1 {
+    background-color: #d7373f;
+}
+
+.tag.cat-2 {
+    background-color: #12805c;
+}
+
+.tag.cat-3 {
+    background-color: #2eaabb;
+}
+
+span.tag .highlight {
+    font-weight: 700;
+    color: white;
+}
+
+span.path {
+    cursor: pointer;
+    border-radius: 10px;
+    border: 1px dashed black;
+    padding: 4px 10px 2px;
+    font-size: 12px;
+}
+
+span.path.filtered {
+    display: none;
+}
+
+span.psep {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* stylelint-disable-next-line media-feature-range-notation */
+@media(min-width: 600px) {
+    #selected {
+        grid-template-columns: 1fr 100px;
+    }
+}
+
+.selected-tags {
+    display: flex;
+    flex-wrap: wrap;
+    height: min-content;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.offscreen {
+    position: absolute;
+    top: -1000px;
+}
