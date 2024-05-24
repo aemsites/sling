@@ -12,30 +12,38 @@ function renderItem(item, catId) {
 }
 
 function renderItems(item, catId) {
-  let html = item.hide ? '' : renderItem(item, catId);
+  const html = item.hide ? '' : renderItem(item, catId);
+  let lvlhtml = '<div class="subcategory">';
+  lvlhtml += `<h2>${item.title}</h2>`;
+  const results = document.getElementById('results');
   Object.keys(item).forEach((key) => {
     if (!['title', 'name', 'path', 'hide'].includes(key)) {
-      html += renderItems(item[key], catId);
+      lvlhtml += renderItems(item[key], catId + 1);
     }
   });
-
+  lvlhtml += '</div>';
+  if (lvlhtml.indexOf('span') > 1) results.insertAdjacentHTML('beforeend', lvlhtml);
   return html;
 }
 
-function initTaxonomy(taxonomy) {
+function initTaxonomy(tags) {
   let html = '';
-  Object.values(taxonomy).forEach((cat, idx) => {
-    html += '<div class="category">';
-    html += `<h2>${cat.title}</h2>`;
-    Object.keys(cat).forEach((key) => {
-      if (!['title', 'name', 'path', 'hide'].includes(key)) {
-        html += renderItems(cat[key], idx);
-      }
-    });
-    html += '</div>';
-  });
   const results = document.getElementById('results');
-  results.innerHTML = html;
+  if (results) {
+    Object.values(tags).forEach((tag, idx) => {
+      html += '<div class="category">';
+      html += `<h2>${tag.title}</h2>`;
+      Object.keys(tag).forEach((key) => {
+        if (!['title', 'name', 'path', 'hide'].includes(key)) {
+          html += renderItems(tag[key], idx);
+        }
+      });
+
+      html += '</div>';
+    });
+  }
+  // results.innerHTML = html;
+  results.insertAdjacentHTML('afterbegin', html);
 }
 
 function filter() {
@@ -59,10 +67,14 @@ function toggleTag(target) {
   target.classList.toggle('selected');
   const { title } = target.querySelector('.tag').dataset;
   const category = target.closest('.category')
-    .querySelector('h2').textContent; // Assuming category title is in h2
+    ?.querySelector('h2')?.textContent;
+  const subcategory = target.closest('.subcategory')
+    ?.querySelector('h2')?.textContent; // Assuming category title is in h2
+
   const tagIdentifier = {
     title,
     category,
+    subcategory,
   };
 
   if (target.classList.contains('selected')) {
@@ -80,17 +92,20 @@ function displaySelected() {
   const selEl = document.getElementById('selected');
   const selTagsEl = selEl.querySelector('.selected-tags');
   const toCopyBuffer = [];
-
   selTagsEl.innerHTML = '';
   selectedOrder.forEach(({
     title,
     category,
+    subcategory,
   }) => {
     // Find the category element
-    const categories = document.querySelectorAll('#results .category');
+    let categories;
+    if (subcategory) categories = document.querySelectorAll('#results .subcategory');
+    else categories = document.querySelectorAll('#results .category');
     let path;
     categories.forEach((cat) => {
-      if (cat.querySelector('h2').textContent === category) {
+      if (cat.querySelector('h2').textContent === category
+    || cat.querySelector('h2').textContent === subcategory) {
         const tag = Array.from(cat.querySelectorAll('.tag'))
           .find((t) => t.dataset.title === title);
         if (tag) {
@@ -123,9 +138,8 @@ function displaySelected() {
 }
 
 async function init() {
-  const tax = await getTags();
-
-  initTaxonomy(tax);
+  const tags = await getTags();
+  initTaxonomy(tags);
 
   const selEl = document.getElementById('selected');
   const copyButton = selEl.querySelector('button.copy');
@@ -165,6 +179,11 @@ async function init() {
       toggleTag(target);
     }
   });
+  document.addEventListener('click', (e) => {
+    const target = e.target.closest('.subcategory .path');
+    if (target) {
+      toggleTag(target);
+    }
+  });
 }
-
 init();

@@ -1,34 +1,39 @@
 import ffetch from './ffetch.js';
 
-function titleToName(name) {
-  return name.toLowerCase().replace(' ', '-');
-}
-
 const tagsEndpoint = '/tags.json';
 let tagsPromise;
-function fetchTags() {
+const titleToName = ((name) => name.toLowerCase().replace(' ', '-'));
+const fetchTags = (() => {
   if (!tagsPromise) {
     tagsPromise = new Promise((resolve, reject) => {
       (async () => {
         try {
           const tagsJson = await ffetch(tagsEndpoint).all();
           const tags = {};
-          let curType;
+          let root;
           let l1;
+          let l2;
           tagsJson.forEach((row) => {
-            if (row.Type) {
-              curType = row.Type;
-              tags[curType] = {
-                title: curType,
-                name: titleToName(curType),
+            if (row.root) {
+              root = row.root;
+              tags[root] = {
+                title: root,
+                name: titleToName(root),
               };
             }
 
-            if (row['Level 1']) {
-              l1 = row['Level 1'];
-              tags[curType][l1] = {
+            if (row.level1) {
+              l1 = row.level1;
+              tags[root][l1] = {
                 title: l1,
                 name: titleToName(l1),
+              };
+            }
+            if (row.level2) {
+              l2 = row.level2;
+              tags[root][l1][l2] = {
+                title: l2,
+                name: `${titleToName(l1)}/${titleToName(l2)}`,
               };
             }
           });
@@ -41,7 +46,7 @@ function fetchTags() {
   }
 
   return tagsPromise;
-}
+});
 
 const getDeepNestedObject = (obj, filter) => Object.entries(obj)
   .reduce((acc, [key, value]) => {
@@ -68,7 +73,7 @@ export function getTags() {
  * Returns a tags category as an array of objects
  * @param {*} category
  */
-export const gettagsCategory = async (category) => {
+export const getTagsCategory = async (category) => {
   const tags = await getTags();
   return getDeepNestedObject(tags, category)[0];
 };

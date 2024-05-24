@@ -69,6 +69,12 @@ main #selected {
     flex-direction: column;
 }
 
+#results > .subcategory {
+    user-select: none;
+    display: flex;
+    flex-direction: column;
+}
+
 main > div > span,
 main > div > div > span {
     white-space: nowrap;
@@ -129,6 +135,7 @@ span.psep {
     font-weight: bold;
 }
 
+/* stylelint-disable-next-line media-feature-range-notation */
 @media(min-width: 600px) {
     #selected {
         grid-template-columns: 1fr 100px;
