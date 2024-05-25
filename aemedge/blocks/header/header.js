@@ -128,21 +128,21 @@ export default async function decorate(block) {
 
   const navSections = nav.querySelector('.nav-sections');
   if (navSections) {
-    navSections
-      .querySelectorAll(':scope .default-content-wrapper > ul > li')
-      .forEach((navSection) => {
-        if (navSection.querySelector('ul')) navSection.classList.add('nav-drop');
-        navSection.addEventListener('click', () => {
-          if (isDesktop.matches) {
-            const expanded = navSection.getAttribute('aria-expanded') === 'true';
-            toggleAllNavSections(navSections);
-            navSection.setAttribute(
-              'aria-expanded',
-              expanded ? 'false' : 'true',
-            );
-          }
-        });
-      });
+    // navSections
+    //   .querySelectorAll(':scope .default-content-wrapper > ul > li')
+    //   .forEach((navSection) => {
+    //     if (navSection.querySelector('ul')) navSection.classList.add('nav-drop');
+    //     navSection.addEventListener('hover', () => {
+    //       if (isDesktop.matches) {
+    //         const expanded = navSection.getAttribute('aria-expanded') === 'true';
+    //         toggleAllNavSections(navSections);
+    //         navSection.setAttribute(
+    //           'aria-expanded',
+    //           expanded ? 'false' : 'true',
+    //         );
+    //       }
+    //     });
+    //   });
   }
 
   // hamburger for mobile
