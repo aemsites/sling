@@ -217,7 +217,7 @@ header nav .nav-sections ul > li > ul > li {
     border-width: 2px 2px 0 0;
   }
 
-  header nav .nav-sections .nav-drop[aria-expanded="true"]::after {
+  header nav .nav-sections .nav-drop:hover::after {
     top: unset;
     bottom: .5em;
     transform: rotate(315deg);
@@ -236,14 +236,6 @@ header nav .nav-sections ul > li > ul > li {
     font-weight: 500;
   }
 
-  header nav .nav-sections .default-content-wrapper > ul > li::after {
-    content: '';
-    display: inline-block;
-    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>');
-    width: 20px;
-    height: 20px;
-  }
-
   header nav .nav-sections .default-content-wrapper > ul > li > ul {
     display: none;
     position: relative;
@@ -258,15 +250,6 @@ header nav .nav-sections ul > li > ul > li {
     padding: 1em;
     background-color: var(--light-color);
     white-space: initial;
-  }
-
-  header nav .nav-sections .default-content-wrapper > ul > li:hover::after {
-    content: '';
-    display: inline-block;
-    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>');
-    transform: rotate(180deg);
-    width: 20px;
-    height: 20px;
   }
 
   header nav .nav-sections .default-content-wrapper > ul > li > ul::before {
