@@ -264,3 +264,8 @@ header nav .nav-sections ul > li > ul > li {
 header nav .nav-tools {
   grid-area: tools;
 }
+
+header nav .nav-tools .icon-search img {
+  vertical-align: middle;
+  color: rgb(252, 191, 56);
+}
