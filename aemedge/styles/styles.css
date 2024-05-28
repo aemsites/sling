@@ -23,6 +23,7 @@
   --body-font-family:proxima-nova ,proxima-nova-fallback,sans-serif;
   --heading-font-family: var(--body-font-family);
   --fixed-font-family: 'Roboto Mono', menlo, consolas, 'Liberation Mono', monospace;
+  --font-awesome: font-awesome, sans-serif;
 
   /* body sizes */
   --body-font-size-m: 22px;

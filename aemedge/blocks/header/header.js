@@ -89,7 +89,7 @@ function toggleMenu(nav, navSections, forceExpanded = null) {
       drop.removeEventListener('focus', focusNavSection);
     });
   }
-  // enable menu collapse on escape keypress
+  // enable menu collapse on escape keypress or click outside the nav
   if (!expanded || isDesktop.matches) {
     // collapse menu on escape press
     window.addEventListener('keydown', closeOnEscape);
@@ -131,18 +131,17 @@ export default async function decorate(block) {
     navSections
       .querySelectorAll(':scope .default-content-wrapper > ul > li')
       .forEach((navSection) => {
-        if (navSection.querySelector('ul')) navSection.classList.add('nav-drop');
-        // navSection.addEventListener('hover', () => {
-        //   if (isDesktop.matches) {
-        //     const expanded = navSection.getAttribute('aria-expanded') === 'true';
-        //     toggleAllNavSections(navSections);
-        //     navSection.setAttribute(
-        //       'aria-expanded',
-        //       expanded ? 'false' : 'true',
-        //     );
-        //   }
-        // });
+        const children = navSection.querySelector('ul');
+        if (children) navSection.classList.add('nav-drop');
       });
+  }
+
+  if (isDesktop.matches) {
+    window.addEventListener('click', (e) => {
+      if (!nav.contains(e.target)) {
+        toggleMenu(nav, navSections);
+      }
+    });
   }
 
   // hamburger for mobile
@@ -152,10 +151,10 @@ export default async function decorate(block) {
       <span class="nav-hamburger-icon"></span>
     </button>`;
   hamburger.addEventListener('click', () => toggleMenu(nav, navSections));
-  nav.prepend(hamburger);
+  nav.append(hamburger);
   nav.setAttribute('aria-expanded', 'false');
   // prevent mobile nav behavior on window resize
-  // toggleMenu(nav, navSections, isDesktop.matches);
+  toggleMenu(nav, navSections, isDesktop.matches);
   isDesktop.addEventListener('change', () => toggleMenu(nav, navSections, isDesktop.matches));
 
   const navWrapper = document.createElement('div');
