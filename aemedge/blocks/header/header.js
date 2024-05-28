@@ -119,11 +119,20 @@ export default async function decorate(block) {
     if (section) section.classList.add(`nav-${c}`);
   });
 
+  // nav brand
   const navBrand = nav.querySelector('.nav-brand');
-  const brandLink = navBrand.querySelector('.button');
+  const brandLink = navBrand.querySelector('a');
   if (brandLink) {
-    brandLink.className = '';
-    brandLink.closest('.button-container').className = '';
+    const brandLogo = document.createElement('img');
+    brandLogo.src = '/icons/whats-on.png';
+    brandLogo.alt = 'What\'s On Sling';
+    brandLogo.classList.add('nav-brand-logo');
+    brandLink.innerHTML = '';
+    brandLink.append(brandLogo);
+    if ((brandLink.parentElement.tagName === 'P') && brandLink.parentElement.classList.contains('button-container')) {
+      brandLink.parentElement.classList.remove('button-container');
+      brandLink.classList.remove('button');
+    }
   }
 
   const navSections = nav.querySelector('.nav-sections');
