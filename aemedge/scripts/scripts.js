@@ -17,27 +17,7 @@ import {
 const LCP_BLOCKS = []; // add your LCP blocks to the list
 const TEMPLATES = ['blog-article']; // add your templates here
 const TEMPLATE_META = 'template';
-/**
- * Builds hero block and prepends to main in a new section.
- * @param {Element} main The container element
- */
-function buildHeroBlock(main) {
-  const picture = main.querySelector('picture');
-  const template = getMetadata(TEMPLATE_META);
-  if (template !== 'blog-article') {
-    const h1 = main.querySelector('h1');
-    // eslint-disable-next-line no-bitwise
-    if (h1 && picture && (h1.compareDocumentPosition(picture) & Node.DOCUMENT_POSITION_PRECEDING)) {
-      const section = document.createElement('div');
-      section.append(buildBlock('hero', { elems: [picture, h1] }));
-      main.prepend(section);
-    }
-  } else if (picture) { // blog articles shows only image
-    const section = document.createElement('div');
-    section.append(buildBlock('hero', { elems: [picture] }));
-    main.prepend(section);
-  }
-}
+
 /**
  * Create an HTML tag in one line of code
  * @param {string} tag Tag to create
@@ -61,6 +41,69 @@ export function createTag(tag, attributes, html = undefined) {
       });
   }
   return element;
+}
+/**
+ * function to build the breadcrumb for blog details page
+ * @returns blobsdiv element for whatson pages, otherwise null
+ */
+function buildBlogBreadcrumb() {
+  const urlPath = window.location.pathname;
+
+  if (urlPath.includes('/whatson')) {
+    const bcWrapper = createTag('div');
+    const breamCrumbs = ['BLOG'];
+    let pathElements = urlPath.split('/');
+    pathElements = pathElements.slice(2, pathElements.length - 1);
+    pathElements.forEach((path) => (breamCrumbs.push(path.trim().replace('-', ' ').toUpperCase())));
+
+    breamCrumbs.map((breadCrumb, index) => {
+      const href = urlPath.substring(0, urlPath.indexOf(urlPath.split('/')[index + 2]) - 1);
+      const breadCrumbLink = createTag('a', {
+        class: 'blog-breadcrumb--links',
+        href,
+      });
+      breadCrumbLink.innerHTML = breadCrumb;
+      const arrowSpan = createTag('span', { class: 'blog-breadcrumb--arrow fa fa-angle-right' });
+      arrowSpan.innerHTML = '  >  ';
+      return bcWrapper.append(breadCrumbLink, arrowSpan);
+    });
+    const pageTitle = getMetadata('og:title');
+    if (pageTitle) {
+      // generate span tag with title
+      const titleSpan = createTag('span', { class: 'blog-breadcrumb-active-article' });
+      titleSpan.innerHTML = pageTitle;
+      bcWrapper.append(titleSpan);
+    }
+    return bcWrapper;
+  }
+  return null;
+}
+/**
+ * Builds hero block and prepends to main in a new section.
+ * @param {Element} main The container element
+ */
+function buildHeroBlock(main) {
+  const picture = main.querySelector('picture');
+  const template = getMetadata(TEMPLATE_META);
+  if (template !== 'blog-article') {
+    const h1 = main.querySelector('h1');
+    // eslint-disable-next-line no-bitwise
+    if (h1 && picture && (h1.compareDocumentPosition(picture) & Node.DOCUMENT_POSITION_PRECEDING)) {
+      const section = document.createElement('div');
+      section.append(buildBlock('hero', { elems: [picture, h1] }));
+      main.prepend(section);
+    }
+  } else if (picture) {
+    const h1 = main.querySelector('h1');
+    const h2 = main.querySelector('h1+h2'); // blog articles shows only image
+    const section = document.createElement('div');
+    section.append(buildBlock('hero', { elems: [picture] }));
+    const breadCrumb = buildBlogBreadcrumb();
+    if (breadCrumb) section.append(breadCrumb);
+    section.append(h1);
+    section.append(h2);
+    main.prepend(section);
+  }
 }
 
 /**
@@ -145,8 +188,8 @@ async function loadEager(doc) {
   decorateTemplateAndTheme();
   const main = doc.querySelector('main');
   if (main) {
-    await loadTemplate(main);
     decorateMain(main);
+    await loadTemplate(main);
     document.body.classList.add('appear');
     await waitForLCP(LCP_BLOCKS);
   }
