@@ -146,10 +146,8 @@ header nav .nav-sections .nav-drop .nav-drop-icon::before {
   right: 0;
   margin: 0;
   padding: 0;
-  font: normal normal normal 14px / 1 var(--font-awesome);
-  font-size: 28px;
+  font: normal normal normal 28px / 1 var(--font-awesome);
   text-rendering: auto;
-  width: 100%;
   text-align: right;
   align-self: center;
 }
