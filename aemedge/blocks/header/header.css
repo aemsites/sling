@@ -249,7 +249,7 @@ header nav .nav-tools {
   visibility: hidden;
 }
 
-@media (min-width = 1400px) {
+@media (width >= 1400px) {
   header nav .nav-tools {
     visibility: visible;
   }
