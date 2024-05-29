@@ -2,7 +2,7 @@ import { getMetadata } from '../../scripts/aem.js';
 import { loadFragment } from '../fragment/fragment.js';
 
 // media query match that indicates mobile/tablet width
-const isDesktop = window.matchMedia('(min-width: 900px)');
+const isDesktop = window.matchMedia('(min-width: 1400px)');
 
 function closeOnEscape(e) {
   if (e.code === 'Escape') {
@@ -66,7 +66,7 @@ function toggleMenu(nav, navSections, forceExpanded = null) {
   nav.setAttribute('aria-expanded', expanded ? 'false' : 'true');
   toggleAllNavSections(
     navSections,
-    expanded || isDesktop.matches ? 'false' : 'true',
+    false,
   );
   button.setAttribute(
     'aria-label',
@@ -141,16 +141,17 @@ export default async function decorate(block) {
       .querySelectorAll(':scope .default-content-wrapper > ul > li')
       .forEach((navSection) => {
         const children = navSection.querySelector('ul');
-        if (children) navSection.classList.add('nav-drop');
+        if (children) {
+          navSection.classList.add('nav-drop');
+          const navDropIcon = document.createElement('span');
+          navDropIcon.className = 'nav-drop-icon';
+          navSection.insertBefore(navDropIcon, children);
+          navDropIcon.addEventListener('click', () => {
+            const dropExpanded = navSection.getAttribute('aria-expanded') === 'true';
+            navSection.setAttribute('aria-expanded', dropExpanded ? 'false' : 'true');
+          });
+        }
       });
-  }
-
-  if (isDesktop.matches) {
-    window.addEventListener('click', (e) => {
-      if (!nav.contains(e.target)) {
-        toggleMenu(nav, navSections);
-      }
-    });
   }
 
   // hamburger for mobile
@@ -159,7 +160,7 @@ export default async function decorate(block) {
   hamburger.innerHTML = `<button type="button" aria-controls="nav" aria-label="Open navigation">
       <span class="nav-hamburger-icon"></span>
     </button>`;
-  hamburger.addEventListener('click', () => toggleMenu(nav, navSections));
+  hamburger.addEventListener('click', () => toggleMenu(nav, navSections, null));
   nav.append(hamburger);
   nav.setAttribute('aria-expanded', 'false');
   // prevent mobile nav behavior on window resize

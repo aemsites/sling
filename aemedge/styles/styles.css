@@ -61,7 +61,7 @@
   src: local('Arial');
 }
 
-@media (width >= 900px) {
+@media (min-width = 1400px) {
   :root {
     --heading-font-size-xxl: 60px;
     --heading-font-size-xl: 48px;
@@ -203,15 +203,15 @@ main .section {
   padding: 64px 16px;
 }
 
-@media (width >= 600px) {
+@media (min-width = 600px) {
   main .section {
     padding: 64px 32px;
   }
 }
 
-@media (width >= 900px) {
+@media (min-width = 1400px) {
   .section > div {
-    max-width: 1200px;
+    max-width: 1400px;
     margin: auto;
   }
 }
