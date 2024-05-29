@@ -14,70 +14,12 @@ import {
   getMetadata,
 } from './aem.js';
 
+import { buildBlogBreadcrumb } from './blog-utils.js';
+
 const LCP_BLOCKS = []; // add your LCP blocks to the list
 const TEMPLATES = ['blog-article']; // add your templates here
 const TEMPLATE_META = 'template';
 
-/**
- * Create an HTML tag in one line of code
- * @param {string} tag Tag to create
- * @param {object} attributes Key/value object of attributes
- * @param {Element} html html to append to tag
- * @returns {HTMLElement} The created tag
- */
-export function createTag(tag, attributes, html = undefined) {
-  const element = document.createElement(tag);
-  if (html) {
-    if (html instanceof HTMLElement || html instanceof SVGElement) {
-      element.append(html);
-    } else {
-      element.insertAdjacentHTML('beforeend', html);
-    }
-  }
-  if (attributes) {
-    Object.entries(attributes)
-      .forEach(([key, val]) => {
-        element.setAttribute(key, val);
-      });
-  }
-  return element;
-}
-/**
- * function to build the breadcrumb for blog details page
- * @returns blobsdiv element for whatson pages, otherwise null
- */
-function buildBlogBreadcrumb() {
-  const urlPath = window.location.pathname;
-
-  if (urlPath.includes('/whatson')) {
-    const bcWrapper = createTag('div');
-    const breamCrumbs = ['BLOG'];
-    let pathElements = urlPath.split('/');
-    pathElements = pathElements.slice(2, pathElements.length - 1);
-    pathElements.forEach((path) => (breamCrumbs.push(path.trim().replace('-', ' ').toUpperCase())));
-
-    breamCrumbs.map((breadCrumb, index) => {
-      const href = urlPath.substring(0, urlPath.indexOf(urlPath.split('/')[index + 2]) - 1);
-      const breadCrumbLink = createTag('a', {
-        class: 'blog-breadcrumb--links',
-        href,
-      });
-      breadCrumbLink.innerHTML = breadCrumb;
-      const arrowSpan = createTag('span', { class: 'blog-breadcrumb--arrow fa fa-angle-right' });
-      arrowSpan.innerHTML = '  >  ';
-      return bcWrapper.append(breadCrumbLink, arrowSpan);
-    });
-    const pageTitle = getMetadata('og:title');
-    if (pageTitle) {
-      // generate span tag with title
-      const titleSpan = createTag('span', { class: 'blog-breadcrumb-active-article' });
-      titleSpan.innerHTML = pageTitle;
-      bcWrapper.append(titleSpan);
-    }
-    return bcWrapper;
-  }
-  return null;
-}
 /**
  * Builds hero block and prepends to main in a new section.
  * @param {Element} main The container element
@@ -95,13 +37,12 @@ function buildHeroBlock(main) {
     }
   } else if (picture) {
     const h1 = main.querySelector('h1');
-    const h2 = main.querySelector('h1+h2'); // blog articles shows only image
+
     const section = document.createElement('div');
     section.append(buildBlock('hero', { elems: [picture] }));
     const breadCrumb = buildBlogBreadcrumb();
     if (breadCrumb) section.append(breadCrumb);
     section.append(h1);
-    section.append(h2);
     main.prepend(section);
   }
 }
@@ -143,6 +84,7 @@ async function loadTemplate(main) {
       // invoke the default export from template js
       if (templateJS.default) {
         await templateJS.default(main);
+        console.log(template);
       }
       loadCSS(
         `${window.hlx.codeBasePath}/templates/${template}/${template}.css`,
@@ -152,6 +94,7 @@ async function loadTemplate(main) {
     console.log(`Failed to load template with error : ${err}`);
   }
 }
+
 /**
  * Builds all synthetic blocks in a container element.
  * @param {Element} main The container element
@@ -159,6 +102,8 @@ async function loadTemplate(main) {
 function buildAutoBlocks(main) {
   try {
     buildHeroBlock(main);
+    // buildFragmentBlocks(main);
+    // buildVideoBlocks(main);
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('Auto Blocking failed', error);
@@ -188,7 +133,10 @@ async function loadEager(doc) {
   decorateTemplateAndTheme();
   const main = doc.querySelector('main');
   if (main) {
+    // await loadTemplate(main);
+    // await buildBlogDetails(main);
     decorateMain(main);
+    // await buildBlogDetails(main);
     await loadTemplate(main);
     document.body.classList.add('appear');
     await waitForLCP(LCP_BLOCKS);
@@ -211,7 +159,6 @@ async function loadEager(doc) {
 async function loadLazy(doc) {
   const main = doc.querySelector('main');
   await loadBlocks(main);
-
   const { hash } = window.location;
   const element = hash ? doc.getElementById(hash.substring(1)) : false;
   if (hash && element) element.scrollIntoView();

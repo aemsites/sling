@@ -1,11 +1,16 @@
-import { createTag } from '../../scripts/scripts.js';
 import {
-  buildBlock,
-  getMetadata,
-} from '../../scripts/aem.js';
-import { getTagsCategory } from '../../scripts/tags.js';
+  createTag,
+} from '../../scripts/utils.js';
+import { getMetadata, buildBlock } from '../../scripts/aem.js';
 
-// const findPageByTag = async (tag) => await getTagsCategory(tag);
+import { getTag } from '../../scripts/tags.js';
+import { buildFragmentBlocks, buildVideoBlocks } from '../../scripts/blog-utils.js';
+/**
+ * Function to return the name of the author photo
+ * photos must be stored with <firstname>-<lastname>-author.jpeg
+ * @param {*} aName - author name from metadata
+ * @returns
+ */
 const getAuthorPhoto = (aName) => {
   const aPhotosLoc = `${window.location.origin}/whatson/authors/photos`;
   if (aName !== 'Sling Staff') {
@@ -13,10 +18,15 @@ const getAuthorPhoto = (aName) => {
   }
   return `${aPhotosLoc}/sling-default-author.jpg`;
 };
+/**
+ * Function to build the div with the links to tagged pages
+ * @param {*} tags - list of tags mentioned in the metadata
+ * @returns div element with links
+ */
 async function buildTagsDiv(tags) {
   const tagsDiv = createTag('div', { class: 'tags' });
   tags.map(async (tag, index) => {
-    const tagObj = await getTagsCategory(tag.trim());
+    const tagObj = await getTag(tag.trim());
     if (tagObj) {
       const tagLink = createTag('a', { target: '_self', href: `/whatson/${tagObj.name}` });
       if (index > 0) tagLink.innerText = `,${tag}`;
@@ -26,13 +36,25 @@ async function buildTagsDiv(tags) {
   });
   return tagsDiv;
 }
+/**
+ * utility to create a tag with link to author page
+ * @param {*} authName - author name mentioned in the page metadata
+ * @returns a element
+ */
 const buildAuthorLink = (authName) => {
   const authLink = createTag('a', {
     href: `${window.location.origin}/whatson/${authName.trim().toLowerCase().replace(' ', '-')}`,
   });
   return authLink;
 };
-const buildAuthorBlock = async () => {
+
+/**
+ * Function that will build the author block with
+ * photo, name (link to the author page) ,tags
+ * and social links
+ * @returns div element / author block
+ */
+export async function buildAuthorBlock() {
   const authName = getMetadata('author') || 'Sling Staff';
   const authPhoto = getAuthorPhoto(authName);
   const pubDate = getMetadata('publication-date');
@@ -95,7 +117,12 @@ const buildAuthorBlock = async () => {
   const section = document.createElement('div');
   section.append(buildBlock('author-card', { elems: [authImgContainer, authTxtContainer] }));
   return section;
-};
+}
+/**
+ * The default export that will be invoked when this remplate
+ * loaded from scripts.js. search for loadTemplate(main) in scripts.js
+ * @param {*} main - main element
+ */
 export default async function buildBlogDetails(main) {
   // get the section followed by hero section
   const contentSection = main.querySelector('.section.hero-container+.section');
@@ -110,6 +137,6 @@ export default async function buildBlogDetails(main) {
   blogContentWrapper.append(authWrapper, contentWrapper);
   // append the blog details wrapper to the section
   contentSection.append(blogContentWrapper);
-  // const breadCrumb = buildBlogBreadcrumb();
-  // console.log(breadCrumb);
+  buildFragmentBlocks(main);
+  buildVideoBlocks(main);
 }
