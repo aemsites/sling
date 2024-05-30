@@ -84,7 +84,6 @@ async function loadTemplate(main) {
       // invoke the default export from template js
       if (templateJS.default) {
         await templateJS.default(main);
-        console.log(template);
       }
       loadCSS(
         `${window.hlx.codeBasePath}/templates/${template}/${template}.css`,

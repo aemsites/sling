@@ -88,7 +88,7 @@ export function buildEmailSubsFrm() {
 
   // containerDiv.innerHTML = '<p><b>Place Holder for Email Subscription Form </b></p>';
   // return containerDiv;
-  const p = createTag('p');
+  const p = createTag('p', { class: 'email-susbcription' });
   const b = createTag('b');
   b.innerHTML = 'Place Holder for Email Subscription Form';
   p.appendChild(b);
@@ -104,9 +104,9 @@ export function buildPopularBlogs() {
 
   // containerDiv.innerHTML = '<p><b>Place Holder for Most Popular Blogs</b></p>';
   // return containerDiv;
-  const p = createTag('p');
+  const p = createTag('p', { class: 'popular-blogs' });
   const b = createTag('b');
   b.innerHTML = 'Place Holder for Popular Blogs';
   p.appendChild(b);
-  return (buildBlock('popular-blogs', { elems: [p] }));
+  return buildBlock('popular-blogs', { elems: [p] });
 }
