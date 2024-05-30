@@ -14,7 +14,7 @@ import {
   getMetadata,
 } from './aem.js';
 
-import { buildBlogBreadcrumb } from './blog-utils.js';
+import { buildBlogBreadcrumb } from './utils.js';
 
 const LCP_BLOCKS = []; // add your LCP blocks to the list
 const TEMPLATES = ['blog-article']; // add your templates here

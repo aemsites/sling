@@ -1,14 +1,17 @@
 import {
   createTag,
+  buildEmailSubsFrm,
+  buildFragmentBlocks,
+  buildPopularBlogs,
+  buildVideoBlocks,
 } from '../../scripts/utils.js';
+
 import {
   getMetadata, buildBlock, decorateBlock,
 } from '../../scripts/aem.js';
 
 import { getTag } from '../../scripts/tags.js';
-import {
-  buildEmailSubsFrm, buildFragmentBlocks, buildPopularBlogs, buildVideoBlocks,
-} from '../../scripts/blog-utils.js';
+
 /**
  * Function to return the name of the author photo
  * photos must be stored with <firstname>-<lastname>-author.jpeg
@@ -148,5 +151,4 @@ export default async function buildBlogDetails(main) {
   contentSection.append(popularBlock, emailSubBlock);
   decorateBlock(popularBlock);
   decorateBlock(emailSubBlock);
-  // contentSection.append(decorateBlock(block));
 }
