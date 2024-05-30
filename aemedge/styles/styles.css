@@ -20,8 +20,8 @@
   --text-color: black;
 
   /* fonts */
-  --body-font-family:proxima-nova ,proxima-nova-fallback,sans-serif;
-  --heading-font-family: var(--body-font-family);
+  --body-font-family: proxima-nova, proxima-nova-fallback, sans-serif;
+  --heading-font-family: var(--body-font-family), sans-serif;
   --fixed-font-family: 'Roboto Mono', menlo, consolas, 'Liberation Mono', monospace;
 
   /* body sizes */
