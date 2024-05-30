@@ -2,7 +2,7 @@ import { getMetadata } from '../../scripts/aem.js';
 import { loadFragment } from '../fragment/fragment.js';
 
 // media query match that indicates mobile/tablet width
-const isDesktop = window.matchMedia('(min-width: 900px)');
+const isDesktop = window.matchMedia('(min-width: 1400px)');
 
 function closeOnEscape(e) {
   if (e.code === 'Escape') {
@@ -66,7 +66,7 @@ function toggleMenu(nav, navSections, forceExpanded = null) {
   nav.setAttribute('aria-expanded', expanded ? 'false' : 'true');
   toggleAllNavSections(
     navSections,
-    expanded || isDesktop.matches ? 'false' : 'true',
+    false,
   );
   button.setAttribute(
     'aria-label',
@@ -89,7 +89,7 @@ function toggleMenu(nav, navSections, forceExpanded = null) {
       drop.removeEventListener('focus', focusNavSection);
     });
   }
-  // enable menu collapse on escape keypress
+  // enable menu collapse on escape keypress or click outside the nav
   if (!expanded || isDesktop.matches) {
     // collapse menu on escape press
     window.addEventListener('keydown', closeOnEscape);
@@ -119,11 +119,20 @@ export default async function decorate(block) {
     if (section) section.classList.add(`nav-${c}`);
   });
 
+  // nav brand
   const navBrand = nav.querySelector('.nav-brand');
-  const brandLink = navBrand.querySelector('.button');
+  const brandLink = navBrand.querySelector('a');
   if (brandLink) {
-    brandLink.className = '';
-    brandLink.closest('.button-container').className = '';
+    const brandLogo = document.createElement('img');
+    brandLogo.src = '/icons/whats-on.png';
+    brandLogo.alt = 'What\'s On Sling';
+    brandLogo.classList.add('nav-brand-logo');
+    brandLink.innerHTML = '';
+    brandLink.append(brandLogo);
+    if ((brandLink.parentElement.tagName === 'P') && brandLink.parentElement.classList.contains('button-container')) {
+      brandLink.parentElement.classList.remove('button-container');
+      brandLink.classList.remove('button');
+    }
   }
 
   const navSections = nav.querySelector('.nav-sections');
@@ -131,17 +140,17 @@ export default async function decorate(block) {
     navSections
       .querySelectorAll(':scope .default-content-wrapper > ul > li')
       .forEach((navSection) => {
-        if (navSection.querySelector('ul')) navSection.classList.add('nav-drop');
-        navSection.addEventListener('click', () => {
-          if (isDesktop.matches) {
-            const expanded = navSection.getAttribute('aria-expanded') === 'true';
-            toggleAllNavSections(navSections);
-            navSection.setAttribute(
-              'aria-expanded',
-              expanded ? 'false' : 'true',
-            );
-          }
-        });
+        const children = navSection.querySelector('ul');
+        if (children) {
+          navSection.classList.add('nav-drop');
+          const navDropIcon = document.createElement('span');
+          navDropIcon.className = 'nav-drop-icon';
+          navSection.insertBefore(navDropIcon, children);
+          navDropIcon.addEventListener('click', () => {
+            const dropExpanded = navSection.getAttribute('aria-expanded') === 'true';
+            navSection.setAttribute('aria-expanded', dropExpanded ? 'false' : 'true');
+          });
+        }
       });
   }
 
@@ -151,11 +160,11 @@ export default async function decorate(block) {
   hamburger.innerHTML = `<button type="button" aria-controls="nav" aria-label="Open navigation">
       <span class="nav-hamburger-icon"></span>
     </button>`;
-  hamburger.addEventListener('click', () => toggleMenu(nav, navSections));
-  nav.prepend(hamburger);
+  hamburger.addEventListener('click', () => toggleMenu(nav, navSections, null));
+  nav.append(hamburger);
   nav.setAttribute('aria-expanded', 'false');
   // prevent mobile nav behavior on window resize
-  // toggleMenu(nav, navSections, isDesktop.matches);
+  toggleMenu(nav, navSections, isDesktop.matches);
   isDesktop.addEventListener('change', () => toggleMenu(nav, navSections, isDesktop.matches));
 
   const navWrapper = document.createElement('div');

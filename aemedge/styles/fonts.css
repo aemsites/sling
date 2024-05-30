@@ -142,3 +142,11 @@
   font-style:normal;
   font-display: swap;
 }
+
+@font-face {
+  font-family: font-awesome;
+  src: url('../fonts/fontawesome-webfont.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+}
