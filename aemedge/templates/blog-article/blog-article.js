@@ -129,7 +129,6 @@ export async function buildAuthorBlock() {
  */
 export default async function buildBlogDetails(main) {
   // get the section followed by hero section
-
   const contentSection = main.querySelector('.section.hero-container+.section');
   // create a wrapper div to place author and content
   const blogContentWrapper = createTag('div', { class: 'blog-details-wrapper' });

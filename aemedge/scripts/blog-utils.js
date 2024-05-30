@@ -13,7 +13,7 @@ export function buildBlogBreadcrumb() {
   const urlPath = window.location.pathname;
 
   if (urlPath.includes('/whatson')) {
-    const bcWrapper = createTag('div');
+    const bcWrapper = createTag('div', { class: 'blog-breadcrumb' });
     const breamCrumbs = ['BLOG'];
     let pathElements = urlPath.split('/');
     pathElements = pathElements.slice(2, pathElements.length - 1);
@@ -22,12 +22,11 @@ export function buildBlogBreadcrumb() {
     breamCrumbs.map((breadCrumb, index) => {
       const href = urlPath.substring(0, urlPath.indexOf(urlPath.split('/')[index + 2]) - 1);
       const breadCrumbLink = createTag('a', {
-        class: 'blog-breadcrumb--links',
+        class: 'blog-breadcrumb-link',
         href,
       });
       breadCrumbLink.innerHTML = breadCrumb;
-      const arrowSpan = createTag('span', { class: 'blog-breadcrumb--arrow fa fa-angle-right' });
-      arrowSpan.innerHTML = '  >  ';
+      const arrowSpan = createTag('span', { class: 'icon icon-fw-arrow' });
       return bcWrapper.append(breadCrumbLink, arrowSpan);
     });
     const pageTitle = getMetadata('og:title');
@@ -85,9 +84,6 @@ export function buildFragmentBlocks(main) {
 
 export function buildEmailSubsFrm() {
   const containerDiv = createTag('div');
-
-  // containerDiv.innerHTML = '<p><b>Place Holder for Email Subscription Form </b></p>';
-  // return containerDiv;
   const p = createTag('p', { class: 'email-susbcription' });
   const b = createTag('b');
   b.innerHTML = 'Place Holder for Email Subscription Form';
@@ -101,12 +97,19 @@ export function buildEmailSubsFrm() {
  */
 export function buildPopularBlogs() {
   const containerDiv = createTag('div');
-
-  // containerDiv.innerHTML = '<p><b>Place Holder for Most Popular Blogs</b></p>';
-  // return containerDiv;
   const p = createTag('p', { class: 'popular-blogs' });
   const b = createTag('b');
   b.innerHTML = 'Place Holder for Popular Blogs';
   p.appendChild(b);
   return containerDiv.appendChild(buildBlock('popular-blogs', { elems: [p] }));
 }
+
+// export function buildBlogHero(main) {
+//   const picture = main.querySelector('picture');
+//   const section = document.createElement('div');
+//   const heroBlock = buildBlock('hero', { elems: [picture] });
+//   section.append(decorateBlock(heroBlock));
+//   const breadCrumb = buildBlogBreadcrumb();
+//   if (breadCrumb) section.append(breadCrumb);
+//   main.prepend(section);
+// }

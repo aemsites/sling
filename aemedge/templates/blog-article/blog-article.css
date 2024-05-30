@@ -1,4 +1,5 @@
 .blog-details-wrapper {
-    display: flex;
+    display: block;
+    max-width: 100%;
 }
 

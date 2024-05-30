@@ -37,11 +37,21 @@ function buildHeroBlock(main) {
     }
   } else if (picture) {
     const h1 = main.querySelector('h1');
-
+    const images = [];
+    main.querySelectorAll('picture').forEach((image, idx) => {
+      if (h1.compareDocumentPosition(image)) {
+        images.push(image);
+        if (idx === 0) image.classList.add('desktop');
+        if (idx === 1) image.classList.add('mobile');
+      }
+    });
     const section = document.createElement('div');
-    section.append(buildBlock('hero', { elems: [picture] }));
+    section.append(buildBlock('hero', { elems: images }));
     const breadCrumb = buildBlogBreadcrumb();
-    if (breadCrumb) section.append(breadCrumb);
+    if (breadCrumb) {
+      breadCrumb.classList.add('blog-details-breadcrumb');
+      section.append(breadCrumb);
+    }
     section.append(h1);
     main.prepend(section);
   }
@@ -101,8 +111,6 @@ async function loadTemplate(main) {
 function buildAutoBlocks(main) {
   try {
     buildHeroBlock(main);
-    // buildFragmentBlocks(main);
-    // buildVideoBlocks(main);
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('Auto Blocking failed', error);
