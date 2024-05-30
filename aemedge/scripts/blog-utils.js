@@ -84,7 +84,7 @@ export function buildFragmentBlocks(main) {
  */
 
 export function buildEmailSubsFrm() {
-  // const containerDiv = createTag('div', { class: 'email-subscription-wrapper' });
+  const containerDiv = createTag('div');
 
   // containerDiv.innerHTML = '<p><b>Place Holder for Email Subscription Form </b></p>';
   // return containerDiv;
@@ -92,7 +92,7 @@ export function buildEmailSubsFrm() {
   const b = createTag('b');
   b.innerHTML = 'Place Holder for Email Subscription Form';
   p.appendChild(b);
-  return buildBlock('email-subscription', { elems: [p] });
+  return containerDiv.appendChild(buildBlock('email-subscription', { elems: [p] }));
 }
 
 /**
@@ -100,7 +100,7 @@ export function buildEmailSubsFrm() {
  * @returns
  */
 export function buildPopularBlogs() {
-  // const containerDiv = createTag('div', { class: 'popular-blogs-wrapper' });
+  const containerDiv = createTag('div');
 
   // containerDiv.innerHTML = '<p><b>Place Holder for Most Popular Blogs</b></p>';
   // return containerDiv;
@@ -108,5 +108,5 @@ export function buildPopularBlogs() {
   const b = createTag('b');
   b.innerHTML = 'Place Holder for Popular Blogs';
   p.appendChild(b);
-  return buildBlock('popular-blogs', { elems: [p] });
+  return containerDiv.appendChild(buildBlock('popular-blogs', { elems: [p] }));
 }

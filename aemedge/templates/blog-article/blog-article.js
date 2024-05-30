@@ -1,7 +1,9 @@
 import {
   createTag,
 } from '../../scripts/utils.js';
-import { getMetadata, buildBlock } from '../../scripts/aem.js';
+import {
+  getMetadata, buildBlock, decorateBlock,
+} from '../../scripts/aem.js';
 
 import { getTag } from '../../scripts/tags.js';
 import {
@@ -127,6 +129,7 @@ export async function buildAuthorBlock() {
  */
 export default async function buildBlogDetails(main) {
   // get the section followed by hero section
+
   const contentSection = main.querySelector('.section.hero-container+.section');
   // create a wrapper div to place author and content
   const blogContentWrapper = createTag('div', { class: 'blog-details-wrapper' });
@@ -139,7 +142,12 @@ export default async function buildBlogDetails(main) {
   blogContentWrapper.append(authWrapper, contentWrapper);
   // append the blog details wrapper to the section
   contentSection.append(blogContentWrapper);
-  contentSection.append(buildPopularBlogs(), buildEmailSubsFrm());
   buildFragmentBlocks(main);
   buildVideoBlocks(main);
+  const popularBlock = buildPopularBlogs();
+  const emailSubBlock = buildEmailSubsFrm();
+  contentSection.append(popularBlock, emailSubBlock);
+  decorateBlock(popularBlock);
+  decorateBlock(emailSubBlock);
+  // contentSection.append(decorateBlock(block));
 }
