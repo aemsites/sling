@@ -14,9 +14,12 @@ import {
   getMetadata,
 } from './aem.js';
 
+import { buildBlogBreadcrumb } from './utils.js';
+
 const LCP_BLOCKS = []; // add your LCP blocks to the list
 const TEMPLATES = ['blog-article']; // add your templates here
 const TEMPLATE_META = 'template';
+
 /**
  * Builds hero block and prepends to main in a new section.
  * @param {Element} main The container element
@@ -32,35 +35,26 @@ function buildHeroBlock(main) {
       section.append(buildBlock('hero', { elems: [picture, h1] }));
       main.prepend(section);
     }
-  } else if (picture) { // blog articles shows only image
+  } else if (picture) {
+    const h1 = main.querySelector('h1');
+    const images = [];
+    main.querySelectorAll('picture').forEach((image, idx) => {
+      if (h1.compareDocumentPosition(image)) {
+        images.push(image);
+        if (idx === 0) image.classList.add('desktop');
+        if (idx === 1) image.classList.add('mobile');
+      }
+    });
     const section = document.createElement('div');
-    section.append(buildBlock('hero', { elems: [picture] }));
+    section.append(buildBlock('hero', { elems: images }));
+    const breadCrumb = buildBlogBreadcrumb();
+    if (breadCrumb) {
+      breadCrumb.classList.add('blog-details-breadcrumb');
+      section.append(breadCrumb);
+    }
+    section.append(h1);
     main.prepend(section);
   }
-}
-/**
- * Create an HTML tag in one line of code
- * @param {string} tag Tag to create
- * @param {object} attributes Key/value object of attributes
- * @param {Element} html html to append to tag
- * @returns {HTMLElement} The created tag
- */
-export function createTag(tag, attributes, html = undefined) {
-  const element = document.createElement(tag);
-  if (html) {
-    if (html instanceof HTMLElement || html instanceof SVGElement) {
-      element.append(html);
-    } else {
-      element.insertAdjacentHTML('beforeend', html);
-    }
-  }
-  if (attributes) {
-    Object.entries(attributes)
-      .forEach(([key, val]) => {
-        element.setAttribute(key, val);
-      });
-  }
-  return element;
 }
 
 /**
@@ -110,6 +104,7 @@ async function loadTemplate(main) {
     console.error(`Failed to load template with error : ${err}`);
   }
 }
+
 /**
  * Builds all synthetic blocks in a container element.
  * @param {Element} main The container element
@@ -146,8 +141,11 @@ async function loadEager(doc) {
   decorateTemplateAndTheme();
   const main = doc.querySelector('main');
   if (main) {
-    await loadTemplate(main);
+    // await loadTemplate(main);
+    // await buildBlogDetails(main);
     decorateMain(main);
+    // await buildBlogDetails(main);
+    await loadTemplate(main);
     document.body.classList.add('appear');
     await waitForLCP(LCP_BLOCKS);
   }
@@ -169,7 +167,6 @@ async function loadEager(doc) {
 async function loadLazy(doc) {
   const main = doc.querySelector('main');
   await loadBlocks(main);
-
   const { hash } = window.location;
   const element = hash ? doc.getElementById(hash.substring(1)) : false;
   if (hash && element) element.scrollIntoView();

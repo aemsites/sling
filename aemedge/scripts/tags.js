@@ -72,7 +72,7 @@ export function getTags() {
  * Returns a tags category as an array of objects
  * @param {*} category
  */
-export const getTagsCategory = async (category) => {
+export const getTag = async (tag) => {
   const tags = await getTags();
-  return getDeepNestedObject(tags, category)[0];
+  return getDeepNestedObject(tags, tag)[0];
 };

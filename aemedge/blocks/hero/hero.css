@@ -1,6 +1,6 @@
-main .hero-container > div {
+/* main .hero-container > div {
   max-width: unset;
-}
+} */
   
 main .hero-container {
   padding: 0;
@@ -31,4 +31,18 @@ main .hero-container {
   object-fit: cover;
   width: 100%;
   height: 100%;
+}
+
+.hero picture.desktop {
+  display: none;
+}
+
+@media (width >= 900px) {
+  .hero picture.mobile {
+    display: none;
+  }
+
+  .hero picture.desktop {
+    display: block;
+  }
 }
