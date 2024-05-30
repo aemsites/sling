@@ -8,7 +8,7 @@ header .nav-wrapper {
 }
 
 header nav {
-  font: font-awesome;
+  font: var(--font-awesome);
   box-sizing: border-box;
   display: grid;
   grid-template:
@@ -160,6 +160,7 @@ header nav .nav-sections .nav-drop[aria-expanded="false"] ul {
   display: none;
 }
 
+/* stylelint-disable-next-line no-descending-specificity */
 header nav .nav-sections ul > li > ul {
   margin-top: 0;
 }
@@ -181,7 +182,6 @@ header nav .nav-sections ul > li > ul > li {
 
   header nav .nav-sections .nav-drop {
     position: relative;
-    /* padding-right: 16px; */
     cursor: pointer;
   }
 
