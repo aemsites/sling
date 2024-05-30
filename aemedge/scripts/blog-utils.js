@@ -77,3 +77,36 @@ export function buildFragmentBlocks(main) {
     }
   });
 }
+
+/**
+ * Function to build the email subscription form
+ * @returns the form container
+ */
+
+export function buildEmailSubsFrm() {
+  // const containerDiv = createTag('div', { class: 'email-subscription-wrapper' });
+
+  // containerDiv.innerHTML = '<p><b>Place Holder for Email Subscription Form </b></p>';
+  // return containerDiv;
+  const p = createTag('p');
+  const b = createTag('b');
+  b.innerHTML = 'Place Holder for Email Subscription Form';
+  p.appendChild(b);
+  return buildBlock('email-subscription', { elems: [p] });
+}
+
+/**
+ * Function to build the Mostpopular blogs
+ * @returns
+ */
+export function buildPopularBlogs() {
+  // const containerDiv = createTag('div', { class: 'popular-blogs-wrapper' });
+
+  // containerDiv.innerHTML = '<p><b>Place Holder for Most Popular Blogs</b></p>';
+  // return containerDiv;
+  const p = createTag('p');
+  const b = createTag('b');
+  b.innerHTML = 'Place Holder for Popular Blogs';
+  p.appendChild(b);
+  return (buildBlock('popular-blogs', { elems: [p] }));
+}

@@ -4,7 +4,9 @@ import {
 import { getMetadata, buildBlock } from '../../scripts/aem.js';
 
 import { getTag } from '../../scripts/tags.js';
-import { buildFragmentBlocks, buildVideoBlocks } from '../../scripts/blog-utils.js';
+import {
+  buildEmailSubsFrm, buildFragmentBlocks, buildPopularBlogs, buildVideoBlocks,
+} from '../../scripts/blog-utils.js';
 /**
  * Function to return the name of the author photo
  * photos must be stored with <firstname>-<lastname>-author.jpeg
@@ -137,6 +139,7 @@ export default async function buildBlogDetails(main) {
   blogContentWrapper.append(authWrapper, contentWrapper);
   // append the blog details wrapper to the section
   contentSection.append(blogContentWrapper);
+  contentSection.append(buildPopularBlogs(), buildEmailSubsFrm());
   buildFragmentBlocks(main);
   buildVideoBlocks(main);
 }
