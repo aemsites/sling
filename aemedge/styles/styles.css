@@ -137,22 +137,32 @@ a.button:any-link, button {
   box-sizing: border-box;
   text-decoration: none;
   border: 2px solid transparent;
-  padding: 5px 30px;
   text-align: center;
+  text-transform:uppercase;
   font-style: normal;
   font-weight: 600;
   cursor: pointer;
   color: var(--background-color);
-  background-color: var(--link-color);
-  margin: 16px 0;
+  background-color: #ce4c00;
+  margin-bottom: 8px;
+  margin-top:8px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  border-radius: 30px;
+  min-width: 180px;
+ padding: 14px 16px;
 }
 
-a.button:hover, a.button:focus, button:hover, button:focus  {
+a.button:hover, a.button::-moz-focus-inner  {
   background-color: var(--link-hover-color);
+  cursor: pointer;
+}
+
+a.button:hover {
+  outline: none;
+  box-shadow: #07070b66 0 24px 57px 0;
+  opacity: 1;
+  transform: scale(1.05);
   cursor: pointer;
 }
 
