@@ -146,9 +146,13 @@ export default async function buildBlogDetails(main) {
   contentSection.append(blogContentWrapper);
   buildFragmentBlocks(main);
   buildVideoBlocks(main);
+  const popularSection = createTag('div', { class: ' popular-blogs-section' });
+  const emailSubSection = createTag('div', { class: ' email-subscription-section' });
   const popularBlock = buildPopularBlogs();
   const emailSubBlock = buildEmailSubsFrm();
-  contentSection.append(popularBlock, emailSubBlock);
+  popularSection.append(popularBlock);
+  emailSubSection.append(emailSubBlock);
+  main.append(popularSection, emailSubSection);
   decorateBlock(popularBlock);
   decorateBlock(emailSubBlock);
 }
