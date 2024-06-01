@@ -36,14 +36,3 @@ a.blog-breadcrumb-link {
     content: "\f105";
 }
 
-.hero-container .blog-primary-title {
-    line-height: 35px;
-    color: #1d1d1d;
-    max-width: 770px;
-    text-align: center;
-}
-
-main .hero-container + .section {
-    border: 1px solid red;
-    display: flex;
-}

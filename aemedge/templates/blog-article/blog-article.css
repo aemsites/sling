@@ -1,5 +1,92 @@
+
+main .hero-container + .section {
+    display: flex;
+    max-width: 80%;
+    margin: 0 auto;
+    text-align: justify;
+}
+
+main .hero-container + .section h1, h2, h3, h4 {
+    text-align: center;
+}
+
+main .hero-container .blog-primary-title {
+    line-height: 35px;
+    color: #1d1d1d;
+    max-width: 770px;
+    text-align: center;
+}
+
+.author-details-wrapper {
+    margin: 0 auto 32px;
+    min-height: 160px;
+    min-width: 300px;
+    background-color: #fff;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    max-width: 168px;
+    text-align: center;
+    word-break: break-word;
+    box-shadow: 0 5px 15px 0 rgb(0 0 0 / 14%);
+}
+
+.author-details-wrapper li {
+    list-style: none;
+ }
+
+.author-card .image-container
+{
+    align-self: stretch;
+    margin: 0 auto;
+    width: 60px; 
+}
+
+.author-card .image-container img
+{
+    margin-top: 8px;
+    padding: 0;
+    text-align: center;
+    border-radius: 100%;
+    /* stylelint-disable-next-line property-no-vendor-prefix */
+    -webkit-border-radius: 100%;
+}
+
+.text-container {
+    text-align: center;
+}
+
+.text-container .auth-name {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.text-container .tags {
+    display: flex;
+    flex-direction: column;
+}
+
+.text-container .social-share {
+    display: flex;
+   text-align: center;
+}
+
+.text-container .social-share .share-list {
+    display: flex;
+    justify-content: space-around;
+}
+
 .blog-details-wrapper {
-    display: block;
-    max-width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin: 0 auto;
+}
+
+.content-details-wrapper {
+    display: flex;
+    margin: 0 auto;
+    flex-direction: column;
 }
 
