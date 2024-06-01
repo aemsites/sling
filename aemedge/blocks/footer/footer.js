@@ -69,22 +69,25 @@ export default async function decorate(block) {
 
   // add classes for secondary footer nav items
   const secSection = footer.querySelector('.section.footer-secondary');
-  const copyright = createTag('div', { class: 'copy-right' });
-  const secFooterLinks = createTag('div', { class: 'sec-footer-links' });
-  secSection.querySelectorAll('ul > li').forEach((li, idx) => {
-    if (idx === 0) {
-      li.classList.add('copyright-item');
-      const crTxt = createTag('span', { class: 'copy-right-text' });
-      crTxt.innerText = li.innerText;
-      li.innerHTML = crTxt.outerHTML;
 
-      copyright.append(li);
-    } else {
-      secFooterLinks.append(li);
-    }
-  });
+  if (secSection) {
+    const copyright = createTag('div', { class: 'copy-right' });
+    const secFooterLinks = createTag('div', { class: 'sec-footer-links' });
+    secSection.querySelectorAll('ul > li').forEach((li, idx) => {
+      if (idx === 0) {
+        li.classList.add('copyright-item');
+        const crTxt = createTag('span', { class: 'copy-right-text' });
+        crTxt.innerText = li.innerText;
+        li.innerHTML = crTxt.outerHTML;
 
-  secSection.querySelector('.default-content-wrapper').replaceWith(copyright, secFooterLinks);
+        copyright.append(li);
+      } else {
+        secFooterLinks.append(li);
+      }
+    });
+
+    secSection.querySelector('.default-content-wrapper').replaceWith(copyright, secFooterLinks);
+  }
   decorateLinkItems(footer);
   block.append(footer);
 }
