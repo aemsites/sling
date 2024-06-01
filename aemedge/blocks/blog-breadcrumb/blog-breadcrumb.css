@@ -1,18 +1,49 @@
 .blog-breadcrumb-wrapper {
     width: 100%;
-    overflow: hidden;
-    text-overflow: ellipsis;
 }
 
 .block.blog-breadcrumb {
     background: 0;
     color: #454550;
     font-size: 18px;
-    overflow: hidden;
     margin: 0 auto;
     padding: 32px 10%;
     text-align: center;
     white-space: nowrap;
-    width: 100%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.blog-breadcrumb .blog-breadcrumb-active-article {
+font-weight: 700;
+
+}
+
+a.blog-breadcrumb-link {
+    color: #9fa0a7;
+}
+
+.blog-breadcrumb span.icon-fw-arrow {
+    margin: 0 10px;
+    display: inline-block;
+    font: normal normal normal 20px / 1 var(--font-awesome);
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.blog-breadcrumb span.icon-fw-arrow::before {
+    content: "\f105";
+}
+
+.hero-container .blog-primary-title {
+    line-height: 35px;
+    color: #1d1d1d;
+    max-width: 770px;
+    text-align: center;
+}
+
+main .hero-container + .section {
+    border: 1px solid red;
     display: flex;
 }
