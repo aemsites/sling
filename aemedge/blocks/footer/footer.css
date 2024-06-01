@@ -56,7 +56,6 @@ footer .section.footer-primary{
   flex-flow: wrap column ;
   align-content: flex-start;
   background-color: #202230;
-  /* padding-top:40px; */
 }
 
 footer .footer-primary-links {
@@ -167,7 +166,7 @@ vertical-align: middle;
   .footer-primary-links .nav-items-wrapper {
     margin-right:40px;
   }
-  
+
   footer .section.footer-secondary {
     flex-direction: row;
   }
