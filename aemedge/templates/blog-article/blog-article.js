@@ -108,12 +108,11 @@ export async function buildAuthorBlock() {
     const link = createTag(
       'a',
       {
-        class: `fafa-${social}`,
+        class: `fa fa-${social}`,
         title: `Share this article on ${social}`,
         'aria-label': `Share this article on ${social}`,
       },
     );
-    link.innerText = social;
     span.append(link);
     socialListItm.append(span);
     socialList.append(socialListItm);

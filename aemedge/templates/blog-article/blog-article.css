@@ -8,6 +8,11 @@ main .hero-container + .section {
 
 main .hero-container + .section h1, h2, h3, h4 {
     text-align: center;
+    margin: 10px;
+}
+
+main .hero-container + .section p {
+    line-height: 24px;
 }
 
 main .hero-container .blog-primary-title {
@@ -62,19 +67,66 @@ main .hero-container .blog-primary-title {
     font-weight: 700;
 }
 
+.text-container .pub-date {
+    padding-top:8px;    
+}
+
 .text-container .tags {
     display: flex;
-    flex-direction: column;
+    margin:0 auto;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-top:16px;
+}
+
+.text-container .tags > a{ 
+    color:#333;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    text-transform: uppercase;
 }
 
 .text-container .social-share {
     display: flex;
    text-align: center;
+   padding:20px 0;
+   justify-content: center;
+}
+
+.social-share .social-share-icon {
+    font-size: 20px;
+    padding-left: 4px;
+    padding-right: 4px;
+}
+
+.social-share .social-share-icon a {
+    text-decoration: none;
+    color: var(--link-color);
+    padding: 0 4px
 }
 
 .text-container .social-share .share-list {
     display: flex;
     justify-content: space-around;
+    padding: 0;
+}
+
+.social-share-icon .fa {
+    display: inline-block;
+    font: normal normal normal 14px / 1 var(--font-awesome);
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.social-share-icon .fa-facebook::before {
+    content: "\f230";
+}
+
+.social-share-icon .fa-twitter::before {
+    content: "\f099";
 }
 
 .blog-details-wrapper {
@@ -90,3 +142,35 @@ main .hero-container .blog-primary-title {
     flex-direction: column;
 }
 
+.content-details-wrapper .video.block  {
+    margin-bottom: 10px;
+}
+
+.fragment-wrapper .button-container {
+    display: flex;
+    justify-content: center;
+    position:fixed;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+    background-color: #ce4c00;
+}
+
+.fragment-wrapper .button-container .button {
+    margin: 0;
+    border-width: 1px 0;
+    border-radius: 0;
+    cursor: pointer;
+    position: relative;
+    box-sizing: border-box;
+    font-size: 1rem;
+    padding: 0.875rem 1rem;
+    font-weight: 700;
+    text-align: center;
+    letter-spacing: 0;
+    border: 2px solid #ce4c00;
+    opacity: 1;
+    min-width: 11.25rem;
+}

@@ -24,6 +24,8 @@ a.blog-breadcrumb-link {
 }
 
 .blog-breadcrumb span.icon-fw-arrow {
+    width: unset;
+    height: unset;
     margin: 0 10px;
     display: inline-block;
     font: normal normal normal 20px / 1 var(--font-awesome);
