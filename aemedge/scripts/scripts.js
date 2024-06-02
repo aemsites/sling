@@ -43,7 +43,10 @@ function buildHeroBlock(main) {
       if (h1 && h1.compareDocumentPosition(image)) {
         images.push(image);
         if (idx === 0) image.classList.add('desktop');
-        if (idx === 1) image.classList.add('mobile');
+        if (idx === 1) {
+          image.classList.add('mobile');
+          image.querySelector('img').setAttribute('loading', 'eager');
+        }
       }
     });
     const section = document.createElement('div');

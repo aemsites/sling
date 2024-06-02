@@ -1,13 +1,11 @@
 import {
   createTag,
-  buildEmailSubsFrm,
   buildFragmentBlocks,
-  buildPopularBlogs,
   buildVideoBlocks,
 } from '../../scripts/utils.js';
 
 import {
-  getMetadata, buildBlock, decorateBlock,
+  getMetadata, buildBlock,
 } from '../../scripts/aem.js';
 
 import { getTag } from '../../scripts/tags.js';
@@ -145,13 +143,13 @@ export default async function buildBlogDetails(main) {
   contentSection.append(blogContentWrapper);
   buildFragmentBlocks(main);
   buildVideoBlocks(main);
-  const popularSection = createTag('div', { class: ' popular-blogs-section' });
-  const emailSubSection = createTag('div', { class: ' email-subscription-section' });
-  const popularBlock = buildPopularBlogs();
-  const emailSubBlock = buildEmailSubsFrm();
-  popularSection.append(popularBlock);
-  emailSubSection.append(emailSubBlock);
-  main.append(popularSection, emailSubSection);
-  decorateBlock(popularBlock);
-  decorateBlock(emailSubBlock);
+  // const popularSection = createTag('div', { class: ' popular-blogs-section' });
+  // const emailSubSection = createTag('div', { class: ' email-subscription-section' });
+  // const popularBlock = buildPopularBlogs();
+  // const emailSubBlock = buildEmailSubsFrm();
+  // popularSection.append(popularBlock);
+  // emailSubSection.append(emailSubBlock);
+  // main.append(popularSection, emailSubSection);
+  // decorateBlock(popularBlock);
+  // decorateBlock(emailSubBlock);
 }
