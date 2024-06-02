@@ -45,7 +45,11 @@ function buildHeroBlock(main) {
         if (idx === 0) image.classList.add('desktop');
         if (idx === 1) {
           image.classList.add('mobile');
-          image.querySelector('img').setAttribute('loading', 'eager');
+          // load eager on mobile
+          const mquery = window.matchMedia('(max-width: 900px)');
+          if (mquery.matches) {
+            image.querySelector('img').setAttribute('loading', 'eager');
+          }
         }
       }
     });
