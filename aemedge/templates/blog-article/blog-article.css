@@ -34,7 +34,7 @@ main .hero-container .blog-primary-title {
     max-width: 168px;
     text-align: center;
     word-break: break-word;
-    box-shadow: 0 5px 15px 0 rgb(0 0 0 / 14%);
+    box-shadow: 0 5px 15px 0 #00000024;
 }
 
 .author-details-wrapper li {
@@ -155,7 +155,11 @@ main .hero-container .blog-primary-title {
     left: 0;
     width: 100%;
     z-index: 100;
-    background-color: #ce4c00;
+    background-color: var(--primary-button-color);
+}
+
+.content-details-wrapper .fragment-wrapper .button-container + p{
+    display: none;
 }
 
 .fragment-wrapper .button-container .button {
@@ -170,7 +174,68 @@ main .hero-container .blog-primary-title {
     font-weight: 700;
     text-align: center;
     letter-spacing: 0;
-    border: 2px solid #ce4c00;
+    border: 2px solid var(--primary-button-color);;
     opacity: 1;
     min-width: 11.25rem;
+}
+
+@media (width >= 900px) {
+.section.hero-container {
+   margin: 64px 125px 0;
+   padding: 0;
+   width: 100%;
+}
+
+main .hero-container .blog-primary-title {
+    margin: 0 auto;
+    line-height: 55px;
+    text-align: center;
+}
+
+.blog-details-wrapper {
+    flex-direction: row;
+}
+
+.author-details-wrapper {
+    align-self: flex-start;
+    min-width: unset;
+    max-width: unset;
+    min-height: unset;
+    margin:24px;
+}
+
+.author-details-wrapper > div { 
+    width: 168px;
+    margin: 0 0 0 8px;
+}
+
+.text-container .tags {
+    flex-direction: column;
+    align-items: center;
+    word-wrap: break-word;
+}
+
+.text-container .social-share {
+    flex-direction: column;
+}
+
+.text-container .social-share .share-list {
+    place-content: center;
+}
+
+.fragment-wrapper .button-container { 
+    position: unset;
+    width: unset;
+    background-color: unset
+}
+
+.fragment-wrapper .button-container .button { 
+    margin: 0 8px;
+}
+
+.content-details-wrapper .fragment-wrapper .button-container + p{
+    display: flex;
+    justify-content: center;
+}
+
 }

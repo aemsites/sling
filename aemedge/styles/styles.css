@@ -21,6 +21,7 @@
   --light-color: #eee;
   --dark-color: #ccc;
   --text-color: #333;
+  --primary-button-color:#ce4c00;
 
   /* fonts */
   --body-font-family: proxima-nova, proxima-nova-fallback, sans-serif;
@@ -143,7 +144,7 @@ a.button:any-link, button {
   font-weight: 600;
   cursor: pointer;
   color: var(--background-color);
-  background-color: #ce4c00;
+  background-color: var(--primary-button-color);
   margin-bottom: 8px;
   margin-top:8px;
   white-space: nowrap;
