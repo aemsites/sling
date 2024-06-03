@@ -99,7 +99,7 @@ export function buildBlogBreadcrumb() {
     if (pageTitle) {
       // generate span tag with title
       const titleSpan = createTag('span', { class: 'blog-breadcrumb-active-article' });
-      titleSpan.innerHTML = pageTitle;
+      titleSpan.innerHTML = pageTitle.toUpperCase();
       bcWrapper.append(titleSpan);
     }
     return bcWrapper;

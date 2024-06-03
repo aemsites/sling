@@ -37,12 +37,20 @@ function buildHeroBlock(main) {
     }
   } else if (picture) {
     const h1 = main.querySelector('h1');
+    if (h1) h1.classList.add('blog-primary-title');
     const images = [];
     main.querySelectorAll('picture').forEach((image, idx) => {
-      if (h1.compareDocumentPosition(image)) {
+      if (h1 && h1.compareDocumentPosition(image)) {
         images.push(image);
         if (idx === 0) image.classList.add('desktop');
-        if (idx === 1) image.classList.add('mobile');
+        if (idx === 1) {
+          image.classList.add('mobile');
+          // load eager on mobile
+          const mquery = window.matchMedia('(max-width: 900px)');
+          if (mquery.matches) {
+            image.querySelector('img').setAttribute('loading', 'eager');
+          }
+        }
       }
     });
     const section = document.createElement('div');

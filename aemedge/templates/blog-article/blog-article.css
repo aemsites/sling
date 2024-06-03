@@ -1,5 +1,241 @@
-.blog-details-wrapper {
-    display: block;
-    max-width: 100%;
+
+main .hero-container + .section {
+    display: flex;
+    max-width: 80%;
+    margin: 0 auto;
+    text-align: justify;
 }
 
+main .hero-container + .section h1, h2, h3, h4 {
+    text-align: center;
+    margin: 10px;
+}
+
+main .hero-container + .section p {
+    line-height: 24px;
+}
+
+main .hero-container .blog-primary-title {
+    line-height: 35px;
+    color: #1d1d1d;
+    max-width: 770px;
+    text-align: center;
+}
+
+.author-details-wrapper {
+    margin: 0 auto 32px;
+    min-height: 160px;
+    min-width: 300px;
+    background-color: #fff;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    max-width: 168px;
+    text-align: center;
+    word-break: break-word;
+    box-shadow: 0 5px 15px 0 #00000024;
+}
+
+.author-details-wrapper li {
+    list-style: none;
+ }
+
+.author-card .image-container
+{
+    align-self: stretch;
+    margin: 0 auto;
+    width: 60px; 
+}
+
+.author-card .image-container img
+{
+    margin-top: 8px;
+    padding: 0;
+    text-align: center;
+    border-radius: 100%;
+    /* stylelint-disable-next-line property-no-vendor-prefix */
+    -webkit-border-radius: 100%;
+}
+
+.text-container {
+    text-align: center;
+}
+
+.text-container .auth-name {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.text-container .pub-date {
+    padding-top:8px;    
+}
+
+.text-container .tags {
+    display: flex;
+    margin:0 auto;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-top:16px;
+}
+
+.text-container .tags > a{ 
+    color:#333;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+.text-container .social-share {
+    display: flex;
+   text-align: center;
+   padding:20px 0;
+   justify-content: center;
+}
+
+.social-share .social-share-icon {
+    font-size: 20px;
+    padding-left: 4px;
+    padding-right: 4px;
+}
+
+.social-share .social-share-icon a {
+    text-decoration: none;
+    color: var(--link-color);
+    padding: 0 4px
+}
+
+.text-container .social-share .share-list {
+    display: flex;
+    justify-content: space-around;
+    padding: 0;
+}
+
+.social-share-icon .fa {
+    display: inline-block;
+    font: normal normal normal 14px / 1 var(--font-awesome);
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.social-share-icon .fa-facebook::before {
+    content: "\f230";
+}
+
+.social-share-icon .fa-twitter::before {
+    content: "\f099";
+}
+
+.blog-details-wrapper {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin: 0 auto;
+}
+
+.content-details-wrapper {
+    display: flex;
+    margin: 0 auto;
+    flex-direction: column;
+}
+
+.content-details-wrapper .video.block  {
+    margin-bottom: 10px;
+}
+
+.fragment-wrapper .button-container {
+    display: flex;
+    justify-content: center;
+    position:fixed;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+    background-color: var(--primary-button-color);
+}
+
+.content-details-wrapper .fragment-wrapper .button-container + p{
+    display: none;
+}
+
+.fragment-wrapper .button-container .button {
+    margin: 0;
+    border-width: 1px 0;
+    border-radius: 0;
+    cursor: pointer;
+    position: relative;
+    box-sizing: border-box;
+    font-size: 1rem;
+    padding: 0.875rem 1rem;
+    font-weight: 700;
+    text-align: center;
+    letter-spacing: 0;
+    border: 2px solid var(--primary-button-color);;
+    opacity: 1;
+    min-width: 11.25rem;
+}
+
+@media (width >= 900px) {
+.section.hero-container {
+   margin: 64px 125px 0;
+   padding: 0;
+   width: 100%;
+}
+
+main .hero-container .blog-primary-title {
+    margin: 0 auto;
+    line-height: 55px;
+    text-align: center;
+}
+
+.blog-details-wrapper {
+    flex-direction: row;
+}
+
+.author-details-wrapper {
+    align-self: flex-start;
+    min-width: unset;
+    max-width: unset;
+    min-height: unset;
+    margin:24px;
+}
+
+.author-details-wrapper > div { 
+    width: 168px;
+    margin: 0 0 0 8px;
+}
+
+.text-container .tags {
+    flex-direction: column;
+    align-items: center;
+    word-wrap: break-word;
+}
+
+.text-container .social-share {
+    flex-direction: column;
+}
+
+.text-container .social-share .share-list {
+    place-content: center;
+}
+
+.fragment-wrapper .button-container { 
+    position: unset;
+    width: unset;
+    background-color: unset
+}
+
+.fragment-wrapper .button-container .button { 
+    margin: 0 8px;
+}
+
+.content-details-wrapper .fragment-wrapper .button-container + p{
+    display: flex;
+    justify-content: center;
+}
+
+}
