@@ -16,10 +16,10 @@ export default {
     const tags = document.querySelectorAll('.author-card--tags a');
     const ogImage = document.querySelector('meta[property="og:image"]')?.content;
     const authorImage = document.querySelector('.author-card--author-image')?.src;
-    meta.Author = authorName;
-    meta.Date = publishDate;
-    meta.Tags = Array.from(tags).map((tag) => tag.textContent).join(', ');
-    meta.Image = ogImage.replace('https://www.sling.com', '');
+    meta.Author = authorName || '';
+    meta.Date = publishDate || '';
+    meta.Tags = Array.from(tags).map((tag) => tag.textContent).join(', ') || '';
+    meta.Image = ogImage.replace('https://www.sling.com', '') || '';
     const youtubeIframes = document.querySelectorAll('iframe[src*="youtube"]');
     // Handle youtube videos
     youtubeIframes.forEach((iframe) => {
@@ -43,6 +43,17 @@ export default {
       }
     });
 
+    // Handle category pages
+    const isCategoryPage = document.querySelector('.homepage-wrapper .blog-homepage--outer');
+    if (isCategoryPage) {
+      const cells = [
+        ['Category'],
+        [''],
+      ];
+      const categoryBlock = WebImporter.DOMUtils.createTable(cells, document);
+      // replace blog-homepage--outer with the category block
+      isCategoryPage.parentElement.replaceChild(categoryBlock, isCategoryPage);
+    }
     // attempt to remove non-content elements
     WebImporter.DOMUtils.remove(main, [
       'header',
@@ -58,6 +69,7 @@ export default {
       '.popular-content',
       '.js-react-spacer',
       '.email-capture--container',
+      '.blog-homepage--outer',
     ]);
 
     WebImporter.rules.transformBackgroundImages(main, document);
@@ -69,7 +81,12 @@ export default {
     // // append the block to the main element
     main.append(block);
 
-    const newPath = new URL(params.originalURL).pathname.replace(/\/$/, '').replace(/\.html$/, '');
+    const newPathUrl = new URL(params.originalURL).pathname;
+    const newPath = decodeURIComponent(newPathUrl)
+      .toLowerCase()
+      .replace(/\/$/, '')
+      .replace(/\.html$/, '')
+      .replace(/[^a-z0-9/]/gm, '-');
     // const newPath = decodeURIComponent(new URL(url).pathname)
     //                .replace('.htm', '').replace('/news/', `/news/${publishedYear}/`);
     // const destinationUrl = WebImporter.FileUtils.sanitizePath(newPath);
