@@ -50,7 +50,7 @@ const fetchTags = (() => {
 const getDeepNestedObject = (obj, filter) => Object.entries(obj)
   .reduce((acc, [key, value]) => {
     let result = [];
-    if (key === filter) {
+    if (key.toLowerCase() === filter.toLowerCase()) {
       result = acc.concat(value);
     } else if (typeof value === 'object') {
       result = acc.concat(getDeepNestedObject(value, filter));
