@@ -32,7 +32,7 @@ export default {
     const authorName = document.querySelector('main .author-card--author-name')?.textContent;
     const publishDate = document.querySelector('main .author-card--date')?.textContent;
     const tags = document.querySelectorAll('main .author-card--tags a');
-    const authorImage = document.querySelector('main .author-card--image')?.src;
+    // const authorImage = document.querySelector('main .author-card--image')?.src;
     meta.author = authorName;
     meta.date = publishDate;
     meta.tags = Array.from(tags).map((tag) => tag.textContent).join(', ');
