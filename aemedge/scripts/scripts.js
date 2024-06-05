@@ -16,8 +16,9 @@ import {
 
 import {
   buildBlogBreadcrumb,
-  buildPopularBlogs,
   buildEmailSubsFrm,
+  buildPopularBlogs,
+  getPageType,
 } from './utils.js';
 
 const LCP_BLOCKS = []; // add your LCP blocks to the list
@@ -30,8 +31,8 @@ const TEMPLATE_META = 'template';
  */
 function buildHeroBlock(main) {
   const picture = main.querySelector('picture');
-  const template = getMetadata(TEMPLATE_META);
-  if (template !== 'blog-article') {
+
+  if (getPageType() !== 'blog' && getPageType() !== 'category') {
     const h1 = main.querySelector('h1');
     // eslint-disable-next-line no-bitwise
     if (h1 && picture && (h1.compareDocumentPosition(picture) & Node.DOCUMENT_POSITION_PRECEDING)) {
@@ -39,7 +40,7 @@ function buildHeroBlock(main) {
       section.append(buildBlock('hero', { elems: [picture, h1] }));
       main.prepend(section);
     }
-  } else if (picture) {
+  } else if (getPageType() === 'blog' && picture) {
     const h1 = main.querySelector('h1');
     if (h1) h1.classList.add('blog-primary-title');
     const images = [];
@@ -64,6 +65,28 @@ function buildHeroBlock(main) {
       breadCrumb.classList.add('blog-details-breadcrumb');
       section.append(breadCrumb);
     }
+    section.append(h1);
+    main.prepend(section);
+  } else if (getPageType() === 'category' && picture) {
+    const h1 = main.querySelector('h1');
+    if (h1) h1.classList.add('blog-primary-title');
+    const images = [];
+    main.querySelectorAll('picture').forEach((image, idx) => {
+      if (h1 && h1.compareDocumentPosition(image)) {
+        images.push(image);
+        if (idx === 0) image.classList.add('desktop');
+        if (idx === 1) {
+          image.classList.add('mobile');
+          // load eager on mobile
+          const mquery = window.matchMedia('(max-width: 900px)');
+          if (mquery.matches) {
+            image.querySelector('img').setAttribute('loading', 'eager');
+          }
+        }
+      }
+    });
+    const section = document.createElement('div');
+    section.append(buildBlock('hero', { elems: images }));
     section.append(h1);
     main.prepend(section);
   }
@@ -100,8 +123,7 @@ export function toClassName(name) {
 async function loadTemplate(main) {
   try {
     const template = getMetadata(TEMPLATE_META) ? toClassName(getMetadata(TEMPLATE_META)) : null;
-
-    if (template && TEMPLATES.includes(template)) {
+    if (template && TEMPLATES.includes(template) && getPageType() === 'blog') {
       const templateJS = await import(`../templates/${template}/${template}.js`);
       // invoke the default export from template js
       if (templateJS.default) {
@@ -153,7 +175,7 @@ async function loadEager(doc) {
   decorateTemplateAndTheme();
   const main = doc.querySelector('main');
   if (main) {
-    if (getMetadata(TEMPLATE_META) === 'blog-article') {
+    if (getPageType() === 'blog') {
       buildPopularBlogs(main);
       buildEmailSubsFrm(main);
     }

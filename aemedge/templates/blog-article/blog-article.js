@@ -34,8 +34,12 @@ async function buildTagsDiv(tags) {
     const tagObj = await getTag(tag.trim());
     if (tagObj) {
       const tagLink = createTag('a', { target: '_self', href: `/whatson/${tagObj.name}` });
-      if (index > 0) tagLink.innerText = `,${tag}`;
-      else tagLink.innerText = tag;
+      tagLink.innerText = tag.toUpperCase();
+      if (tags.length > 1) {
+        if (index < tags.length - 1) {
+          tagLink.innerText = `${tag.toUpperCase()}, `;
+        }
+      }
       tagsDiv.append(tagLink);
     }
   });
@@ -129,7 +133,7 @@ export async function buildAuthorBlock() {
  */
 export default async function buildBlogDetails(main) {
   // get the section followed by hero section
-  const contentSection = main.querySelector(':scope > .section.hero-container+.section');
+  const contentSection = main.querySelector(':scope > .section.hero-container+.section') || main.querySelector(':scope > .section');
   // const contentSection = createTag('div');
   // create a wrapper div to place author and content
   const blogContentWrapper = createTag('div', { class: 'blog-details-wrapper' });
