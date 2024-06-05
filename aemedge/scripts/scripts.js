@@ -14,7 +14,11 @@ import {
   getMetadata,
 } from './aem.js';
 
-import { buildBlogBreadcrumb } from './utils.js';
+import {
+  buildBlogBreadcrumb,
+  buildPopularBlogs,
+  buildEmailSubsFrm,
+} from './utils.js';
 
 const LCP_BLOCKS = []; // add your LCP blocks to the list
 const TEMPLATES = ['blog-article']; // add your templates here
@@ -149,10 +153,11 @@ async function loadEager(doc) {
   decorateTemplateAndTheme();
   const main = doc.querySelector('main');
   if (main) {
-    // await loadTemplate(main);
-    // await buildBlogDetails(main);
+    if (getMetadata(TEMPLATE_META) === 'blog-article') {
+      buildPopularBlogs(main);
+      buildEmailSubsFrm(main);
+    }
     decorateMain(main);
-    // await buildBlogDetails(main);
     await loadTemplate(main);
     document.body.classList.add('appear');
     await waitForLCP(LCP_BLOCKS);

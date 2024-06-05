@@ -129,7 +129,8 @@ export async function buildAuthorBlock() {
  */
 export default async function buildBlogDetails(main) {
   // get the section followed by hero section
-  const contentSection = main.querySelector('.section.hero-container+.section');
+  const contentSection = main.querySelector(':scope > .section.hero-container+.section');
+  // const contentSection = createTag('div');
   // create a wrapper div to place author and content
   const blogContentWrapper = createTag('div', { class: 'blog-details-wrapper' });
   const authWrapper = createTag('div', { class: 'author-details-wrapper' });
@@ -143,13 +144,4 @@ export default async function buildBlogDetails(main) {
   contentSection.append(blogContentWrapper);
   buildFragmentBlocks(main);
   buildVideoBlocks(main);
-  // const popularSection = createTag('div', { class: ' popular-blogs-section' });
-  // const emailSubSection = createTag('div', { class: ' email-subscription-section' });
-  // const popularBlock = buildPopularBlogs();
-  // const emailSubBlock = buildEmailSubsFrm();
-  // popularSection.append(popularBlock);
-  // emailSubSection.append(emailSubBlock);
-  // main.append(popularSection, emailSubSection);
-  // decorateBlock(popularBlock);
-  // decorateBlock(emailSubBlock);
 }
