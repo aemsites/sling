@@ -165,3 +165,15 @@ export function buildPopularBlogs(main) {
   section.append(block);
   main.append(section);
 }
+
+/**
+ * Function to check whether the page is of type blog-article
+ * @param {*} document
+ * @returns
+ */
+export function getPageType() {
+  const category = getMetadata('category');
+  const template = getMetadata('template');
+  if (template === 'blog-article' && !category) return 'blog';
+  return 'category';
+}
