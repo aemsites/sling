@@ -54,6 +54,13 @@ export default {
       // replace blog-homepage--outer with the category block
       isCategoryPage.parentElement.replaceChild(categoryBlock, isCategoryPage);
     }
+
+    // Remove subscribe form at the bottom of the articles
+    const subscribeForm = document.querySelector('.email-capture-new')?.parentElement;
+    if (subscribeForm) {
+      subscribeForm.remove();
+    }
+
     // attempt to remove non-content elements
     WebImporter.DOMUtils.remove(main, [
       'header',
@@ -78,6 +85,15 @@ export default {
     // // Add metadata block to the document
     const block = WebImporter.Blocks.getMetadataBlock(document, meta);
 
+    // Handle anchor links or odd links
+    if (main.querySelector('a[href^="#"]')) {
+      const u = new URL(url);
+      const links = main.querySelectorAll('a[href^="#"]');
+      for (let i = 0; i < links.length; i += 1) {
+        const a = links[i];
+        a.href = `${u.pathname}${a.getAttribute('href')}`;
+      }
+    }
     // // append the block to the main element
     main.append(block);
 
