@@ -133,7 +133,7 @@ export function buildFragmentBlocks(main) {
     const url = new URL(a.href);
     const domainCheck = checkDomain(url);
     if (domainCheck.isKnown && linkTextIncludesHref(a) && url.pathname.includes('/fragments/')) {
-      const block = buildBlock('fragment', a.cloneNode(true));
+      const block = buildBlock('fragment', url.pathname);
       a.replaceWith(block);
       decorateBlock(block);
     }
