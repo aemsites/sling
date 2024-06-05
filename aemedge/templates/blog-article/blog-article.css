@@ -72,10 +72,6 @@ main .hero-container .blog-primary-title {
 }
 
 .text-container .tags {
-    /* display: flex;
-    margin:0 auto;
-    flex-wrap: wrap;
-    justify-content: center; */
     padding-top:16px;
 }
 
