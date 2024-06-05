@@ -116,9 +116,7 @@ export function buildVideoBlocks(main) {
   if (template === 'blog-article') {
     main.querySelectorAll('a[href]').forEach((a) => {
       if (a.href.includes('youtube')) {
-        const aClone = a.cloneNode(true);
-        const videoBlock = buildBlock('video', aClone);
-        // main.append(videoBlock);
+        const videoBlock = buildBlock('video', a.cloneNode(true));
         a.replaceWith(videoBlock);
         decorateBlock(videoBlock);
       }
@@ -138,7 +136,6 @@ export function buildFragmentBlocks(main) {
       const block = buildBlock('fragment', a.cloneNode(true));
       a.replaceWith(block);
       decorateBlock(block);
-      // main.append(block);
     }
   });
 }
@@ -148,24 +145,23 @@ export function buildFragmentBlocks(main) {
  * @returns the email subscription block
  */
 
-export function buildEmailSubsFrm() {
-  const containerDiv = createTag('div');
-  const p = createTag('p', { class: 'email-susbcription' });
-  const b = createTag('b');
-  b.innerHTML = 'Place Holder for Email Subscription Form';
-  p.appendChild(b);
-  return containerDiv.appendChild(buildBlock('email-subscription', { elems: [p] }));
+export function buildEmailSubsFrm(main) {
+  const section = createTag('div');
+  const blockDiv = createTag('div');
+  const block = buildBlock('email-subscription', { elems: [blockDiv] });
+  section.append(block);
+  main.append(section);
 }
 
 /**
  * Function to build the Mostpopular blogs
  * @returns popular blogs block
  */
-export function buildPopularBlogs() {
-  const containerDiv = createTag('div');
-  const p = createTag('p', { class: 'popular-blogs' });
-  const b = createTag('b');
-  b.innerHTML = 'Place Holder for Popular Blogs';
-  p.appendChild(b);
-  return containerDiv.appendChild(buildBlock('popular-blogs', { elems: [p] }));
+export function buildPopularBlogs(main) {
+  const section = createTag('div');
+  const popularBlogs = createTag('div', { class: 'most-popular-blogs' });
+  popularBlogs.innerHTML = '<h4> Most Popular  </h4>';
+  const block = buildBlock('popular-blogs', { elems: [popularBlogs] });
+  section.append(block);
+  main.append(section);
 }
