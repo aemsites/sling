@@ -17,13 +17,17 @@ export default {
     const results = [];
     const meta = WebImporter.Blocks.getMetadata(document);
     const authorName = document.querySelector('.author-card--author-name')?.textContent;
-    const publishDate = document.querySelector('.author-card--date')?.textContent;
-    const publicationDate = new Date(publishDate).toISOString().split('T')[0];
+    const publishDate = document.querySelector('.author-card--date')?.textContent || '';
     const tags = document.querySelectorAll('.author-card--tags a');
     const ogImage = document.querySelector('meta[property="og:image"]')?.content;
     const authorImage = document.querySelector('.author-card--author-image')?.src;
     meta.Author = authorName || '';
-    meta['Publication Date'] = publicationDate || '';
+    if (publishDate === '') {
+      meta['Publication Date'] = '';
+    } else {
+      // eslint-disable-next-line prefer-destructuring
+      meta['Publication Date'] = new Date(publishDate).toISOString().split('T')[0];
+    }
     meta.Tags = Array.from(tags).map((tag) => toProperCase(tag.textContent)).join(', ') || '';
     meta.Image = ogImage.replace('https://www.sling.com', '') || '';
     const youtubeIframes = document.querySelectorAll('iframe[src*="youtube"]');
