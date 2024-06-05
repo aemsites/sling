@@ -36,8 +36,8 @@ async function buildTagsDiv(tags) {
       const tagLink = createTag('a', { target: '_self', href: `/whatson/${tagObj.name}` });
       tagLink.innerText = tag.toUpperCase();
       if (tags.length > 1) {
-        if (index < tags.length - 1) {
-          tagLink.innerText = `${tag.toUpperCase()}, `;
+        if (index > 0 && index < tags.length) {
+          tagsDiv.append(', ');
         }
       }
       tagsDiv.append(tagLink);
