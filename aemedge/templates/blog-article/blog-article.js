@@ -34,14 +34,11 @@ async function buildTagsDiv(tags) {
     const tagObj = await getTag(tag.trim());
     if (tagObj) {
       const tagLink = createTag('a', { target: '_self', href: `/whatson/${tagObj.name}` });
+      tagLink.innerText = tag.toUpperCase();
       if (tags.length > 1) {
         if (index < tags.length - 1) {
-          tagLink.innerText = `${tag} ,`;
-        } else {
-          tagLink.innerText = tag;
+          tagLink.innerText = `${tag.toUpperCase()}, `;
         }
-      } else {
-        tagLink.innerText = tag;
       }
       tagsDiv.append(tagLink);
     }
