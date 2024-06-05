@@ -181,7 +181,7 @@ main .hero-container .blog-primary-title {
 
 @media (width >= 900px) {
 .section.hero-container {
-   margin: 64px 0 125px ;
+   margin-top:64px;
    padding: 0;
    width: 100%;
 }
