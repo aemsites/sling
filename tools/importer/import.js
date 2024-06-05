@@ -1,3 +1,7 @@
+function toProperCase(str) {
+  return str.replace(/\w\S*/g, (txt) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
+}
+
 /* eslint-disable no-undef */
 export default {
   transform: ({
@@ -14,12 +18,13 @@ export default {
     const meta = WebImporter.Blocks.getMetadata(document);
     const authorName = document.querySelector('.author-card--author-name')?.textContent;
     const publishDate = document.querySelector('.author-card--date')?.textContent;
+    const publicationDate = new Date(publishDate).toISOString().split('T')[0];
     const tags = document.querySelectorAll('.author-card--tags a');
     const ogImage = document.querySelector('meta[property="og:image"]')?.content;
     const authorImage = document.querySelector('.author-card--author-image')?.src;
     meta.Author = authorName || '';
-    meta.Date = publishDate || '';
-    meta.Tags = Array.from(tags).map((tag) => tag.textContent).join(', ') || '';
+    meta['Publication Date'] = publicationDate || '';
+    meta.Tags = Array.from(tags).map((tag) => toProperCase(tag.textContent)).join(', ') || '';
     meta.Image = ogImage.replace('https://www.sling.com', '') || '';
     const youtubeIframes = document.querySelectorAll('iframe[src*="youtube"]');
     // Handle youtube videos
