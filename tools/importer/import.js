@@ -6,9 +6,10 @@ export default {
     url,
     params,
   }) => {
-    const CTA_FRAGMENT_URL = 'https://main--sling--aemsites.hlx.page/fragments/try-sling';
+    const CTA_FRAGMENT_URL = 'https://main--sling--aemsites.aem.page/fragments/try-sling';
+    const HOSTNAME = new URL(params.originalURL).origin;
     // Remove unnecessary parts of the content
-    const main = document.body;
+    const main = document.querySelector('main');
     const results = [];
     const meta = WebImporter.Blocks.getMetadata(document);
     const authorName = document.querySelector('.author-card--author-name')?.textContent;
@@ -43,6 +44,15 @@ export default {
       }
     });
 
+    // Handle tables
+    const tables = document.querySelectorAll('table');
+    tables.forEach((table) => {
+      const cells = [['Table'],
+        [table.outerHTML],
+      ];
+      const newTable = WebImporter.DOMUtils.createTable(cells, document);
+      table.parentElement.replaceChild(newTable, table);
+    });
     // Handle category pages
     const isCategoryPage = document.querySelector('.homepage-wrapper .blog-homepage--outer');
     if (isCategoryPage) {
@@ -53,6 +63,8 @@ export default {
       const categoryBlock = WebImporter.DOMUtils.createTable(cells, document);
       // replace blog-homepage--outer with the category block
       isCategoryPage.parentElement.replaceChild(categoryBlock, isCategoryPage);
+      // add metadata field
+      meta.Category = 'true';
     }
 
     // Remove subscribe form at the bottom of the articles
@@ -94,6 +106,14 @@ export default {
         a.href = `${u.pathname}${a.getAttribute('href')}`;
       }
     }
+
+    // Handle relative links
+    const relativeLinks = main.querySelectorAll('a[href^="/"]');
+    for (let i = 0; i < relativeLinks.length; i += 1) {
+      const a = relativeLinks[i];
+      a.href = `${HOSTNAME}${a.getAttribute('href')}`;
+    }
+
     // // append the block to the main element
     main.append(block);
 
