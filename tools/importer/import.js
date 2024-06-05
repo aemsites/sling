@@ -1,7 +1,3 @@
-function toProperCase(str) {
-  return str.replace(/\w\S*/g, (txt) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
-}
-
 /* eslint-disable no-undef */
 export default {
   transform: ({
@@ -28,7 +24,7 @@ export default {
       // eslint-disable-next-line prefer-destructuring
       meta['Publication Date'] = new Date(publishDate).toISOString().split('T')[0];
     }
-    meta.Tags = Array.from(tags).map((tag) => toProperCase(tag.textContent)).join(', ') || '';
+    meta.Tags = Array.from(tags).map((tag) => tag.textContent).join(', ') || '';
     meta.Image = ogImage.replace('https://www.sling.com', '') || '';
     const youtubeIframes = document.querySelectorAll('iframe[src*="youtube"]');
     // Handle youtube videos
