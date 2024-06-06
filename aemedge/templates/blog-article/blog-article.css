@@ -192,15 +192,9 @@ body.blog-article.modal-open {
     position: fixed;
     inset: 0;
     background-color: #0009;
-    display: flex;
-    flex-direction: column;
-    -webkit-box-align: center;
-    align-items: center;
-    justify-content: left;
     z-index: 100;
     overflow: scroll;
     height: auto;
-    
 }
 
 
