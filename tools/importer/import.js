@@ -48,6 +48,15 @@ export default {
         cta.parentElement.replaceChild(ctaFragment, cta);
       }
     });
+    // Handle other CTAs
+    const otherCtas = document.querySelectorAll('a.cta-button');
+    otherCtas.forEach((cta) => {
+      // replace with CTA_FRAGMENT_URL
+      const ctaFragment = document.createElement('a');
+      ctaFragment.href = CTA_FRAGMENT_URL;
+      ctaFragment.textContent = CTA_FRAGMENT_URL;
+      cta.parentElement.replaceChild(ctaFragment, cta);
+    });
 
     // Handle tables
     const tables = document.querySelectorAll('table');
