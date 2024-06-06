@@ -175,6 +175,36 @@ main .hero-container .blog-primary-title {
     min-width: 11.25rem;
 }
 
+.fragment-wrapper .button-container a[href*='modals'].button { 
+    all:unset;
+    font-size: 14px;
+    -webkit-font-smoothing: antialiased;
+    font-style: italic;
+}
+
+.fragment-wrapper .button-container a[href*='modals'].button:hover { 
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+
+
+body.blog-article.modal-open .modal-content .section:first-of-type > div {
+    display: flex;
+    flex-flow: wrap column;
+    align-items: center;
+    margin-top:24px;
+}
+
+@media (width >= 600px) {
+    body.blog-article .modal dialog {
+        padding: 20px;
+        width: 80vw;
+        max-width: 856px;
+    }
+  
+  }
+
 @media (width >= 900px) {
 .section.hero-container {
    margin-top:64px;
@@ -233,5 +263,7 @@ main .hero-container .blog-primary-title {
     display: flex;
     justify-content: center;
 }
+
+
 
 }
