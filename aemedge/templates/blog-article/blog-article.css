@@ -188,6 +188,26 @@ main .hero-container .blog-primary-title {
 }
 
 
+body.blog-article.modal-open {
+    position: fixed;
+    inset: 0;
+    background-color: #0009;
+    display: flex;
+    flex-direction: column;
+    -webkit-box-align: center;
+    align-items: center;
+    justify-content: left;
+    z-index: 100;
+    overflow: scroll;
+    height: auto;
+    
+}
+
+
+body.blog-article.modal-open .modal-content {
+max-height: unset;
+
+}
 
 body.blog-article.modal-open .modal-content .section:first-of-type > div {
     display: flex;
@@ -196,11 +216,17 @@ body.blog-article.modal-open .modal-content .section:first-of-type > div {
     margin-top:24px;
 }
 
+
 @media (width >= 600px) {
     body.blog-article .modal dialog {
-        padding: 20px;
-        width: 80vw;
-        max-width: 856px;
+        padding: 0 20px 20px;
+        max-width: 896px;
+        width: 100%;
+        border-radius: 0.5rem;
+        margin-top: 100px;
+        position: relative;
+        z-index: 99;
+        box-sizing: border-box;
     }
   
   }
