@@ -14,6 +14,7 @@ export default async function decorate(block) {
   // Get blogs
   const blogs = await getBlogs(categories, 7);
   blogs.forEach(async (blog, i) => {
+    if (blog.image === '') return;
     let card;
     if (i === 0) {
       card = await createCard(blog, 'card card-large', true, true);

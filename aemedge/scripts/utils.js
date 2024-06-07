@@ -252,9 +252,8 @@ export async function createCard(row, style, eagerImage = false, fullCardLink = 
 
   // Create and add the link
   const link = createTag('a', { class: 'card-link', href: row.path, alt: row.title });
-
   // Add the image to the link and then card first
-  if (row.image !== '0' && row.title !== '0') {
+  if (row.image !== '' && row.image !== '0' && row.title !== '0') {
     const cardImage = createTag('div', { class: 'card-image' });
     cardImage.append(createOptimizedPicture(
       row.image,

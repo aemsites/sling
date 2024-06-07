@@ -235,6 +235,7 @@ main .section.category-container {
 
   .category .card-large .card-link .card-image img {
     width: 1440px;
+    height: 384px;
     max-width: 100%;
     margin: 0 auto;
     border-radius: 4px;
@@ -242,7 +243,6 @@ main .section.category-container {
     max-height: 550px;
     object-fit: cover;
   }
-
 
   .category .card-large .card-link .card-content .card-title {
     color: white;
@@ -257,20 +257,61 @@ main .section.category-container {
   /* Medium Cards */
   .category .card.card-medium {
     max-width: 769px;
+    max-height: 433px;
     position: relative;
   }
 
-  .category .card-medium .card-link .card-content{
-    bottom: 20px;
-    padding: 0 20px;
+  .category .card-medium .card-content {
+    bottom: 0;
     position: absolute;
     text-align: center;
-    width: 100%
+    width: 100%;
+    color: white;
+  }
+
+  .category .card-medium .card-content .card-tags {
+    position: unset;
+  }
+
+  .category .card-medium .card-content .card-title {
+    color: white;
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 39px;
+    padding: 10px 0;
+    max-width: 368px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .category .card-medium .card-content .card-description {
+    display: none;
+  }
+
+  .category .card-medium .card-content .card-author-date {
+    display: inline-block;
+    border-bottom: unset;
+    letter-spacing: 0;
+    margin-bottom: 12px;
+    max-height: 21px;
+    max-width: 368px;
+    color: white;
+  }
+
+  .category .card-medium .card-content .card-author-date .card-date {
+    font-size: 14px;
+    line-height: 21px;
+    margin-left: 10px;
+    color: white;
   }
 
   /* Small Cards */
   .category .card.card-small {
     max-width: 368px;
     position: relative;
+  }
+
+  .category .card-small .card-content .card-tags {
+    top: 160px;
   }
 }
