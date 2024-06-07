@@ -256,7 +256,12 @@ export async function createCard(row, style, eagerImage = false, fullCardLink = 
   // Add the image to the link and then card first
   if (row.image !== '0' && row.title !== '0') {
     const cardImage = createTag('div', { class: 'card-image' });
-    cardImage.append(createOptimizedPicture(row.image, row.title, eagerImage));
+    cardImage.append(createOptimizedPicture(
+      row.image,
+      row.title,
+      eagerImage,
+      [{ width: '750' }, { media: '(min-width: 600px)', width: '1440' }],
+    ));
     link.append(cardImage);
     card.prepend(link);
   }
