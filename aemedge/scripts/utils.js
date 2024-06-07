@@ -235,7 +235,10 @@ export async function getBlogs(categories, num) {
     }
     return filteredList;
   }
-  return [];
+  if (num) {
+    return blogArticles.slice(0, num);
+  }
+  return blogArticles;
 }
 
 /**
