@@ -15,7 +15,6 @@ export default {
     const authorName = document.querySelector('.author-card--author-name')?.textContent;
     const publishDate = document.querySelector('.author-card--date')?.textContent || '';
     const tags = document.querySelectorAll('.author-card--tags a');
-    const ogImage = document.querySelector('meta[property="og:image"]')?.content;
     const authorImage = document.querySelector('.author-card--author-image')?.src;
     meta.Author = authorName || '';
     if (publishDate === '') {
@@ -25,7 +24,6 @@ export default {
       meta['Publication Date'] = new Date(publishDate).toISOString().split('T')[0];
     }
     meta.Tags = Array.from(tags).map((tag) => tag.textContent).join(', ') || '';
-    meta.Image = ogImage.replace('https://www.sling.com', '') || '';
     const youtubeIframes = document.querySelectorAll('iframe[src*="youtube"]');
     // Handle youtube videos
     youtubeIframes.forEach((iframe) => {
