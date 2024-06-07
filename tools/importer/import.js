@@ -11,6 +11,7 @@ export default {
     // Remove unnecessary parts of the content
     const main = document.querySelector('main');
     const results = [];
+    // Get metadata from document
     const meta = WebImporter.Blocks.getMetadata(document);
     const authorName = document.querySelector('.author-card--author-name')?.textContent;
     const publishDate = document.querySelector('.author-card--date')?.textContent || '';
@@ -25,6 +26,7 @@ export default {
     }
     meta.Tags = Array.from(tags).map((tag) => tag.textContent).join(', ') || '';
     const youtubeIframes = document.querySelectorAll('iframe[src*="youtube"]');
+
     // Handle youtube videos
     youtubeIframes.forEach((iframe) => {
       // replace the iframe with the video URL
@@ -97,7 +99,24 @@ export default {
     WebImporter.rules.transformBackgroundImages(main, document);
     WebImporter.rules.adjustImageUrls(main, url, params.originalURL);
     WebImporter.rules.convertIcons(main, document);
-    // // Add metadata block to the document
+
+    // Override edge case with og:image
+    const img = document.querySelector('meta[property="og:image"]')?.content;
+    if (img && img.startsWith('https://www.sling.com') && img.includes('dish.scene7.com')) {
+      const newImg = img.replace('https://www.sling.com', '');
+      const el = document.createElement('img');
+      el.src = newImg;
+      meta.Image = el;
+
+      const imgAlt = document.querySelector('meta[property="og:image:alt"]')?.content;
+      if (imgAlt) {
+        el.alt = imgAlt;
+      } else {
+        el.alt = meta.Title;
+      }
+    }
+
+    // Add metadata block to the document
     const block = WebImporter.Blocks.getMetadataBlock(document, meta);
 
     // Handle anchor links or odd links
