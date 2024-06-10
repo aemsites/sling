@@ -162,7 +162,6 @@ export function buildEmailSubsFrm(main) {
 export function buildPopularBlogs(main) {
   const section = createTag('div');
   const popularBlogs = createTag('div', { class: 'most-popular-blogs' });
-  popularBlogs.innerHTML = '<h4> Most Popular  </h4>';
   const block = buildBlock('popular-blogs', { elems: [popularBlogs] });
   section.append(block);
   main.append(section);
