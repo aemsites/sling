@@ -22,6 +22,8 @@
   --dark-color: #ccc;
   --text-color: #333;
   --primary-button-color:#ce4c00;
+  --invalid-red: #e90000;
+  --input-background-color: #eaeaec;
 
   /* fonts */
   --body-font-family: proxima-nova, proxima-nova-fallback, sans-serif;

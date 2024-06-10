@@ -96,7 +96,7 @@ main .section.category-container {
 }
 
 .category .card-large .card-link .card-content .card-author-date .card-author {
-  color: #0078ad;
+  color: var(--link-color);
   font-size: 14px;
   line-height: 21px;
   pointer-events: auto;

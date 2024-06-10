@@ -37,20 +37,20 @@
     line-height: 1.222;
     font-weight: 600;
     cursor: text;
-    border-color: #eaeaec !important;
-    background-color: #eaeaec !important;
+    border-color: var(--input-background-color) !important;
+    background-color: var(--input-background-color) !important;
     color: var(--header-hover-background-color) !important;
 }
 
 .email-subscription.block .form-container form .email-input.invalid
-{ 
-    border-color: #e90000 !important;
+{
+    border-color: var(--invalid-red) !important;
 }
 
 .email-subscription.block .form-container form p.error-msg {
     padding-top: 0.25rem;
     font-size: 0.625rem;
-    color: #e90000;
+    color: var(--invalid-red);
     display: none;
 }
 
