@@ -45,7 +45,7 @@ main .hero-container .blog-primary-title {
 {
     align-self: stretch;
     margin: 0 auto;
-    width: 60px; 
+    width: 60px;
 }
 
 .author-card .image-container img
@@ -68,15 +68,15 @@ main .hero-container .blog-primary-title {
 }
 
 .text-container .pub-date {
-    padding-top:8px;    
+    padding-top:8px;
 }
 
 .text-container .tags {
     padding-top:16px;
 }
 
-.text-container .tags > a{ 
-    color:#333;
+.text-container .tags > a{
+    color: var(--text-color);
     font-size: 14px;
     font-weight: 500;
     text-decoration: none;
@@ -175,14 +175,14 @@ main .hero-container .blog-primary-title {
     min-width: 11.25rem;
 }
 
-.fragment-wrapper .button-container a[href*='modals'].button { 
+.fragment-wrapper .button-container a[href*='modals'].button {
     all:unset;
     font-size: 14px;
     -webkit-font-smoothing: antialiased;
     font-style: italic;
 }
 
-.fragment-wrapper .button-container a[href*='modals'].button:hover { 
+.fragment-wrapper .button-container a[href*='modals'].button:hover {
     text-decoration: underline;
     cursor: pointer;
 }
@@ -222,7 +222,7 @@ body.blog-article.modal-open .modal-content .section:first-of-type > div {
         z-index: 99;
         box-sizing: border-box;
     }
-  
+
   }
 
 @media (width >= 900px) {
@@ -250,7 +250,7 @@ main .hero-container .blog-primary-title {
     margin:24px;
 }
 
-.author-details-wrapper > div { 
+.author-details-wrapper > div {
     width: 168px;
     margin: 0 0 0 8px;
 }
@@ -269,13 +269,13 @@ main .hero-container .blog-primary-title {
     place-content: center;
 }
 
-.fragment-wrapper .button-container { 
+.fragment-wrapper .button-container {
     position: unset;
     width: unset;
     background-color: unset
 }
 
-.fragment-wrapper .button-container .button { 
+.fragment-wrapper .button-container .button {
     margin: 0 8px;
 }
 
