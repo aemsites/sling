@@ -45,7 +45,7 @@
   --heading-font-size-xs: 14px;
 
   /* nav height */
-  --nav-height: 85px;
+  --nav-height: 70px;
 }
 
 @font-face {
@@ -202,7 +202,7 @@ main .section {
   padding: 64px 16px;
 }
 
-@media (width >= 600px) {
+@media (width >= 768px) {
   main .section {
     padding: 64px 32px;
   }

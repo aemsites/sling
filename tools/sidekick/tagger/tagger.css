@@ -136,7 +136,7 @@ span.psep {
 }
 
 /* stylelint-disable-next-line media-feature-range-notation */
-@media(min-width: 600px) {
+@media(min-width: 768px) {
     #selected {
         grid-template-columns: 1fr 100px;
     }

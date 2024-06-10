@@ -211,7 +211,7 @@ body.blog-article.modal-open .modal-content .section:first-of-type > div {
 }
 
 
-@media (width >= 600px) {
+@media (width >= 768px) {
     body.blog-article .modal dialog {
         padding: 0 20px 20px;
         max-width: 896px;
@@ -225,7 +225,7 @@ body.blog-article.modal-open .modal-content .section:first-of-type > div {
 
   }
 
-@media (width >= 900px) {
+@media (width >= 992px) {
 .section.hero-container {
    margin-top:64px;
    padding: 0;
@@ -279,11 +279,13 @@ main .hero-container .blog-primary-title {
     margin: 0 8px;
 }
 
+main .hero-container + .section p {
+    line-height: unset;
+}
+
 .content-details-wrapper .fragment-wrapper .button-container + p{
     display: flex;
     justify-content: center;
 }
-
-
 
 }

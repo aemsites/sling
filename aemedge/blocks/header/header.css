@@ -32,7 +32,7 @@ header nav[aria-expanded="true"] {
   min-height: 100vh;
 }
 
-@media (width >= 600px) {
+@media (width >= 768px) {
   header nav {
     padding: 0 2rem;
   }
@@ -170,6 +170,10 @@ header nav .nav-sections ul > li > ul > li {
 }
 
 @media (width >= 1400px) {
+  header, header nav {
+    height: 85px;
+  }
+
   header nav .nav-sections {
     display: block;
     visibility: visible;
