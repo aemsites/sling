@@ -168,7 +168,7 @@ main .section.category-container {
 
 .category .card-medium .card-content .card-title,
 .category .card-small .card-content .card-title {
-  color: #171725;
+  color: var(--header-hover-background-color);
   font-size: 20px;
   font-weight: 700;
   line-height: 27px;
@@ -178,7 +178,7 @@ main .section.category-container {
 
 .category .card-medium .card-content .card-description,
 .category .card-small .card-content .card-description {
-  color: #171725;
+  color: var(--header-hover-background-color);
   font-size: 14px;
   letter-spacing: 0;
   line-height: 21px;
@@ -196,7 +196,7 @@ main .section.category-container {
   max-height: 21px;
   max-width: none;
   width: 100%;
-  color: #171725;
+  color: var(--header-hover-background-color);
   font-size: 14px;
   line-height: 21px;
   margin-left: 10px;
@@ -204,7 +204,7 @@ main .section.category-container {
 
 .category .card-medium .card-content .card-author-date .card-date,
 .category .card-small .card-content .card-author-date .card-date {
-  color: #171725;
+  color: var(--header-hover-background-color);
   font-size: 14px;
   line-height: 21px;
   margin-left: 10px;

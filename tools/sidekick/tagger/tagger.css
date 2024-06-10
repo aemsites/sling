@@ -48,7 +48,7 @@ main #selected button {
 }
 
 #selected button:disabled {
-    background-color: #ccc;
+    background-color: var(--dark-color);
     color: grey;
 }
 
