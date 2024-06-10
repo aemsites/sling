@@ -67,6 +67,21 @@ export default {
       const newTable = WebImporter.DOMUtils.createTable(cells, document);
       table.parentElement.replaceChild(newTable, table);
     });
+
+    // Handle Carousels
+    const carousels = document.querySelectorAll('.image-carousel');
+    carousels.forEach((carousel) => {
+      const images = carousel.querySelectorAll('img');
+      if (images.length > 1) {
+        const cells = [['Carousel']];
+        images.forEach((img) => {
+          cells.push([img.outerHTML]);
+        });
+        const newTable = WebImporter.DOMUtils.createTable(cells, document);
+        carousel.parentElement.replaceChild(newTable, carousel);
+      }
+    });
+
     // Handle category pages
     const isCategoryPage = document.querySelector('.homepage-wrapper .blog-homepage--outer');
     if (isCategoryPage) {
