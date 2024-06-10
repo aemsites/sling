@@ -130,7 +130,7 @@
     padding-top:10px;
 }
 
-@media(width >= 900px) {
+@media(width >= 992px) {
     .section.email-subscription-container .email-subscription.block  {
         margin: 0 auto;
 }}

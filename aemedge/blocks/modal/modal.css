@@ -17,7 +17,7 @@ body.modal-open {
     max-height: calc(100dvh - 60px);
   }
 
-  @media (width >= 600px) {
+  @media (width >= 768px) {
     .modal dialog {
       padding: 30px;
       width: 80vw;
