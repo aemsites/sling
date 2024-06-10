@@ -45,7 +45,8 @@ function buildHeroBlock(main) {
     if (h1) h1.classList.add('blog-primary-title');
     const images = [];
     main.querySelectorAll('picture').forEach((image, idx) => {
-      if (h1 && h1.compareDocumentPosition(image)) {
+      // eslint-disable-next-line no-bitwise
+      if (h1 && (h1.compareDocumentPosition(image) & Node.DOCUMENT_POSITION_PRECEDING)) {
         images.push(image);
         if (idx === 0) image.classList.add('desktop');
         if (idx === 1) {
@@ -72,7 +73,8 @@ function buildHeroBlock(main) {
     if (h1) h1.classList.add('blog-primary-title');
     const images = [];
     main.querySelectorAll('picture').forEach((image, idx) => {
-      if (h1 && h1.compareDocumentPosition(image)) {
+      // eslint-disable-next-line no-bitwise
+      if (h1 && (h1.compareDocumentPosition(image) & Node.DOCUMENT_POSITION_PRECEDING)) {
         images.push(image);
         if (idx === 0) image.classList.add('desktop');
         if (idx === 1) {
