@@ -176,8 +176,9 @@ export function buildPopularBlogs(main) {
 export function getPageType() {
   const category = getMetadata('category');
   const template = getMetadata('template');
-  if (template === 'blog-article' && !category) return 'blog';
-  return 'category';
+  if (template === 'blog-article' && category !== 'true') return 'blog';
+  if (template === 'blog-article' && category === 'true') return 'category';
+  return '';
 }
 
 /**

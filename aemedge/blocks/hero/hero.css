@@ -85,6 +85,12 @@ main .hero-container {
   z-index: -1;
 }
 
+.hero.marquee video {
+  height: 100%;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%);
+}
+
 .hero img {
   object-fit: cover;
   width: 100%;
