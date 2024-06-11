@@ -19,6 +19,7 @@ import {
   buildEmailSubsFrm,
   buildPopularBlogs,
   getPageType,
+  buildFragmentBlocks,
 } from './utils.js';
 
 const LCP_BLOCKS = []; // add your LCP blocks to the list
@@ -151,6 +152,7 @@ async function loadTemplate(main) {
 function buildAutoBlocks(main) {
   try {
     buildHeroBlock(main);
+    buildFragmentBlocks(main);
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('Auto Blocking failed', error);

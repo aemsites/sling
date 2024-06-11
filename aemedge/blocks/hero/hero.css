@@ -91,6 +91,14 @@ main .hero-container {
   height: 100%;
 }
 
+.hero a {
+  /* text-decoration: unset; */
+  color: #f5f5f6;
+  font-size: 1.25rem;
+  line-height: 1.5rem;
+  font-weight: 700;
+}
+
 @media (width >= 992px) {
   .hero {
     min-height: 743px;
