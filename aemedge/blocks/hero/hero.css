@@ -1,6 +1,6 @@
-/* main .hero-container > div {
+main .hero-container > div {
   max-width: unset;
-} */
+}
 
 main .hero-container {
   padding: 0;
@@ -8,15 +8,56 @@ main .hero-container {
 
 .hero {
   position: relative;
-  padding: 32px;
-  min-height: 300px;
+  min-height: 670px;
+  border: none;
+  overflow: hidden;
+}
+
+.hero-content {
+  border: none;
+  padding: 48px 32px 6%;
+  min-height: 500px;
+  display: flex;
+  -webkit-box-pack: justify;
+  justify-content: center;
+  flex-flow: column;
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(rgba(51 51 76 / 0%) 50%, 85%, rgb(23 23 37) 100%), radial-gradient(110% 100% at 75% 25%, rgba(32 32 50 / 0%) 0%, rgb(23 23 37) 100%);
+  box-sizing: border-box;
+  width: 100%;
+  padding-right: 0;
+  color: rgb(255 255 255);
+  -webkit-box-align: start;
+  align-items: start;
+  text-align: left;
 }
 
 .hero h1 {
-  max-width: 1200px;
-  margin-left: auto;
-  margin-right: auto;
+  max-width: 700px;
   color: white;
+  font-size: 3rem;
+  line-height: 54px;
+  font-weight: 800;
+  letter-spacing: -1.15px;
+  margin: 0 0 1rem;
+}
+
+/* Fire style */
+.hero h1 strong em,
+.hero h1 em strong {
+  font-style: normal;
+  color: #faa21b;
+  font-size: 1em;
+}
+
+.hero h2 {
+  font-size: 24px;
+  line-height: 30px;
+  font-weight: 700;
+  letter-spacing: -0.75px;
+  margin: 1rem 0;
+  max-width: 600px;
 }
 
 .hero picture {
@@ -27,22 +68,49 @@ main .hero-container {
   box-sizing: border-box;
 }
 
+.hero video {
+  margin: 0;
+  padding: 0;
+  max-width: unset;
+  box-sizing: unset;
+  position: absolute;
+  min-height: 100%;
+  width: 100%;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  object-fit: cover;
+  z-index: -1;
+}
+
 .hero img {
   object-fit: cover;
   width: 100%;
   height: 100%;
 }
 
-.hero picture.desktop {
-  display: none;
-}
-
 @media (width >= 992px) {
-  .hero picture.mobile {
-    display: none;
+  .hero {
+    min-height: 743px;
   }
 
-  .hero picture.desktop {
-    display: block;
+  .hero-content {
+    padding: 80px 128px 6%;
+    width: 100%;
+  }
+
+  .hero-content h1 {
+    font-size: 52px;
+    line-height: 58px;
+    letter-spacing: -1.25px;
+    margin: 0 0 1rem;
+  }
+
+  .hero-content h2 {
+    font-size: 28px;
+    line-height: 34px;
+    font-weight: 700;
+    letter-spacing: -1px;
+    margin: 1rem 0;
   }
 }

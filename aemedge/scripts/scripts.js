@@ -31,16 +31,7 @@ const TEMPLATE_META = 'template';
  */
 function buildHeroBlock(main) {
   const picture = main.querySelector('picture');
-
-  if (getPageType() !== 'blog' && getPageType() !== 'category') {
-    const h1 = main.querySelector('h1');
-    // eslint-disable-next-line no-bitwise
-    if (h1 && picture && (h1.compareDocumentPosition(picture) & Node.DOCUMENT_POSITION_PRECEDING)) {
-      const section = document.createElement('div');
-      section.append(buildBlock('hero', { elems: [picture, h1] }));
-      main.prepend(section);
-    }
-  } else if (getPageType() === 'blog' && picture) {
+  if (getPageType() === 'blog' && picture) {
     const h1 = main.querySelector('h1');
     if (h1) h1.classList.add('blog-primary-title');
     const images = [];
