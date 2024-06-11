@@ -1,7 +1,10 @@
 // import { createOptimizedPicture } from '../../scripts/aem.js';
+import { getMetadata } from '../../scripts/aem.js';
 import { createTag } from '../../scripts/utils.js';
 
 export default function decorate(block) {
+  const isBlog = (getMetadata('template') === 'blog-article') || false;
+  if (isBlog) return;
   const h1Parent = block.querySelector('h1').parentElement;
   h1Parent.classList.add('hero-content');
 
