@@ -176,8 +176,9 @@ export function buildPopularBlogs(main) {
 export function getPageType() {
   const category = getMetadata('category');
   const template = getMetadata('template');
-  if (template === 'blog-article' && !category) return 'blog';
-  return 'category';
+  if (template === 'blog-article' && category !== 'true') return 'blog';
+  if (template === 'blog-article' && category === 'true') return 'category';
+  return '';
 }
 
 /**
@@ -223,7 +224,9 @@ export async function getBlogs(categories, num) {
     window.allBlogs = await fetchData('/whatson/query-index.json');
   }
 
-  const blogArticles = window.allBlogs.filter((e) => e.category === '');
+  const blogArticles = window.allBlogs.filter(
+    (e) => (e.category !== 'true' && e.image !== '' && !e.image.startsWith('//aemedge/default-meta-image.png')),
+  );
   if (categories && categories.length > 0) {
     const filteredList = blogArticles.filter((e) => {
       const rawTags = JSON.parse(e.tags);
