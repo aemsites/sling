@@ -23,7 +23,7 @@ main .hero-container {
   -webkit-box-pack: justify;
   justify-content: center;
   flex-flow: column;
-  position: absolute;
+  position: relative;
   inset: 0;
   background: linear-gradient(rgba(51 51 76 / 0%) 50%, 85%, rgb(23 23 37) 100%), radial-gradient(110% 100% at 75% 25%, rgba(32 32 50 / 0%) 0%, rgb(23 23 37) 100%);
   box-sizing: border-box;
@@ -62,12 +62,31 @@ main .hero-container {
   max-width: 600px;
 }
 
-.hero picture {
+.hero .multiple-images {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.hero picture:not(.foreground),
+.hero picture.background {
   position: absolute;
   z-index: -1;
   inset: 0;
   object-fit: cover;
   box-sizing: border-box;
+}
+
+.hero picture.foreground {
+  position: relative;
+  object-fit: cover;
+  box-sizing: border-box;
+  width: 100%;
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+  padding-left: 0;
+  text-align: center;
 }
 
 .hero video {
@@ -113,6 +132,21 @@ main .hero-container {
   .hero-content {
     padding: 80px 128px 6%;
     width: 100%;
+    border: none;
+    min-height: 500px;
+    display: flex;
+    -webkit-box-pack: justify;
+    justify-content: center;
+    flex-flow: column;
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(rgba(51 51 76 / 0%) 50%, 85%, rgb(23 23 37) 100%), radial-gradient(110% 100% at 75% 25%, rgba(32 32 50 / 0%) 0%, rgb(23 23 37) 100%);
+    box-sizing: border-box;
+    padding-right: 0;
+    color: rgb(255 255 255);
+    -webkit-box-align: start;
+    align-items: start;
+    text-align: left;
   }
 
   .hero-content h1 {
@@ -128,5 +162,18 @@ main .hero-container {
     font-weight: 700;
     letter-spacing: -1px;
     margin: 1rem 0;
+  }
+
+  .hero picture.foreground {
+    padding-left: 1.5rem;
+    width: 50%;
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    object-fit: cover;
+    box-sizing: border-box;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+    text-align: center;
   }
 }
