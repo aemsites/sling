@@ -51,7 +51,7 @@ function buildHeroBlock(main) {
       }
     });
     const section = document.createElement('div');
-    section.append(buildBlock('hero', { elems: images }));
+    section.append(buildBlock('blog-hero', { elems: images }));
     const breadCrumb = buildBlogBreadcrumb();
     if (breadCrumb) {
       breadCrumb.classList.add('blog-details-breadcrumb');
@@ -79,7 +79,7 @@ function buildHeroBlock(main) {
       }
     });
     const section = document.createElement('div');
-    section.append(buildBlock('hero', { elems: images }));
+    section.append(buildBlock('blog-hero', { elems: images }));
     section.append(h1);
     main.prepend(section);
   }

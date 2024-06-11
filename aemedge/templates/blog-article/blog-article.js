@@ -133,7 +133,7 @@ export async function buildAuthorBlock() {
  */
 export default async function buildBlogDetails(main) {
   // get the section followed by hero section
-  const contentSection = main.querySelector(':scope > .section.hero-container+.section') || main.querySelector(':scope > .section');
+  const contentSection = main.querySelector(':scope > .section.blog-hero-container+.section') || main.querySelector(':scope > .section');
   // const contentSection = createTag('div');
   // create a wrapper div to place author and content
   const blogContentWrapper = createTag('div', { class: 'blog-details-wrapper' });
