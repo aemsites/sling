@@ -48,6 +48,15 @@ export default {
         cta.parentElement.replaceChild(ctaFragment, cta);
       }
     });
+    // Handle other CTAs
+    const otherCtas = document.querySelectorAll('a.cta-button');
+    otherCtas.forEach((cta) => {
+      // replace with CTA_FRAGMENT_URL
+      const ctaFragment = document.createElement('a');
+      ctaFragment.href = CTA_FRAGMENT_URL;
+      ctaFragment.textContent = CTA_FRAGMENT_URL;
+      cta.parentElement.replaceChild(ctaFragment, cta);
+    });
 
     // Handle tables
     const tables = document.querySelectorAll('table');
@@ -58,6 +67,21 @@ export default {
       const newTable = WebImporter.DOMUtils.createTable(cells, document);
       table.parentElement.replaceChild(newTable, table);
     });
+
+    // Handle Carousels
+    const carousels = document.querySelectorAll('.image-carousel');
+    carousels.forEach((carousel) => {
+      const images = carousel.querySelectorAll('img');
+      if (images.length > 1) {
+        const cells = [['Carousel']];
+        images.forEach((img) => {
+          cells.push([img.outerHTML]);
+        });
+        const newTable = WebImporter.DOMUtils.createTable(cells, document);
+        carousel.parentElement.replaceChild(newTable, carousel);
+      }
+    });
+
     // Handle category pages
     const isCategoryPage = document.querySelector('.homepage-wrapper .blog-homepage--outer');
     if (isCategoryPage) {
