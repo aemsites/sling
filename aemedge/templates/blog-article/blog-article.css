@@ -287,5 +287,12 @@ main .hero-container + .section p {
     display: flex;
     justify-content: center;
 }
+}
 
+@media (width >= 1200px) {
+   .blog-article .section > div {
+        max-width: 1168px;
+        margin: auto;
+        padding: 0;
+    }
 }
