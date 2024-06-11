@@ -8,6 +8,10 @@ main .hero-container {
   padding: 0;
 }
 
+.hero-container h1 {
+  text-align: center;
+}
+
 .hero {
   position: relative;
   min-height: 670px;

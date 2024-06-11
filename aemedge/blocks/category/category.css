@@ -5,6 +5,17 @@ main .section.category-container {
   padding: 0;
 }
 
+.category-container .default-content-wrapper {
+  width: 83%;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.category-container .default-content-wrapper h3 {
+font-weight: 400;
+  font-size: 20px;
+}
+
 .category.block {
   display: flex;
   flex-wrap: wrap;
@@ -210,48 +221,9 @@ main .section.category-container {
   margin-left: 10px;
 }
 
-/* Desktop width */
-@media screen and (width >= 1200px) {
-  .section > div.category-wrapper {
-    max-width: 1440px;
-  }
-
-  .category .card-large .card-link {
-    display: flex;
-    justify-content: center;
-    overflow: hidden;
-    align-items: center;
-    text-decoration: none;
-  }
-
-  .category .card-large .card-link .card-content {
-    bottom: 40px;
-    padding: 0 18px;
-  }
-
-  .category .card-large .card-link .card-content .card-tags a {
-    margin: 5px 5px 24px;
-  }
-
-  .category .card-large .card-link .card-image img {
-    width: 1440px;
-    height: 384px;
-    max-width: 100%;
-    margin: 0 auto;
-    border-radius: 4px;
-    margin-bottom: 16px;
-    max-height: 550px;
-    object-fit: cover;
-  }
-
-  .category .card-large .card-link .card-content .card-title {
-    color: white;
-    font-size: 48px;
-    font-weight: 700;
-    line-height: 55px;
-    max-width: 1018px;
-    margin: 0 auto;
-    text-align: center;
+@media screen and (width >=768px) {
+  .category-container .default-content-wrapper {
+    width: 33%;
   }
 
   /* Medium Cards */
@@ -315,3 +287,50 @@ main .section.category-container {
     top: 160px;
   }
 }
+
+/* Desktop width */
+@media screen and (width >= 1200px) {
+  .section > div.category-wrapper {
+    max-width: 1440px;
+    margin: 0 auto;
+  }
+
+  .category .card-large .card-link {
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+    align-items: center;
+    text-decoration: none;
+  }
+
+  .category .card-large .card-link .card-content {
+    bottom: 40px;
+    padding: 0 18px;
+  }
+
+  .category .card-large .card-link .card-content .card-tags a {
+    margin: 5px 5px 24px;
+  }
+
+  .category .card-large .card-link .card-image img {
+    width: 1440px;
+    height: 384px;
+    max-width: 100%;
+    margin: 0 auto;
+    border-radius: 4px;
+    margin-bottom: 16px;
+    max-height: 550px;
+    object-fit: cover;
+  }
+
+  .category .card-large .card-link .card-content .card-title {
+    color: white;
+    font-size: 48px;
+    font-weight: 700;
+    line-height: 55px;
+    max-width: 1018px;
+    margin: 0 auto;
+    text-align: center;
+  }
+}
+

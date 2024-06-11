@@ -208,14 +208,6 @@ main .section {
   }
 }
 
-@media (width >= 1200px) {
-  .section > div {
-    max-width: 1168px;
-    margin: auto;
-    padding: 0;
-  }
-}
-
 /* section metadata */
 main .section.light,
 main .section.highlight {
