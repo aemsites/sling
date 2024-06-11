@@ -46,8 +46,8 @@ main .hero-container {
 }
 
 /* Fire style */
-.hero h1 strong em,
-.hero h1 em strong {
+.hero strong em,
+.hero em strong {
   font-style: normal;
   color: #faa21b;
   font-size: 1em;
@@ -122,6 +122,15 @@ main .hero-container {
   font-size: 1.25rem;
   line-height: 1.5rem;
   font-weight: 700;
+}
+
+.hero em strong a,
+.hero strong em a {
+  /* text-decoration: unset; */
+  color: unset;
+  font-size: unset;
+  line-height: unset;
+  font-weight: unset;
 }
 
 @media (width >= 992px) {
