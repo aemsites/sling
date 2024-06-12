@@ -116,7 +116,6 @@ export default async function decorate(block) {
       if (categories.includes('movies') || categories.includes('entertainment')) {
         categories.push(['movies', 'entertainment'].filter((cat) => cat !== categories[0])[0]);
       }
-      console.log(categories);
       const blogs = await getBlogs(categories, 8);
       // create the dom structure
       const container = block.querySelector('.slides-container');
