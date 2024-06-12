@@ -19,6 +19,7 @@ import {
   buildEmailSubsFrm,
   buildPopularBlogs,
   getPageType,
+  buildFragmentBlocks,
 } from './utils.js';
 
 const LCP_BLOCKS = []; // add your LCP blocks to the list
@@ -31,16 +32,7 @@ const TEMPLATE_META = 'template';
  */
 function buildHeroBlock(main) {
   const picture = main.querySelector('picture');
-
-  if (getPageType() !== 'blog' && getPageType() !== 'category') {
-    const h1 = main.querySelector('h1');
-    // eslint-disable-next-line no-bitwise
-    if (h1 && picture && (h1.compareDocumentPosition(picture) & Node.DOCUMENT_POSITION_PRECEDING)) {
-      const section = document.createElement('div');
-      section.append(buildBlock('hero', { elems: [picture, h1] }));
-      main.prepend(section);
-    }
-  } else if (getPageType() === 'blog' && picture) {
+  if (getPageType() === 'blog' && picture) {
     const h1 = main.querySelector('h1');
     if (h1) h1.classList.add('blog-primary-title');
     const images = [];
@@ -60,7 +52,7 @@ function buildHeroBlock(main) {
       }
     });
     const section = document.createElement('div');
-    section.append(buildBlock('hero', { elems: images }));
+    section.append(buildBlock('blog-hero', { elems: images }));
     const breadCrumb = buildBlogBreadcrumb();
     if (breadCrumb) {
       breadCrumb.classList.add('blog-details-breadcrumb');
@@ -88,7 +80,7 @@ function buildHeroBlock(main) {
       }
     });
     const section = document.createElement('div');
-    section.append(buildBlock('hero', { elems: images }));
+    section.append(buildBlock('blog-hero', { elems: images }));
     section.append(h1);
     main.prepend(section);
   }
@@ -160,6 +152,7 @@ async function loadTemplate(main) {
 function buildAutoBlocks(main) {
   try {
     buildHeroBlock(main);
+    buildFragmentBlocks(main);
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('Auto Blocking failed', error);

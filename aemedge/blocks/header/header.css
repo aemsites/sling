@@ -32,7 +32,7 @@ header nav[aria-expanded="true"] {
   min-height: 100vh;
 }
 
-@media (width >= 600px) {
+@media (width >= 768px) {
   header nav {
     padding: 0 2rem;
   }
@@ -73,7 +73,7 @@ header nav .nav-hamburger button {
 }
 
 header nav .nav-hamburger .nav-hamburger-icon {
-  color: #f5f5f6;
+  color: var(--header-text-color);
   display: inline-block;
   font: normal normal normal 30px / 1 var(--font-awesome);
   text-rendering: auto;
@@ -170,6 +170,10 @@ header nav .nav-sections ul > li > ul > li {
 }
 
 @media (width >= 1400px) {
+  header, header nav {
+    height: 85px;
+  }
+
   header nav .nav-sections {
     display: block;
     visibility: visible;

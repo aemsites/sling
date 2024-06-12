@@ -22,6 +22,8 @@
   --dark-color: #ccc;
   --text-color: #333;
   --primary-button-color:#ce4c00;
+  --invalid-red: #e90000;
+  --input-background-color: #eaeaec;
 
   /* fonts */
   --body-font-family: proxima-nova, proxima-nova-fallback, sans-serif;
@@ -43,7 +45,7 @@
   --heading-font-size-xs: 14px;
 
   /* nav height */
-  --nav-height: 85px;
+  --nav-height: 70px;
 }
 
 @font-face {
@@ -200,17 +202,9 @@ main .section {
   padding: 64px 16px;
 }
 
-@media (width >= 600px) {
+@media (width >= 768px) {
   main .section {
     padding: 64px 32px;
-  }
-}
-
-@media (width >= 1200px) {
-  .section > div {
-    max-width: 1168px;
-    margin: auto;
-    padding: 0;
   }
 }
 

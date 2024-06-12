@@ -6,6 +6,7 @@ export default async function decorate(block) {
   // check if category page
   const category = getMetadata('category');
   if (!category) return;
+  if (category) document.body.classList.add('category');
 
   // get tags from url
   const categories = new URL(window.location.href).pathname.split('/').filter((path) => path);
