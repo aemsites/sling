@@ -1,18 +1,21 @@
 .section.popular-blogs-container {
-    background: #f2f2f2;
     margin: 0 auto;
     width: 100%;
     padding: 37px 0;
+    background: #f2f2f2;
+
 }
 
-.most-popular-blogs {
+.popular-blogs .slides-container {
     display: flex;
-    justify-content: center;
-    flex-flow: wrap column
+    flex-direction: column;
 }
 
+.popular-blogs .slides-wrapper {
+    position: relative;
+}
 
-.popular-blogs-heading {
+.popular-blogs .heading-wrapper {
     display: flex;
     font-size: 42px;
     justify-content: center;
@@ -20,13 +23,13 @@
     align-items: center;
 }
 
-.popular-blogs-heading img {
+.popular-blogs .heading-wrapper img {
     max-height: 36px;
     max-width: 36px;
     vertical-align: middle;
 }
 
-.popular-blog-headline {
+.popular-blogs .headline {
     color: #1d1d1d;
     font-size: 20px;
     font-weight: bold;
@@ -36,37 +39,142 @@
     text-align: center;
 }
 
-.popular-blog-cards {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-}
-
 .popular-blog-title {
     color: #000a12;
     font-size: 16px;
     font-weight: bold;
     line-height: 21px;
-    max-height: 84px;
-    max-width: 168px;
+    max-width: 288px;
 }
 
-.popular-blog-cards:last-child {
-    margin-right: 0;
+.popular-blogs .blog-slides {
+    display: flex;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+    overflow: scroll clip;
+    margin: 0;
+    padding: 0;
 }
 
-.popular-blog-card {
-    display: inline-block;
-    margin-right: 32px;
-    max-height: 200px;
-    max-width: 168px;
+.popular-blogs .blog-slides::-webkit-scrollbar {
+    display: none;
 }
 
-.popular-blog-card img {
+.popular-blogs .blog-slide {
+    flex: 0 0 100%;
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    width: 100%;
+}
+
+.popular-blogs .blog-slide .blog-link {
+    display: flex;
+    flex-flow: wrap column;
+}
+
+.popular-blogs .blog-slide img {
+    max-height: 163px;
+    max-width: 288px;
     margin-bottom: 12px;
-    max-height: 95px;
-    max-width: 168px;
     border-radius: 4px;
     box-shadow: 0 5px 15px 0 rgb(0 0 0 / 14%);
     vertical-align: middle;
     border: 0;
+}
+
+.popular-blogs .slider-nav-container {
+    position: absolute;
+    left: 5rem;
+    right: 5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 100;
+}
+
+.popular-blogs .slider-nav-container button.slide-prev,
+.popular-blogs .slider-nav-container button.slide-next {
+    all: unset;
+    background: 0;
+    border: 0;
+    color: #171725;
+    height: 164px;
+    outline: 0;
+}
+
+.popular-blogs .slider-nav-container button.slide-prev>span,
+.popular-blogs .slider-nav-container button.slide-next>span {
+    padding: 1px 6px;
+}
+
+.popular-blogs .slider-nav-container span.fa {
+    display: inline-block;
+    font: normal normal normal 14px / 1 var(--font-awesome);
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.popular-blogs .slider-nav-container span.fa-chevron-right::before {
+    content: "\f054";
+}
+
+.popular-blogs .slider-nav-container span.fa-chevron-left::before {
+    content: "\f053";
+}
+
+@media (width >=768px) {
+    .section.popular-blogs-container {
+        margin: 0 auto;
+        width: 100%;
+        padding: 37px 0;
+        background: #f2f2f2;
+        max-width: 1440px;
+    }
+
+    .popular-blogs .slides-container {
+        display: flex;
+        justify-content: center;
+        flex-flow: wrap column
+    }
+
+    .popular-blogs .blog-slides {
+        display: flex;
+        margin: 0 auto;
+    }
+
+    .popular-blogs .blog-slide {
+        display: inline-block;
+        margin-right: 32px;
+        max-height: 200px;
+        max-width: 168px;
+    }
+
+    .popular-blogs .blog-slides:last-child {
+        margin-right: 0;
+    }
+
+    .popular-blogs .blog-slide img {
+        margin-bottom: 12px;
+        max-height: 95px;
+        max-width: 168px;
+        border-radius: 4px;
+        box-shadow: 0 5px 15px 0 rgb(0 0 0 / 14%);
+        vertical-align: middle;
+        border: 0;
+    }
+
+    .popular-blog-title {
+        color: #000a12;
+        font-size: 16px;
+        font-weight: bold;
+        line-height: 21px;
+        max-height: 84px;
+        max-width: 168px;
+    }
 }
