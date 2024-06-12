@@ -93,7 +93,7 @@ export default {
       // replace blog-homepage--outer with the category block
       isCategoryPage.parentElement.replaceChild(categoryBlock, isCategoryPage);
       // add metadata field
-      meta.Category = 'true';
+      meta.Template = 'blog-category';
     }
 
     // Remove subscribe form at the bottom of the articles
