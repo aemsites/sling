@@ -143,19 +143,6 @@ export function buildFragmentBlocks(main) {
 }
 
 /**
- * Function to build the email subscription form
- * @returns the email subscription block
- */
-
-export function buildEmailSubsFrm(main) {
-  const section = createTag('div');
-  const blockDiv = createTag('div');
-  const block = buildBlock('email-subscription', { elems: [blockDiv] });
-  section.append(block);
-  main.append(section);
-}
-
-/**
  * Function to build the Mostpopular blogs
  * @returns popular blogs block
  */

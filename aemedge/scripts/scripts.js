@@ -16,7 +16,6 @@ import {
 
 import {
   buildBlogBreadcrumb,
-  buildEmailSubsFrm,
   buildPopularBlogs,
   getPageType,
   buildFragmentBlocks,
@@ -184,7 +183,6 @@ async function loadEager(doc) {
   if (main) {
     if (getPageType() === 'blog') {
       buildPopularBlogs(main);
-      buildEmailSubsFrm(main);
     }
     decorateMain(main);
     await loadTemplate(main);
