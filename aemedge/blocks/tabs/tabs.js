@@ -1,11 +1,62 @@
 // eslint-disable-next-line import/no-unresolved
-import { toClassName } from '../../scripts/aem.js';
+import {
+  toClassName, buildBlock, decorateBlock, loadBlock,
+} from '../../scripts/aem.js';
 
 function hasWrapper(el) {
   return !!el.firstElementChild && window.getComputedStyle(el.firstElementChild).display === 'block';
 }
 
 export default async function decorate(block) {
+  const isFaq = block.classList.contains('faq');
+  let newBlock;
+  if (isFaq) {
+    // build a new block with accordion in the 2nd column
+    newBlock = document.createElement('div');
+    // build accordion for the tabContent
+    const rows = [...block.children];
+    let currentTabCategory;
+    let oldTabCategory;
+    let accordionContent = [];
+    // const tabContent = [];
+    rows.forEach(async (row) => {
+      const is3Col = row.children.length === 3;
+      if (is3Col) {
+        oldTabCategory = currentTabCategory;
+        currentTabCategory = row.firstElementChild;
+        console.log(`oldTabCategory: ${oldTabCategory?.textContent}, currentTabCategory: ${currentTabCategory.textContent}`);
+      }
+      if (oldTabCategory && (oldTabCategory.textContent !== currentTabCategory.textContent)) {
+        // new tab category found - build accordion with the existing accordionContent
+        const accordion = buildBlock('accordion', accordionContent);
+        console.log('category: ', oldTabCategory.textContent, 'tabContent: ', accordion);
+        // add tabCategory and accordionContent to newDiv
+        const tabCategoryDiv = document.createElement('div');
+        tabCategoryDiv.innerHTML = oldTabCategory.innerHTML;
+        const tabContentDiv = document.createElement('div');
+        tabContentDiv.append(accordion);
+        const newRow = document.createElement('div');
+        newRow.append(tabCategoryDiv);
+        newRow.append(tabContentDiv);
+        newBlock.append(newRow);
+        accordionContent = [];
+        oldTabCategory = null;
+      } else {
+        if (is3Col) {
+          row.children[0].remove();
+        }
+        const accKey = row.children[0].innerHTML;
+        const accValue = row.children[1].innerHTML;
+        accordionContent.push([accKey, accValue]);
+        // console.log('accordionContent: ', JSON.stringify(accordionContent));
+      }
+    });
+    // console.log('newBlock: ', newBlock);
+
+    block.innerHTML = '';
+    block.innerHTML = newBlock.innerHTML;
+  }
+
   // build tablist
   const tablist = document.createElement('div');
   tablist.className = 'tabs-list';
