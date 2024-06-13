@@ -4,9 +4,8 @@ import { getBlogs, createCard } from '../../scripts/utils.js';
 export default async function decorate(block) {
   block.textContent = '';
   // check if category page
-  const category = getMetadata('category');
-  if (!category) return;
-  if (category) document.body.classList.add('category');
+  const category = getMetadata('template');
+  if (category === !'blog-category') return;
 
   // get tags from url
   const categories = new URL(window.location.href).pathname.split('/').filter((path) => path);

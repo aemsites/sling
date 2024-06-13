@@ -174,10 +174,9 @@ export function buildPopularBlogs(main) {
  * @returns
  */
 export function getPageType() {
-  const category = getMetadata('category');
   const template = getMetadata('template');
-  if (template === 'blog-article' && category !== 'true') return 'blog';
-  if (template === 'blog-article' && category === 'true') return 'category';
+  if (template === 'blog-article') return 'blog';
+  if (template === 'blog-category') return 'category';
   return '';
 }
 
