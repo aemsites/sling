@@ -13,6 +13,8 @@
 
 .popular-blogs .slides-wrapper {
     position: relative;
+    overflow-x: auto;
+    width: 100%;
 }
 
 .popular-blogs .heading-wrapper {
