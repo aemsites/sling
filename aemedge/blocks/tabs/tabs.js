@@ -15,15 +15,17 @@ export default async function decorate(block) {
     newBlock = document.createElement('div');
     // build accordion for the tabContent
     const rows = [...block.children];
+    block.innerHTML = '';
     let currentTabCategory;
     let oldTabCategory;
     let accordionContent = [];
     // const tabContent = [];
-    rows.forEach(async (row) => {
+    rows.forEach(async (row, i) => {
       const is3Col = row.children.length === 3;
-      if (is3Col) {
+      if (is3Col || (i === (rows.length - 1))) {
         oldTabCategory = currentTabCategory;
         currentTabCategory = row.firstElementChild;
+        if (i === (rows.length - 1)) currentTabCategory = 'currentTabCategory';
         console.log(`oldTabCategory: ${oldTabCategory?.textContent}, currentTabCategory: ${currentTabCategory.textContent}`);
       }
       if (oldTabCategory && (oldTabCategory.textContent !== currentTabCategory.textContent)) {
@@ -42,18 +44,20 @@ export default async function decorate(block) {
         accordionContent = [];
         oldTabCategory = null;
       } else {
+        let accKey;
+        let accValue;
         if (is3Col) {
-          row.children[0].remove();
+          accKey = row.children[1].innerHTML;
+          accValue = row.children[2].innerHTML;
+        } else {
+          accKey = row.children[0].innerHTML;
+          accValue = row.children[1].innerHTML;
         }
-        const accKey = row.children[0].innerHTML;
-        const accValue = row.children[1].innerHTML;
         accordionContent.push([accKey, accValue]);
         // console.log('accordionContent: ', JSON.stringify(accordionContent));
       }
     });
     // console.log('newBlock: ', newBlock);
-
-    block.innerHTML = '';
     block.innerHTML = newBlock.innerHTML;
   }
 
