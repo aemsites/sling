@@ -72,8 +72,9 @@ export default async function decorate(block) {
       const accordionBlocks = block.querySelectorAll('.accordion');
       await accordionBlocks.forEach(async (accordionBlock) => {
         decorateBlock(accordionBlock);
-        await loadBlocks(block);
       });
+      const main = document.querySelector('main');
+      await loadBlocks(main);
     }
   } catch (e) {
     console.error(e);
