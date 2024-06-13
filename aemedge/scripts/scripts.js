@@ -86,6 +86,76 @@ function buildHeroBlock(main) {
   }
 }
 
+/** Builds accordion tags */
+async function buildFAQ(main) {
+  const faqBlock = main.querySelector('.tabs.faq.block');
+  if (faqBlock) {
+    let newBlock;
+    try {
+      // build a new block with accordion in the 2nd column
+      newBlock = document.createElement('div');
+      // build accordion for the tabContent
+      const rows = [...faqBlock.children];
+      faqBlock.innerHTML = '';
+      let currentTabCategory;
+      let oldTabCategory;
+      let accordionContent = [];
+      rows.forEach(async (row, i) => {
+        const is3Col = row.children.length === 3;
+        if (is3Col || (i === (rows.length - 1))) {
+          oldTabCategory = currentTabCategory;
+          currentTabCategory = row.firstElementChild;
+        }
+        if (i === (rows.length - 1)) {
+          let accKey;
+          let accValue;
+          if (is3Col) {
+            accKey = row.children[1].innerHTML;
+            accValue = row.children[2].innerHTML;
+          } else {
+            accKey = row.children[0].innerHTML;
+            accValue = row.children[1].innerHTML;
+          }
+          accordionContent.push([accKey, accValue]);
+        }
+        if ((i === (rows.length - 1))
+            || (oldTabCategory
+            && (oldTabCategory.textContent !== currentTabCategory.textContent)
+            )) {
+          // new tab category found - build accordion with the existing accordionContent
+          const accordion = buildBlock('accordion', accordionContent);
+          // add tabCategory and accordionContent to newDiv
+          const tabCategoryDiv = document.createElement('div');
+          tabCategoryDiv.innerHTML = oldTabCategory.innerHTML;
+          const tabContentDiv = document.createElement('div');
+          tabContentDiv.append(accordion);
+          const newRow = document.createElement('div');
+          newRow.append(tabCategoryDiv);
+          newRow.append(tabContentDiv);
+          newBlock.append(newRow);
+          // reset accordionContent for the next set of rows
+          accordionContent = [];
+          oldTabCategory = null;
+        }
+        let accKey;
+        let accValue;
+        if (is3Col) {
+          accKey = row.children[1].innerHTML;
+          accValue = row.children[2].innerHTML;
+        } else {
+          accKey = row.children[0].innerHTML;
+          accValue = row.children[1].innerHTML;
+        }
+        accordionContent.push([accKey, accValue]);
+      });
+      // set block to newBlock
+      faqBlock.innerHTML = newBlock.innerHTML;
+    } catch (e) {
+      console.error('Error autoblocking FAQ: ', e);
+    }
+  }
+}
+
 function autolinkModals(element) {
   element.addEventListener('click', async (e) => {
     const origin = e.target.closest('a');
@@ -152,6 +222,7 @@ async function loadTemplate(main) {
 function buildAutoBlocks(main) {
   try {
     buildHeroBlock(main);
+    buildFAQ(main);
     buildFragmentBlocks(main);
   } catch (error) {
     // eslint-disable-next-line no-console
