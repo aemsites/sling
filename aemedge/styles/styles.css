@@ -212,7 +212,6 @@ main .section {
   font-weight: 400;
   text-align: center;
   color: rgb(0 0 16);
-  padding: 0 1rem 1.5rem;
 }
 
 @media (width >= 768px) {

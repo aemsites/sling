@@ -13,7 +13,7 @@
 
 /* stylelint-disable-next-line no-descending-specificity */
 .accordion details + details {
-  margin-top: 16px;
+  margin-top: 10px;
 }
 
 .accordion details summary {
@@ -69,6 +69,10 @@
 .accordion details[open] summary::before {
   transform: translateY(-50%) rotate(-180deg);
   margin-top: 8px;
+}
+
+.accordion details summary p {
+  margin: unset;
 }
 
 .accordion details .accordion-item-body {
