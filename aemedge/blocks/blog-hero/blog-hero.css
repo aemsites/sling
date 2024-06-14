@@ -17,6 +17,31 @@ main .blog-hero-container {
   background: linear-gradient(290deg, rgb(25 23 37 / 100%) 25%, rgb(95 43 105 / 100%) 82%);
 }
 
+.blog-hero.category.cyan {
+  background: rgb(25 23 37);
+  background: linear-gradient(290deg, rgb(25 23 37 / 100%) 25%, rgb(25 81 118 / 100%) 82%);
+}
+
+.blog-hero.category.blue-orange {
+  background: rgb(26 12 91);
+  background: linear-gradient(290deg, rgb(124 54 20 / 100%) 25%, rgb(26 12 91 / 100%) 82%);
+}
+
+.blog-hero.category.gray {
+  background: rgb(52 56 59);
+  background: linear-gradient(290deg, rgb(41 43 45 / 100%) 25%, rgb(52 56 59 / 100%) 82%);
+}
+
+.blog-hero.category.blue {
+  background: rgb(0 15 65);
+  background: linear-gradient(290deg, rgb(0 50 174 / 100%) 25%, rgb(0 15 65 / 100%) 82%);
+}
+
+.blog-hero.category.tan {
+  background: rgb(184 149 118);
+  background: linear-gradient(290deg, rgb(25 23 37 / 100%) 25%, rgb(184 149 118/ 100%) 82%);
+}
+
 .hero-container h1 {
   text-align: center;
 }
@@ -30,6 +55,7 @@ main .blog-hero-container {
 
 .blog-hero.category h1 {
   margin-top: 0;
+  margin-bottom: 10px;
 }
 
 .blog-hero.category p {
