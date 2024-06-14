@@ -101,7 +101,7 @@ main .blog-hero-container {
   }
 }
 
-@media (width >= 992px) {
+@media (width >= 768px) {
   .blog-hero picture.mobile {
     display: none;
   }

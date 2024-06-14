@@ -31,7 +31,7 @@ const TEMPLATE_META = 'template';
  */
 function buildHeroBlock(main) {
   const picture = main.querySelector('picture');
-  if (getPageType() === 'blog' && picture) {
+  if ((getPageType() === 'blog' && picture) || (getPageType() === 'category' && picture)) {
     const h1 = main.querySelector('h1');
     if (h1) h1.classList.add('blog-primary-title');
     const images = [];
@@ -39,26 +39,35 @@ function buildHeroBlock(main) {
       // eslint-disable-next-line no-bitwise
       if (h1 && (h1.compareDocumentPosition(image) & Node.DOCUMENT_POSITION_PRECEDING)) {
         images.push(image);
-        if (idx === 0) image.classList.add('desktop');
+        if (idx === 0) {
+          image.classList.add('desktop');
+          // load desktop image eager on desktop
+          const mquery = window.matchMedia('(min-width: 769px)');
+          if (mquery.matches) {
+            image.querySelector('img').setAttribute('loading', 'eager');
+          }
+        }
         if (idx === 1) {
           image.classList.add('mobile');
-          // load eager on mobile
-          const mquery = window.matchMedia('(max-width: 900px)');
+          // load mobile image eager on mobile
+          const mquery = window.matchMedia('(max-width: 768px)');
           if (mquery.matches) {
             image.querySelector('img').setAttribute('loading', 'eager');
           }
         }
       }
     });
-    const section = document.createElement('div');
-    section.append(buildBlock('blog-hero', { elems: images }));
-    const breadCrumb = buildBlogBreadcrumb();
-    if (breadCrumb) {
-      breadCrumb.classList.add('blog-details-breadcrumb');
-      section.append(breadCrumb);
+    if (getPageType() === 'blog') {
+      const section = document.createElement('div');
+      section.append(buildBlock('blog-hero', { elems: images }));
+      const breadCrumb = buildBlogBreadcrumb();
+      if (breadCrumb) {
+        breadCrumb.classList.add('blog-details-breadcrumb');
+        section.append(breadCrumb);
+      }
+      section.append(h1);
+      main.prepend(section);
     }
-    section.append(h1);
-    main.prepend(section);
   }
 }
 
