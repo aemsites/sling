@@ -656,14 +656,7 @@ function decorateBlocks(main) {
  * @returns {Promise}
  */
 async function loadHeader(header) {
-  let block = 'header';
-  const template = getMetadata('template');
-  if (template
-    && (template === 'blog-article'
-      || template === 'blog-category')) {
-    block = 'whatson-header';
-  }
-  const headerBlock = buildBlock(`${block}`, '');
+  const headerBlock = buildBlock('header', '');
   header.append(headerBlock);
   decorateBlock(headerBlock);
   return loadBlock(headerBlock);
