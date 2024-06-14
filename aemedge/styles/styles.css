@@ -202,6 +202,18 @@ main .section {
   padding: 64px 16px;
 }
 
+/* FAQ Section */
+.section.tabs-container.accordion-container .default-content-wrapper {
+  text-align: center;
+}
+
+.section.tabs-container.accordion-container .default-content-wrapper h3 {
+  font-size: 1rem;
+  font-weight: 400;
+  text-align: center;
+  color: rgb(0 0 16);
+}
+
 @media (width >= 768px) {
   main .section {
     padding: 64px 32px;
