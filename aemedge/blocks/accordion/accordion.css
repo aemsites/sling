@@ -79,7 +79,21 @@
   padding: 0 16px;
 }
 
-  /* If you want to add something for when the details are open */
+.accordion details[open] .accordion-item-body {
+  padding-right: 4.25rem;
+}
 
-  /* .accordion details[open] .accordion-item-body {
-  } */
+.accordion details[open] .accordion-item-body ul {
+  margin-left: 40px;
+}
+
+.accordion details[open] .accordion-item-body ul li {
+  padding: 0.5rem 0;
+}
+
+/* width greater than 768px */
+@media (width >= 768px) {
+  .accordion details[open] .accordion-item-body ul li {
+    padding: 0.5rem 4rem 0.5rem 0;
+  }
+}
