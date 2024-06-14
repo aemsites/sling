@@ -1,4 +1,5 @@
 import { getMetadata } from '../../scripts/aem.js';
+import { createTag } from '../../scripts/utils.js';
 import { loadFragment } from '../fragment/fragment.js';
 
 // media query match that indicates mobile/tablet width
@@ -11,6 +12,10 @@ function closeOnEscape(e) {
     const navSectionExpanded = navSections.querySelector(
       '[aria-expanded="true"]',
     );
+    const searchInput = nav.querySelector('.nav-search-input.visible');
+    const navSearch = nav.querySelector('.nav-tools span.icon-search');
+    if (searchInput) searchInput.classList.remove('visible');
+    if (navSearch) navSearch.classList.remove('active');
     if (navSectionExpanded && isDesktop.matches) {
       // eslint-disable-next-line no-use-before-define
       toggleAllNavSections(navSections);
@@ -171,4 +176,29 @@ export default async function decorate(block) {
   navWrapper.className = 'nav-wrapper';
   navWrapper.append(nav);
   block.append(navWrapper);
+
+  // Search
+  const navSearch = nav.querySelector('.nav-tools span.icon-search');
+  if (navSearch) {
+    // add input element to nav search and hide it by default
+    const searchInput = createTag('input', {
+      class: 'nav-search-input',
+      'aria-label': 'Search',
+      type: 'search',
+      placeholder: 'Search',
+    });
+    nav.append(searchInput);
+    navSearch.addEventListener('click', () => {
+      navSearch.classList.toggle('active');
+      searchInput.classList.toggle('visible');
+      searchInput.focus();
+    });
+  }
+
+  document.addEventListener('click', (e) => {
+    if (nav.contains(e.target)) return;
+    const searchInput = nav.querySelector('.nav-search-input.visible');
+    if (searchInput) searchInput.classList.remove('visible');
+    if (navSearch) navSearch.classList.remove('active');
+  });
 }

@@ -40,6 +40,7 @@ header nav[aria-expanded="true"] {
     header nav {
         display: flex;
         justify-content: space-between;
+        position: relative;
     }
 
     header nav[aria-expanded="true"] {
@@ -255,5 +256,39 @@ header nav .nav-tools {
 @media (width >=1400px) {
     header nav .nav-tools {
         visibility: visible;
+    }
+
+    header nav .nav-search-input {
+        display: none;
+    }
+
+    header nav .nav-tools span.icon-search.active {
+        display: none;
+    }
+
+    header nav .nav-search-input.visible {
+        display: flex;
+        position: absolute;
+        margin: 14px;
+        right: 6%;
+        top: 4%;
+        width: 85%;
+        height: 70px;
+        z-index: 2;
+    }
+
+    header nav .nav-search-input::after {
+        content: '';
+        display: inline;
+        position: absolute;
+        background: url('../../icons/close.svg') no-repeat;
+        width: 36px;
+        color: rgb(20 171 224);
+        font-size: 40px;
+        height: 36px;
+        margin: 0;
+        right: 0;
+        top: 50%;
+        cursor: pointer
     }
 }
