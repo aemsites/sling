@@ -1,7 +1,6 @@
 import {
   sampleRUM,
   buildBlock,
-  loadHeader,
   loadFooter,
   decorateButtons,
   decorateIcons,
@@ -12,6 +11,8 @@ import {
   loadBlocks,
   loadCSS,
   getMetadata,
+  decorateBlock,
+  loadBlock,
 } from './aem.js';
 
 import {
@@ -184,6 +185,25 @@ async function loadEager(doc) {
   } catch (e) {
     // do nothing
   }
+}
+
+/**
+ * Loads a block named 'header' into header
+ * @param {Element} header header element
+ * @returns {Promise}
+ */
+async function loadHeader(header) {
+  let block = 'header';
+  const template = getMetadata('template');
+  if (template
+    && (template === 'blog-article'
+      || template === 'blog-category')) {
+    block = 'whatson-header';
+  }
+  const headerBlock = buildBlock(`${block}`, '');
+  header.append(headerBlock);
+  decorateBlock(headerBlock);
+  return loadBlock(headerBlock);
 }
 
 /**
