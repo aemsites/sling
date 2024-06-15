@@ -303,3 +303,18 @@ export async function createCard(row, style, eagerImage = false, fullCardLink = 
   }
   return (card);
 }
+
+export function getDesktopAndMobileImages(section) {
+  const images = [];
+  // eslint-disable-next-line consistent-return
+  section.querySelectorAll('p img').forEach((img, idx) => {
+    const image = createTag('div', { class: 'background-image' });
+    image.append(img);
+    images.push(image);
+    if (idx === 0) image.classList.add('desktop');
+    if (idx === 1) {
+      image.classList.add('mobile');
+    }
+  });
+  return images;
+}

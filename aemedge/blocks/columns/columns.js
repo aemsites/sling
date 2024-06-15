@@ -35,9 +35,11 @@ export default async function decorate(block) {
     });
   });
   const carouselBlocks = block.querySelectorAll('.columns-img-col-multi .carousel');
-  carouselBlocks.forEach(async (subBlock) => {
-    decorateBlock(subBlock);
-  });
-  const main = document.querySelector('main');
-  await loadBlocks(main);
+  if (carouselBlocks) {
+    carouselBlocks.forEach(async (subBlock) => {
+      decorateBlock(subBlock);
+    });
+    const main = document.querySelector('main');
+    await loadBlocks(main);
+  }
 }
