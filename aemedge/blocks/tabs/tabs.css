@@ -2,15 +2,15 @@
   display: flex;
   flex-direction: row;
   gap: 8px;
-  max-width: 100%;
+  width: 100%;
   overflow-x: auto;
   justify-content: center;
-  padding-bottom: 24px;
+  margin-bottom: 24px;
 }
 
 .tabs .tabs-list button {
   display: flex;
-  min-width: unset;
+  min-width: fit-content;
   font-size: 1rem;
   padding-inline: unset;
   padding: 0 1rem;
