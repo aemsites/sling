@@ -117,7 +117,7 @@ export function buildVideoBlocks(main) {
   const template = getMetadata('template');
   if (template === 'blog-article') {
     main.querySelectorAll('a[href]').forEach((a) => {
-      if (a.href.includes('youtube')) {
+      if (a.href.includes('youtube') && linkTextIncludesHref(a)) {
         const videoBlock = buildBlock('video', a.cloneNode(true));
         a.replaceWith(videoBlock);
         decorateBlock(videoBlock);
@@ -171,7 +171,7 @@ export function getPageType() {
  * @param {string} path - The path to the JSON file
  * @returns {Promise<Array>} - A promise resolving to the transformed data array
  */
-async function fetchData(path) {
+export async function fetchData(path) {
   const response = await fetch(path);
   const json = await response.json();
 
