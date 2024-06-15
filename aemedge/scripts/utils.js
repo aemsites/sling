@@ -171,7 +171,7 @@ export function getPageType() {
  * @param {string} path - The path to the JSON file
  * @returns {Promise<Array>} - A promise resolving to the transformed data array
  */
-async function fetchData(path) {
+export async function fetchData(path) {
   const response = await fetch(path);
   const json = await response.json();
 
