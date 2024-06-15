@@ -1,4 +1,4 @@
-import { getMetadata } from '../../scripts/aem.js';
+import { decorateIcons, getMetadata } from '../../scripts/aem.js';
 import { createTag } from '../../scripts/utils.js';
 import { loadFragment } from '../fragment/fragment.js';
 
@@ -12,9 +12,9 @@ function closeOnEscape(e) {
     const navSectionExpanded = navSections.querySelector(
       '[aria-expanded="true"]',
     );
-    const searchInput = nav.querySelector('.nav-search-input.visible');
+    const searchDiv = nav.querySelector('.nav-search.visible');
     const navSearch = nav.querySelector('.nav-tools span.icon-search');
-    if (searchInput) searchInput.classList.remove('visible');
+    if (searchDiv) searchDiv.classList.remove('visible');
     if (navSearch) navSearch.classList.remove('active');
     if (navSectionExpanded && isDesktop.matches) {
       // eslint-disable-next-line no-use-before-define
@@ -185,20 +185,30 @@ export default async function decorate(block) {
       class: 'nav-search-input',
       'aria-label': 'Search',
       type: 'search',
-      placeholder: 'Search',
     });
-    nav.append(searchInput);
+    const searchDiv = createTag('div', { class: 'nav-search' });
+    const searchIcon = createTag('span', { class: 'icon icon-search' });
+    const closeIcon = createTag('span', { class: 'icon icon-close-blue' });
+    searchDiv.append(searchIcon);
+    searchDiv.append(searchInput);
+    searchDiv.append(closeIcon);
+    nav.append(searchDiv);
+    decorateIcons(searchDiv);
     navSearch.addEventListener('click', () => {
       navSearch.classList.toggle('active');
-      searchInput.classList.toggle('visible');
+      searchDiv.classList.toggle('visible');
       searchInput.focus();
+    });
+    closeIcon.addEventListener('click', () => {
+      searchDiv.classList.remove('visible');
+      navSearch.classList.remove('active');
     });
   }
 
   document.addEventListener('click', (e) => {
     if (nav.contains(e.target)) return;
-    const searchInput = nav.querySelector('.nav-search-input.visible');
-    if (searchInput) searchInput.classList.remove('visible');
+    const searchDiv = nav.querySelector('.nav-search');
+    if (searchDiv) searchDiv.classList.remove('visible');
     if (navSearch) navSearch.classList.remove('active');
   });
 }
