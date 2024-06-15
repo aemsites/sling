@@ -122,6 +122,14 @@ main pre {
   white-space: pre;
 }
 
+/* Fire style */
+strong em,
+em strong {
+  font-style: normal;
+  color: #faa21b;
+  font-size: 1em;
+}
+
 /* links */
 a:any-link {
   color: var(--link-color);
