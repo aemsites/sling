@@ -253,13 +253,13 @@ header nav .nav-tools {
     visibility: hidden;
 }
 
+header nav .nav-search {
+    display: none;
+}
+
 @media (width >=1400px) {
     header nav .nav-tools {
         visibility: visible;
-    }
-
-    header nav .nav-search {
-        display: none;
     }
 
     header nav .nav-search.visible {
