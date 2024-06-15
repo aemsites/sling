@@ -117,7 +117,7 @@ export function buildVideoBlocks(main) {
   const template = getMetadata('template');
   if (template === 'blog-article') {
     main.querySelectorAll('a[href]').forEach((a) => {
-      if (a.href.includes('youtube')) {
+      if (a.href.includes('youtube') && linkTextIncludesHref(a)) {
         const videoBlock = buildBlock('video', a.cloneNode(true));
         a.replaceWith(videoBlock);
         decorateBlock(videoBlock);
