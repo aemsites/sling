@@ -24,11 +24,13 @@
   scroll-snap-align: start;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
   justify-content: center;
   position: relative;
-  width: 100%;
-  min-height: min(40rem, calc(100svh - var(--nav-height)));
+  min-width: 33.334%;
+
+  /* align-items: flex-start; */
+  
+  /* min-height: min(40rem, calc(100svh - var(--nav-height))); */
 }
 
 .carousel .carousel-slide:has(.carousel-slide-content[data-align="center"]) {
