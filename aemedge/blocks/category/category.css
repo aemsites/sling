@@ -38,6 +38,11 @@ main .section.category-container {
   align-items: center;
 }
 
+.category .card-large .card-link .card-image {
+  height: 100%;
+  aspect-ratio: 432 / 317;
+}
+
 .category .card-large .card-link .card-image img {
   border-radius: 4px;
   max-height: 550px;
@@ -150,6 +155,8 @@ main .section.category-container {
   align-items: center;
   transition: box-shadow 0.3s ease;
   margin: 10px;
+  aspect-ratio: 16 / 9;
+  max-height: 100%;
 }
 
 .category .card-medium .card-link:hover .card-image ,
