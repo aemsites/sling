@@ -158,7 +158,8 @@ main .section.category-container {
   transition: box-shadow 0.3s ease;
   margin: 10px;
   aspect-ratio: 16 / 9;
-  max-height: 100%;
+  min-height: 180px;
+  width: 100%;
 }
 
 .category .card-medium .card-link:hover .card-image ,
@@ -268,6 +269,7 @@ main .section.category-container {
   .category .card-large {
     width: 100%;
     aspect-ratio: 800 / 213;
+    min-height: 213px;
   }
 
   .category .card-large .card-image {
@@ -382,6 +384,10 @@ main .section.category-container {
     position: relative;
     margin-right: 8%;
     width: 27%;
+  }
+
+  .category .card.card-small .card-image {
+    min-height: 114px;
   }
 
   .category .card-small .card-content .card-tags {
