@@ -28,6 +28,9 @@ main .section.category-container {
   margin: 0 auto 6px;
   border-radius: 4px;
   max-height: 550px;
+  min-height: 317px;
+  width: 100%;
+  aspect-ratio: 432 / 317;
 }
 
 .category .card-large .card-link {
@@ -38,8 +41,7 @@ main .section.category-container {
   align-items: center;
 }
 
-.category .card-large .card-link .card-image {
-  height: 100%;
+.category .card-large .card-link .card-image picture {
   aspect-ratio: 432 / 317;
 }
 
@@ -265,6 +267,7 @@ main .section.category-container {
 
   .category .card-large {
     width: 100%;
+    aspect-ratio: 800 / 213;
   }
 
   .category .card-large .card-image {
@@ -290,6 +293,10 @@ main .section.category-container {
 
   .category .card-medium .card-link .card-content {
     margin: 0 auto;
+  }
+
+  .category .card-large .card-link .card-image picture{
+    aspect-ratio: 800 / 213;
   }
 
   .category .card-large .card-link .card-image img {
