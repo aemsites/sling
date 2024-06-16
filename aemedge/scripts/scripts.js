@@ -42,10 +42,12 @@ function buildHeroBlock(main) {
         images.push(image);
         if (idx === 0) {
           image.classList.add('desktop');
-          // load desktop image eager on desktop
+          // load desktop image eager on desktop; but it is always loaded eager due to being the first image in the doc
           const mquery = window.matchMedia('(min-width: 769px)');
           if (mquery.matches) {
             image.querySelector('img').setAttribute('loading', 'eager');
+          } else {
+            image.querySelector('img').setAttribute('loading', 'lazy');
           }
         }
         if (idx === 1) {
@@ -54,6 +56,8 @@ function buildHeroBlock(main) {
           const mquery = window.matchMedia('(max-width: 768px)');
           if (mquery.matches) {
             image.querySelector('img').setAttribute('loading', 'eager');
+          } else {
+            image.querySelector('img').setAttribute('loading', 'lazy');
           }
         }
       }

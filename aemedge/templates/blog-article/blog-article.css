@@ -1,4 +1,19 @@
 
+.blog-article h1 {
+    text-align: center;
+    margin: 10px auto;
+}
+
+.blog-article p {
+    line-height: 1.5em;
+}
+
+.blog-article .video-container {
+    padding: 16px;
+    width: 80%;
+    margin: 0 auto;
+}
+
 main .hero-container + .section {
     display: flex;
     max-width: 80%;
@@ -8,7 +23,7 @@ main .hero-container + .section {
 
 main .hero-container + .section h1, h2, h3, h4 {
     text-align: center;
-    margin: 10px;
+    margin-bottom: 10px;
 }
 
 main .hero-container + .section p {
@@ -65,14 +80,7 @@ main .hero-container .blog-primary-title {
 .text-container .auth-name {
     font-size: 18px;
     font-weight: 700;
-}
-
-.text-container .pub-date {
-    padding-top:8px;
-}
-
-.text-container .tags {
-    padding-top:16px;
+    line-height: 23px;
 }
 
 .text-container .tags > a{
@@ -86,7 +94,7 @@ main .hero-container .blog-primary-title {
 .text-container .social-share {
     display: flex;
    text-align: center;
-   padding:20px 0;
+   padding:20px 0 10px;
    justify-content: center;
 }
 
@@ -136,10 +144,6 @@ main .hero-container .blog-primary-title {
     display: flex;
     margin: 0 auto;
     flex-direction: column;
-}
-
-.content-details-wrapper .video.block  {
-    margin-bottom: 10px;
 }
 
 .fragment-wrapper .button-container {
