@@ -233,9 +233,47 @@ main .section {
   color: rgb(0 0 16);
 }
 
+/* CTA Banner Section */
+.section.cta-banner {
+  position: relative;
+  text-align: center;
+  padding: 0;
+  color: white;
+}
+
+.section.cta-banner .columns-wrapper {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  flex: 2 1 0%;
+  padding: 1.25rem;
+  justify-content: flex-start;
+  align-items: center;
+  box-sizing: border-box;
+  width: 100%;
+  color: rgb(245 245 246);
+  max-height: 300px;
+}
+
+.section.cta-banner .blog-hero img {
+  box-sizing: border-box;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  object-position: center center;
+}
+
 @media (width >= 768px) {
   main .section {
     padding: 64px 32px;
+  }
+
+  /* CTA Banner Section */
+  .section.cta-banner .columns-wrapper {
+    flex-direction: row;
+    justify-content: center;
+    padding: 3.75rem;
   }
 }
 

@@ -21,7 +21,6 @@ import {
   getPageType,
   buildFragmentBlocks,
   createTag,
-  getDesktopAndMobileImages,
 } from './utils.js';
 
 const LCP_BLOCKS = []; // add your LCP blocks to the list
@@ -104,12 +103,19 @@ export function buildCtaBanners(main) {
   // cta banner
   const columns = main.querySelectorAll('div.columns');
   columns.forEach((column) => {
-    const pictures = column.parentElement.querySelectorAll('p > picture');
+    const pictures = column.parentElement.querySelectorAll(':scope > p picture');
     if (pictures && pictures.length > 1) {
-      const images = getDesktopAndMobileImages(column.parentElement);
+      const images = [];
+      pictures.forEach((picture, idx) => {
+        const pTag = picture.parentElement;
+        const image = createTag('div', { class: 'background-image' });
+        if (idx === 0) picture.classList.add('desktop');
+        if (idx === 1) picture.classList.add('mobile');
+        image.append(picture);
+        images.push(image);
+        pTag.remove();
+      });
       const blogHero = buildBlock('blog-hero', { elems: images });
-      column.parentElement.querySelector('.default-content-wrapper').remove();
-      // pictures.forEach((picture) => picture.remove());
       column.parentElement.prepend(blogHero);
     }
   });

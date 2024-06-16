@@ -78,6 +78,11 @@ main .blog-hero-container {
   min-height: 300px;
 }
 
+/* CTA Banner Variation */
+.cta-banner .blog-hero {
+  padding: 0;
+} 
+
 .blog-hero picture {
   z-index: -1;
   inset: 0;
@@ -108,5 +113,9 @@ main .blog-hero-container {
 
   .blog-hero picture.desktop {
     display: block;
+  }
+
+  .cta-banner .blog-hero {
+    max-height: 300px;
   }
 }
