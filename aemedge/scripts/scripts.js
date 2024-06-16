@@ -104,13 +104,14 @@ export function buildCtaBanners(main) {
   const columns = main.querySelectorAll('div.columns');
   columns.forEach((column) => {
     const pictures = column.parentElement.querySelectorAll(':scope > p picture');
-    if (pictures && pictures.length > 1) {
+    if (pictures) {
       const images = [];
       pictures.forEach((picture, idx) => {
         const pTag = picture.parentElement;
         const image = createTag('div', { class: 'background-image' });
         if (idx === 0) picture.classList.add('desktop');
         if (idx === 1) picture.classList.add('mobile');
+        if (pictures.length === 1) picture.classList.add('mobile');
         image.append(picture);
         images.push(image);
         pTag.remove();

@@ -1,6 +1,6 @@
 // eslint-disable-next-line import/no-unresolved
 import {
-  toClassName, buildBlock, decorateBlock, loadBlocks,
+  toClassName, buildBlock, decorateBlock, loadBlocks, decorateButtons,
 } from '../../scripts/aem.js';
 
 const AVAILABLE_SUB_BLOCKS = ['accordion', 'columns'];
@@ -99,11 +99,12 @@ export default async function decorate(block) {
     // set block to newBlock
     block.innerHTML = newBlock.innerHTML;
     // decorate subBlocks
+    const main = document.querySelector('main');
     const subBlocks = block.querySelectorAll(`.${subBlockToBuild}`);
     subBlocks.forEach((subBlock) => {
       decorateBlock(subBlock);
     });
-    const main = document.querySelector('main');
+    decorateButtons(block);
     await loadBlocks(main);
   }
 
