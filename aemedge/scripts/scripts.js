@@ -43,7 +43,7 @@ function buildHeroBlock(main) {
         images.push(image);
         if (idx === 0) {
           image.classList.add('desktop');
-          // load desktop image eager on desktop; but it is always loaded eager due to being the first image in the doc
+          // load desktop image eager on desktop
           const mquery = window.matchMedia('(min-width: 769px)');
           if (mquery.matches) {
             image.querySelector('img').setAttribute('loading', 'eager');
