@@ -99,6 +99,28 @@ export function buildMultipleButtons(main) {
   });
 }
 
+export function buildCtaBanners(main) {
+  // cta banner
+  const columns = main.querySelectorAll('div.columns');
+  columns.forEach((column) => {
+    const pictures = column.parentElement.querySelectorAll(':scope > p picture');
+    if (pictures) {
+      const images = [];
+      pictures.forEach((picture, idx) => {
+        const pTag = picture.parentElement;
+        const image = createTag('div', { class: 'background-image' });
+        if (idx === 0) picture.classList.add('desktop');
+        if (idx === 1) picture.classList.add('mobile');
+        if (pictures.length === 1) picture.classList.add('mobile');
+        image.append(picture);
+        images.push(image);
+        pTag.remove();
+      });
+      const blogHero = buildBlock('blog-hero', { elems: images });
+      column.parentElement.prepend(blogHero);
+    }
+  });
+}
 /**
  * load fonts.css and set a session storage flag
  */
@@ -154,7 +176,7 @@ function buildAutoBlocks(main) {
   try {
     buildHeroBlock(main);
     buildFragmentBlocks(main);
-    buildMultipleButtons(main);
+    buildCtaBanners(main);
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('Auto Blocking failed', error);
@@ -230,6 +252,7 @@ async function loadLazy(doc) {
   autolinkModals(doc);
   const main = doc.querySelector('main');
   await loadBlocks(main);
+  buildMultipleButtons(main);
   const { hash } = window.location;
   const element = hash ? doc.getElementById(hash.substring(1)) : false;
   if (hash && element) element.scrollIntoView();
