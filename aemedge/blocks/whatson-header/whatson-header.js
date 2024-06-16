@@ -1,8 +1,46 @@
-import { getMetadata } from '../../scripts/aem.js';
+import { decorateIcons, getMetadata } from '../../scripts/aem.js';
+import { createTag, fetchData } from '../../scripts/utils.js';
 import { loadFragment } from '../fragment/fragment.js';
 
 // media query match that indicates mobile/tablet width
 const isDesktop = window.matchMedia('(min-width: 1400px)');
+
+function debounce(callback, delay) {
+  let timeout;
+  return () => {
+    clearTimeout(timeout);
+    timeout = setTimeout(callback, delay);
+  };
+}
+
+async function searchOnType(e) {
+  const searchInput = e.target;
+  const searchValue = searchInput.value;
+  if (searchValue.length >= 3) {
+    if (!window.allBlogs) {
+      window.allBlogs = await fetchData('/whatson/query-index.json');
+    }
+    const searchResults = await window.allBlogs.filter((row) => {
+      if (row.category !== 'true') {
+        if (row.title.toLowerCase().includes(searchValue.toLowerCase())) return true;
+        // bad results if searching description so commenting it out for now
+        // if (row.description.toLowerCase().includes(searchValue.toLowerCase())) return true;
+        const tags = JSON.parse(row.tags).map((tag) => tag.trim().toLowerCase());
+        return tags.includes(searchValue.toLowerCase());
+      }
+      return false;
+    });
+    const searchResultsDiv = document.querySelector('nav .nav-search .search-results');
+    if (searchResultsDiv) {
+      searchResultsDiv.innerHTML = '';
+      searchResults.forEach(async (row) => {
+        const result = createTag('a', { href: row.path, title: row.title, class: 'search-result' }, row.title);
+        searchResultsDiv.append(result);
+      });
+      searchResultsDiv.focus();
+    }
+  }
+}
 
 function closeOnEscape(e) {
   if (e.code === 'Escape') {
@@ -11,6 +49,10 @@ function closeOnEscape(e) {
     const navSectionExpanded = navSections.querySelector(
       '[aria-expanded="true"]',
     );
+    const searchDiv = nav.querySelector('.nav-search.visible');
+    const navSearch = nav.querySelector('.nav-tools span.icon-search');
+    if (searchDiv) searchDiv.classList.remove('visible');
+    if (navSearch) navSearch.classList.remove('active');
     if (navSectionExpanded && isDesktop.matches) {
       // eslint-disable-next-line no-use-before-define
       toggleAllNavSections(navSections);
@@ -171,4 +213,46 @@ export default async function decorate(block) {
   navWrapper.className = 'nav-wrapper';
   navWrapper.append(nav);
   block.append(navWrapper);
+
+  // Search
+  const navSearch = nav.querySelector('.nav-tools span.icon-search');
+  if (navSearch) {
+    // add input element to nav search and hide it by default
+    const searchDiv = createTag('div', { class: 'nav-search' });
+    const searchInput = createTag('input', {
+      class: 'nav-search-input',
+      'aria-label': 'Search',
+      type: 'search',
+    });
+    const searchIcon = createTag('span', { class: 'icon icon-search' });
+    const closeIcon = createTag('span', { class: 'icon icon-close-blue' });
+    const searchInputContainer = createTag('div', { class: 'search-input-container' });
+    const searchResultsContainer = createTag('div', { class: 'search-results-container' });
+    const searchResults = createTag('div', { class: 'search-results' });
+    searchInputContainer.append(searchIcon);
+    searchInputContainer.append(searchInput);
+    searchInputContainer.append(closeIcon);
+    searchResultsContainer.append(searchResults);
+    searchDiv.append(searchInputContainer);
+    searchDiv.append(searchResultsContainer);
+    nav.append(searchDiv);
+    decorateIcons(searchDiv);
+    navSearch.addEventListener('click', () => {
+      navSearch.classList.toggle('active');
+      searchDiv.classList.toggle('visible');
+      searchInput.focus();
+    });
+    closeIcon.addEventListener('click', () => {
+      searchDiv.classList.remove('visible');
+      navSearch.classList.remove('active');
+    });
+    searchInput.addEventListener('input', async (e) => debounce(searchOnType(e), 1000));
+  }
+
+  document.addEventListener('click', (e) => {
+    if (nav.contains(e.target)) return;
+    const searchDiv = nav.querySelector('.nav-search');
+    if (searchDiv) searchDiv.classList.remove('visible');
+    if (navSearch) navSearch.classList.remove('active');
+  });
 }

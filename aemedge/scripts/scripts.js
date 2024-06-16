@@ -20,6 +20,7 @@ import {
   buildPopularBlogs,
   getPageType,
   buildFragmentBlocks,
+  createTag,
 } from './utils.js';
 
 const LCP_BLOCKS = []; // add your LCP blocks to the list
@@ -88,6 +89,20 @@ function autolinkModals(element) {
   });
 }
 
+export function buildMultipleButtons(main) {
+  const buttons = main.querySelectorAll('p.button-container');
+  buttons.forEach((button) => {
+    if (button.nextElementSibling && button.nextElementSibling.classList.contains('button-container')) {
+      const siblingButton = button.nextElementSibling;
+      if (siblingButton && !button.parentElement.classList.contains('buttons-container')) {
+        const buttonContainer = createTag('div', { class: 'buttons-container' });
+        button.parentElement.insertBefore(buttonContainer, button);
+        buttonContainer.append(button, siblingButton);
+      }
+    }
+  });
+}
+
 /**
  * load fonts.css and set a session storage flag
  */
@@ -143,6 +158,7 @@ function buildAutoBlocks(main) {
   try {
     buildHeroBlock(main);
     buildFragmentBlocks(main);
+    buildMultipleButtons(main);
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('Auto Blocking failed', error);
