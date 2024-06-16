@@ -234,10 +234,9 @@ export async function getBlogs(categories, num) {
  * @param {Object} row - JSON Object representing a blog
  * @param {String} style - The style of the card (default: 'card')
  * @param {Boolean} eagerImage - Whether to load the image eagerly (default: false)
- * @param {Boolean} fullCardLink - Whether to set the link over the entire card (default: false)
  * @returns {Promise<Array>} - A promise resolving to the card element
  */
-export async function createCard(row, style, eagerImage = false, fullCardLink = false) {
+export async function createCard(row, style, eagerImage = false) {
   // Create card div
   const card = createTag('div', { class: style || 'card' });
 
@@ -258,7 +257,7 @@ export async function createCard(row, style, eagerImage = false, fullCardLink = 
 
   // Create a separate child div for the card content
   const cardContent = createTag('div', { class: 'card-content' });
-
+  link.append(cardContent);
   // Add tags
   if (row.tags && row.tags !== '0') {
     const tags = createTag('div', { class: 'card-tags' });
@@ -296,10 +295,5 @@ export async function createCard(row, style, eagerImage = false, fullCardLink = 
     authorDate.append(date);
   }
   cardContent.append(authorDate);
-  if (fullCardLink) {
-    link.append(cardContent);
-  } else {
-    card.append(cardContent);
-  }
   return (card);
 }

@@ -47,6 +47,8 @@ function buildHeroBlock(main) {
           const mquery = window.matchMedia('(min-width: 769px)');
           if (mquery.matches) {
             image.querySelector('img').setAttribute('loading', 'eager');
+          } else {
+            image.querySelector('img').setAttribute('loading', 'lazy');
           }
         }
         if (idx === 1) {
@@ -55,6 +57,8 @@ function buildHeroBlock(main) {
           const mquery = window.matchMedia('(max-width: 768px)');
           if (mquery.matches) {
             image.querySelector('img').setAttribute('loading', 'eager');
+          } else {
+            image.querySelector('img').setAttribute('loading', 'lazy');
           }
         }
       }
