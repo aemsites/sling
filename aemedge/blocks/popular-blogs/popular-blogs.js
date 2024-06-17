@@ -108,16 +108,20 @@ export default async function decorate(block) {
     if (entries.some((entry) => entry.isIntersecting)) {
       observer.disconnect();
       // get tags from url
-      let categories = new URL(window.location.href).pathname.split('/').filter((path) => path);
+      const categories = new URL(window.location.href).pathname.split('/').filter((path) => path);
+      let mergedCategories = [];
       // remove whatson from the categories
       categories.shift();
       const curPage = categories.pop();
       // get the popular blogs for the current page
       if (categories.includes('movies') || categories.includes('entertainment')) {
-        const add = ['movies', 'entertainment'].filter((cat) => cat !== categories[0])[0];
-        categories = categories.push(add);
+        // const add = ['movies', 'entertainment'].filter((cat) => cat !== categories[0])[0];
+        // categories.push(add);
+        const newArr = ['movies', 'entertainment'];
+        const updatedArr = [...categories, ...newArr];
+        mergedCategories = [...new Set(updatedArr)];
       }
-      const blogs = await getBlogs(categories, 7);
+      const blogs = await getBlogs(mergedCategories, 7);
       // create the dom structure
       const container = block.querySelector('.slides-container');
       const headlineWrapper = createTag('div', { class: 'heading-wrapper' });
