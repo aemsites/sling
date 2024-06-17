@@ -125,6 +125,26 @@ export function buildCtaBanners(main) {
     }
   });
 }
+
+async function buildGlobalBanner(main) {
+  const banner = getMetadata('global-banner');
+  if (banner) {
+    const bannerURL = new URL(banner);
+    const bannerPath = bannerURL.pathname;
+    if (bannerURL) {
+      const bannerLink = createTag('a', { href: bannerPath }, bannerPath);
+      const fragment = buildBlock('fragment', [[bannerLink]]);
+      const section = createTag('div', { class: 'section' });
+      const wrapper = document.createElement('div');
+      wrapper.append(fragment);
+      section.append(wrapper);
+      main.prepend(section);
+      decorateBlock(fragment);
+      await loadBlock(fragment);
+    }
+  }
+}
+
 /**
  * load fonts.css and set a session storage flag
  */
@@ -260,13 +280,11 @@ async function loadLazy(doc) {
   const { hash } = window.location;
   const element = hash ? doc.getElementById(hash.substring(1)) : false;
   if (hash && element) element.scrollIntoView();
-
   loadHeader(doc.querySelector('header'));
   loadFooter(doc.querySelector('footer'));
-
+  buildGlobalBanner(main);
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
   loadFonts();
-
   sampleRUM('lazy');
   sampleRUM.observe(main.querySelectorAll('div[data-block-name]'));
   sampleRUM.observe(main.querySelectorAll('picture > img'));
