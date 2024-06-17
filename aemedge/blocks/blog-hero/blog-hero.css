@@ -80,7 +80,7 @@ main .blog-hero-container {
 /* CTA Banner Variation */
 .cta-banner .blog-hero {
   padding: 0;
-} 
+}
 
 .blog-hero picture {
   z-index: -1;
@@ -104,12 +104,11 @@ main .blog-hero-container {
 }
 
 @media (width >= 768px) {
-  .blog-hero.category > div > div {
-    width: 33%;
+  .blog-hero {
+    position: relative;
+    min-height: 200px;
   }
-}
 
-@media (width >= 768px) {
   .blog-hero picture.mobile {
     display: none;
   }
@@ -117,6 +116,10 @@ main .blog-hero-container {
   .blog-hero picture.desktop,
   .blog-hero picture.desktop.mobile {
     display: block;
+  }
+
+  .blog-hero.category > div > div {
+    width: 33%;
   }
 
   .cta-banner .blog-hero {

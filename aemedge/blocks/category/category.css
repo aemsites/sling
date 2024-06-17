@@ -159,7 +159,6 @@ main .section.category-container {
   margin: 10px;
   aspect-ratio: 16 / 9;
   min-height: 180px;
-  width: 100%;
 }
 
 .category .card-medium .card-link:hover .card-image ,

@@ -38,3 +38,8 @@ a.blog-breadcrumb-link {
     content: "\f105";
 }
 
+@media (width >= 768px) {
+ .block.blog-breadcrumb {
+     padding-bottom: 24px;
+ }
+}
