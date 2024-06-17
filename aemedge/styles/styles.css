@@ -46,6 +46,9 @@
 
   /* nav height */
   --nav-height: 70px;
+
+  /* Color Variants */
+  --blue-to-orange: linear-gradient(to right, #1b00a6, #eb550f);
 }
 
 @font-face {
