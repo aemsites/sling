@@ -210,7 +210,7 @@ export async function getBlogs(categories, num) {
   }
 
   const blogArticles = window.allBlogs.filter(
-    (e) => (e.category !== 'true' && e.image !== '' && !e.image.startsWith('//aemedge/default-meta-image.png')),
+    (e) => (e.template !== 'blog-category' && e.image !== '' && !e.image.startsWith('//aemedge/default-meta-image.png')),
   );
   if (categories && categories.length > 0) {
     const filteredList = blogArticles.filter((e) => {
