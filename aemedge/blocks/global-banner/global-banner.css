@@ -16,11 +16,12 @@ main .section.global-banner-container {
   position: relative;
   color: white;
   display: flex;
+  flex-direction: row;
   flex: 1;
   align-items: center;
   padding-top: 5px;
   padding-bottom: 5px;
-  justify-content: center;
+  justify-content: space-between;
   font-size: 20px;
   font-weight: bold;
   height: auto;
@@ -29,7 +30,7 @@ main .section.global-banner-container {
 }
 
 .global-banner p {
-  margin: 0;
+  margin: 0 20px;
 }
 
 .global-banner a {
@@ -42,8 +43,7 @@ main .section.global-banner-container {
 .global-banner span.close {
   cursor: pointer;
   font-size: 38px;
-  position: absolute;
-  right: 50px;
+  position: relative;
   padding: 5px 20px 0 0;
   z-index: 11;
 }
