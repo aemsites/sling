@@ -2,7 +2,11 @@ main {
   position: relative;
 }
 
-main .section.global-banner-container {
+main .section.fragment-container.global-banner-container {
+  padding: 0;
+}
+
+main .fragment-container .section.global-banner-container[data-section-status="loaded"] {
   position: absolute;
   top: 0;
   margin: 0;
@@ -11,7 +15,12 @@ main .section.global-banner-container {
   z-index: 1;
 }
 
-.global-banner {
+main .fragment-container .section.global-banner-container:not([data-section-status="loaded"]),
+main .block.global-banner:not([data-block-status="loaded"]) {
+  display: none;
+}
+
+main .block.global-banner[data-block-status="loaded"] {
   position: relative;
   color: white;
   display: flex;
