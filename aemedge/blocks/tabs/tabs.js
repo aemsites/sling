@@ -1,7 +1,9 @@
 // eslint-disable-next-line import/no-unresolved
 import {
-  toClassName, buildBlock, decorateBlock, loadBlocks, decorateButtons,
+  toClassName, buildBlock, decorateBlock, loadBlocks,
 } from '../../scripts/aem.js';
+
+import { decorateButtons } from '../../scripts/scripts.js';
 
 const AVAILABLE_SUB_BLOCKS = ['accordion', 'columns'];
 
