@@ -38,13 +38,40 @@ header nav[aria-expanded="false"] {
 
 header nav .nav-brand {
   position: fixed;
-  top: 16px;
+  top: 0;
+}
+
+header nav[aria-expanded="true"] .nav-brand {
+  width: calc(100% - 32px);
+  background-color: var(--header-text-color);
+  padding-top: 16px;
+}
+
+header nav[aria-expanded="false"] .nav-brand {
+  top: unset;
 }
 
 header nav .nav-brand img {
   width: 68px;
   height: 26px;
   vertical-align: center;
+}
+
+header nav .nav-sections ul > li {
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  font-weight: 600;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: #666;
+  font-size: 1.125rem;
+  letter-spacing: 0.025rem;
+  line-height: 1.16;
+}
+
+header nav .nav-sections .default-content-wrapper > ul > li {
+  margin: 16px 0 34px 8px;
 }
 
 header nav[aria-expanded="true"] .nav-hamburger-icon img {
@@ -96,6 +123,12 @@ header nav .nav-hamburger .nav-hamburger-icon {
   header nav .nav-brand {
     position: unset;
   }
+
+  header nav[aria-expanded="true"] .nav-brand {
+    width: unset;
+    background-color: unset;
+    padding-top: unset;
+  }
 }
 
 /* brand */
@@ -113,13 +146,11 @@ header nav .nav-sections {
   flex: 1 1 auto;
   display: none;
   visibility: hidden;
-  background-color: var(--overlay-color);
 }
 
 header nav[aria-expanded="true"] .nav-sections {
   display: block;
   visibility: visible;
-  align-self: start;
 }
 
 header nav .nav-sections ul {
@@ -127,21 +158,6 @@ header nav .nav-sections ul {
   padding-left: 0;
   font-size: var(--body-font-size-s);
   font-weight: 500;
-}
-
-header nav .nav-sections ul>li {
-  display: flex;
-  -webkit-box-align: center;
-  align-items: center;
-  font-weight: 600;
-  text-transform: uppercase;
-  text-decoration: none;
-  color: #171725;
-  font-size: 1.125rem;
-  letter-spacing: 0.025rem;
-  line-height: 1.16;
-  margin-left: 0.188rem;
-  margin-bottom: 34px;
 }
 
 header nav .nav-sections .nav-top {
@@ -192,29 +208,8 @@ header nav .nav-sections .nav-top>ul li:first-child {
   header nav .nav-sections ul {
     all: unset;
     display: flex;
-    margin: 0;
-    opacity: 0.6;
-    margin-left: 24px;
-  }
-
-  header nav .nav-sections {
-    display: block;
-    visibility: visible;
-    white-space: nowrap;
-  }
-
-  header nav[aria-expanded="true"] .nav-sections {
-    align-self: unset;
-  }
-
-  header nav .nav-sections .nav-drop {
-    position: relative;
-    cursor: pointer;
-  }
-
-  header nav .nav-sections .nav-drop:hover,
-  header nav .nav-sections .nav-drop[aria-expanded="true"] {
-    background-color: var(--header-hover-background-color);
+    margin: 0 0 0 24px;
+    flex-wrap: wrap;
   }
 
   header nav .nav-sections .nav-drop::after {
@@ -249,15 +244,26 @@ header nav .nav-sections .nav-top>ul li:first-child {
     margin-right: 40px;
   }
 
-  header nav .nav-sections .default-content-wrapper>ul>li {
+  header nav .nav-sections .default-content-wrapper > ul > li {
     color: var(--header-text-color);
-    margin-bottom: 0;
-    margin-right: 60px;
+    margin: 0 60px 0 0;
     font-size: 16px;
+    line-height: 1.6em;
+    opacity: 0.6;
+    letter-spacing: 0;
   }
 
-  header nav .nav-sections .nav-drop:hover>ul,
-  header nav .nav-sections .nav-drop[aria-expanded="true"]>ul {
+  header nav .nav-sections .default-content-wrapper > ul > li > ul > li {
+    padding: 8px 0;
+  }
+
+  header nav .nav-sections .default-content-wrapper > ul > li:hover {
+    opacity: 1.0;
+    color: white;
+  }
+
+  header nav .nav-sections .nav-drop:hover > ul,
+  header nav .nav-sections .nav-drop[aria-expanded="true"] > ul {
     display: block;
     position: absolute;
     width: 200px;
@@ -266,10 +272,6 @@ header nav .nav-sections .nav-top>ul li:first-child {
     top: 3em;
     background-color: var(--header-hover-background-color);
     white-space: initial;
-  }
-
-  header nav .nav-sections .default-content-wrapper>ul>li>ul>li {
-    padding: 8px 0;
   }
 
   header .section.nav-top {
@@ -304,8 +306,8 @@ header nav[aria-expanded='true'] .nav-tools {
   display: flex;
   justify-content: center;
   position: fixed;
-  top: 16px;
-  left: calc(100%/2);
+  top: 10px;
+  left: calc(87% / 2);
 }
 
 header nav .nav-tools a.button:any-link {
@@ -330,7 +332,8 @@ header nav .nav-tools a.button:hover {
 
   header nav[aria-expanded='true'] .nav-tools {
     position: unset;
-    margin-right: 32px;
+    margin-right: 24px;
+    white-space: nowrap;
   }
 
   header nav .nav-tools a.button img {
