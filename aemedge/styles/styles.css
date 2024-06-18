@@ -46,6 +46,9 @@
 
   /* nav height */
   --nav-height: 70px;
+
+  /* Color Variants */
+  --blue-to-orange: linear-gradient(to right, #1b00a6, #eb550f);
 }
 
 @font-face {
@@ -122,6 +125,14 @@ main pre {
   white-space: pre;
 }
 
+/* Fire style */
+strong em,
+em strong {
+  font-style: normal;
+  color: #faa21b;
+  font-size: 1em;
+}
+
 /* links */
 a:any-link {
   color: var(--link-color);
@@ -149,7 +160,6 @@ a.button:any-link, button {
   background-color: var(--primary-button-color);
   margin-bottom: 8px;
   margin-top:8px;
-  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   min-width: 180px;
@@ -178,6 +188,17 @@ a.button.secondary, button.secondary {
   background-color: unset;
   border: 2px solid currentcolor;
   color: var(--text-color)
+}
+
+/* Buttons Container */
+.buttons-container {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+}
+
+.buttons-container a.button {
+  margin: 8px;
 }
 
 main img {
@@ -214,10 +235,64 @@ main .section {
   color: rgb(0 0 16);
 }
 
+/* CTA Banner Section */
+.section.cta-banner {
+  position: relative;
+  text-align: center;
+  padding: 0;
+  color: white;
+}
+
+.section.cta-banner .section {
+  padding: 0;
+}
+
+.section.cta-banner .columns-wrapper {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  flex: 2 1 0%;
+  padding: 1.25rem;
+  justify-content: flex-start;
+  align-items: center;
+  box-sizing: border-box;
+  width: 100%;
+  color: rgb(245 245 246);
+  height: 350px;
+  overflow: hidden;
+}
+
+.section.cta-banner .columns.block {
+  width: 100%;
+}
+
+.section.cta-banner .blog-hero picture {
+  width: 100%;
+  height: 350px;
+  overflow: hidden;
+}
+
+.section.cta-banner .blog-hero img {
+  box-sizing: border-box;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  object-position: center center;
+}
+
 @media (width >= 768px) {
   main .section {
     padding: 64px 32px;
   }
+
+  /* CTA Banner Section */
+  .section.cta-banner .columns-wrapper {
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 3.75rem;
+  }
+
 }
 
 /* section metadata */

@@ -20,6 +20,7 @@ import {
   buildPopularBlogs,
   getPageType,
   buildFragmentBlocks,
+  createTag,
 } from './utils.js';
 
 const LCP_BLOCKS = []; // add your LCP blocks to the list
@@ -46,6 +47,8 @@ function buildHeroBlock(main) {
           const mquery = window.matchMedia('(min-width: 769px)');
           if (mquery.matches) {
             image.querySelector('img').setAttribute('loading', 'eager');
+          } else {
+            image.querySelector('img').setAttribute('loading', 'lazy');
           }
         }
         if (idx === 1) {
@@ -54,6 +57,8 @@ function buildHeroBlock(main) {
           const mquery = window.matchMedia('(max-width: 768px)');
           if (mquery.matches) {
             image.querySelector('img').setAttribute('loading', 'eager');
+          } else {
+            image.querySelector('img').setAttribute('loading', 'lazy');
           }
         }
       }
@@ -82,6 +87,62 @@ function autolinkModals(element) {
       openModal(origin.href);
     }
   });
+}
+
+export function buildMultipleButtons(main) {
+  const buttons = main.querySelectorAll('p.button-container');
+  buttons.forEach((button) => {
+    if (button.nextElementSibling && button.nextElementSibling.classList.contains('button-container')) {
+      const siblingButton = button.nextElementSibling;
+      if (siblingButton && !button.parentElement.classList.contains('buttons-container')) {
+        const buttonContainer = createTag('div', { class: 'buttons-container' });
+        button.parentElement.insertBefore(buttonContainer, button);
+        buttonContainer.append(button, siblingButton);
+      }
+    }
+  });
+}
+
+export function buildCtaBanners(main) {
+  // cta banner
+  const columns = main.querySelectorAll('div.columns');
+  columns.forEach((column) => {
+    const pictures = column.parentElement.querySelectorAll(':scope > p picture');
+    if (pictures) {
+      const images = [];
+      pictures.forEach((picture, idx) => {
+        const pTag = picture.parentElement;
+        const image = createTag('div', { class: 'background-image' });
+        if (idx === 0) picture.classList.add('desktop');
+        if (idx === 1) picture.classList.add('mobile');
+        if (pictures.length === 1) picture.classList.add('mobile');
+        image.append(picture);
+        images.push(image);
+        pTag.remove();
+      });
+      const blogHero = buildBlock('blog-hero', { elems: images });
+      column.parentElement.prepend(blogHero);
+    }
+  });
+}
+
+async function buildGlobalBanner(main) {
+  const banner = getMetadata('global-banner');
+  if (banner) {
+    const bannerURL = new URL(banner);
+    const bannerPath = bannerURL.pathname;
+    if (bannerURL) {
+      const bannerLink = createTag('a', { href: bannerPath }, bannerPath);
+      const fragment = buildBlock('fragment', [[bannerLink]]);
+      const section = createTag('div', { class: 'section' });
+      const wrapper = document.createElement('div');
+      wrapper.append(fragment);
+      section.append(wrapper);
+      main.prepend(section);
+      decorateBlock(fragment);
+      await loadBlock(fragment);
+    }
+  }
 }
 
 /**
@@ -139,6 +200,7 @@ function buildAutoBlocks(main) {
   try {
     buildHeroBlock(main);
     buildFragmentBlocks(main);
+    buildCtaBanners(main);
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('Auto Blocking failed', error);
@@ -214,16 +276,15 @@ async function loadLazy(doc) {
   autolinkModals(doc);
   const main = doc.querySelector('main');
   await loadBlocks(main);
+  buildMultipleButtons(main);
   const { hash } = window.location;
   const element = hash ? doc.getElementById(hash.substring(1)) : false;
   if (hash && element) element.scrollIntoView();
-
   loadHeader(doc.querySelector('header'));
   loadFooter(doc.querySelector('footer'));
-
+  buildGlobalBanner(main);
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
   loadFonts();
-
   sampleRUM('lazy');
   sampleRUM.observe(main.querySelectorAll('div[data-block-name]'));
   sampleRUM.observe(main.querySelectorAll('picture > img'));

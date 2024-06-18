@@ -1,32 +1,43 @@
 // eslint-disable-next-line import/no-unresolved
 import {
-  toClassName, buildBlock, decorateBlock, loadBlocks,
+  toClassName, buildBlock, decorateBlock, loadBlocks, decorateButtons,
 } from '../../scripts/aem.js';
+
+const AVAILABLE_SUB_BLOCKS = ['accordion', 'columns'];
 
 function hasWrapper(el) {
   return !!el.firstElementChild && window.getComputedStyle(el.firstElementChild).display === 'block';
 }
 
 export default async function decorate(block) {
-  const isFaq = block.classList.contains('faq');
+  // nonStandard = mix of 2 and 3 column rows for sub blocks under tabs
+  // standard = all 3 column rows for sub blocks under tabs
+  const numColumns = [...block.children].filter((child) => child.children.length === 3);
+  const isStandard = numColumns.length === block.children.length;
+  const isNonStandard = numColumns.length !== block.children.length;
   let newBlock;
-  try {
-    if (isFaq) {
-      // build a new block with accordion in the 2nd column
-      newBlock = document.createElement('div');
-      // build accordion for the tabContent
-      const rows = [...block.children];
-      block.innerHTML = '';
+  // if tabs has 3 columns, use first col for tab category and 2nd and 3rd for tab content
+  // and build the block based on the variant provided
+  if (isStandard || isNonStandard) {
+    const subBlockToBuild = [...block.classList].filter(
+      (className) => AVAILABLE_SUB_BLOCKS.includes(className),
+    )[0];
+    // build a new block with sub block in the 2nd column
+    newBlock = document.createElement('div');
+    // build content for the sub block
+    const rows = [...block.children];
+    block.innerHTML = '';
+    if (isNonStandard) {
       let currentTabCategory;
       let oldTabCategory;
-      let accordionContent = [];
-      rows.forEach(async (row, i) => {
+      let subBlockContent = [];
+      rows.forEach((row, i) => {
         const is3Col = row.children.length === 3;
         if (is3Col || (i === (rows.length - 1))) {
           oldTabCategory = currentTabCategory;
           currentTabCategory = row.firstElementChild;
         }
-        if (i === (rows.length - 1)) {
+        if (!is3Col && (i === (rows.length - 1))) {
           let accKey;
           let accValue;
           if (is3Col) {
@@ -36,23 +47,22 @@ export default async function decorate(block) {
             accKey = row.children[0].innerHTML;
             accValue = row.children[1].innerHTML;
           }
-          accordionContent.push([accKey, accValue]);
+          subBlockContent.push([accKey, accValue]);
         }
-        if ((i === (rows.length - 1))
-          || (oldTabCategory && (oldTabCategory.textContent !== currentTabCategory.textContent))) {
-          // new tab category found - build accordion with the existing accordionContent
-          const accordion = buildBlock('accordion', accordionContent);
-          // add tabCategory and accordionContent to newDiv
+        if (oldTabCategory && (oldTabCategory.textContent !== currentTabCategory.textContent)) {
+          // new tab category found - build sub block with the existing content
+          const subBlock = buildBlock(subBlockToBuild, subBlockContent);
+          // add tabCategory and sub block content to newDiv
           const tabCategoryDiv = document.createElement('div');
           tabCategoryDiv.innerHTML = oldTabCategory.innerHTML;
           const tabContentDiv = document.createElement('div');
-          tabContentDiv.append(accordion);
+          tabContentDiv.append(subBlock);
           const newRow = document.createElement('div');
           newRow.append(tabCategoryDiv);
           newRow.append(tabContentDiv);
           newBlock.append(newRow);
-          // reset accordionContent for the next set of rows
-          accordionContent = [];
+          // reset subBlockContent for the next set of rows
+          subBlockContent = [];
           oldTabCategory = null;
         }
         let accKey;
@@ -64,20 +74,38 @@ export default async function decorate(block) {
           accKey = row.children[0].innerHTML;
           accValue = row.children[1].innerHTML;
         }
-        accordionContent.push([accKey, accValue]);
+        subBlockContent.push([accKey, accValue]);
       });
-      // set block to newBlock
-      block.innerHTML = newBlock.innerHTML;
-      // decorate accordions
-      const accordionBlocks = block.querySelectorAll('.accordion');
-      await accordionBlocks.forEach(async (accordionBlock) => {
-        decorateBlock(accordionBlock);
-      });
-      const main = document.querySelector('main');
-      await loadBlocks(main);
     }
-  } catch (e) {
-    console.error(e);
+    if (isStandard) {
+      rows.forEach((row) => {
+        const subBlockContent = [];
+        const contentKey = row.children[1].innerHTML;
+        const contentValue = row.children[2].innerHTML;
+        subBlockContent.push([contentKey, contentValue]);
+        // build sub block with the existing content
+        const subBlock = buildBlock(subBlockToBuild, subBlockContent);
+        // add tabCategory and sub block content to newDiv
+        const tabCategoryDiv = document.createElement('div');
+        tabCategoryDiv.innerHTML = row.firstElementChild.innerHTML;
+        const tabContentDiv = document.createElement('div');
+        tabContentDiv.append(subBlock);
+        const newRow = document.createElement('div');
+        newRow.append(tabCategoryDiv);
+        newRow.append(tabContentDiv);
+        newBlock.append(newRow);
+      });
+    }
+    // set block to newBlock
+    block.innerHTML = newBlock.innerHTML;
+    // decorate subBlocks
+    const main = document.querySelector('main');
+    const subBlocks = block.querySelectorAll(`.${subBlockToBuild}`);
+    subBlocks.forEach((subBlock) => {
+      decorateBlock(subBlock);
+    });
+    decorateButtons(block);
+    await loadBlocks(main);
   }
 
   // continue processing tabs as usual

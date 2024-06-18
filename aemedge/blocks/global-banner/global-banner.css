@@ -1,0 +1,54 @@
+main {
+  position: relative;
+}
+
+main .section.global-banner-container {
+  position: absolute;
+  top: 0;
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100%;
+  z-index: 10;
+}
+
+.global-banner {
+  position: relative;
+  color: white;
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  align-items: center;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  justify-content: space-between;
+  font-size: 20px;
+  font-weight: bold;
+  height: auto;
+  text-align: center;
+  width: 100%;
+}
+
+.global-banner p {
+  margin: 0 20px;
+}
+
+.global-banner a {
+  color: white;
+  line-height: 27px;
+  text-decoration: underline;
+  font-size: 1em;
+}
+
+.global-banner span.close {
+  cursor: pointer;
+  font-size: 38px;
+  line-height: normal;
+  position: relative;
+  padding: 5px 20px 0 0;
+  z-index: 11;
+}
+
+.global-banner.blue-orange {
+  background: var(--blue-to-orange);
+}
