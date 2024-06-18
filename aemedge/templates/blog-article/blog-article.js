@@ -1,6 +1,7 @@
 import {
   createTag,
   buildVideoBlocks,
+  buildFragmentBlocks,
 } from '../../scripts/utils.js';
 
 import {
@@ -145,6 +146,6 @@ export default async function buildBlogDetails(main) {
   blogContentWrapper.append(authWrapper, contentWrapper);
   // append the blog details wrapper to the section
   contentSection.append(blogContentWrapper);
-  // buildFragmentBlocks(main);
+  buildFragmentBlocks(main);
   buildVideoBlocks(main);
 }
