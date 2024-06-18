@@ -24,6 +24,7 @@
   --primary-button-color:#ce4c00;
   --invalid-red: #e90000;
   --input-background-color: #eaeaec;
+  --dark-background-color: rgb(23 23 37);
 
   /* fonts */
   --body-font-family: proxima-nova, proxima-nova-fallback, sans-serif;
@@ -349,6 +350,22 @@ main .section {
   object-position: center center;
 }
 
+/* Section with Dark or Centered content */
+.section.dark {
+  background-color: var(--dark-background-color);
+  color: var(--light-color);
+}
+
+.section.center {
+  text-align: center;
+}
+
+/* specially for supported devices illustration */
+.section.dark.center.columns-container span.icon:first-of-type {
+  height: 103px;
+  width: 108px;
+}
+
 @media (width >= 768px) {
   main .section {
     padding: 64px 32px;
@@ -359,6 +376,14 @@ main .section {
     flex-direction: row;
     justify-content: space-between;
     padding: 3.75rem;
+  }
+
+  /* Section with Dark or Centered content */
+  .section.center > * {
+    max-width: 1200px;
+    align-items: center;
+    width: 100%;
+    margin: 0 auto;
   }
 
 }

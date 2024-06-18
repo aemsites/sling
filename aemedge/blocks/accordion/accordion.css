@@ -76,6 +76,7 @@
 }
 
 .accordion details .accordion-item-body {
+  text-align: left;
   padding: 0 16px;
 }
 
