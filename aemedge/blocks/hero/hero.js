@@ -34,10 +34,14 @@ export default function decorate(block) {
       playsinline: 'true',
       muted: 'true',
       loop: 'true',
+      oncanplay: 'this.muted=true',
     });
+    video.oncanplaythrough = () => {
+      video.muted = true;
+      video.play();
+    };
     const videoSource = createTag('source', { src: videoUrl });
     video.append(videoSource);
-    // videoWrapper.append(video);
     // If video is wrapped in a button container, replace the container with the video wrapper
     if (videoLink.parentElement.tagName === 'P' && videoLink.parentElement.classList.contains('button-container')) {
       videoLink.parentElement.remove();
