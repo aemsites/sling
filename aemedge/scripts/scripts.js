@@ -2,7 +2,6 @@ import {
   sampleRUM,
   buildBlock,
   loadFooter,
-  decorateButtons,
   decorateIcons,
   decorateSections,
   decorateBlocks,
@@ -144,6 +143,55 @@ async function buildGlobalBanner(main) {
       await loadBlock(fragment);
     }
   }
+}
+
+/**
+ * Decorates paragraphs containing a single link as buttons.
+ * @param {Element} element container element
+ */
+export function decorateButtons(element) {
+  element.querySelectorAll('a').forEach((a) => {
+    a.title = a.title || a.textContent;
+    if (a.href !== a.textContent) {
+      const hasIcon = a.querySelector('.icon');
+      const up = a.parentElement;
+      const twoup = a.parentElement.parentElement;
+      if (hasIcon) return;
+      if (!a.querySelector('img')) {
+        // let default button be text-only, no decoration
+        const linkText = a.textContent;
+        const linkTextEl = document.createElement('span');
+        linkTextEl.classList.add('link-button-text');
+        linkTextEl.append(linkText);
+        a.textContent = `${linkText}`;
+        a.setAttribute('aria-label', `${linkText}`);
+        if (up.childNodes.length === 1 && (up.tagName === 'P' || up.tagName === 'DIV')) {
+          a.textContent = '';
+          a.className = 'button text'; // default
+          up.classList.add('button-container');
+          a.append(linkTextEl);
+        }
+        if (
+          up.childNodes.length === 1
+          && up.tagName === 'STRONG'
+          && twoup.childNodes.length === 1
+          && twoup.tagName === 'P'
+        ) {
+          a.className = 'button primary';
+          twoup.classList.add('button-container');
+        }
+        if (
+          up.childNodes.length === 1
+          && up.tagName === 'EM'
+          && twoup.childNodes.length === 1
+          && twoup.tagName === 'P'
+        ) {
+          a.className = 'button secondary';
+          twoup.classList.add('button-container');
+        }
+      }
+    }
+  });
 }
 
 /**

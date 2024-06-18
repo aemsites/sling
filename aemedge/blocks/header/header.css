@@ -310,7 +310,7 @@ header nav[aria-expanded='true'] .nav-tools {
   left: calc(87% / 2);
 }
 
-header nav .nav-tools a.button:any-link {
+header nav .nav-tools a:any-link {
   all: unset;
   font-size: 1rem;
   font-weight: 600;
@@ -321,7 +321,7 @@ header nav .nav-tools a.button:any-link {
   text-decoration: none;
 }
 
-header nav .nav-tools a.button:hover {
+header nav .nav-tools a:hover {
   cursor: pointer;
 }
 
@@ -336,7 +336,7 @@ header nav .nav-tools a.button:hover {
     white-space: nowrap;
   }
 
-  header nav .nav-tools a.button img {
+  header nav .nav-tools a img {
     height: 16px;
     width: 16px;
     padding-right: 0.313rem;
