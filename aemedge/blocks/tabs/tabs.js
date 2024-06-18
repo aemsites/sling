@@ -99,13 +99,11 @@ export default async function decorate(block) {
     // set block to newBlock
     block.innerHTML = newBlock.innerHTML;
     // decorate subBlocks
-    const main = document.querySelector('main');
     const subBlocks = block.querySelectorAll(`.${subBlockToBuild}`);
     subBlocks.forEach((subBlock) => {
       decorateBlock(subBlock);
     });
     decorateButtons(block);
-    await loadBlocks(main);
   }
 
   // continue processing tabs as usual
@@ -154,4 +152,7 @@ export default async function decorate(block) {
   });
 
   block.prepend(tablist);
+  if (isStandard || isNonStandard) {
+    await loadBlocks(block);
+  }
 }
