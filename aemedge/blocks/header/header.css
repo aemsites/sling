@@ -92,6 +92,10 @@ header nav .nav-hamburger .nav-hamburger-icon {
     display: none;
     visibility: hidden;
   }
+
+  header nav .nav-brand {
+    position: unset;
+  }
 }
 
 /* brand */
