@@ -1,12 +1,14 @@
 /* header and nav layout */
 header {
   height: 58px;
+  background: transparent;
 }
 
 header .nav-wrapper {
   width: 100%;
   z-index: 2;
   position: fixed;
+  background: transparent;
 }
 
 header nav {
@@ -19,6 +21,7 @@ header nav {
   height: 60px;
   padding: 0 1rem;
   font-family: var(--body-font-family);
+  background: transparent;
 }
 
 header nav[aria-expanded="true"] {
