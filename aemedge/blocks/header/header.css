@@ -1,6 +1,6 @@
 /* header and nav layout */
 header {
-  height: auto;
+  height: 58px;
 }
 
 header .nav-wrapper {
@@ -154,7 +154,7 @@ header nav .nav-sections .nav-top>ul li:first-child {
 
 @media (width >=1024px) {
   header {
-    height: auto;
+    height: 90px;
     -webkit-font-smoothing: antialiased;
   }
 
