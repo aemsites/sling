@@ -105,9 +105,9 @@ export function buildMultipleButtons(main) {
 
 export function buildCtaBanners(main) {
   // cta banner
-  const columns = main.querySelectorAll('div.columns');
+  const columns = main.querySelectorAll('.section.cta-banner div.columns-wrapper');
   columns.forEach((column) => {
-    const pictures = column.parentElement.querySelectorAll(':scope > p picture');
+    const pictures = column.parentElement.querySelectorAll('p picture');
     if (pictures) {
       const images = [];
       pictures.forEach((picture, idx) => {
@@ -122,6 +122,7 @@ export function buildCtaBanners(main) {
       });
       const blogHero = buildBlock('blog-hero', { elems: images });
       column.parentElement.prepend(blogHero);
+      decorateBlock(blogHero);
     }
   });
 }
@@ -200,7 +201,6 @@ function buildAutoBlocks(main) {
   try {
     buildHeroBlock(main);
     buildFragmentBlocks(main);
-    buildCtaBanners(main);
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('Auto Blocking failed', error);
@@ -219,6 +219,7 @@ export function decorateMain(main) {
   buildAutoBlocks(main);
   decorateSections(main);
   decorateBlocks(main);
+  buildCtaBanners(main);
 }
 
 /**
