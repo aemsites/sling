@@ -153,8 +153,10 @@ export function decorateButtons(element) {
   element.querySelectorAll('a').forEach((a) => {
     a.title = a.title || a.textContent;
     if (a.href !== a.textContent) {
+      const hasIcon = a.querySelector('.icon');
       const up = a.parentElement;
       const twoup = a.parentElement.parentElement;
+      if (hasIcon) return;
       if (!a.querySelector('img')) {
         // let default button be text-only, no decoration
         const linkText = a.textContent;
