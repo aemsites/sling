@@ -12,10 +12,16 @@ export default async function decorate(block) {
   const tagIn = blockConfig['tag-in'] || placeholders.tagIn || 'us';
   const zipCode = window.zipCode || placeholders.defaultZipCode;
   block.innerHTML = '';
-  const variables = `{"filter":{"pck_type":{"in":["${packageType}"]},"is_channel_required":{"eq":${isChannelRequired}},"tag":{"in":["${tagIn}"]},"zipcode":{"eq":"${zipCode}"},"plan_offer_identifier":{"eq":"${planOfferIdentifier}"},"plan_identifier":{"eq":"${planIdentifier}"}}}`;
   const planOfferJson = await fetchGQL(
     GQL_QUERIES.getPackage.query,
-    variables,
+    GQL_QUERIES.getPackage.variables(
+      packageType,
+      isChannelRequired,
+      tagIn,
+      zipCode,
+      planOfferIdentifier,
+      planIdentifier,
+    ),
     GQL_QUERIES.getPackage.operationName,
   );
   console.log(planOfferJson);

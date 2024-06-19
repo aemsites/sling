@@ -17,6 +17,7 @@ export const GQL_QUERIES = {
         }
       }
     `,
+    variables: (zipCode) => `{"zipcode":"${zipCode}"}`,
   },
   packagesPerZipCode: {
     operationName: 'packagesPerZipCode',
@@ -39,6 +40,7 @@ export const GQL_QUERIES = {
         }
       }
     `,
+    variables: (zipCode) => `{"zipcode":"${zipCode}"}`,
   },
   getPackage: {
     operationName: 'getPackage',
@@ -81,6 +83,7 @@ export const GQL_QUERIES = {
         }
       }
     `,
+    variables: (packageType, isChannelRequired, tagIn, zipCode, planOfferIdentifier, planIdentifier) => `{"filter":{"pck_type":{"in":["${packageType}"]},"is_channel_required":{"eq":${isChannelRequired}},"tag":{"in":["${tagIn}"]},"zipcode":{"eq":"${zipCode}"},"plan_offer_identifier":{"eq":"${planOfferIdentifier}"},"plan_identifier":{"eq":"${planIdentifier}"}}}`,
   },
 };
 
