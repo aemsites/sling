@@ -1,6 +1,6 @@
 export const GRAPHQL_ENDPOINT = 'https://www.slingcommerce.com/graphql';
 
-export const GQL_QUERIES = {
+export const GQL_QUERIES = Object.freeze({
   zipcodeAddressVerificationV2: {
     operationName: 'zipcodeAddressVerificationV2',
     query: `
@@ -85,7 +85,7 @@ export const GQL_QUERIES = {
     `,
     variables: (packageType, isChannelRequired, tagIn, zipCode, planOfferIdentifier, planIdentifier) => `{"filter":{"pck_type":{"in":["${packageType}"]},"is_channel_required":{"eq":${isChannelRequired}},"tag":{"in":["${tagIn}"]},"zipcode":{"eq":"${zipCode}"},"plan_offer_identifier":{"eq":"${planOfferIdentifier}"},"plan_identifier":{"eq":"${planIdentifier}"}}}`,
   },
-};
+});
 
 export function cleanGQLParam(param) {
   return param.replace(/\s+/g, ' ').trim();
