@@ -3,6 +3,9 @@ import {
 } from './aem.js';
 
 export const PRODUCTION_DOMAINS = ['sling.com'];
+const ZIPCODE_ENDPOINT = 'https://p-geo.movetv.com/geo';
+const DEFAULT_ZIPCODE = '90020';
+const ZIPCODE_KEY = 'user_zip';
 const domainCheckCache = {};
 /**
  * Checks a url to determine if it is a known domain.
@@ -296,4 +299,20 @@ export async function createCard(row, style, eagerImage = false) {
   }
   cardContent.append(authorDate);
   return (card);
+}
+
+export async function getZipcode() {
+  let zipcode = localStorage.getItem(ZIPCODE_KEY);
+  if (!zipcode) {
+    const response = await fetch(ZIPCODE_ENDPOINT);
+    const data = await response.json();
+    zipcode = data?.zip_code || DEFAULT_ZIPCODE;
+    localStorage.setItem(ZIPCODE_KEY, zipcode);
+  }
+  return zipcode;
+}
+
+export function updateZipcode(zipinput) {
+  localStorage.setItem(ZIPCODE_KEY, zipinput);
+  // TODO : emit custom event
 }
