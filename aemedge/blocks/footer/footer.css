@@ -2,6 +2,7 @@ footer {
   color:var(--header-text-color);
   font-family: var(--heading-font-family);
   -webkit-font-smoothing:antialiased;
+  background-color: #202230;
 }
 
 footer .footer {
@@ -16,6 +17,7 @@ footer .footer p {
 footer .footer a {
   color:var(--header-text-color);
   margin-bottom: 16px;
+  line-height: 2em;
 }
 
 footer .footer a > span.nav-link-text {
@@ -31,12 +33,13 @@ footer ul , footer li , footer ul li{
 footer li.nav-item.nav-heading {
 font-size: var(--heading-font-size-m);
 font-weight: 700;
-margin-bottom: 32px;
+margin-bottom: 12px;
 line-height:27px;
 }
 
 footer li.social-link span.nav-link-text {
   font-size: 12px;
+  white-space: nowrap;
 }
 
 /* footer .section > div {
@@ -55,20 +58,20 @@ footer .section.footer-primary{
   display: flex;
   flex-flow: wrap column ;
   align-content: flex-start;
-  background-color: #202230;
+
 }
 
 footer .footer-primary-links {
 display: flex;
 flex-flow: wrap column ;
-margin-top:40px;
-margin-bottom: 40px;
+margin-top:48px;
+margin-bottom: 20px;
 }
 
 .footer-primary-links .nav-items-wrapper {
 flex-shrink: 0;
 flex-grow: 1;
-margin-bottom: 40px;
+margin-bottom: 48px;
 padding: 0 16px;
 }
 
@@ -78,22 +81,28 @@ flex-flow: wrap column;
 margin-bottom:24px;
 }
 
-.footer .social-icons-wrapper{
-  display: flex;
-  padding: 0;
+.footer .icon-privacy-checkbox {
+  margin-right: 16px;
 }
 
-.footer .social-links-wrapper{
+.footer .social-icons-wrapper {
   display: flex;
-  padding: 0 16px;
+  padding: 0 24px;
+}
+
+.footer .social-links-wrapper {
+  display: flex;
+  padding: 0 24px;
 }
 
 .footer .social-icons-wrapper > li {
-  margin-left:18px;
+  align-content: flex-end;
+  margin-right: 10px
 }
 
 .footer .social-links-wrapper > li {
-  margin-right:24px;
+  line-height: 1em;
+  margin: 6px 24px 0 0;
 }
 
 footer .section.footer-secondary {
@@ -102,14 +111,16 @@ footer .section.footer-secondary {
   align-content: flex-start;
   padding-left:16px;
   background-color: #000;
-  padding-top:24px;
-  padding-bottom: 24px;
+  padding-top:16px;
+  padding-bottom: 30px;
 }
 
 .footer-secondary .sec-footer-links {
   display: flex;
   flex-flow: wrap ;
   align-content: space-evenly;
+  flex-grow: 1;
+  max-width: 1236px;
 }
 
 .footer-secondary div.copy-right{
@@ -142,46 +153,91 @@ vertical-align: middle;
   transition: filter .3s ease;
 }
 
-@media (width >= 992px) {
+@media (width >= 768px) {
   footer .footer.block > div {
     display: flex;
     flex-direction: column;
-
   }
 
   footer .section.footer-primary{
     display: flex;
-    flex-flow: wrap row ;
-    padding: 60px 33px 64px;
-    justify-content: space-evenly;
-
   }
 
   footer .footer-primary-links {
-  display: flex;
-  flex-flow: wrap row ;
-  justify-content: space-around;
+    display: grid;
+    grid-template-columns: auto auto auto auto auto;
+    justify-content: space-between;
+    width: calc(100% - 48px);
+    max-width: 950px;
+    margin-left: 24px;
   }
 
-  .footer-primary-links .nav-items-wrapper {
-    margin-right:40px;
+  footer li.nav-item.nav-heading {
+    margin-bottom: 24px;
+  }
+
+  .footer-primary .nav-items-wrapper.footer-social-links {
+    display: flex;
+    flex-flow: wrap row;
   }
 
   footer .section.footer-secondary {
     flex-direction: row;
-  }
-
-  .footer .footer-social-links .social-links-wrapper {
-    flex-direction: column;
-  }
-
-  .footer-secondary .sec-footer-links {
-    flex-direction: row;
-    margin: 0 auto;
+    padding-left: 32px;
   }
 
   .footer-secondary div.copy-right {
     display: flex;
+    margin: 4px 24px 0 0;
+    max-width: 200px;
+  }
+}
+
+@media (width >= 1024px) {
+  .footer .section.footer-primary {
     margin: 0 auto;
+    width: 100%;
+    max-width: 1436px;
+    flex-flow: row;
+  }
+
+.footer .section.footer-secondary {
+  justify-content: center;
+}
+
+  .footer .footer-primary-links .nav-items-wrapper {
+    padding-right: 48px;
+  }
+
+  .footer .social-links-wrapper {
+    display: block;
+    text-align:right;
+    padding: 0;
+    flex-flow: wrap column;
+  }
+
+  .footer .social-icons-wrapper {
+    padding: 0 0 0 16px;
+  }
+
+  .footer .social-icons-wrapper > li {
+    align-content: flex-end;
+  }
+
+  .footer .social-links-wrapper > li {
+    line-height: 1em;
+    margin: 0 24px 0 0;
+  }
+
+  .footer-primary .nav-items-wrapper.footer-social-links {
+    flex-flow: wrap column;
+    margin-top: 48px;
+    margin-right: 24px;
+    flex-grow: 1;
+    align-content: end;
+  }
+
+  .footer-secondary .sec-footer-links {
+    justify-content: flex-end;
   }
 }
