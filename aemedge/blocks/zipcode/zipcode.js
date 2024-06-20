@@ -1,8 +1,19 @@
-import {
-  createTag,
-  getZipcode,
-  updateZipcode,
-} from '../../scripts/utils.js';
+import { createTag } from '../../scripts/utils.js';
+
+const ZIPCODE_ENDPOINT = 'https://p-geo.movetv.com/geo';
+const DEFAULT_ZIPCODE = '90020';
+const ZIPCODE_KEY = 'user_zip';
+
+async function getZipcode() {
+  let zipcode = localStorage.getItem(ZIPCODE_KEY);
+  if (!zipcode) {
+    const response = await fetch(ZIPCODE_ENDPOINT);
+    const data = await response.json();
+    zipcode = data?.zip_code || DEFAULT_ZIPCODE;
+    localStorage.setItem(ZIPCODE_KEY, zipcode);
+  }
+  return zipcode;
+}
 
 const closeForm = (e, block) => {
   e.preventDefault();
@@ -12,17 +23,11 @@ const closeForm = (e, block) => {
 const updateZip = (e, block) => {
   e.preventDefault();
   const zipinput = block.querySelector(':scope  .zip-input').value;
-  updateZipcode(zipinput);
+  localStorage.setItem(ZIPCODE_KEY, zipinput);
   block.querySelector('.geo-form-container').remove();
   // create custom event and dispatch it
-  const zipUpdateEvent = new CustomEvent(
-    'zipupdate',
-    {
-      data: {
-        zipcode: zipinput,
-      },
-    },
-  );
+  const options = { bubbles: true, detail: { zipcode: zipinput } };
+  const zipUpdateEvent = new CustomEvent('zipupdate', options);
   document.dispatchEvent(zipUpdateEvent);
 };
 
@@ -54,6 +59,9 @@ const toggleGeoSelector = (e, zipCode, block) => {
 
 export default async function decorate(block) {
   const zipCode = await getZipcode();
+  document.addEventListener('zipupdate', () => {
+    decorate(block);
+  });
   block.innerHTML = `
   <div class="geo-container">
         <div class="geo-pin">
