@@ -1,0 +1,192 @@
+header nav[aria-expanded="true"] .zipcode-wrapper {
+    display: none;
+}
+
+header nav[aria-expanded="false"] .zipcode-wrapper {
+    position: absolute;
+    background: #44444f;
+    z-index: 1000;
+    height: 59px;
+    padding-left: 5px;
+    padding-right: 5px;
+    top: 0;
+    left: 95px;
+    display: flex;
+    place-content: center;
+    place-items: center;
+    box-sizing: border-box;
+}
+
+.white-arrow-background {
+    width: 20px;
+    height: 20px;
+    position: relative;
+    background-color: var(--clr-white);
+    top: -10px;
+    left: 20px;
+    transform: rotate(-45deg);
+    margin-top: 1px;
+    z-index: 2;
+    border-radius: 3px;
+}
+
+.geo-container {
+    box-sizing: border-box;
+    color: var(--header-text-color);
+    display: flex;
+    width: 100px;
+    place-content: space-evenly;
+}
+
+.geo-container .geo-pin:hover,
+.geo-container .geo-text:hover,
+.geo-container .geo-selector:hover {
+    cursor: pointer;
+}
+
+.geo-container img {
+    filter: invert(1);
+    width: 16px;
+    height: 16px;
+}
+
+.geo-form-container {
+    position: absolute;
+    height: 286px;
+    width: 265px;
+    top: 70px;
+    border-radius: 0.5rem;
+    background-color: var(--clr-white);
+    box-shadow: var(--clr-black);
+    z-index: 1000;
+    padding: 0 24px;
+    box-sizing: border-box;
+}
+
+.form-close {
+    display: flex;
+    justify-content: flex-end;
+    box-sizing: border-box;
+}
+
+.form-close .form-close-btn {
+    all: unset;
+    cursor: pointer;
+}
+
+
+.form-close .form-close-btn>img {
+    width: 20px;
+    height: 20px;
+}
+
+.form-header {
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 24px;
+    color: var(--clr-black);
+    text-align: center;
+    margin-bottom: 24px;
+    letter-spacing: 0.25px;
+}
+
+.form-info-text {
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--clr-black);
+    text-align: left;
+    margin-bottom: 16px;
+    line-height: 18px;
+}
+
+.geo-form-input {
+    width: 265px;
+    position: relative;
+}
+
+.geo-form-input input {
+    border-style: solid;
+    border-image: initial;
+    border-width: 2px;
+    border-radius: 2px;
+    box-sizing: border-box;
+    outline: none;
+    padding-left: 0.75rem;
+    padding-top: 1.5rem;
+    font-size: 1.125rem;
+    line-height: 1.222;
+    font-weight: 600;
+    cursor: text;
+    border-color: var(--input-background-color) !important;
+    background-color: var(--input-background-color) !important;
+    color: var(--clr-light-black) !important;
+    display: flex;
+    flex-direction: column;
+    height: 3.25rem;
+}
+
+.zip-input-label {
+    position: absolute;
+    color: var(--clr-light-black);
+    ;
+    opacity: 1;
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-align: left;
+    left: calc(2px + 0.75rem);
+    top: 0.75rem;
+    transform: none;
+    transition: all 0.3s ease 0s;
+    pointer-events: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: calc(100% - 15px);
+}
+
+.zip-update-btn {
+    margin-bottom: 20px;
+    width: 100%;
+    height: 40px;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 13px;
+    letter-spacing: 1px;
+    padding: 0.875rem 1rem;
+    box-sizing: border-box;
+}
+
+@media (width >=1024px) {
+    header nav[aria-expanded="true"] .zipcode-wrapper {
+        position: relative;
+        margin-left: 24px;
+        top: unset;
+        left: unset;
+        height: 58px;
+        padding: 0 5px;
+        background: #292938;
+        display: flex;
+        place-content: center;
+        place-items: center;
+        box-sizing: border-box;
+    }
+
+    .geo-form-container {
+        position: absolute;
+        height: 335px;
+        width: 313px;
+    }
+
+    .geo-form-input {
+        margin-bottom: 34px;
+        width: 265px;
+        height: 40px;
+        padding-bottom: 10px;
+        position: relative;
+    }
+
+    .geo-form-input input {
+        height: 4rem;
+        width: 100%;
+    }
+}

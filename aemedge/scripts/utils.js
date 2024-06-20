@@ -3,6 +3,7 @@ import {
 } from './aem.js';
 
 export const PRODUCTION_DOMAINS = ['sling.com'];
+
 const domainCheckCache = {};
 /**
  * Checks a url to determine if it is a known domain.

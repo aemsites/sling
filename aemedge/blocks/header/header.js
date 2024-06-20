@@ -1,4 +1,8 @@
-import { getMetadata } from '../../scripts/aem.js';
+import {
+  buildBlock, decorateBlock, getMetadata,
+  loadBlock,
+} from '../../scripts/aem.js';
+import { createTag } from '../../scripts/utils.js';
 import { loadFragment } from '../fragment/fragment.js';
 
 // media query match that indicates mobile/tablet width
@@ -207,5 +211,11 @@ export default async function decorate(block) {
     );
     moveTopNav(mquery, topnavSection, navSections);
   }
+  const wrapper = createTag('div');
+  const zipblock = buildBlock('zipcode', createTag('div'));
+  wrapper.append(zipblock);
+  decorateBlock(zipblock);
+  await loadBlock(zipblock);
+  nav.insertBefore(wrapper, navSections);
   block.append(navWrapper);
 }
