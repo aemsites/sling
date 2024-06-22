@@ -1,5 +1,5 @@
 import {
-  getMetadata, buildBlock, decorateBlock, createOptimizedPicture,
+  getMetadata, buildBlock, decorateBlock, createOptimizedPicture, toCamelCase,
 } from './aem.js';
 
 export const PRODUCTION_DOMAINS = ['sling.com'];
@@ -296,4 +296,48 @@ export async function createCard(row, style, eagerImage = false) {
   }
   cardContent.append(authorDate);
   return (card);
+}
+
+/**
+ * Gets placeholders object.
+ * @param {string} [prefix] Location of placeholders
+ * @param {string} [sheet] Sheet name to fetch placeholders from
+ * @returns {object} Window placeholders object
+ */
+// eslint-disable-next-line import/prefer-default-export, default-param-last
+export async function fetchPlaceholders(prefix = 'default', sheet = '') {
+  window.placeholders = window.placeholders || {};
+  if (!window.placeholders[`${prefix}-${sheet}`]) {
+    window.placeholders[`${prefix}-${sheet}`] = new Promise((resolve) => {
+      fetch(`${prefix === 'default' ? '' : prefix}/placeholders.json`)
+        .then((resp) => {
+          if (resp.ok) {
+            return resp.json();
+          }
+          return {};
+        })
+        .then((json) => {
+          const placeholders = {};
+          let jsonData;
+          if (sheet) {
+            jsonData = json[sheet].data;
+          } else {
+            jsonData = json.data;
+          }
+          jsonData
+            .filter((placeholder) => placeholder.Key)
+            .forEach((placeholder) => {
+              placeholders[toCamelCase(placeholder.Key)] = placeholder.Text;
+            });
+          window.placeholders[prefix] = placeholders;
+          resolve(window.placeholders[prefix]);
+        })
+        .catch(() => {
+          // error loading placeholders
+          window.placeholders[`${prefix}-${sheet}`] = {};
+          resolve(window.placeholders[`${prefix}-${sheet}`]);
+        });
+    });
+  }
+  return window.placeholders[`${prefix}-${sheet}`];
 }
