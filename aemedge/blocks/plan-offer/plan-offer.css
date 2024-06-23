@@ -27,7 +27,6 @@
     box-shadow: rgba(0 0 0 0.1) 0 0 20px;
     border-radius: 4px;
     margin-bottom: 32px;
-    height: 477px;
     width: 347px;
 }
 
@@ -39,6 +38,20 @@
 .plan-offer .card.single.blue {
     background: linear-gradient(to right, rgb(0 50 175) 0.01%, rgb(0 91 255) 100%);
     color: white;
+}
+
+.plan-offer .card.combo {
+    margin: 0 auto;
+    /* width: 734px; */
+    width: 80%;
+    display: flex;
+    border-radius: 4px;
+    color: rgb(23 23 37);
+    height: 180px;
+    background: linear-gradient(87.61deg, rgb(23 23 37) 0%, rgb(0 50 175) 100%) rgb(255 255 255);
+    flex-flow: row wrap;
+    justify-content: space-around;
+    align-items: center;
 }
 
 .plan-offer .card.single .card-header {
@@ -62,7 +75,49 @@
     color: white;
 }
 
-.plan-offer .card .card-body {
+.plan-offer .card.combo .card-header {
+    color: white;
+    display: flex;
+    flex-flow: row wrap;
+    gap: 2em;
+}
+
+.plan-offer .card.combo .card-body {
+    background-color: unset;
+}
+
+.plan-offer .card.combo .card-body .channels,
+.plan-offer .card.combo .card-body .stream-devices,
+.plan-offer .card.combo .card-body .compare.button {
+    display: none;
+}
+
+.plan-offer .card.single .card-header .price {
+    text-align: end;
+}
+
+.plan-offer .card.combo .card-header .price {
+    /* display: flex;
+    flex-flow: column wrap;
+    align-items: center;
+    justify-content: center; */
+
+    align-self: center;
+}
+
+.plan-offer .card.single .card-header .base-price {
+    font-size: 18px;
+    font-weight: 600;
+    opacity: 0.6;
+    text-decoration: line-through;
+}
+
+.plan-offer .card.single .card-header .offer-price {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.plan-offer .card.single .card-body {
     overflow: hidden;
     background-color: white;
     color: black;
@@ -73,13 +128,13 @@
     margin: 1px 0 2px 1px;
 }
 
-.plan-offer .channels span {
+.plan-offer .card.single .channels span {
     position: relative;
     width: 93px;
     height: 93px;
     border-radius: 50%;
     background: rgb(255 255 255);
-    box-shadow: rgba(0 0 0 20%) 0 0 8px;
+    box-shadow: rgba(0 0 0 / 20%) 0 0 8px;
     margin-right: 8px;
     margin-bottom: 16px;
     display: flex;
@@ -87,28 +142,28 @@
     align-items: center;
 }
 
-.plan-offer span img {
+.plan-offer .card.single span img {
     width: 60px;
     object-fit: cover;
 }
 
-.plan-offer .carousel-slide-image {
+.plan-offer .card.single .carousel-slide-image {
     justify-content: center;
     align-items: center;
 }
 
-.plan-offer .carousel-slide-image p {
+.plan-offer .card.single .carousel-slide-image p {
     margin: 0;
     padding: 0;
 }
 
-.plan-offer .stream-devices {
+.plan-offer .card.single .stream-devices {
     position: relative;
     display: inline-flex;
     line-height: normal;
 }
 
-.plan-offer .stream-devices::before {
+.plan-offer .card.single .stream-devices::before {
     content: url('../../icons/stream-devices.svg');
     position: relative;
     color: rgb(23 23 37);

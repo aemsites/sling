@@ -31,12 +31,16 @@ async function createCard(
   } else {
     card.classList.add('single');
   }
-  const cardHeader = createTag('div', { class: 'card-header' }, planComparisonPlaceholders[`${packageType.name}servicetitletext`] || '');
+  const cardHeader = createTag('div', { class: 'card-header' });
+  const cardTitle = createTag('div', { class: 'card-title' });
+  const title = createTag('h3', {}, planComparisonPlaceholders[`${packageType.name}servicetitletext`] || '');
+  cardTitle.appendChild(title);
+  cardHeader.appendChild(cardTitle);
   const price = createTag('div', { class: 'price' });
   const basePrice = Number(packageJson.base_price) || '';
   const offerPrice = Number(packageJson.plan_offer_price) || '';
   const discountPrice = basePrice - offerPrice;
-  const basePriceSpan = createTag('span', { class: 'base-price' }, `$${basePrice}` || '');
+  const basePriceSpan = createTag('span', { class: 'base-price' }, `$${basePrice}/month ` || ' ');
   const offerPriceSpan = createTag('span', { class: 'offer-price' }, `$${offerPrice}` || '');
   const discountPriceSpan = createTag('div', { class: 'discount-price' }, `$${discountPrice} off your first month` || '');
   price.appendChild(basePriceSpan);
@@ -61,13 +65,19 @@ async function createCard(
   });
   const carouselBlock = buildBlock('carousel', carouselContent);
   channelsWrapper.append(carouselBlock);
+  const cardBodyText = createTag('div', { class: 'card-body-text' }, `${channels.length} total channels` || '');
+  if (packageType.name !== 'combo') {
+    cardBody.appendChild(cardBodyText);
+  } else {
+    cardTitle.appendChild(cardBodyText);
+  }
   cardBody.appendChild(channelsWrapper);
   const streamDevicesContent = planOfferPlaceholders[`${packageType.name}servicedevicestreamstext`];
   const streamDevices = createTag('div', { class: 'stream-devices' }, streamDevicesContent || '');
   cardBody.appendChild(streamDevices);
   // Buttons
-  const planButton = createTag('a', { class: 'button', href: `${planComparisonPlaceholders[packageType.name]}servicectalink` }, planComparisonPlaceholders[`${packageType.name}servicectatext`] || '');
-  const comparePlans = createTag('a', { class: 'button', href: '#' }, 'COMPARE PLANS');
+  const planButton = createTag('a', { class: 'button plan', href: planComparisonPlaceholders[`${packageType.name}servicectalink`] }, planComparisonPlaceholders[`${packageType.name}servicectatext`] || '');
+  const comparePlans = createTag('a', { class: 'button compare', href: '#' }, 'COMPARE PLANS');
   const buttonWrapper = createTag('div', { class: 'button-wrapper' });
   buttonWrapper.appendChild(planButton);
   buttonWrapper.appendChild(comparePlans);
