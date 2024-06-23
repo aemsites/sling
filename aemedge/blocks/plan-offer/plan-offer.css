@@ -20,7 +20,6 @@
 .plan-offer .card.single {
     display: flex;
     flex-direction: column;
-    -webkit-box-align: center;
     align-items: center;
     position: relative;
     margin: 1px 0 32px 1px;
@@ -105,14 +104,13 @@
 
 .plan-offer .stream-devices {
     position: relative;
+    display: inline-flex;
+    line-height: normal;
 }
 
 .plan-offer .stream-devices::before {
-    content: "";
+    content: url('../../icons/stream-devices.svg');
     position: relative;
     color: rgb(23 23 37);
     margin-right: 10px;
-    width: 1em;
-    height: 1em;
-    background: url('../../icons/stream-devices.svg') no-repeat center;
 }

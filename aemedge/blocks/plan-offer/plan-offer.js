@@ -1,4 +1,6 @@
-import { readBlockConfig, buildBlock, decorateBlock, loadBlock } from '../../scripts/aem.js';
+import {
+  readBlockConfig, buildBlock, decorateBlock, loadBlock, decorateButtons,
+} from '../../scripts/aem.js';
 import { GQL_QUERIES, fetchGQL } from '../../scripts/gql-utils.js';
 import { createTag, fetchPlaceholders } from '../../scripts/utils.js';
 
@@ -63,6 +65,14 @@ async function createCard(
   const streamDevicesContent = planOfferPlaceholders[`${packageType.name}servicedevicestreamstext`];
   const streamDevices = createTag('div', { class: 'stream-devices' }, streamDevicesContent || '');
   cardBody.appendChild(streamDevices);
+  // Buttons
+  const planButton = createTag('a', { class: 'button', href: `${planComparisonPlaceholders[packageType.name]}servicectalink` }, planComparisonPlaceholders[`${packageType.name}servicectatext`] || '');
+  const comparePlans = createTag('a', { class: 'button', href: '#' }, 'COMPARE PLANS');
+  const buttonWrapper = createTag('div', { class: 'button-wrapper' });
+  buttonWrapper.appendChild(planButton);
+  buttonWrapper.appendChild(comparePlans);
+  cardBody.appendChild(buttonWrapper);
+  decorateButtons(buttonWrapper);
   card.appendChild(cardBody);
   decorateBlock(carouselBlock);
   await loadBlock(carouselBlock);
