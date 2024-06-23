@@ -105,16 +105,21 @@
     align-self: center;
 }
 
-.plan-offer .card.single .card-header .base-price {
+.plan-offer .card .card-header .base-price {
     font-size: 18px;
     font-weight: 600;
     opacity: 0.6;
     text-decoration: line-through;
 }
 
-.plan-offer .card.single .card-header .offer-price {
+.plan-offer .card .card-header .offer-price {
     font-size: 18px;
     font-weight: 600;
+}
+
+.plan-offer .card .card-header .discount-price {
+    font-size: unset;
+    font-weight: unset;
 }
 
 .plan-offer .card.single .card-body {
