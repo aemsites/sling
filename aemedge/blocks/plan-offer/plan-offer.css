@@ -1,3 +1,4 @@
+/* stylelint-disable no-descending-specificity */
 .plan-offer {
     display: flex;
     flex-direction: column;
@@ -42,7 +43,9 @@
 
 .plan-offer .card.combo {
     margin: 0 auto;
+    
     /* width: 734px; */
+
     width: 80%;
     display: flex;
     border-radius: 4px;
