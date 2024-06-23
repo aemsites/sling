@@ -1,4 +1,4 @@
-import { readBlockConfig } from '../../scripts/aem.js';
+import { readBlockConfig, buildBlock, decorateBlock, loadBlock } from '../../scripts/aem.js';
 import { GQL_QUERIES, fetchGQL } from '../../scripts/gql-utils.js';
 import { createTag, fetchPlaceholders } from '../../scripts/utils.js';
 
@@ -17,13 +17,18 @@ const PACKAGE_TYPES = Object.freeze({
   },
 });
 
-function createCard(
+async function createCard(
   packageType,
   planOfferPlaceholders,
   planComparisonPlaceholders,
   packageJson,
 ) {
-  const card = createTag('div', { class: 'card' });
+  const card = createTag('div', { class: `card ${packageType.name}` });
+  if (packageType.name === 'combo') {
+    card.classList.add('combo');
+  } else {
+    card.classList.add('single');
+  }
   const cardHeader = createTag('div', { class: 'card-header' }, planComparisonPlaceholders[`${packageType.name}servicetitletext`] || '');
   const price = createTag('div', { class: 'price' });
   const basePrice = Number(packageJson.base_price) || '';
@@ -48,12 +53,19 @@ function createCard(
     const channelDiv = createTag('span', { class: 'channel' }, channelImage);
     return channelDiv;
   });
-  channelsWrapper.append(...channels);
+  const carouselContent = [];
+  channels.forEach((channel) => {
+    carouselContent.push([channel]);
+  });
+  const carouselBlock = buildBlock('carousel', carouselContent);
+  channelsWrapper.append(carouselBlock);
   cardBody.appendChild(channelsWrapper);
   const streamDevicesContent = planOfferPlaceholders[`${packageType.name}servicedevicestreamstext`];
   const streamDevices = createTag('div', { class: 'stream-devices' }, streamDevicesContent || '');
   cardBody.appendChild(streamDevices);
   card.appendChild(cardBody);
+  decorateBlock(carouselBlock);
+  await loadBlock(carouselBlock);
   return card;
 }
 
@@ -96,19 +108,19 @@ export default async function decorate(block) {
     .filter((p) => p.name === PACKAGE_TYPES.blue.title)[0];
   const comboPackageJson = planOfferJson.data.packages.items.package
     .filter((p) => p.name === PACKAGE_TYPES.combo.title)[0];
-  const orangeCard = createCard(
+  const orangeCard = await createCard(
     PACKAGE_TYPES.orange,
     planOfferPlaceholders,
     planComparisonPlaceholders,
     orangePackageJson,
   );
-  const blueCard = createCard(
+  const blueCard = await createCard(
     PACKAGE_TYPES.blue,
     planOfferPlaceholders,
     planComparisonPlaceholders,
     bluePackageJson,
   );
-  const comboCard = createCard(
+  const comboCard = await createCard(
     PACKAGE_TYPES.combo,
     planOfferPlaceholders,
     planComparisonPlaceholders,

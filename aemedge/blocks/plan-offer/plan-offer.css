@@ -1,8 +1,77 @@
-
-.plan-offer .channels {
+.plan-offer {
     display: flex;
-    flex-wrap: wrap;
-    transition: transform 0.5s ease-in-out 0s;
+    flex-direction: column;
+    align-items: center;
+    padding: 32px 0;
+    background: rgb(255 255 255);
+    box-shadow: rgba(0 0 0 20%) 0 0 8px;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+.plan-offer .card-wrapper {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    gap: 16px;
+}
+
+.plan-offer .card.single {
+    display: flex;
+    flex-direction: column;
+    -webkit-box-align: center;
+    align-items: center;
+    position: relative;
+    margin: 1px 0 32px 1px;
+    padding: 1px;
+    box-shadow: rgba(0 0 0 0.1) 0 0 20px;
+    border-radius: 4px;
+    margin-bottom: 32px;
+    height: 477px;
+    width: 347px;
+}
+
+.plan-offer .card.single.orange {
+    background: linear-gradient(to right, rgb(255 163 0), rgb(255 208 60));
+    color: rgb(23 23 37);
+}
+
+.plan-offer .card.single.blue {
+    background: linear-gradient(to right, rgb(0 50 175) 0.01%, rgb(0 91 255) 100%);
+    color: white;
+}
+
+.plan-offer .card.single .card-header {
+    justify-content: space-between;
+    padding: 16px;
+    border-radius: 4px 4px 0 0;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    box-sizing: border-box;
+    align-items: center;
+}
+
+.plan-offer .card.single.orange .card-header {
+    background: linear-gradient(to right, rgb(255 163 0), rgb(255 208 60));
+    color: black;
+}
+
+.plan-offer .card.single.blue .card-header {
+    background: linear-gradient(to right, rgb(0 50 175) 0.01%, rgb(0 91 255) 100%);
+    color: white;
+}
+
+.plan-offer .card .card-body {
+    overflow: hidden;
+    background-color: white;
+    color: black;
+    position: relative;
+    width: 343px;
+    height: 100%;
+    border-radius: 4px;
+    margin: 1px 0 2px 1px;
 }
 
 .plan-offer .channels span {
@@ -22,4 +91,28 @@
 .plan-offer span img {
     width: 60px;
     object-fit: cover;
+}
+
+.plan-offer .carousel-slide-image {
+    justify-content: center;
+    align-items: center;
+}
+
+.plan-offer .carousel-slide-image p {
+    margin: 0;
+    padding: 0;
+}
+
+.plan-offer .stream-devices {
+    position: relative;
+}
+
+.plan-offer .stream-devices::before {
+    content: "";
+    position: relative;
+    color: rgb(23 23 37);
+    margin-right: 10px;
+    width: 1em;
+    height: 1em;
+    background: url('../../icons/stream-devices.svg') no-repeat center;
 }
