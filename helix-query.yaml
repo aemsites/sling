@@ -7,7 +7,7 @@ indices:
       - '/drafts/**'
       - '/tools/sidekick/**'
       - '/fragments/**'
-    target: /query-index.json
+    target: /whatson/query-index.json
     properties:
       title:
         select: head > meta[property="og:title"]
