@@ -81,7 +81,7 @@
   border-radius: 0.25em;
   object-fit: cover;
   background: rgb(239 239 241);
-  filter: drop-shadow(rgba(0 0 0 / 20%) 0 4px 4px);
+  filter: drop-shadow(0 4px 4px rgb(0 0 0 / 20%));
 }
 
 .carousel .carousel-slide .carousel-slide-content {
@@ -97,20 +97,6 @@
 .carousel .carousel-slide-indicators {
   display: none;
 }
-
-/* .carousel .carousel-slide-indicator button {
-  width: 1rem;
-  height: 1rem;
-  padding: 0;
-  border-radius: 1rem;
-  background-color: rgba(0 0 0 / 25%);
-}
-
-.carousel .carousel-slide-indicator button:disabled,
-.carousel .carousel-slide-indicator button:hover,
-.carousel .carousel-slide-indicator button:focus-visible {
-  background-color: rgba(0 0 0 / 80%);
-} */
 
 .carousel .carousel-slide-indicator span,
 .carousel .carousel-navigation-buttons span {
@@ -150,17 +136,10 @@
   line-height: 0;
   border: none;
   border-radius: 50%;
-  background: rgba(245, 245, 246, 0.8);
-  /*
-  z-index: 2; */
+  background: rgb(245 245 246 / 80%);
   cursor: pointer;
-  filter: drop-shadow(rgba(0, 0, 0, 0.3) 0px 2px 10px);
+  filter: drop-shadow(0 2px 10px rgb(0 0 0 / 30%));
   backdrop-filter: blur(5px);
-}
-
-.carousel .carousel-navigation-buttons button:hover,
-.carousel .carousel-navigation-buttons button:focus-visible {
-  background: rgba(245, 245, 246, 0.8);
 }
 
 .carousel .carousel-navigation-buttons button::after {
@@ -193,6 +172,7 @@
 
   .carousel .carousel-slide .carousel-slide-content {
     --slide-content-width: 50%;
+
     margin: 2.5rem 5rem;
   }
 
