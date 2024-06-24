@@ -11,8 +11,9 @@ export default async function decorate(block) {
   const categories = new URL(window.location.href).pathname.split('/').filter((path) => path);
   // remove whatson from the categories
   categories.shift();
+  categories.map((cat) => cat.replace('-and-', '&'));
   // Get blogs
-  const blogs = await getBlogs(categories, 7);
+  const blogs = await getBlogs(categories.map((cat) => cat.replace('-and-', ' & ')), 7);
   blogs.forEach(async (blog, i) => {
     if (blog.image === '') return;
     let card;
