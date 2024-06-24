@@ -28,13 +28,13 @@ export default async function decorate(block) {
           pictures.forEach((picture) => {
             carouselContent.push([picture]);
           });
-          const carouselBlock = buildBlock('carousel', carouselContent);
+          const carouselBlock = buildBlock('carousel-new', carouselContent);
           col.append(carouselBlock);
         }
       }
     });
   });
-  const carouselBlocks = block.querySelectorAll('.columns-img-col-multi .carousel');
+  const carouselBlocks = block.querySelectorAll('.columns-img-col-multi .carousel-new');
   if (carouselBlocks) {
     carouselBlocks.forEach(async (subBlock) => {
       decorateBlock(subBlock);
