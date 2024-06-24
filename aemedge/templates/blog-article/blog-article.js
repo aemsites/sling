@@ -139,6 +139,7 @@ export default async function buildBlogDetails(main) {
   const blogContentWrapper = createTag('div', { class: 'blog-details-wrapper' });
   const authWrapper = createTag('div', { class: 'author-details-wrapper' });
   const contentWrapper = createTag('div', { class: 'content-details-wrapper' });
+
   // move all divs into content wrapper div
   contentSection.querySelectorAll('div').forEach((div) => contentWrapper.append(div));
   authWrapper.prepend(await buildAuthorBlock());
@@ -146,6 +147,8 @@ export default async function buildBlogDetails(main) {
   blogContentWrapper.append(authWrapper, contentWrapper);
   // append the blog details wrapper to the section
   contentSection.append(blogContentWrapper);
+  const p = contentWrapper.querySelector('.default-content-wrapper:first-of-type > p:first-of-type');
+  if (p) p.remove();
   buildFragmentBlocks(main);
   buildVideoBlocks(main);
 }
