@@ -22,8 +22,10 @@
 .carousel-slide {
   flex-shrink: 0;
   width: 33.34%;
+  /* max-height: 33.34%; */
   background-color: #FFF;
   scroll-snap-align: center;
+  object-fit: cover;
 }
 
 .carousel-slide > div {
