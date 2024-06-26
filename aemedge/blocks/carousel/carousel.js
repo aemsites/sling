@@ -1,6 +1,6 @@
 /* eslint-disable no-lonely-if */
 function handleClick(direction, e) {
-  const list = e.target.closest('.carousel-new').querySelector('.carousel-slides');
+  const list = e.target.closest('.carousel').querySelector('.carousel-slides');
   // We want to know the width of one of the items.
   // We'll use this to decide how many pixels we want our carousel to scroll.
   const item = list.querySelector('.carousel-slide');
@@ -29,12 +29,21 @@ function handleClick(direction, e) {
 }
 
 function handleButtonClick(i, e) {
-  const slides = e.target.closest('.carousel-new').querySelector('.carousel-slides');
+  const slides = e.target.closest('.carousel').querySelector('.carousel-slides');
   const children = slides.querySelectorAll('.carousel-slide');
   if (i < 0 || i >= children.length) {
     return;
   }
-  slides.scrollBy({ left: children[i].getBoundingClientRect().left, behavior: 'smooth' });
+  if (i === 0 || i === children.length - 1) {
+    // if the first or last slide is already in view, don't scroll
+    if (children[i].getBoundingClientRect().left >= 0
+      && children[i].getBoundingClientRect().right <= slides.getBoundingClientRect().right) {
+      return;
+    }
+    slides.scrollBy({ left: children[i].getBoundingClientRect().left, behavior: 'smooth' });
+    return;
+  }
+  slides.scrollBy({ left: children[i - 1].getBoundingClientRect().left, behavior: 'smooth' });
 }
 
 export default async function decorate(block) {

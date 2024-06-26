@@ -22,7 +22,6 @@
 .carousel-slide {
   flex-shrink: 0;
   width: 33.34%;
-  height: 30%;
   background-color: #FFF;
   scroll-snap-align: center;
 }
@@ -34,7 +33,7 @@
   height: 100%;
 }
 
-.carousel-new .button {
+.carousel .button {
   position: absolute;
   top: 50%;
   width: 3rem;
@@ -47,11 +46,17 @@
   z-index: 1;
 }
 
-.carousel-new .button-previous {
+.carousel .button-previous {
   left: 1.5rem;
   transform: rotate(180deg);
 }
 
-.carousel-new .button-next {
+.carousel .button-next {
   right: 1.5rem;
+}
+
+.carousel-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
