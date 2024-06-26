@@ -47,14 +47,14 @@ setTimeout(() => {
     if (cells.length === 1) {
       trcount = 0;
       row.classList.add('single-column-row');
-      for (let i = 0; i < 2; i++) {
-        let newCell = document.createElement('td');
+      for (let i = 0; i < 2; i += 1) {
+        const newCell = document.createElement('td');
         row.appendChild(newCell);
       }
     }
     if (trcount % 2 === 0) {
       row.classList.add('lightgrey');
     }
-    trcount++;
+    trcount += 1;
   });
 });
