@@ -1,150 +1,72 @@
-import { fetchPlaceholders } from '../../scripts/aem.js';
+/* eslint-disable no-lonely-if */
+function handleClick(direction, e) {
+  const list = e.target.closest('.carousel-new').querySelector('.carousel-slides');
+  // We want to know the width of one of the items.
+  // We'll use this to decide how many pixels we want our carousel to scroll.
+  const item = list.querySelector('.carousel-slide');
+  const itemWidth = item.offsetWidth;
+  const firstItem = list.querySelector('.carousel-slide:first-child');
+  const lastItem = list.querySelector('.carousel-slide:last-child');
 
-function updateActiveSlide(slide) {
-  const block = slide.closest('.carousel');
-  const slideIndex = parseInt(slide.dataset.slideIndex, 10);
-  block.dataset.activeSlide = slideIndex;
-
-  const slides = block.querySelectorAll('.carousel-slide');
-
-  slides.forEach((aSlide, idx) => {
-    aSlide.setAttribute('aria-hidden', idx !== slideIndex);
-    aSlide.querySelectorAll('a').forEach((link) => {
-      if (idx !== slideIndex) {
-        link.setAttribute('tabindex', '-1');
-      } else {
-        link.removeAttribute('tabindex');
-      }
-    });
-  });
-
-  const indicators = block.querySelectorAll('.carousel-slide-indicator');
-  indicators.forEach((indicator, idx) => {
-    if (idx !== slideIndex) {
-      indicator.querySelector('button').removeAttribute('disabled');
+  // Based on the direction we call `scrollBy` with the item width we got earlier
+  if (direction === 'previous') {
+    // If first item is visible, scroll to the last item
+    if (firstItem.getBoundingClientRect().left >= 0) {
+      list.scrollBy({ left: lastItem.getBoundingClientRect().left, behavior: 'smooth' });
     } else {
-      indicator.querySelector('button').setAttribute('disabled', 'true');
+    // If first item is not visible, scroll to the left
+      list.scrollBy({ left: -itemWidth, behavior: 'smooth' });
     }
-  });
-}
-
-function showSlide(block, slideIndex = 0) {
-  const slides = block.querySelectorAll('.carousel-slide');
-  let realSlideIndex = slideIndex < 0 ? slides.length - 1 : slideIndex;
-  if (slideIndex >= slides.length) realSlideIndex = 0;
-  const activeSlide = slides[realSlideIndex];
-
-  activeSlide.querySelectorAll('a').forEach((link) => link.removeAttribute('tabindex'));
-  block.querySelector('.carousel-slides').scrollTo({
-    top: 0,
-    left: activeSlide.offsetLeft,
-    behavior: 'smooth',
-  });
-}
-
-function bindEvents(block) {
-  const slideIndicators = block.querySelector('.carousel-slide-indicators');
-  if (!slideIndicators) return;
-
-  slideIndicators.querySelectorAll('button').forEach((button) => {
-    button.addEventListener('click', (e) => {
-      const slideIndicator = e.currentTarget.parentElement;
-      showSlide(block, parseInt(slideIndicator.dataset.targetSlide, 10));
-    });
-  });
-
-  block.querySelector('.slide-prev').addEventListener('click', () => {
-    showSlide(block, parseInt(block.dataset.activeSlide, 10) - 1);
-  });
-  block.querySelector('.slide-next').addEventListener('click', () => {
-    showSlide(block, parseInt(block.dataset.activeSlide, 10) + 1);
-  });
-
-  const slideObserver = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) updateActiveSlide(entry.target);
-    });
-  }, { threshold: 0.5 });
-  block.querySelectorAll('.carousel-slide').forEach((slide) => {
-    slideObserver.observe(slide);
-  });
-}
-
-function createSlide(row, slideIndex, carouselId) {
-  const slide = document.createElement('li');
-  slide.dataset.slideIndex = slideIndex;
-  slide.setAttribute('id', `carousel-${carouselId}-slide-${slideIndex}`);
-  slide.classList.add('carousel-slide');
-
-  row.querySelectorAll(':scope > div').forEach((column, colIdx) => {
-    column.classList.add(`carousel-slide-${colIdx === 0 ? 'image' : 'content'}`);
-    slide.append(column);
-  });
-
-  const labeledBy = slide.querySelector('h1, h2, h3, h4, h5, h6');
-  if (labeledBy) {
-    slide.setAttribute('aria-labelledby', labeledBy.getAttribute('id'));
+  } else {
+    // If last item is visible, scroll to the first item
+    if (lastItem.getBoundingClientRect().right <= list.getBoundingClientRect().right) {
+      list.scrollBy({ left: firstItem.getBoundingClientRect().left, behavior: 'smooth' });
+    } else {
+      // If last item is not visible, scroll to the right
+      list.scrollBy({ left: itemWidth, behavior: 'smooth' });
+    }
   }
-
-  return slide;
 }
 
-let carouselId = 0;
+function handleButtonClick(i, e) {
+  const slides = e.target.closest('.carousel-new').querySelector('.carousel-slides');
+  const children = slides.querySelectorAll('.carousel-slide');
+  if (i < 0 || i >= children.length) {
+    return;
+  }
+  slides.scrollBy({ left: children[i].getBoundingClientRect().left, behavior: 'smooth' });
+}
+
 export default async function decorate(block) {
-  carouselId += 1;
-  block.setAttribute('id', `carousel-${carouselId}`);
+  const ul = document.createElement('ul');
+  ul.classList.add('carousel-slides');
   const rows = block.querySelectorAll(':scope > div');
-  const isSingleSlide = rows.length < 2;
-
-  const placeholders = await fetchPlaceholders();
-
-  block.setAttribute('role', 'region');
-  block.setAttribute('aria-roledescription', placeholders.carousel || 'Carousel');
-
-  const container = document.createElement('div');
-  container.classList.add('carousel-slides-container');
-
-  const slidesWrapper = document.createElement('ul');
-  slidesWrapper.classList.add('carousel-slides');
-  block.prepend(slidesWrapper);
-
-  let slideIndicators;
-  if (!isSingleSlide) {
-    const slideIndicatorsNav = document.createElement('nav');
-    slideIndicatorsNav.setAttribute('aria-label', placeholders.carouselSlideControls || 'Carousel Slide Controls');
-    slideIndicators = document.createElement('ol');
-    slideIndicators.classList.add('carousel-slide-indicators');
-    slideIndicatorsNav.append(slideIndicators);
-    block.append(slideIndicatorsNav);
-
-    const slideNavButtons = document.createElement('div');
-    slideNavButtons.classList.add('carousel-navigation-buttons');
-    slideNavButtons.innerHTML = `
-      <button type="button" class= "slide-prev" aria-label="${placeholders.previousSlide || 'Previous Slide'}"></button>
-      <button type="button" class="slide-next" aria-label="${placeholders.nextSlide || 'Next Slide'}"></button>
-    `;
-
-    container.append(slideNavButtons);
-  }
-
-  rows.forEach((row, idx) => {
-    const slide = createSlide(row, idx, carouselId);
-    slidesWrapper.append(slide);
-
-    if (slideIndicators) {
-      const indicator = document.createElement('li');
-      indicator.classList.add('carousel-slide-indicator');
-      indicator.dataset.targetSlide = idx;
-      indicator.innerHTML = `<button type="button"><span>${placeholders.showSlide || 'Show Slide'} ${idx + 1} ${placeholders.of || 'of'} ${rows.length}</span></button>`;
-      slideIndicators.append(indicator);
-    }
-    row.remove();
+  rows.forEach((row) => {
+    row.classList.add('carousel-slide');
   });
+  ul.append(...rows);
+  block.prepend(ul);
+  const buttons = ` 
+    <button class="button button-previous" type="button">➜</button>
+    <button class="button button-next" type="button">➜</button>
+  `;
+  block.innerHTML += buttons;
 
-  container.append(slidesWrapper);
-  block.prepend(container);
+  const previousButton = block.querySelector('.button-previous');
+  previousButton.addEventListener('click', (e) => handleClick('previous', e));
+  const nextButton = block.querySelector('.button-next');
+  nextButton.addEventListener('click', (e) => handleClick('next', e));
 
-  if (!isSingleSlide) {
-    bindEvents(block);
-  }
+  // add a button for every slide to the bottom of the carousel
+  const slideButtons = block.querySelectorAll('.carousel-slide');
+  const buttonContainer = document.createElement('div');
+  buttonContainer.classList.add('carousel-buttons');
+  slideButtons.forEach((slide, index) => {
+    const button = document.createElement('button');
+    button.classList.add('carousel-button');
+    button.textContent = index + 1;
+    button.addEventListener('click', (e) => handleButtonClick(index, e));
+    buttonContainer.appendChild(button);
+  });
+  block.appendChild(buttonContainer);
 }
