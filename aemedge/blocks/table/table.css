@@ -56,3 +56,92 @@
 .table.bordered table td {
   border: 1px solid;
 }
+
+
+/* new code */
+
+*{
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+.table.schedule {
+  width: 100%;
+  overflow-x: auto;
+  font-size: 12px;
+  font-family: sans-serif;
+}
+
+
+.table.schedule table thead tr {
+  background-color: rgb(50, 50, 253);
+  color: gold;
+}
+
+.table.schedule p, dl, ol, ul, pre, blockquote {
+margin-top: 2px;
+margin-bottom: 5px;
+}
+
+
+.table.schedule.no-header table tbody tr {
+  border-top: 1px solid;
+}
+
+.lightgrey {
+  background-color: var(--light-color);
+}
+
+
+.schedule {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  font-size: 16px;
+}
+
+.schedule.td {
+  padding: 1px;
+  text-align: center; 
+}
+
+.table.schedule table thead tr,.table.schedule table tbody tr {
+  border: none; 
+}
+
+
+.single-column-row{
+  background-color: var(--dark-color) !important;
+  width: 100%;
+  text-align: center;
+}
+
+@media (width >= 600px) {
+  .table.schedule table {
+    font-size: var(--body-font-size-xs);
+  }
+}
+
+@media (width >= 900px) {
+  div.section.table-container{
+    width: 60%;
+  }
+
+  div.table-wrapper{
+      display: flex;
+      justify-content: center;
+
+  }
+
+  div.table.schedule.block{
+      display: flex;
+      justify-content: center;
+      width: 66%;
+  }
+
+  .table.schedule table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: var(--body-font-size-xs);
+    }
+}
