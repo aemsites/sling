@@ -1,40 +1,69 @@
-import {
-  loadScript,
-  loadCSS,
-} from '../../scripts/aem.js';
+import { createTag } from '../../scripts/utils.js';
 
-// async function loadReactLib(src, attrs) {
-//   return new Promise((resolve, reject) => {
-//     const script = document.createElement('script');
-//     script.src = src;
-//     if (attrs) {
-//       // eslint-disable-next-line no-restricted-syntax, guard-for-in
-//       for (const attr in attrs) {
-//         script.setAttribute(attr, attrs[attr]);
-//       }
-//     }
-//     script.onload = resolve;
-//     script.onerror = reject;
-//     document.querySelector('.game-finder.block').append(script);
-//   });
-// }
+async function loadScript(src, attrs) {
+  return new Promise((resolve, reject) => {
+    const script = document.createElement('script');
+    script.src = src;
+    if (attrs) {
+      // eslint-disable-next-line no-restricted-syntax, guard-for-in
+      for (const attr in attrs) {
+        script.setAttribute(attr, attrs[attr]);
+      }
+    }
+    script.onload = resolve;
+    script.onerror = reject;
+    document.querySelector('.game-finder.block').append(script);
+  });
+}
+
+function toPropName(name) {
+  return typeof name === 'string'
+    ? name
+      .replace(/[^0-9a-z]/gi, '-')
+      .replace(/-+/g, '-')
+      .replace(/^-|-$/g, '')
+    : '';
+}
+
+function readBlockConfig(block) {
+  const config = {};
+  block.querySelectorAll(':scope > div').forEach((row) => {
+    if (row.children) {
+      const cols = [...row.children];
+      if (cols[1]) {
+        const name = toPropName(cols[0].textContent);
+        const value = row.children[1].textContent;
+        config[name] = value;
+      }
+    }
+  });
+  return config;
+}
 
 export default async function decorate(block) {
-  block.innerHTML = '<div class="js-react js-react-gamefinder"></div>';
-  // // window.slingUtils.apollo = apolloClientConfig;
-  // // await loadReactLib('../../../aemedge/scripts/reactlibs/apolloClientConfig.js');
-  // await loadReactLib('../../../aemedge/scripts/reactlibs/utils.js');
-
-  // await loadReactLib('../../../aemedge/scripts/reactlibs/launch-utils.js');
-  // await loadReactLib('../../../aemedge/scripts/reactlibs/gamefinder-react.js');
-
-  // // await loadReactLib('https://www.sling.com/etc.clientlibs/sling-tv/clientlibs/reactlibs/utils.min.34a064826b6e68471391de72a19a262f.js');
-  // // await loadReactLib('https://www.sling.com/etc.clientlibs/sling-tv/clientlibs/main.min.bb5232ec39d28034ed21652b78c0a156.js');
-
-  // // await loadReactLib('https://www.sling.com/etc.clientlibs/sling-tv/clientlibs/reactlibs/gamefinder-adobe-commerce.34a064826b6e68471391de72a19a262f.js');
-  // loadScript('../../../aemedge/scripts/preact/index-BBtLxv_Q.js');
-  // loadCSS('../../../aemedge/scripts/preact/index-CLfp0uDy.css');
-  // block.innerHTML = '<div id="app"></div>';
-
-  loadScript('../../../aemedge/scripts/preact/index-DybPTDOv.js');
+  const observer = new IntersectionObserver(async (entries) => {
+    if (entries.some((entry) => entry.isIntersecting)) {
+      observer.disconnect();
+      const defultProps = {
+        showFilter: false,
+        filterOnlyFirstTwoPosition: false,
+        showDetailsModal: false,
+        agentView: false,
+        packageFilterDefault: 'All Games',
+        matchupImgFormat: 'png',
+      };
+      const config = readBlockConfig(block);
+      if (config.leagueList) {
+        config.leagueList = config.leagueList.split(',');
+      }
+      if (config.numberOfDays) {
+        config.numberOfDays = parseInt(config.numberOfDays, 10);
+      }
+      const slingProps = { ...config, ...defultProps };
+      const container = createTag('div', { id: 'app', 'data-sling-props': JSON.stringify(slingProps) });
+      block.append(container);
+      loadScript('../../../aemedge/scripts/sling-react/bundle.js');
+    }
+  }, { threshold: 0 });
+  observer.observe(block);
 }
