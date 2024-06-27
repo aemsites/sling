@@ -132,6 +132,8 @@ export async function buildAuthorBlock() {
  * @param {*} main - main element
  */
 export default async function buildBlogDetails(main) {
+  const gamefinder = main.querySelector('.game-finder');
+  if (gamefinder) gamefinder.innerHTML = '';
   // get the section followed by hero section
   const contentSection = main.querySelector(':scope > .section.blog-hero-container+.section') || main.querySelector(':scope > .section');
   // const contentSection = createTag('div');

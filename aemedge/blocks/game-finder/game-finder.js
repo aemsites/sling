@@ -25,14 +25,37 @@ function toPropName(name) {
     : '';
 }
 
-function readBlockConfig(block) {
+async function readBlockConfig(block) {
   const config = {};
   block.querySelectorAll(':scope > div').forEach((row) => {
     if (row.children) {
       const cols = [...row.children];
       if (cols[1]) {
+        const col = cols[1];
         const name = toPropName(cols[0].textContent);
-        const value = row.children[1].textContent;
+        let value = '';
+        if (col.querySelector('a')) {
+          const as = [...col.querySelectorAll('a')];
+          if (as.length === 1) {
+            value = as[0].href;
+          } else {
+            value = as.map((a) => a.href);
+          }
+        } else if (col.querySelector('img')) {
+          const imgs = [...col.querySelectorAll('img')];
+          if (imgs.length === 1) {
+            value = imgs[0].src;
+          } else {
+            value = imgs.map((img) => img.src);
+          }
+        } else if (col.querySelector('p')) {
+          const ps = [...col.querySelectorAll('p')];
+          if (ps.length === 1) {
+            value = ps[0].textContent;
+          } else {
+            value = ps.map((p) => p.textContent);
+          }
+        } else value = row.children[1].textContent;
         config[name] = value;
       }
     }
@@ -43,7 +66,6 @@ function readBlockConfig(block) {
 export default async function decorate(block) {
   const observer = new IntersectionObserver(async (entries) => {
     if (entries.some((entry) => entry.isIntersecting)) {
-      observer.disconnect();
       const defultProps = {
         showFilter: false,
         filterOnlyFirstTwoPosition: false,
@@ -52,7 +74,7 @@ export default async function decorate(block) {
         packageFilterDefault: 'All Games',
         matchupImgFormat: 'png',
       };
-      const config = readBlockConfig(block);
+      const config = await readBlockConfig(block);
       if (config.leagueList) {
         config.leagueList = config.leagueList.split(',');
       }
@@ -62,7 +84,7 @@ export default async function decorate(block) {
       const slingProps = { ...config, ...defultProps };
       const container = createTag('div', { id: 'app', 'data-sling-props': JSON.stringify(slingProps) });
       block.append(container);
-      loadScript('../../../aemedge/scripts/sling-react/bundle.js');
+      loadScript('../../../aemedge/scripts/sling-react/gamefinder-build.js');
     }
   }, { threshold: 0 });
   observer.observe(block);
