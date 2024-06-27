@@ -46,6 +46,28 @@
   border-top: 1px solid;
 }
 
+.schedule.table table thead tr {
+  background-color: rgb(0 30 120 );
+  color: rgb(255 208 60);
+}
+
+.schedule.table table thead tr,.schedule.table table tbody tr, .schedule table tbody td, .schedule table thead tr th {
+  border: none; 
+  text-align: center;
+}
+
+.playoff.table table thead tr{
+  background-color: rgb(84 172 210);
+  color: white;
+}
+
+
+.playoff.table table thead tr,.playoff.table table tbody tr, .playoff table tbody td, .playoff table thead tr th {
+  border: none; 
+  text-align: center;
+  text-wrap: nowrap;
+}
+
 /* striped variant */
 .table.striped tbody tr:nth-child(odd) {
   background-color: var(--overlay-background-color);
@@ -66,24 +88,41 @@
   margin: 0;
 }
 
-.table.schedule {
+.schedule.table, .playoff.table {
   width: 100%;
   overflow-x: auto;
-}
-
-.schedule.table table thead tr {
-  background-color: rgb(0, 30, 120);
-  color: rgb(255, 208, 60);
-}
-
-.table.schedule p, dl, ol, ul, pre, blockquote {
-margin-top: 2px;
-margin-bottom: 5px;
 }
 
 .schedule.table table .lightgrey {
   background-color: var(--light-grey-color);
 }
+
+.schedule.table table .single-column-row{
+  background-color: var(--dark-color);
+  width: 100%;
+  text-align: center;
+}
+
+.playoff.table table tbody tr td:not(:nth-child(4)) {
+  background-color: var(--light-grey-color);
+}
+
+.schedule.table .single-column-row.lightgrey td{
+  text-align: left;
+}
+
+.playoff.table table .single-column-row.lightgrey td{
+  background-color: var(--dark-color);
+}
+
+
+
+.schedule.table p, dl, ol, ul, pre, blockquote {
+margin-top: 2px;
+margin-bottom: 5px;
+}
+
+
 
 
 .schedule {
@@ -94,20 +133,6 @@ margin-bottom: 5px;
 }
 
 
-.table.schedule table thead tr,.table.schedule table tbody tr, .schedule table tbody td, .schedule table thead tr th {
-  border: none; 
-  text-align: center;
-}
-
-.schedule.table table .single-column-row{
-  background-color: var(--dark-color);
-  width: 100%;
-  text-align: center;
-}
-
-.schedule.table .single-column-row.lightgrey td{
-  text-align: left;
-}
 
 div.content-details-wrapper div.default-content-wrapper ,div.section.table-container div.default-content-wrapper{
   text-align: center;
@@ -137,6 +162,22 @@ div.content-details-wrapper div.default-content-wrapper ,div.section.table-conta
   }
 
   .schedule.table table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: var(--body-font-size-xs);
+    }
+}
+
+/* playoff table code */
+
+@media (width >= 900px) {
+  div.playoff.table.block{
+      display: flex;
+      justify-content: center;
+      width: 66%;
+  }
+
+  .playoff.table table {
       width: 100%;
       border-collapse: collapse;
       font-size: var(--body-font-size-xs);

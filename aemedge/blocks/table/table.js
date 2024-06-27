@@ -40,14 +40,14 @@ export default async function decorate(block) {
 //  adding code for schedule table
 
 setTimeout(() => {
-  const tableRows = document.querySelectorAll('.table-wrapper table tbody tr ');
+  const tableRows = document.querySelectorAll('.table-wrapper table tbody tr');
   let trcount = 0;
   tableRows.forEach((row) => {
     const cells = row.querySelectorAll('td');
     if (cells.length === 1) {
       trcount = 0;
       row.classList.add('single-column-row');
-      for (let i = 0; i < 2; i += 1) {
+      for (let i = 0; i < tableRows[1].childElementCount - 1; i += 1) {
         const newCell = document.createElement('td');
         row.appendChild(newCell);
       }
