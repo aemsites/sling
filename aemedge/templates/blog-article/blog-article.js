@@ -45,17 +45,6 @@ async function buildTagsDiv(tags) {
   });
   return tagsDiv;
 }
-/**
- * utility to create a tag with link to author page
- * @param {*} authName - author name mentioned in the page metadata
- * @returns a element
- */
-const buildAuthorLink = (authName) => {
-  const authLink = createTag('a', {
-    href: `${window.location.origin}/whatson/${authName.trim().toLowerCase().replace(' ', '-')}`,
-  });
-  return authLink;
-};
 
 /**
  * Function that will build the author block with
@@ -69,20 +58,15 @@ export async function buildAuthorBlock() {
   const pubDate = getMetadata('publication-date');
   const tags = getMetadata('article:tag')?.split(',');
   const authImgContainer = createTag('div', { class: 'image-container' });
-  const authImgLink = buildAuthorLink(authName);
   const authImg = createTag('img', {
     class: 'author-image',
     alt: authName,
     src: authPhoto,
   });
-  authImgLink.append(authImg);
-  authImgContainer.append(authImgLink);
+  authImgContainer.append(authImg);
   const authTxtContainer = createTag('div', { class: 'text-container' });
   const authNameDiv = createTag('div', { class: 'auth-name' });
-  const authTxtLink = buildAuthorLink(authName);
-
-  authTxtLink.innerText = authName;
-  authNameDiv.append(authTxtLink);
+  authNameDiv.innerText = authName;
   authTxtContainer.append(authNameDiv);
   // publication date
   if (pubDate) {
