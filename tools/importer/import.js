@@ -52,11 +52,29 @@ export default {
     // Handle tables
     const tables = document.querySelectorAll('table');
     tables.forEach((table) => {
-      const cells = [['Table'],
-        [table.outerHTML],
-      ];
+      const cells = [['Table'], [table.outerHTML]];
       const newTable = WebImporter.DOMUtils.createTable(cells, document);
       table.parentElement.replaceChild(newTable, table);
+    });
+
+    // Handle Gamefinder block
+    const gameFinders = document.querySelectorAll('div.gamefinder');
+    gameFinders.forEach((gameFinder) => {
+      const cells = [['Game Finder']];
+      const reactDiv = gameFinder.querySelector('div.js-react-gamefinder');
+      let props;
+      if (reactDiv) {
+        props = reactDiv.getAttribute('data-sling-props');
+        if (props) {
+          const blockConfigs = ['numberOfDays', 'leagueList', 'planIdentifier'];
+          // eslint-disable-next-line no-restricted-syntax
+          for (const [key, value] of Object.entries(JSON.parse(props))) {
+            if (blockConfigs.includes(key)) cells.push([`${key}`, `${value}`]);
+          }
+        }
+      }
+      const gameFinderBlock = WebImporter.DOMUtils.createTable(cells, document);
+      gameFinder.parentElement.replaceChild(gameFinderBlock, gameFinder);
     });
     // Handle category pages
     const isCategoryPage = document.querySelector('.homepage-wrapper .blog-homepage--outer');
