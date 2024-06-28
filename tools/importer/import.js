@@ -86,6 +86,16 @@ export default {
       const gameFinderBlock = WebImporter.DOMUtils.createTable(cells, document);
       gameFinder.parentElement.replaceChild(gameFinderBlock, gameFinder);
     });
+
+    // Handle centered h2 text ( wrap then in <strong>)
+    const centeredHs = document.querySelectorAll('h2[style="text-align: center;"], h3[style="text-align: center;"],h4[style="text-align: center;"]');
+    centeredHs.forEach((h) => {
+      const p = document.createElement('p');
+      const strongH = document.createElement('strong');
+      strongH.append(h.cloneNode(true));
+      p.append(strongH);
+      h.replaceWith(p);
+    });
     // Handle category pages
     const isCategoryPage = document.querySelector('.homepage-wrapper .blog-homepage--outer');
     if (isCategoryPage) {
