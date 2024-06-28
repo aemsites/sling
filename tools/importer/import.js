@@ -26,9 +26,9 @@ export default {
     }
     meta.Tags = Array.from(tags).map((tag) => tag.textContent).join(', ') || '';
     meta.Image = ogImage.replace('https://www.sling.com', '') || '';
-    const youtubeIframes = document.querySelectorAll('iframe[src*="youtube"]');
-    // Handle youtube videos
-    youtubeIframes.forEach((iframe) => {
+    const videoIframes = document.querySelectorAll('iframe[src*="youtube"], iframe[src*="platform.twitter.com"]');
+    // Handle embed youtube or twitter videos
+    videoIframes.forEach((iframe) => {
       // replace the iframe with the video URL
       const videoUrl = iframe.src;
       const video = document.createElement('a');
