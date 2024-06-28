@@ -52,7 +52,17 @@ export default {
     // Handle tables
     const tables = document.querySelectorAll('table');
     tables.forEach((table) => {
-      const cells = [['Table'], [table.outerHTML]];
+      let blockName = 'Table';
+      // handling table variants
+      const style = document.querySelector('table > tbody > tr > td[style]')?.getAttribute('style');
+      if (style) {
+        if (style.indexOf('rgb(0,30,120)') > -1) {
+          blockName = 'Table(schedule)';
+        } else if (style.indexOf('rgb(84,172,210)') > -1) {
+          blockName = 'Table(playoffs)';
+        }
+      }
+      const cells = [[blockName], [table.outerHTML]];
       const newTable = WebImporter.DOMUtils.createTable(cells, document);
       table.parentElement.replaceChild(newTable, table);
     });
