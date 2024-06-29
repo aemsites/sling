@@ -12,7 +12,6 @@
 
 .popular-blogs .slides-wrapper {
     position: relative;
-    overflow-x: auto;
     width: 100%;
 }
 
@@ -183,9 +182,6 @@
 }
 
 @media (width >=1200px) {
-    .section.popular-blogs-container {
-        max-width: 1440px;
-    }
 
     .popular-blogs .slides-container {
         overflow: unset;
