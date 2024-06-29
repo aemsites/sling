@@ -7,7 +7,7 @@
     color: #454550;
     font-size: 18px;
     margin: 0 auto;
-    padding: 12px 10%;
+    padding: 8px 10% 14px;
     text-align: center;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -26,7 +26,7 @@ a.blog-breadcrumb-link {
 .blog-breadcrumb span.icon-fw-arrow {
     width: unset;
     height: unset;
-    margin: 0 10px;
+    margin: 0 14px;
     display: inline-block;
     font: normal normal normal 20px / 1 var(--font-awesome);
     text-rendering: auto;
