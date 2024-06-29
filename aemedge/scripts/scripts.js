@@ -242,6 +242,22 @@ async function loadTemplate(main) {
 }
 
 /**
+ * Builds a spacer out of a code block with the text 'spacer'.
+ */
+function buildSpacer(main) {
+  const allPageSpacers = main.querySelectorAll('code');
+
+  allPageSpacers.forEach((el) => {
+    const alt = el.innerText.trim();
+
+    if (alt === 'spacer') {
+      el.innerText = '';
+      el.classList.add('spacer');
+    }
+  });
+}
+
+/**
  * Builds all synthetic blocks in a container element.
  * @param {Element} main The container element
  */
@@ -268,6 +284,7 @@ export function decorateMain(main) {
   decorateSections(main);
   decorateBlocks(main);
   buildCtaBanners(main);
+  buildSpacer(main);
 }
 
 /**
