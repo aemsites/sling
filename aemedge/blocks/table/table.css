@@ -37,8 +37,9 @@
 
 .table table th,
 .table table td {
-  padding: 8px 16px;
-  text-align: left;
+  padding: 0;
+  width: 25%;
+  text-align: center;
 }
 
 /* no header variant */
@@ -51,21 +52,19 @@
   color: rgb(255 208 60);
 }
 
-.schedule.table table thead tr,.schedule.table table tbody tr, .schedule table tbody td, .schedule table thead tr th {
+.playoffs.table table tbody tr td p a.button.text {
+  padding: 0;
+  display: flex;
+}
+
+.schedule.table table thead tr,.schedule.table table tbody tr, .schedule table tbody td, .schedule table thead tr th, .playoffs.table table thead tr,.playoffs.table table tbody tr, .playoffs table tbody td, .playoffs table thead tr th {
   border: none; 
   text-align: center;
 }
 
-.playoff.table table thead tr{
+.playoffs.table table thead tr{
   background-color: rgb(84 172 210);
   color: white;
-}
-
-
-.playoff.table table thead tr,.playoff.table table tbody tr, .playoff table tbody td, .playoff table thead tr th {
-  border: none; 
-  text-align: center;
-  text-wrap: nowrap;
 }
 
 /* striped variant */
@@ -79,18 +78,10 @@
   border: 1px solid;
 }
 
-
-/* new code */
-
 *{
   box-sizing: border-box;
   padding: 0;
   margin: 0;
-}
-
-.schedule.table, .playoff.table {
-  width: 100%;
-  overflow-x: auto;
 }
 
 .schedule.table table .lightgrey {
@@ -103,83 +94,68 @@
   text-align: center;
 }
 
-.playoff.table table tbody tr td:not(:nth-child(4)) {
-  background-color: var(--light-grey-color);
+.playoffs.table table tbody tr td:not(:nth-child(4)) {
+  background-color: rgb(238 238 238);
 }
 
 .schedule.table .single-column-row.lightgrey td{
   text-align: left;
 }
 
-.playoff.table table .single-column-row.lightgrey td{
+.playoffs.table table .single-column-row.lightgrey td{
   background-color: var(--dark-color);
 }
-
-
 
 .schedule.table p, dl, ol, ul, pre, blockquote {
 margin-top: 2px;
 margin-bottom: 5px;
 }
 
-
-
-
-.schedule {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  font-size: 16px;
+.blog-article > main div.section.table-container{
+  width: 80%;
+  margin: 0 auto;
 }
 
+.playoffs.table, .schedule.table {
+overflow-x: hidden;
+}
 
+.playoffs.table table, .schedule.table table {
+  font-size: 16px;
+  table-layout: fixed
+}
 
 div.content-details-wrapper div.default-content-wrapper ,div.section.table-container div.default-content-wrapper{
   text-align: center;
 }
 
-@media (width >= 600px) {
-  .schedule.table table {
-    font-size: var(--body-font-size-xs);
+@media (width >= 768px) {
+  .blog-article > main div.section.table-container{
+    width: 90%;
+    margin: 0 auto;
+  } 
+
+  .playoffs.table, .schedule.table{
+    margin-left: 134px;
+    width: auto;
+  }
+
+  .playoffs.table table tbody tr td p a.button.text {
+    padding: 0;
+    display: inline-block;
   }
 }
 
-@media (width >= 900px) {
-  div.section.table-container{
-    max-width: 1138px;
+@media (width >= 992px) {
+  .playoffs.table, .schedule.table{
+    width: 66%;
+    margin-left: 192px;
   }
-
-  div.table-wrapper{
-      display: flex;
-      justify-content: center;
-
-  }
-
-  div.schedule.table.block{
-      display: flex;
-      justify-content: center;
-      width: 66%;
-  }
-
-  .schedule.table table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: var(--body-font-size-xs);
-    }
 }
 
-/* playoff table code */
-
-@media (width >= 900px) {
-  div.playoff.table.block{
-      display: flex;
-      justify-content: center;
-      width: 66%;
+@media (width >= 1200px) {
+  .blog-article > main div.section.table-container .table-wrapper {
+    max-width: 1168px;
+    margin: auto;
   }
-
-  .playoff.table table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: var(--body-font-size-xs);
-    }
 }
