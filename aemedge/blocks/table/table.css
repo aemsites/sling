@@ -54,7 +54,7 @@
 
 .playoffs.table table tbody tr td p a.button.text {
   padding: 0;
-  display: flex;
+  display: inline;
 }
 
 .schedule.table table thead tr,.schedule.table table tbody tr, .schedule table tbody td, .schedule table thead tr th, .playoffs.table table thead tr,.playoffs.table table tbody tr, .playoffs table tbody td, .playoffs table thead tr th {
@@ -98,10 +98,6 @@
   background-color: rgb(238 238 238);
 }
 
-.schedule.table .single-column-row.lightgrey td{
-  text-align: left;
-}
-
 .playoffs.table table .single-column-row.lightgrey td{
   background-color: var(--dark-color);
 }
@@ -138,11 +134,6 @@ div.content-details-wrapper div.default-content-wrapper ,div.section.table-conta
   .playoffs.table, .schedule.table{
     margin-left: 134px;
     width: auto;
-  }
-
-  .playoffs.table table tbody tr td p a.button.text {
-    padding: 0;
-    display: inline-block;
   }
 }
 
