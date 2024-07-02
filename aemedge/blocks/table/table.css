@@ -48,7 +48,7 @@
 }
 
 .schedule.table table thead tr {
-  background-color: rgb(0 30 120 );
+  background-color: rgb(0 30 120);
   color: rgb(255 208 60);
 }
 
@@ -57,12 +57,19 @@
   display: inline;
 }
 
-.schedule.table table thead tr,.schedule.table table tbody tr, .schedule table tbody td, .schedule table thead tr th, .playoffs.table table thead tr,.playoffs.table table tbody tr, .playoffs table tbody td, .playoffs table thead tr th {
-  border: none; 
+.schedule.table table thead tr,
+.schedule.table table tbody tr,
+.schedule table tbody td,
+.schedule table thead tr th,
+.playoffs.table table thead tr,
+.playoffs.table table tbody tr,
+.playoffs table tbody td,
+.playoffs table thead tr th {
+  border: none;
   text-align: center;
 }
 
-.playoffs.table table thead tr{
+.playoffs.table table thead tr {
   background-color: rgb(84 172 210);
   color: white;
 }
@@ -78,7 +85,7 @@
   border: 1px solid;
 }
 
-*{
+* {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
@@ -88,7 +95,7 @@
   background-color: var(--light-grey-color);
 }
 
-.schedule.table table .single-column-row{
+.schedule.table table .single-column-row {
   background-color: var(--dark-color);
   width: 100%;
   text-align: center;
@@ -98,47 +105,58 @@
   background-color: rgb(238 238 238);
 }
 
-.playoffs.table table .single-column-row.lightgrey td{
+.playoffs.table table .single-column-row.lightgrey td {
   background-color: var(--dark-color);
 }
 
-.schedule.table p, dl, ol, ul, pre, blockquote {
-margin-top: 2px;
-margin-bottom: 5px;
+.schedule.table p,
+.playoffs.table p,
+dl,
+ol,
+ul,
+pre,
+blockquote {
+  margin-top: 2px;
+  margin-bottom: 5px;
 }
 
-.blog-article > main div.section.table-container{
+.blog-article > main div.section.table-container {
   width: 80%;
   margin: 0 auto;
 }
 
-.playoffs.table, .schedule.table {
-overflow-x: hidden;
+.playoffs.table,
+.schedule.table {
+  overflow-x: hidden;
 }
 
-.playoffs.table table, .schedule.table table {
+.playoffs.table table,
+.schedule.table table {
   font-size: 16px;
-  table-layout: fixed
+  table-layout: fixed;
 }
 
-div.content-details-wrapper div.default-content-wrapper ,div.section.table-container div.default-content-wrapper{
+div.content-details-wrapper div.default-content-wrapper,
+div.section.table-container div.default-content-wrapper {
   text-align: center;
 }
 
 @media (width >= 768px) {
-  .blog-article > main div.section.table-container{
+  .blog-article > main div.section.table-container {
     width: 90%;
     margin: 0 auto;
-  } 
+  }
 
-  .playoffs.table, .schedule.table{
+  .playoffs.table,
+  .schedule.table {
     margin-left: 134px;
     width: auto;
   }
 }
 
 @media (width >= 992px) {
-  .playoffs.table, .schedule.table{
+  .playoffs.table,
+  .schedule.table {
     width: 66%;
     margin-left: 192px;
   }
