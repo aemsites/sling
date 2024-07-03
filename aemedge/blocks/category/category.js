@@ -70,29 +70,35 @@ export async function createCardLarge(row, style, eagerImage = false) {
   const desktopMediaQuery = window.matchMedia('only screen and (min-width: 1024px)');
   const cardImage = createTag('div', { class: 'card-image' });
 
-  if (desktopMediaQuery.matches) { // CREATE DIV USING DESKTOP IMAGE
-    cardImage.append(createOptimizedPicture(
-      row.desktopImagePath,
-      row.title,
-      eagerImage,
-      [{ width: '1200' }, {
-        media: '(min-width: 1024px)',
-        width: '1440',
-      }],
-    ));
-    console.log('this is largeCard Desktop', row.desktopImagePath);
-  } else { // CREATE DIV USING MOBILE IMAGE
-    cardImage.append(createOptimizedPicture(
-      row.mobileImagePath,
-      row.title,
-      eagerImage,
-      [{ width: '600' }, {
-        media: '(max-width: 1023px)',
-        width: '1000',
-      }],
-    ));
-    console.log('this is largeCard mobile');
-  } // end of if desktopMediaQuery
+  const handleMediaQueryChange = () => {
+    if (desktopMediaQuery.matches) { // CREATE DIV USING DESKTOP IMAGE
+      // function updateDesktopImage() {
+      cardImage.append(createOptimizedPicture(
+        row.desktopImagePath,
+        row.title,
+        eagerImage,
+        [{width: '1200'}, {
+          media: '(min-width: 1024px)',
+          width: '1440',
+        }],
+      ));
+      console.log('this is largeCard Desktop', row.desktopImagePath);
+    } else { // CREATE DIV USING MOBILE IMAGE
+      // function updateMobileImage() {
+      cardImage.append(createOptimizedPicture(
+        row.mobileImagePath,
+        row.title,
+        eagerImage,
+        [{ width: '600' }, {
+          media: '(max-width: 1023px)',
+          width: '1000',
+        }],
+      ));
+      console.log('this is largeCard mobile');
+    }
+  }; // end of handleMediaQueryChange
+  handleMediaQueryChange();
+  desktopMediaQuery.addEventListener('change', handleMediaQueryChange);
   link.append(cardImage);
   card.prepend(link);
 

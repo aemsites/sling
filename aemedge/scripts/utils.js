@@ -1,5 +1,5 @@
 import {
-  getMetadata, buildBlock, decorateBlock, createOptimizedPicture,
+  getMetadata, buildBlock, decorateBlock,
 } from './aem.js';
 
 export const PRODUCTION_DOMAINS = ['sling.com'];
