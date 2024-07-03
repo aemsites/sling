@@ -305,6 +305,14 @@ body.blog-article.modal-open .modal-content .section:first-of-type > div {
 }
 
 @media (width >= 1024px) {
+.blog-article code.spacer2 {
+    line-height: 3.75em;
+}
+
+.blog-article code.spacer3 {
+    line-height: 5.625em;
+}
+
 .blog-article > main .section:not(.popular-blogs-container) {
     max-width: 1168px;
 }
@@ -338,7 +346,7 @@ body.blog-article.modal-open .modal-content .section:first-of-type > div {
 }
 
 .blog-article .default-content-wrapper p {
-    line-height: 30px;
+    line-height: 1.875em;
 }
 
 main .hero-container + .section p {
