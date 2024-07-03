@@ -107,6 +107,8 @@
 
 .playoffs.table table .single-column-row.lightgrey td {
   background-color: var(--dark-color);
+  text-align: left;
+  padding-left: 6px;
 }
 
 .schedule.table p,
@@ -123,7 +125,7 @@ blockquote {
 .blog-article > main div.section.table-container {
   width: 80%;
   margin: 0 auto;
-  padding: 0;
+  padding: 0 16px;
 }
 
 .playoffs.table,
@@ -137,35 +139,31 @@ blockquote {
   table-layout: fixed;
 }
 
-div.content-details-wrapper div.default-content-wrapper,
 div.section.table-container div.default-content-wrapper {
   text-align: center;
 }
 
 @media (width >= 768px) {
   .blog-article > main div.section.table-container {
-    width: 90%;
-    margin: 0 auto;
+    padding: unset;
+    width: unset;
+    margin-left: auto;
+    margin-right: auto;
   }
 
-  .playoffs.table,
-  .schedule.table {
-    margin-left: 134px;
-    width: auto;
+  .playoffs.table, .schedule.table{
+    margin-left: 8px;
   }
-}
 
-@media (width >= 992px) {
-  .playoffs.table,
-  .schedule.table {
+  .playoffs.table table,
+  .schedule.table table {
     width: 66%;
-    margin-left: 192px;
+    margin: 0 auto 0 17%;
   }
 }
 
-@media (width >= 1200px) {
+@media (width >= 1024px) {
   .blog-article > main div.section.table-container .table-wrapper {
     max-width: 1168px;
-    margin: auto;
   }
 }
