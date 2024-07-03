@@ -243,6 +243,7 @@ async function loadTemplate(main) {
 
 /**
  * Builds a spacer out of a code block with the text 'spacer'.
+ * add up to 3 spacers with 'spacer1', 'spacer2', 'spacer3'
  */
 function buildSpacer(main) {
   const allPageSpacers = main.querySelectorAll('code');
@@ -250,9 +251,19 @@ function buildSpacer(main) {
   allPageSpacers.forEach((el) => {
     const alt = el.innerText.trim();
 
-    if (alt === 'spacer') {
+    if (alt === 'spacer' || alt === 'spacer1') {
       el.innerText = '';
-      el.classList.add('spacer');
+      el.classList.add('spacer1');
+    } else {
+      if (alt === 'spacer2') {
+        el.innerText = '';
+        el.classList.add('spacer2');
+      } else {
+        if (alt === 'spacer3') {
+          el.innerText = '';
+          el.classList.add('spacer3');
+        }
+      }
     }
   });
 }
