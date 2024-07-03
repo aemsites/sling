@@ -145,6 +145,14 @@ code {
   padding: .125em;
 }
 
+code.spacer2 {
+  line-height: 3em;
+}
+
+code.spacer3 {
+  line-height: 4.5em;
+}
+
 pre {
   overflow: scroll;
 }
