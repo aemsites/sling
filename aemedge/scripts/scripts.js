@@ -254,16 +254,14 @@ function buildSpacer(main) {
     if (alt === 'spacer' || alt === 'spacer1') {
       el.innerText = '';
       el.classList.add('spacer1');
-    } else {
-      if (alt === 'spacer2') {
-        el.innerText = '';
-        el.classList.add('spacer2');
-      } else {
-        if (alt === 'spacer3') {
-          el.innerText = '';
-          el.classList.add('spacer3');
-        }
-      }
+    }
+    if (alt === 'spacer2') {
+      el.innerText = '';
+      el.classList.add('spacer2');
+    }
+    if (alt === 'spacer3') {
+      el.innerText = '';
+      el.classList.add('spacer3');
     }
   });
 }
