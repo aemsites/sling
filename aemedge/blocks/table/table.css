@@ -37,13 +37,41 @@
 
 .table table th,
 .table table td {
-  padding: 8px 16px;
-  text-align: left;
+  padding: 0;
+  width: 25%;
+  text-align: center;
 }
 
 /* no header variant */
 .table.no-header table tbody tr {
   border-top: 1px solid;
+}
+
+.schedule.table table thead tr {
+  background-color: rgb(0 30 120);
+  color: rgb(255 208 60);
+}
+
+.playoffs.table table tbody tr td p a.button.text {
+  padding: 0;
+  display: inline;
+}
+
+.schedule.table table thead tr,
+.schedule.table table tbody tr,
+.schedule table tbody td,
+.schedule table thead tr th,
+.playoffs.table table thead tr,
+.playoffs.table table tbody tr,
+.playoffs table tbody td,
+.playoffs table thead tr th {
+  border: none;
+  text-align: center;
+}
+
+.playoffs.table table thead tr {
+  background-color: rgb(84 172 210);
+  color: white;
 }
 
 /* striped variant */
@@ -55,4 +83,87 @@
 .table.bordered table th,
 .table.bordered table td {
   border: 1px solid;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+.schedule.table table .lightgrey {
+  background-color: var(--light-grey-color);
+}
+
+.schedule.table table .single-column-row {
+  background-color: var(--dark-color);
+  width: 100%;
+  text-align: center;
+}
+
+.playoffs.table table tbody tr td:nth-child(4) {
+  background-color: white;
+}
+
+.playoffs.table table .single-column-row.lightgrey td, .schedule.table table .single-column-row.lightgrey td {
+  background-color: var(--dark-color);
+  text-align: left;
+  padding-left: 6px;
+}
+
+.schedule.table p,
+.playoffs.table p,
+dl,
+ol,
+ul,
+pre,
+blockquote {
+  margin-top: 2px;
+  margin-bottom: 5px;
+}
+
+.blog-article > main div.section.table-container {
+  width: 80%;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+.playoffs.table,
+.schedule.table {
+  overflow-x: hidden;
+}
+
+.playoffs.table table,
+.schedule.table table {
+  font-size: 16px;
+  table-layout: fixed;
+}
+
+div.section.table-container div.default-content-wrapper {
+  text-align: center;
+}
+
+@media (width >= 768px) {
+  .blog-article > main div.section.table-container {
+    padding: unset;
+    width: unset;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .playoffs.table, .schedule.table{
+    margin-left: 8px;
+  }
+
+  .playoffs.table table,
+  .schedule.table table {
+    width: 66%;
+    margin: 0 auto 0 17%;
+  }
+}
+
+@media (width >= 1024px) {
+  .blog-article > main div.section.table-container .table-wrapper {
+    max-width: 1168px;
+  }
 }

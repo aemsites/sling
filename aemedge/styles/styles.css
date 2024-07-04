@@ -20,6 +20,7 @@
   --header-hover-background-color: var(--clr-light-black);
   --header-text-color: #f5f5f6;
   --light-color: #eee;
+  --light-grey-color: rgb(235 235 235);
   --dark-color: #ccc;
   --text-color: #333;
   --primary-button-color: #ce4c00;
@@ -144,6 +145,14 @@ code {
   padding: .125em;
 }
 
+code.spacer2 {
+  line-height: 3em;
+}
+
+code.spacer3 {
+  line-height: 4.5em;
+}
+
 pre {
   overflow: scroll;
 }
@@ -157,20 +166,11 @@ main pre {
 }
 
 /* Fire style */
-strong em,
-em strong {
+.columns strong em,
+.columns em strong {
   font-style: normal;
   color: #faa21b;
   font-size: 1em;
-}
-
-.blog-article strong em,
-.blog-category strong em,
-.blog-article em strong,
-.blog-category em strong {
-  font-style: normal;
-  color: var(--text-color);
-  font-size: unset;
 }
 
 /* links */
@@ -217,14 +217,18 @@ a.button.primary,
 button.primary,
 a.button.secondary,
 button.secondary {
-  color: var(--background-color);
-  background-color: var(--primary-button-color);
-  border: 2px solid var(--primary-button-color);
   border-radius: 0.125rem;
   opacity: 1;
   min-width: 11.25rem;
   font-size: 1rem;
   padding: 0.875rem 1rem;
+}
+
+a.button.primary,
+button.primary {
+  color: var(--background-color);
+  background-color: var(--primary-button-color);
+  border: 2px solid var(--primary-button-color);
 }
 
 a.button.secondary,
@@ -417,7 +421,7 @@ main .section {
   }
 
   /* Section with Dark or Centered content */
-  .section.center>* {
+  .section.center >* {
     max-width: 1200px;
     align-items: center;
     width: 100%;
