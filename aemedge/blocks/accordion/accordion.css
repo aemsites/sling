@@ -64,6 +64,12 @@
   width: 16px;
   height: 16px;
   margin-right: 10px;
+  transition: color 0.3s ease-in-out 0s;
+}
+
+.accordion details summary::after {
+  color:red;
+  transition: color 0.3s ease-in-out 0s;
 }
 
 .accordion details[open] summary::before {
