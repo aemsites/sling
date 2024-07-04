@@ -56,49 +56,74 @@ function addCardContent(container, {
   addAuthorAndDate(cardContent, author, date);
 }
 
-/**
- * Creates a large card element from an index row
- * @param {Object} row - JSON Object representing a blog
- * @param {String} style - The style of the card (default: 'card')
- * @param {Boolean} eagerImage - Whether to load the image eagerly (default: false)
- * @returns {Promise<Array>} - A promise resolving to the card element
- */
-export async function createCardLarge(row, style, eagerImage = false) {
-  // Create card div and link
-  const card = createTag('div', { class: style || 'card' });
-  const link = createTag('a', { class: 'card-link', href: row.path, alt: row.title });
-  const desktopMediaQuery = window.matchMedia('only screen and (min-width: 1024px)');
-  const cardImage = createTag('div', { class: 'card-image' });
+// Create cardLarge images for breakpoints
+export async function addCardImageLarge(row, style, eagerImage = true) {
+  const cardImageDiv = createTag('div', { class: 'card-image' });
+  const desktopMediaQuery = window.matchMedia('only screen and (min-width: 768px)');
 
-  const handleMediaQueryChange = () => {
-    if (desktopMediaQuery.matches) { // CREATE DIV USING DESKTOP IMAGE
-      // function updateDesktopImage() {
-      cardImage.append(createOptimizedPicture(
-        row.desktopImagePath,
-        row.title,
-        eagerImage,
-        [{width: '1200'}, {
-          media: '(min-width: 1024px)',
-          width: '1440',
-        }],
-      ));
-      console.log('this is largeCard Desktop', row.desktopImagePath);
-    } else { // CREATE DIV USING MOBILE IMAGE
-      // function updateMobileImage() {
-      cardImage.append(createOptimizedPicture(
-        row.mobileImagePath,
-        row.title,
-        eagerImage,
-        [{ width: '600' }, {
-          media: '(max-width: 1023px)',
-          width: '1000',
-        }],
-      ));
-      console.log('this is largeCard mobile');
+  function updateDesktopImage() {
+    cardImageDiv.innerHTML = ''; // Clear existing content
+    cardImageDiv.append(createOptimizedPicture(
+      row.desktopImagePath,
+      row.title,
+      eagerImage,
+      [{ width: '1200' }, {
+        media: '(min-width: 1024px)',
+        width: '1440',
+      }],
+    ));
+  }
+
+  function updateMobileImage() {
+    cardImageDiv.innerHTML = ''; // Clear existing content
+    cardImageDiv.append(createOptimizedPicture(
+      row.mobileImagePath,
+      row.title,
+      eagerImage,
+      [{ width: '600' }, {
+        media: '(max-width: 1023px)',
+        width: '1000',
+      }],
+    ));
+  }
+  function handleImageUpdate() {
+    if (desktopMediaQuery.matches) {
+      updateDesktopImage();
+    } else {
+      updateMobileImage();
     }
-  }; // end of handleMediaQueryChange
-  handleMediaQueryChange();
-  desktopMediaQuery.addEventListener('change', handleMediaQueryChange);
+  }
+
+  // Listen for window resize events to update the image accordingly
+  desktopMediaQuery.addEventListener('change', handleImageUpdate);
+
+  // Initial call to set the correct image based on the current window size
+  handleImageUpdate();
+  return cardImageDiv;
+}
+
+// Create card images using default thumbnail image
+export async function addCardImage(row, style, eagerImage = false) {
+  if (row.image !== '' && row.image !== '0' && row.title !== '0') {
+    const cardImageDiv = createTag('div', { class: 'card-image' });
+    cardImageDiv.append(createOptimizedPicture(
+      row.image,
+      row.title,
+      eagerImage,
+      [{ width: '750' }, { media: '(min-width: 600px)', width: '1440' }],
+    ));
+    return cardImageDiv;
+  }
+  return null;
+}
+
+export async function createCard(row, style, eagerImage, isLarge = false) {
+  const cardClass = isLarge ? 'card card-large' : style || 'card';
+  const card = createTag('div', { class: cardClass });
+  const link = createTag('a', { class: 'card-link', href: row.path, alt: row.title });
+  const cardImageFunction = isLarge ? addCardImageLarge : addCardImage;
+  const cardImage = await cardImageFunction(row, style, eagerImage);
+
   link.append(cardImage);
   card.prepend(link);
 
@@ -109,44 +134,8 @@ export async function createCardLarge(row, style, eagerImage = false) {
     author: row.author,
     date: row.date ? convertExcelDate(row.date) : null,
   });
-
-  return (card);
-} // end of the createCardLarge function
-
-/**
- * Creates a default card element from an index row using metadata image
- * @param {Object} row - JSON Object representing a blog
- * @param {String} style - The style of the card (default: 'card')
- * @param {Boolean} eagerImage - Whether to load the image eagerly (default: false)
- * @returns {Promise<Array>} - A promise resolving to the card element
- */
-export async function createCard(row, style, eagerImage = false) {
-  // Create card div
-  const card = createTag('div', { class: style || 'card' });
-  // Create and add the link
-  const link = createTag('a', { class: 'card-link', href: row.path, alt: row.title });
-  // Add the image to the link and then card first
-  if (row.image !== '' && row.image !== '0' && row.title !== '0') {
-    const cardImage = createTag('div', { class: 'card-image' });
-    cardImage.append(createOptimizedPicture(
-      row.image,
-      row.title,
-      eagerImage,
-      [{ width: '750' }, { media: '(min-width: 600px)', width: '1440' }],
-    ));
-
-    link.append(cardImage);
-    card.prepend(link);
-  }
-  addCardContent(link, {
-    tags: row.tags ? JSON.parse(row.tags) : null,
-    title: row.title,
-    description: row.description,
-    author: row.author,
-    date: row.date ? convertExcelDate(row.date) : null,
-  });
-  return (card);
-} // end of the createCard function
+  return card;
+}
 
 export default async function decorate(block) {
   block.textContent = '';
@@ -161,12 +150,11 @@ export default async function decorate(block) {
   categories.map((cat) => cat.replace('-and-', '&'));
   // Get blogs
   const blogs = await getBlogs(categories.map((cat) => cat.replace('-and-', ' & ')), 7);
-
   blogs.forEach(async (blog, i) => {
     if (blog.image === '') return;
     let card;
     if (i === 0) {
-      card = await createCardLarge(blog, 'card card-large', true, true);
+      card = await createCard(blog, 'card card-large', true, true);
     } else if (i % 2 !== 0) {
       card = await createCard(blog, 'card card-medium', false, false);
     } else {
