@@ -24,6 +24,7 @@ async function createCard(
   planOfferPlaceholders,
   planComparisonPlaceholders,
   packageJson,
+  exclusiveChannels = [],
 ) {
   const card = createTag('div', { class: `card ${packageType.name}` });
   if (packageType.name === 'combo') {
@@ -59,17 +60,29 @@ async function createCard(
     const channelDiv = createTag('span', { class: 'channel' }, channelImage);
     return channelDiv;
   });
+  const exclusiveChannelsList = exclusiveChannels.map((channel) => {
+    const imageUrl = `https://www.sling.com/${planOfferPlaceholders.iconurlbase}/${channel.call_sign}.svg`;
+    const channelImage = createTag('img', {
+      src: imageUrl,
+      alt: channel.name,
+    });
+    const channelDiv = createTag('span', { class: 'channel' }, channelImage);
+    return channelDiv;
+  });
   const carouselContent = [];
-  channels.forEach((channel) => {
+  exclusiveChannelsList.forEach((channel) => {
     carouselContent.push([channel]);
   });
   const carouselBlock = buildBlock('carousel', carouselContent);
   channelsWrapper.append(carouselBlock);
-  const cardBodyText = createTag('div', { class: 'card-body-text' }, `${channels.length} total channels` || '');
+  const cardBodyText = createTag('div', { class: 'card-body-text' }, `${channels.length} total channels including` || '');
+  const cardBodySubtext = createTag('div', { class: 'card-body-subtext' }, `${exclusiveChannelsList.length} exclusive ${planOfferPlaceholders[`${packageType.name}exclusivechannelsgenres`]}` || '');
   if (packageType.name !== 'combo') {
     cardBody.appendChild(cardBodyText);
+    cardBody.appendChild(cardBodySubtext);
   } else {
     cardTitle.appendChild(cardBodyText);
+    cardTitle.appendChild(cardBodySubtext);
   }
   cardBody.appendChild(channelsWrapper);
   const streamDevicesContent = planOfferPlaceholders[`${packageType.name}servicedevicestreamstext`];
@@ -128,17 +141,25 @@ export default async function decorate(block) {
     .filter((p) => p.name === PACKAGE_TYPES.blue.title)[0];
   const comboPackageJson = planOfferJson.data.packages.items.package
     .filter((p) => p.name === PACKAGE_TYPES.combo.title)[0];
+  const orangeExclusiveChannels = orangePackageJson.channels.filter(
+    ({ name }) => !bluePackageJson.channels.some((e) => e.name === name),
+  );
+  const blueExclusiveChannels = bluePackageJson.channels.filter(
+    ({ name }) => !orangePackageJson.channels.some((e) => e.name === name),
+  );
   const orangeCard = await createCard(
     PACKAGE_TYPES.orange,
     planOfferPlaceholders,
     planComparisonPlaceholders,
     orangePackageJson,
+    orangeExclusiveChannels,
   );
   const blueCard = await createCard(
     PACKAGE_TYPES.blue,
     planOfferPlaceholders,
     planComparisonPlaceholders,
     bluePackageJson,
+    blueExclusiveChannels,
   );
   const comboCard = await createCard(
     PACKAGE_TYPES.combo,
