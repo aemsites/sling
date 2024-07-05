@@ -28,7 +28,7 @@ indices:
       mobileImage:
         select: main > div:nth-child(1) > p:nth-child(1) > picture:nth-of-type(2) img
         value: |
-          match(attribute(el, 'src'), "^.{2}(.*)$")
+          match(attribute(el, 'src'), "^.{2}([^?]*)")
       tags:
         select: head > meta[property="article:tag"]
         values: |

@@ -1,5 +1,5 @@
 import {
-  getMetadata, buildBlock, decorateBlock,
+  getMetadata, buildBlock, decorateBlock, createOptimizedPicture,
 } from './aem.js';
 
 export const PRODUCTION_DOMAINS = ['sling.com'];
@@ -228,4 +228,74 @@ export async function getBlogs(categories, num) {
     return blogArticles.slice(0, num);
   }
   return blogArticles;
+}
+
+// Adding tags
+function addTags(container, tags) {
+  const tagsDiv = createTag('div', { class: 'card-tags' });
+  tags.forEach((tag) => {
+    const tagElement = createTag('a', { class: 'card-tag-link', href: `/whatson/${tag.toLowerCase()}` }, tag.toUpperCase());
+    tagsDiv.append(tagElement);
+  });
+  container.append(tagsDiv);
+}
+
+// Adding title
+function addTitle(container, title) {
+  const titleDiv = createTag('div', { class: 'card-title' }, title);
+  container.append(titleDiv);
+}
+
+// Adding description
+function addDescription(container, description) {
+  const descriptionDiv = createTag('div', { class: 'card-description' }, `${description.substring(0, 100)}…`);
+  container.append(descriptionDiv);
+}
+
+// Adding author + publish date
+function addAuthorAndDate(container, authorName, publishDate) {
+  const authorDateDiv = createTag('div', { class: 'card-author-date' });
+  const author = createTag('span', { class: 'card-author' }, authorName || 'Sling Staff');
+  authorDateDiv.append(author);
+  if (publishDate) {
+    const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
+    const formattedDate = publishDate.toLocaleDateString('en-US', dateOptions);
+    const date = createTag('span', { class: 'card-date' }, formattedDate);
+    authorDateDiv.append(date);
+  }
+  container.append(authorDateDiv);
+}
+
+// Creating card content
+export async function addCardContent(container, {
+  tags, title, description, author, date,
+}) {
+  const cardContent = createTag('div', { class: 'card-content' });
+  container.append(cardContent);
+
+  if (tags) {
+    addTags(cardContent, tags);
+  }
+  if (title) {
+    addTitle(cardContent, title);
+  }
+  if (description) {
+    addDescription(cardContent, description);
+  }
+  addAuthorAndDate(cardContent, author, date);
+}
+
+// Create card images using default thumbnail image
+export async function addCardImage(row, style, eagerImage = false) {
+  if (row.image !== '' && row.image !== '0' && row.title !== '0') {
+    const cardImageDiv = createTag('div', { class: 'card-image' });
+    cardImageDiv.append(createOptimizedPicture(
+      row.image,
+      row.title,
+      eagerImage,
+      [{ width: '800' }], // because 795 is the max card width
+    ));
+    return cardImageDiv;
+  }
+  return null;
 }

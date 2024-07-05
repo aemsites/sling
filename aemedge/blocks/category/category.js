@@ -1,62 +1,9 @@
 import { getMetadata, createOptimizedPicture } from '../../scripts/aem.js';
-import { createTag, getBlogs, convertExcelDate } from '../../scripts/utils.js';
+import {
+  createTag, getBlogs, convertExcelDate, addCardImage, addCardContent,
+} from '../../scripts/utils.js';
 
-// Adding tags
-function addTags(container, tags) {
-  const tagsDiv = createTag('div', { class: 'card-tags' });
-  tags.forEach((tag) => {
-    const tagElement = createTag('a', { class: 'card-tag-link', href: `/whatson/${tag.toLowerCase()}` }, tag.toUpperCase());
-    tagsDiv.append(tagElement);
-  });
-  container.append(tagsDiv);
-}
-
-// Adding title
-function addTitle(container, title) {
-  const titleDiv = createTag('div', { class: 'card-title' }, title);
-  container.append(titleDiv);
-}
-
-// Adding description
-function addDescription(container, description) {
-  const descriptionDiv = createTag('div', { class: 'card-description' }, `${description.substring(0, 100)}…`);
-  container.append(descriptionDiv);
-}
-
-// Adding author + publish date
-function addAuthorAndDate(container, authorName, publishDate) {
-  const authorDateDiv = createTag('div', { class: 'card-author-date' });
-  const author = createTag('span', { class: 'card-author' }, authorName || 'Sling Staff');
-  authorDateDiv.append(author);
-  if (publishDate) {
-    const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
-    const formattedDate = publishDate.toLocaleDateString('en-US', dateOptions);
-    const date = createTag('span', { class: 'card-date' }, formattedDate);
-    authorDateDiv.append(date);
-  }
-  container.append(authorDateDiv);
-}
-
-// Creating card content
-function addCardContent(container, {
-  tags, title, description, author, date,
-}) {
-  const cardContent = createTag('div', { class: 'card-content' });
-  container.append(cardContent);
-
-  if (tags) {
-    addTags(cardContent, tags);
-  }
-  if (title) {
-    addTitle(cardContent, title);
-  }
-  if (description) {
-    addDescription(cardContent, description);
-  }
-  addAuthorAndDate(cardContent, author, date);
-}
-
-// Create cardLarge images for breakpoints
+// Create cardLarge images for 2 breakpoints
 export async function addCardImageLarge(row, style, eagerImage = true) {
   const cardImageDiv = createTag('div', { class: 'card-image' });
   const desktopMediaQuery = window.matchMedia('only screen and (min-width: 768px)');
@@ -67,10 +14,7 @@ export async function addCardImageLarge(row, style, eagerImage = true) {
       row.desktopImagePath,
       row.title,
       eagerImage,
-      [{ width: '1200' }, {
-        media: '(min-width: 1024px)',
-        width: '1440',
-      }],
+      [{ width: '1200' }],
     ));
   }
 
@@ -80,10 +24,7 @@ export async function addCardImageLarge(row, style, eagerImage = true) {
       row.mobileImagePath,
       row.title,
       eagerImage,
-      [{ width: '600' }, {
-        media: '(max-width: 1023px)',
-        width: '1000',
-      }],
+      [{ width: '770' }],
     ));
   }
   function handleImageUpdate() {
@@ -100,21 +41,6 @@ export async function addCardImageLarge(row, style, eagerImage = true) {
   // Initial call to set the correct image based on the current window size
   handleImageUpdate();
   return cardImageDiv;
-}
-
-// Create card images using default thumbnail image
-export async function addCardImage(row, style, eagerImage = false) {
-  if (row.image !== '' && row.image !== '0' && row.title !== '0') {
-    const cardImageDiv = createTag('div', { class: 'card-image' });
-    cardImageDiv.append(createOptimizedPicture(
-      row.image,
-      row.title,
-      eagerImage,
-      [{ width: '750' }, { media: '(min-width: 600px)', width: '1440' }],
-    ));
-    return cardImageDiv;
-  }
-  return null;
 }
 
 export async function createCard(row, style, eagerImage, isLarge = false) {
