@@ -25,6 +25,7 @@ async function createCard(
   planComparisonPlaceholders,
   packageJson,
   exclusiveChannels = [],
+  comboExclusiveChannels = [],
 ) {
   const card = createTag('div', { class: `card ${packageType.name}` });
   if (packageType.name === 'combo') {
@@ -75,12 +76,14 @@ async function createCard(
   });
   const carouselBlock = buildBlock('carousel', carouselContent);
   channelsWrapper.append(carouselBlock);
-  const cardBodyText = createTag('div', { class: 'card-body-text' }, `${channels.length} total channels including` || '');
-  const cardBodySubtext = createTag('div', { class: 'card-body-subtext' }, `${exclusiveChannelsList.length} exclusive ${planOfferPlaceholders[`${packageType.name}exclusivechannelsgenres`]}` || '');
   if (packageType.name !== 'combo') {
+    const cardBodyText = createTag('div', { class: 'card-body-text' }, `${channels.length} total channels including` || '');
+    const cardBodySubtext = createTag('div', { class: 'card-body-subtext' }, `${exclusiveChannelsList.length} exclusive ${planOfferPlaceholders[`${packageType.name}exclusivechannelsgenres`]}` || '');
     cardBody.appendChild(cardBodyText);
     cardBody.appendChild(cardBodySubtext);
   } else {
+    const cardBodyText = createTag('div', { class: 'card-body-text' }, `Enjoy all ${channels.length} ${packageJson.name} channels` || '');
+    const cardBodySubtext = createTag('div', { class: 'card-body-subtext' }, `including all ${comboExclusiveChannels.length} exclusive channels` || '');
     cardTitle.appendChild(cardBodyText);
     cardTitle.appendChild(cardBodySubtext);
   }
@@ -166,6 +169,8 @@ export default async function decorate(block) {
     planOfferPlaceholders,
     planComparisonPlaceholders,
     comboPackageJson,
+    [],
+    [...orangeExclusiveChannels, ...blueExclusiveChannels],
   );
   const cardWrapper = createTag('div', { class: 'card-wrapper' });
   cardWrapper.append(orangeCard);
