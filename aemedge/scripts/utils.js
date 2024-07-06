@@ -123,7 +123,7 @@ export function buildVideoBlocks(main) {
         a.replaceWith(videoBlock);
         decorateBlock(videoBlock);
       }
-      if (a.href.includes('twitter.com') && linkTextIncludesHref(a)) {
+      if ((a.href.includes('twitter.com') || a.href.includes('facebook.com')) && linkTextIncludesHref(a)) {
         const embedBlock = buildBlock('embed', a.cloneNode(true));
         a.replaceWith(embedBlock);
         decorateBlock(embedBlock);
