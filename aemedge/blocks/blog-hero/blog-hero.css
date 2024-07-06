@@ -9,6 +9,7 @@ main .blog-hero-container {
 .blog-hero.category {
   text-align: center;
   padding: 0;
+  margin-bottom: 10px;
   min-height: unset;
 }
 

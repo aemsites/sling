@@ -242,13 +242,38 @@ async function loadTemplate(main) {
 }
 
 /**
+ * Builds a spacer out of a code block with the text 'spacer'.
+ * add up to 3 spacers with 'spacer1', 'spacer2', 'spacer3'
+ */
+function buildSpacer(main) {
+  const allPageSpacers = main.querySelectorAll('code');
+
+  allPageSpacers.forEach((el) => {
+    const alt = el.innerText.trim();
+
+    if (alt === 'spacer' || alt === 'spacer1') {
+      el.innerText = '';
+      el.classList.add('spacer1');
+    }
+    if (alt === 'spacer2') {
+      el.innerText = '';
+      el.classList.add('spacer2');
+    }
+    if (alt === 'spacer3') {
+      el.innerText = '';
+      el.classList.add('spacer3');
+    }
+  });
+}
+
+/**
  * Builds all synthetic blocks in a container element.
  * @param {Element} main The container element
  */
 function buildAutoBlocks(main) {
   try {
     buildHeroBlock(main);
-    buildFragmentBlocks(main);
+    if (getPageType() !== 'blog') buildFragmentBlocks(main);
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('Auto Blocking failed', error);
@@ -268,6 +293,7 @@ export function decorateMain(main) {
   decorateSections(main);
   decorateBlocks(main);
   buildCtaBanners(main);
+  buildSpacer(main);
 }
 
 /**

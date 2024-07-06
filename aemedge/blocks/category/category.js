@@ -1,5 +1,67 @@
-import { getMetadata } from '../../scripts/aem.js';
-import { getBlogs, createCard } from '../../scripts/utils.js';
+import { getMetadata, createOptimizedPicture } from '../../scripts/aem.js';
+import {
+  createTag, getBlogs, convertExcelDate, addCardImage, addCardContent,
+} from '../../scripts/utils.js';
+
+// Create cardLarge images for 2 breakpoints
+export async function addCardImageLarge(row, style, eagerImage = true) {
+  const cardImageDiv = createTag('div', { class: 'card-image' });
+  const desktopMediaQuery = window.matchMedia('only screen and (min-width: 768px)');
+
+  function updateDesktopImage() {
+    cardImageDiv.innerHTML = ''; // Clear existing content
+    cardImageDiv.append(createOptimizedPicture(
+      row.desktopImagePath,
+      row.title,
+      eagerImage,
+      [{ width: '1200' }],
+    ));
+  }
+
+  function updateMobileImage() {
+    cardImageDiv.innerHTML = ''; // Clear existing content
+    cardImageDiv.append(createOptimizedPicture(
+      row.mobileImagePath,
+      row.title,
+      eagerImage,
+      [{ width: '770' }],
+    ));
+  }
+  function handleImageUpdate() {
+    if (desktopMediaQuery.matches) {
+      updateDesktopImage();
+    } else {
+      updateMobileImage();
+    }
+  }
+
+  // Listen for window resize events to update the image accordingly
+  desktopMediaQuery.addEventListener('change', handleImageUpdate);
+
+  // Initial call to set the correct image based on the current window size
+  handleImageUpdate();
+  return cardImageDiv;
+}
+
+export async function createCard(row, style, eagerImage, isLarge = false) {
+  const cardClass = isLarge ? 'card card-large' : style || 'card';
+  const card = createTag('div', { class: cardClass });
+  const link = createTag('a', { class: 'card-link', href: row.path, alt: row.title });
+  const cardImageFunction = isLarge ? addCardImageLarge : addCardImage;
+  const cardImage = await cardImageFunction(row, style, eagerImage);
+
+  link.append(cardImage);
+  card.prepend(link);
+
+  addCardContent(link, {
+    tags: row.tags ? JSON.parse(row.tags) : null,
+    title: row.title,
+    description: row.description,
+    author: row.author,
+    date: row.date ? convertExcelDate(row.date) : null,
+  });
+  return card;
+}
 
 export default async function decorate(block) {
   block.textContent = '';
@@ -11,8 +73,9 @@ export default async function decorate(block) {
   const categories = new URL(window.location.href).pathname.split('/').filter((path) => path);
   // remove whatson from the categories
   categories.shift();
+  categories.map((cat) => cat.replace('-and-', '&'));
   // Get blogs
-  const blogs = await getBlogs(categories, 7);
+  const blogs = await getBlogs(categories.map((cat) => cat.replace('-and-', ' & ')), 7);
   blogs.forEach(async (blog, i) => {
     if (blog.image === '') return;
     let card;
