@@ -1,5 +1,6 @@
 import {
   readBlockConfig, buildBlock, decorateBlock, loadBlock, decorateButtons,
+  decorateIcons,
 } from '../../scripts/aem.js';
 import { GQL_QUERIES, fetchGQL } from '../../scripts/gql-utils.js';
 import { createTag, fetchPlaceholders } from '../../scripts/utils.js';
@@ -90,7 +91,9 @@ async function createCard(
   cardBody.appendChild(channelsWrapper);
   const streamDevicesContent = planOfferPlaceholders[`${packageType.name}servicedevicestreamstext`];
   const streamDevices = createTag('div', { class: 'stream-devices' }, streamDevicesContent || '');
+  const streamDevicesInfo = createTag('span', { class: 'icon icon-info' });
   cardBody.appendChild(streamDevices);
+  cardBody.appendChild(streamDevicesInfo);
   // Buttons
   const planButton = createTag('a', { class: 'button plan', href: planComparisonPlaceholders[`${packageType.name}servicectalink`] }, planComparisonPlaceholders[`${packageType.name}servicectatext`] || '');
   const comparePlans = createTag('a', { class: 'button compare', href: '#' }, 'COMPARE PLANS');
@@ -99,6 +102,7 @@ async function createCard(
   buttonWrapper.appendChild(comparePlans);
   cardBody.appendChild(buttonWrapper);
   decorateButtons(buttonWrapper);
+  decorateIcons(cardBody);
   card.appendChild(cardBody);
   decorateBlock(carouselBlock);
   await loadBlock(carouselBlock);
