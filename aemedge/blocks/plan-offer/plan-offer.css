@@ -167,13 +167,9 @@
 
 .plan-offer .card.single .stream-devices {
     position: relative;
-    display: inline-flex;
+    display: flex;
     line-height: normal;
-}
-
-.plan-offer .card.single .stream-devices::before {
-    content: url('../../icons/stream-devices.svg');
-    position: relative;
-    color: rgb(23 23 37);
-    margin-right: 10px;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5em;
 }

@@ -89,11 +89,14 @@ async function createCard(
     cardTitle.appendChild(cardBodySubtext);
   }
   cardBody.appendChild(channelsWrapper);
-  const streamDevicesContent = planOfferPlaceholders[`${packageType.name}servicedevicestreamstext`];
-  const streamDevices = createTag('div', { class: 'stream-devices' }, streamDevicesContent || '');
+  const streamDevicesTVIcon = createTag('span', { class: 'icon icon-tv' });
+  const streamDevicesContent = createTag('div', { class: 'stream-devices-content' }, planOfferPlaceholders[`${packageType.name}servicedevicestreamstext`]);
   const streamDevicesInfo = createTag('span', { class: 'icon icon-info' });
+  const streamDevices = createTag('div', { class: 'stream-devices' });
+  streamDevices.appendChild(streamDevicesTVIcon);
+  streamDevices.appendChild(streamDevicesContent);
+  streamDevices.appendChild(streamDevicesInfo);
   cardBody.appendChild(streamDevices);
-  cardBody.appendChild(streamDevicesInfo);
   // Buttons
   const planButton = createTag('a', { class: 'button plan', href: planComparisonPlaceholders[`${packageType.name}servicectalink`] }, planComparisonPlaceholders[`${packageType.name}servicectatext`] || '');
   const comparePlans = createTag('a', { class: 'button compare', href: '#' }, 'COMPARE PLANS');
