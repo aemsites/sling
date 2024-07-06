@@ -30,6 +30,16 @@
     line-height: 1.5em;
 }
 
+.blog-article .icon.award {
+    width: 20%;
+    height: auto;
+}
+
+.blog-article strong > .icon { /* centers the icon */
+    display: block;
+    margin: 0 auto;
+}
+
 .blog-article .video {
     margin: 16px auto;
 }
@@ -64,6 +74,7 @@ main .hero-container + .section {
     text-align: center;
     word-break: break-word;
     box-shadow: 0 5px 15px 0 #00000024;
+    margin-bottom: 32px;
 }
 
 .author-details-wrapper li {
