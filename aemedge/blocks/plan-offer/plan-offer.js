@@ -92,11 +92,14 @@ async function createCard(
   const streamDevicesTVIcon = createTag('span', { class: 'icon icon-tv' });
   const streamDevicesContent = createTag('div', { class: 'stream-devices-content' }, planOfferPlaceholders[`${packageType.name}servicedevicestreamstext`]);
   const streamDevicesInfo = createTag('span', { class: 'icon icon-info' });
+  // eslint-disable-next-line dot-notation
+  const streamDevicesInfoModal = createTag('a', { href: planOfferPlaceholders.blueorangestreammodal, alt: 'stream for each package', class: 'modal' }, streamDevicesInfo);
   const streamDevices = createTag('div', { class: 'stream-devices' });
   streamDevices.appendChild(streamDevicesTVIcon);
   streamDevices.appendChild(streamDevicesContent);
-  streamDevices.appendChild(streamDevicesInfo);
+  streamDevices.appendChild(streamDevicesInfoModal);
   cardBody.appendChild(streamDevices);
+
   // Buttons
   const planButton = createTag('a', { class: 'button plan', href: planComparisonPlaceholders[`${packageType.name}servicectalink`] }, planComparisonPlaceholders[`${packageType.name}servicectatext`] || '');
   const comparePlans = createTag('a', { class: 'button compare', href: '#' }, 'COMPARE PLANS');
