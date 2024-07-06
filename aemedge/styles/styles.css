@@ -424,22 +424,6 @@ main .section {
   color: rgb(23 23 37);
 }
 
-/* columns variant for supported devices */
-.columns.block.streams {
-  padding: 2.5rem 6.25rem 2.25rem;
-}
-
-.columns.block.streams > div > div > p:first-of-type {
-  display: flex;
-  width: fit-content;
-  flex-wrap: wrap;
-  margin-top: 0;
-  align-items: baseline;
-  gap: 1em;
-  font-size: 2rem;
-  color: rgb(23 23 37);
-}
-
 @media (width >= 768px) {
   main .section {
     padding: 64px 32px;
