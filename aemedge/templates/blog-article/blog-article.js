@@ -10,6 +10,13 @@ import {
 
 import { getTag } from '../../scripts/tags.js';
 
+// This depends on authors naming award icons starting with "award-"
+export function decorateAwardIcons() {
+  document.querySelectorAll('[class^="icon icon-award-"]').forEach((span) => {
+    span.classList.add('award');
+  });
+}
+
 /**
  * Function to return the name of the author photo
  * photos must be stored with <firstname>-<lastname>-author.jpeg
@@ -151,4 +158,5 @@ export default async function buildBlogDetails(main) {
   if (p) p.remove();
   buildFragmentBlocks(main);
   buildVideoBlocks(main);
+  decorateAwardIcons(main);
 }
