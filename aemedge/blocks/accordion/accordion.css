@@ -1,9 +1,5 @@
 
-.accordion-wrapper {
-  margin: 0 auto;
-  max-width: 780px;
-  width: 66%;
-}
+
 
 .accordion .details {
   overflow-x: hidden;
@@ -65,7 +61,7 @@
   background: url("../../icons/accordion-arrow-down.svg") no-repeat;
   width: 16px;
   height: 16px;
-  margin-right: 10px;
+  margin: 0 1rem;
   transition: transform 0.3s ease 0s;
 }
 
@@ -85,7 +81,7 @@
   height: auto;
   max-height: 0;
   overflow: hidden;
-  padding-left: 30px;
+  padding-left: 45px;
   transition: max-height 500ms ease-in-out 0s;
 }
 
@@ -94,7 +90,7 @@
   height: auto;
   max-height: 300px;
   overflow: hidden;
-  padding-left: 30px;
+  padding-left: 45px;
   
   /* transition: max-height 500ms ease-in-out 0s; */
 }
@@ -111,5 +107,23 @@
 @media (width >= 768px) {
   .accordion .details.open .accordion-item-body ul li {
     padding: 0.5rem 4rem 0.5rem 0;
+  }
+
+  .accordion .details .accordion-item-body {
+    padding-left: 60px;
+  }
+  
+  .accordion .details.open .accordion-item-body {
+    padding-left: 60px;
+  }
+
+  .accordion .details .summary::before {
+    margin-left: 1.5rem;
+  }
+
+  .accordion-wrapper {
+    margin: 0 auto;
+    max-width: 780px;
+    width: 66%;
   }
 }
