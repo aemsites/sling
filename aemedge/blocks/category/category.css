@@ -139,7 +139,7 @@ main .section.category-container {
   position: relative;
   display: flex;
   flex-direction: column;
-  padding-bottom: 32px;
+  padding-bottom: 30px;
 }
 
 .category .card-medium .card-link,
@@ -193,9 +193,9 @@ main .section.category-container {
   font-size: 11px;
   font-weight: bold;
   line-height: 16px;
-  margin: 0 5px 5px 0;
+  margin: 5px 5px 0 0;
   max-height: 25px;
-  padding: 5px 17px;
+  padding: 5px 17px 2px;
   pointer-events: auto;
   white-space: nowrap;
   z-index: 1;
@@ -226,7 +226,7 @@ main .section.category-container {
   font-size: var(--body-font-size-xs);
   letter-spacing: 0;
   line-height: 21px;
-  margin: 0 10px 38px;
+  margin: 0 0 38px 10px;
   max-height: 55px;
   max-width: none;
 }
@@ -245,7 +245,7 @@ main .section.category-container {
   color: var(--header-hover-background-color);
   font-size: var(--body-font-size-xs);
   line-height: 21px;
-  padding-bottom: 15px;
+  padding-bottom: 12px;
   margin: 0 10px;
 }
 
@@ -321,11 +321,10 @@ main .section.category-container {
 
   /* Medium Cards */
   .category .card.card-medium {
-    max-width: 769px;
-    max-height: 423px;
+    max-width: 792px;
+    max-height: 480px;
     position: relative;
-    margin: 0 0 0 7%;
-    padding-bottom: 54px;
+    margin: 0 0 0 6.5%;
     width: 55%;
   }
 
@@ -343,6 +342,7 @@ main .section.category-container {
     height: unset;
     justify-content: center;
     margin-top: unset;
+    padding: 10px 0 0;
   }
 
   .category .card-medium .card-content .card-title {
@@ -381,8 +381,8 @@ main .section.category-container {
   .category .card.card-small {
     max-width: 388px;
     position: relative;
-    margin-right: 8%;
-    width: 27%;
+    margin-right: 7%;
+    width: 28%;
   }
 
   .category .card.card-small .card-image {
@@ -394,7 +394,8 @@ main .section.category-container {
   }
 
   .category .card-small .card-content .card-title {
-    margin-top: 0;
+    padding-top:20px;
+    margin-right: 0;
   }
 
   .category .card-small .card-content .card-description {
@@ -402,7 +403,7 @@ main .section.category-container {
   }
 
   .category .card-small .card-content .card-author-date {
-    padding-bottom: 23px;
+    padding-bottom: 16px;
   }
 }
 
