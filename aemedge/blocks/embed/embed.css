@@ -33,7 +33,7 @@
     max-width: 560px;
 }
 
-@media (min-width: 768px) {
+@media (width >= 768px) {
     .embed {
         max-width: 560px;
     }
