@@ -26,6 +26,7 @@
   line-height: normal;
   margin: 0;
   color: rgb(23 23 37);
+  padding-bottom: 1.25rem;
 }
 
 .accordion .details.open .summary {
@@ -55,11 +56,11 @@
 
 .accordion .details .summary p {
   margin: unset;
+  line-height: unset;
 }
 
 .accordion .details .accordion-item-body {
   text-align: left;
-  padding-right: 4.25rem;
   height: auto;
   max-height: 0;
   overflow: hidden;
@@ -87,6 +88,7 @@
 
   .accordion .details .accordion-item-body {
     padding-left: 65px;
+    padding-right: 4.25rem;
   }
 
   .accordion .details.open .accordion-item-body {
@@ -98,7 +100,7 @@
   }
 
   .accordion-wrapper {
-    margin: 0 auto;
+    margin: 0 auto 4rem;
     max-width: 780px;
     width: 66%;
   }
