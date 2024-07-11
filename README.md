@@ -1,7 +1,9 @@
 # Sling.com EDS Implementation
+
 Implementation artifacts of the sling.com for EDS + Doc based authoring
 
 ## Environments
+
 - Preview: https://main--sling--aemsites.hlx.page/
 - Live: https://main--sling--aemsites.hlx.live/
 
