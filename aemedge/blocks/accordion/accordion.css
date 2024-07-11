@@ -77,6 +77,10 @@
 
 /* width greater than 768px */
 @media (width >= 768px) {
+  .accordion .details .accordion-item-body ul li {
+    padding: 0.5rem 4rem 0.5rem 0;
+  }
+
   .accordion .details.open .accordion-item-body ul li {
     padding: 0.5rem 4rem 0.5rem 0;
   }
