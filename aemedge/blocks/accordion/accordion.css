@@ -1,16 +1,13 @@
-
-
-
 .accordion .details {
   overflow-x: hidden;
   position: relative;
   display: flex;
   flex-direction: column;
-  padding: 1rem 1rem 1rem 0;
+  padding: 0.75rem 1rem 0 2rem;
 }
 
 /* stylelint-disable-next-line no-descending-specificity */
-.accordion .details +.details {
+.accordion .details + .details {
   margin-top: 10px;
 }
 
@@ -29,46 +26,31 @@
   line-height: normal;
   margin: 0;
   color: rgb(23 23 37);
-  border-top: 1px solid transparent;
-  border-right: 1px solid transparent;
-  border-left: 1px solid transparent;
-  border-bottom: none;
-  border-radius: 4px;
-  transform: translate3d(0, 0, 0);
 }
 
-  /* If you want to add something for when the.details are open */
-
-  .accordion .details.open .summary {
-    font-weight: bold;
-    transition: color 0.3s ease-in-out 0s;
-  } 
-
-  /* If you want to add something for focus/hover */
-
-  /* .accordion.details.summary:focus,
-  .accordion.details.summary:hover {
-  } */
+.accordion .details.open .summary {
+  font-weight: bold;
+  transition: color 0.3s ease-in-out 0s;
+}
 
 .accordion .details .summary::-webkit-details-marker {
   display: none;
 }
 
 .accordion .details .summary::before {
-  content: "";
+  content: '';
   position: relative;
   color: rgb(23 23 37);
-  background: url("../../icons/accordion-arrow-down.svg") no-repeat;
+  background: url('../../icons/accordion-arrow-down.svg') no-repeat;
   width: 16px;
   height: 16px;
-  margin: 0 1rem;
-  transition: transform 0.3s ease 0s;
+  margin: 4px 1.5rem 0 1rem;
+  transition: transform 0.5s ease 0s;
 }
 
 .accordion .details.open .summary::before {
-  transform: translateY(-50%) rotate(-180deg);
-  margin-top: 8px;
-  transition: transform 0.3s ease 0s;
+  transform: rotate3d(1, 0, 0, -180deg);
+  transition: transform 0.5s ease 0s;
 }
 
 .accordion .details .summary p {
@@ -81,18 +63,8 @@
   height: auto;
   max-height: 0;
   overflow: hidden;
-  padding-left: 45px;
+  padding-left: 55px;
   transition: max-height 500ms ease-in-out 0s;
-}
-
-.accordion .details.open .accordion-item-body {
-  padding-right: 4.25rem;
-  height: auto;
-  max-height: 300px;
-  overflow: hidden;
-  padding-left: 45px;
-  
-  /* transition: max-height 500ms ease-in-out 0s; */
 }
 
 .accordion.details.open .accordion-item-body ul {
@@ -110,11 +82,11 @@
   }
 
   .accordion .details .accordion-item-body {
-    padding-left: 60px;
+    padding-left: 65px;
   }
-  
+
   .accordion .details.open .accordion-item-body {
-    padding-left: 60px;
+    padding-left: 65px;
   }
 
   .accordion .details .summary::before {

@@ -36,8 +36,14 @@ export default function decorate(block) {
   const questions = block.querySelectorAll('.accordion-items .summary');
   questions.forEach((item) => {
     item.addEventListener('click', () => {
-      const answer = item.parentElement;
-      answer.classList.toggle('open');
+      const answer = item.nextSibling;
+      const faqitem = item.parentElement;
+      faqitem.classList.toggle('open');
+      if (answer.style.maxHeight) {
+        answer.style.maxHeight = null;
+      } else {
+        answer.style.maxHeight = `${answer.scrollHeight}px`;
+      }
     });
   });
 }
