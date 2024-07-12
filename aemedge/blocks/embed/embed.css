@@ -1,0 +1,40 @@
+.embed {
+    width: 100%;
+    text-align: center;
+    max-width: 400px;
+    margin: 32px auto;
+}
+
+.embed > div {
+    display: flex;
+    justify-content: center;
+}
+
+.embed.embed-twitter .twitter-tweet-rendered {
+    margin-left: auto;
+    margin-right: auto;
+
+    /* reserve an approximate space to avoid extensive layout shifts */
+    aspect-ratio: 4/3;
+}
+
+.embed .embed-placeholder {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    position: relative;
+}
+
+.embed.embed-instagram {
+    display: flex;
+    justify-content: center;
+}
+
+.embed.embed-facebook {
+    max-width: 560px;
+}
+
+@media (width >= 768px) {
+    .embed {
+        max-width: 560px;
+    }
+}
