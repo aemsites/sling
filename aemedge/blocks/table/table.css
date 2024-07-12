@@ -139,8 +139,23 @@ blockquote {
   table-layout: fixed;
 }
 
-div.section.table-container div.default-content-wrapper {
+div.section.table-container .default-content-wrapper p {
   text-align: center;
+}
+
+div.section.table-container .default-content-wrapper .button-container {
+  text-align: left;
+  background-color: var(--background-color);
+}
+
+div.section.table-container .default-content-wrapper .button-container a {
+  text-align: left;
+  background-color: var(--background-color);
+  border: none;
+}
+
+div.section.table-container .default-content-wrapper .button-container ~ p {
+  text-align: left;
 }
 
 @media (width >= 768px) {

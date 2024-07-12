@@ -35,12 +35,15 @@ export default async function decorate(block) {
   });
   block.innerHTML = '';
   block.append(table);
-}
 
-//  adding code for schedule table
-
-setTimeout(() => {
-  const tableRows = document.querySelectorAll('.table-wrapper table tbody tr');
+  let tableRows = '';
+  if (block.classList.contains('schedule')) {
+    const scheduletableRows = block.querySelectorAll('table tbody tr');
+    tableRows = scheduletableRows;
+  } else if (block.classList.contains('playoffs')) {
+    const playoffstableRows = block.querySelectorAll('table tbody tr');
+    tableRows = playoffstableRows;
+  }
   let trcount = 0;
   tableRows.forEach((row) => {
     const cells = row.querySelectorAll('td');
@@ -57,4 +60,4 @@ setTimeout(() => {
     }
     trcount += 1;
   });
-});
+}
