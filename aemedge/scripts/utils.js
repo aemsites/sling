@@ -123,6 +123,11 @@ export function buildVideoBlocks(main) {
         a.replaceWith(videoBlock);
         decorateBlock(videoBlock);
       }
+      if ((a.href.includes('twitter.com') || a.href.includes('facebook.com') || a.href.includes('instagram.com')) && linkTextIncludesHref(a)) {
+        const embedBlock = buildBlock('embed', a.cloneNode(true));
+        a.replaceWith(embedBlock);
+        decorateBlock(embedBlock);
+      }
     });
   }
 }
@@ -230,71 +235,72 @@ export async function getBlogs(categories, num) {
   return blogArticles;
 }
 
-/**
- * Creates a card element from an index row
- * @param {Object} row - JSON Object representing a blog
- * @param {String} style - The style of the card (default: 'card')
- * @param {Boolean} eagerImage - Whether to load the image eagerly (default: false)
- * @returns {Promise<Array>} - A promise resolving to the card element
- */
-export async function createCard(row, style, eagerImage = false) {
-  // Create card div
-  const card = createTag('div', { class: style || 'card' });
+// Adding tags
+function addTags(container, tags) {
+  const tagsDiv = createTag('div', { class: 'card-tags' });
+  tags.forEach((tag) => {
+    const tagElement = createTag('a', { class: 'card-tag-link', href: `/whatson/${tag.toLowerCase()}` }, tag.toUpperCase());
+    tagsDiv.append(tagElement);
+  });
+  container.append(tagsDiv);
+}
 
-  // Create and add the link
-  const link = createTag('a', { class: 'card-link', href: row.path, alt: row.title });
-  // Add the image to the link and then card first
-  if (row.image !== '' && row.image !== '0' && row.title !== '0') {
-    const cardImage = createTag('div', { class: 'card-image' });
-    cardImage.append(createOptimizedPicture(
-      row.image,
-      row.title,
-      eagerImage,
-      [{ width: '750' }, { media: '(min-width: 600px)', width: '1440' }],
-    ));
-    link.append(cardImage);
-    card.prepend(link);
-  }
+// Adding title
+function addTitle(container, title) {
+  const titleDiv = createTag('div', { class: 'card-title' }, title);
+  container.append(titleDiv);
+}
 
-  // Create a separate child div for the card content
-  const cardContent = createTag('div', { class: 'card-content' });
-  link.append(cardContent);
-  // Add tags
-  if (row.tags && row.tags !== '0') {
-    const tags = createTag('div', { class: 'card-tags' });
-    const tagArray = JSON.parse(row.tags);
-    tagArray.forEach((tag) => {
-      const tagElement = createTag('a', { class: 'card-tag-link', href: `/whatson/${tag.toLowerCase()}` }, tag.toUpperCase());
-      tags.append(tagElement);
-    });
-    cardContent.append(tags);
-  }
-  // Add title
-  if (row.title && row.title !== '0') {
-    const title = createTag('div', { class: 'card-title' }, row.title);
-    cardContent.append(title);
-  }
-  // Add description
-  if (row.description && row.description !== '0') {
-    const description = createTag('div', { class: 'card-description' }, `${row.description.substring(0, 100)}...`);
-    cardContent.append(description);
-  }
-  // Add author and publish date
-  const authorDate = createTag('div', { class: 'card-author-date' });
-  let author;
-  if (!row.author || row.author === '0') {
-    author = createTag('span', { class: 'card-author' }, 'Sling Staff');
-  } else {
-    author = createTag('span', { class: 'card-author' }, row.author);
-  }
-  authorDate.append(author);
-  if (row.date && row.date !== '0') {
-    const publishDate = convertExcelDate(row.date);
+// Adding description
+function addDescription(container, description) {
+  const descriptionDiv = createTag('div', { class: 'card-description' }, `${description.substring(0, 100)}…`);
+  container.append(descriptionDiv);
+}
+
+// Adding author + publish date
+function addAuthorAndDate(container, authorName, publishDate) {
+  const authorDateDiv = createTag('div', { class: 'card-author-date' });
+  const author = createTag('span', { class: 'card-author' }, authorName || 'Sling Staff');
+  authorDateDiv.append(author);
+  if (publishDate) {
     const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
     const formattedDate = publishDate.toLocaleDateString('en-US', dateOptions);
     const date = createTag('span', { class: 'card-date' }, formattedDate);
-    authorDate.append(date);
+    authorDateDiv.append(date);
   }
-  cardContent.append(authorDate);
-  return (card);
+  container.append(authorDateDiv);
+}
+
+// Creating card content
+export async function addCardContent(container, {
+  tags, title, description, author, date,
+}) {
+  const cardContent = createTag('div', { class: 'card-content' });
+  container.append(cardContent);
+
+  if (tags) {
+    addTags(cardContent, tags);
+  }
+  if (title) {
+    addTitle(cardContent, title);
+  }
+  if (description) {
+    addDescription(cardContent, description);
+  }
+  addAuthorAndDate(cardContent, author, date);
+}
+
+// Create card images using default thumbnail image
+export async function addCardImage(row, style, eagerImage = false) {
+  if (row.image !== '' && row.image !== '0' && row.title !== '0') {
+    const cardImageDiv = createTag('div', { class: 'card-image' });
+    cardImageDiv.append(createOptimizedPicture(
+      row.image,
+      row.title,
+      eagerImage,
+      [{ width: '800' }], // because 795 is the max card width
+    ));
+    return cardImageDiv;
+  }
+  return null;
 }

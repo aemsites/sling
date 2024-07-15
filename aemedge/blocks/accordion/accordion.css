@@ -1,22 +1,17 @@
-
-.accordion-wrapper {
-  margin: 0 auto;
-  max-width: 780px;
-}
-
-.accordion details {
+.accordion .details {
   overflow-x: hidden;
   position: relative;
   display: flex;
-  padding: 1rem 1rem 1rem 0;
+  flex-direction: column;
+  padding: 0.75rem 1rem 0 2rem;
 }
 
 /* stylelint-disable-next-line no-descending-specificity */
-.accordion details + details {
+.accordion .details + .details {
   margin-top: 10px;
 }
 
-.accordion details summary {
+.accordion .details .summary {
   position: relative;
   cursor: pointer;
   list-style: none;
@@ -31,70 +26,82 @@
   line-height: normal;
   margin: 0;
   color: rgb(23 23 37);
-  border-top: 1px solid transparent;
-  border-right: 1px solid transparent;
-  border-left: 1px solid transparent;
-  border-bottom: none;
-  border-radius: 4px;
-  transform: translate3d(0, 0, 0);
+  padding-bottom: 1.25rem;
+}
+
+.accordion .details.open .summary {
+  font-weight: bold;
   transition: color 0.3s ease-in-out 0s;
 }
 
-  /* If you want to add something for when the details are open */
-
-  /* .accordion details[open] summary {
-
-  } */
-
-  /* If you want to add something for focus/hover */
-
-  /* .accordion details summary:focus,
-  .accordion details summary:hover {
-  } */
-
-.accordion details summary::-webkit-details-marker {
+.accordion .details .summary::-webkit-details-marker {
   display: none;
 }
 
-.accordion details summary::before {
-  content: "";
+.accordion .details .summary::before {
+  content: '';
   position: relative;
   color: rgb(23 23 37);
-  background: url("../../icons/accordion-arrow-down.svg") no-repeat;
+  background: url('../../icons/accordion-arrow-down.svg') no-repeat;
   width: 16px;
   height: 16px;
-  margin-right: 10px;
+  margin: 4px 1.5rem 0 1rem;
+  transition: transform 0.5s ease 0s;
 }
 
-.accordion details[open] summary::before {
-  transform: translateY(-50%) rotate(-180deg);
-  margin-top: 8px;
+.accordion .details.open .summary::before {
+  transform: rotate3d(1, 0, 0, -180deg);
+  transition: transform 0.5s ease 0s;
 }
 
-.accordion details summary p {
+.accordion .details .summary p {
   margin: unset;
+  line-height: unset;
 }
 
-.accordion details .accordion-item-body {
+.accordion .details .accordion-item-body {
   text-align: left;
-  padding: 0 16px;
+  height: auto;
+  max-height: 0;
+  overflow: hidden;
+  padding-left: 55px;
+  transition: max-height 500ms ease-in-out 0s;
 }
 
-.accordion details[open] .accordion-item-body {
-  padding-right: 4.25rem;
-}
-
-.accordion details[open] .accordion-item-body ul {
+.accordion.details.open .accordion-item-body ul {
   margin-left: 40px;
 }
 
-.accordion details[open] .accordion-item-body ul li {
+.accordion.details.open .accordion-item-body ul li {
   padding: 0.5rem 0;
 }
 
 /* width greater than 768px */
 @media (width >= 768px) {
-  .accordion details[open] .accordion-item-body ul li {
+  .accordion .details .accordion-item-body ul li {
     padding: 0.5rem 4rem 0.5rem 0;
+  }
+
+  .accordion .details.open .accordion-item-body ul li {
+    padding: 0.5rem 4rem 0.5rem 0;
+  }
+
+  .accordion .details .accordion-item-body {
+    padding-left: 65px;
+    padding-right: 4.25rem;
+  }
+
+  .accordion .details.open .accordion-item-body {
+    padding-left: 65px;
+  }
+
+  .accordion .details .summary::before {
+    margin-left: 1.5rem;
+  }
+
+  .accordion-wrapper {
+    margin: 0 auto 4rem;
+    max-width: 780px;
+    width: 66%;
   }
 }

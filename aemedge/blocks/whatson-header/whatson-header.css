@@ -18,7 +18,7 @@ header nav {
     margin: auto;
     max-width: 1400px;
     height: var(--nav-height);
-    padding: 0 1rem;
+    padding: 0 24px;
     font-family: var(--body-font-family);
 }
 
@@ -30,17 +30,12 @@ header nav[aria-expanded="true"] {
     min-height: 100vh;
 }
 
-@media (width >=768px) {
-    header nav {
-        padding: 0 2rem;
-    }
-}
-
 @media (width >=1400px) {
     header nav {
         display: flex;
         justify-content: space-between;
         position: relative;
+        max-width: 85%;
     }
 
     header nav[aria-expanded="true"] {
@@ -104,8 +99,8 @@ header .nav-brand {
 }
 
 header nav .nav-brand img {
-    width: 128px;
-    height: auto;
+    width: auto;
+    height: 40px;
 }
 
 /* sections */
