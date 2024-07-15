@@ -3,7 +3,7 @@ header .nav-wrapper {
     background-color: var(--header-background-color);
     color: var(--header-text-color);
     width: 100%;
-    z-index: 2;
+    z-index: 200;
     position: fixed;
 }
 
@@ -125,7 +125,7 @@ header nav .nav-sections ul {
     font-weight: 500;
 }
 
-header nav .nav-sections ul>li {
+header nav .nav-sections ul > li {
     font-size: 14px;
     font-weight: bold;
     line-height: 20px;
@@ -155,11 +155,11 @@ header nav .nav-sections .nav-drop[aria-expanded="false"] ul {
 }
 
 /* stylelint-disable-next-line no-descending-specificity */
-header nav .nav-sections ul>li>ul {
+header nav .nav-sections ul > li > ul {
     margin-top: 0;
 }
 
-header nav .nav-sections ul>li>ul>li {
+header nav .nav-sections ul > li > ul > li {
     font-weight: 500;
 }
 
@@ -215,18 +215,18 @@ header nav .nav-sections ul>li>ul>li {
         font-size: var(--body-font-size-xs);
     }
 
-    header nav .nav-sections .default-content-wrapper>ul>li {
+    header nav .nav-sections .default-content-wrapper > ul > li {
         flex: 0 1 auto;
         position: relative;
     }
 
-    header nav .nav-sections .default-content-wrapper>ul>li>ul {
+    header nav .nav-sections .default-content-wrapper > ul > li > ul {
         display: none;
         position: relative;
     }
 
-    header nav .nav-sections .nav-drop:hover>ul,
-    header nav .nav-sections .nav-drop[aria-expanded="true"]>ul {
+    header nav .nav-sections .nav-drop:hover > ul,
+    header nav .nav-sections .nav-drop[aria-expanded="true"] > ul {
         display: block;
         position: absolute;
         width: 200px;
@@ -237,7 +237,7 @@ header nav .nav-sections ul>li>ul>li {
         white-space: initial;
     }
 
-    header nav .nav-sections .default-content-wrapper>ul>li>ul>li {
+    header nav .nav-sections .default-content-wrapper > ul > li > ul > li {
         padding: 8px 0;
     }
 }

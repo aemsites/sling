@@ -35,7 +35,8 @@
     height: auto;
 }
 
-.blog-article strong > .icon { /* centers the icon */
+.blog-article strong > .icon {
+    /* centers the icon */
     display: block;
     margin: 0 auto;
 }
@@ -79,7 +80,7 @@ main .hero-container + .section {
 
 .author-details-wrapper li {
     list-style: none;
- }
+}
 
 .author-card .image-container {
     align-self: stretch;
@@ -113,7 +114,7 @@ main .hero-container + .section {
     padding-top: 16px;
 }
 
-.text-container .tags > a{
+.text-container .tags > a {
     color: var(--text-color);
     font-size: 14px;
     font-weight: 500;
@@ -124,9 +125,9 @@ main .hero-container + .section {
 
 .text-container .social-share {
     display: flex;
-   text-align: center;
-   padding:24px 0 6px;
-   justify-content: center;
+    text-align: center;
+    padding: 24px 0 6px;
+    justify-content: center;
 }
 
 .text-container .social-share .share-text {
@@ -186,7 +187,7 @@ main .hero-container + .section {
 .fragment-wrapper .button-container {
     display: flex;
     justify-content: center;
-    position:fixed;
+    position: fixed;
     bottom: 0;
     right: 0;
     left: 0;
@@ -211,13 +212,14 @@ main .hero-container + .section {
     font-weight: 700;
     text-align: center;
     letter-spacing: 0;
-    border: 2px solid var(--primary-button-color);;
+    border: 2px solid var(--primary-button-color);
+    ;
     opacity: 1;
     min-width: 11.25rem;
 }
 
 .fragment-wrapper .button-container a[href*='modals'].button {
-    all:unset;
+    all: unset;
     font-size: 14px;
     -webkit-font-smoothing: antialiased;
     font-style: italic;
@@ -246,10 +248,10 @@ body.blog-article.modal-open .modal-content .section:first-of-type > div {
     display: flex;
     flex-flow: wrap column;
     align-items: center;
-    margin-top:24px;
+    margin-top: 24px;
 }
 
-@media (width >= 768px) {
+@media (width >=768px) {
     .blog-article h1 {
         margin: 10px auto 32px;
         line-height: 55px;
@@ -276,7 +278,7 @@ body.blog-article.modal-open .modal-content .section:first-of-type > div {
         margin: 0;
     }
 
-    .blog-article main .content-details-wrapper >.default-content-wrapper > *:first-child {
+    .blog-article main .content-details-wrapper > .default-content-wrapper > *:first-child {
         margin-top: 0;
     }
 
@@ -327,58 +329,57 @@ body.blog-article.modal-open .modal-content .section:first-of-type > div {
     }
 }
 
-@media (width >= 1024px) {
-.blog-article code.spacer2 {
-    line-height: 3.75em;
-}
+@media (width >=1024px) {
+    .blog-article code.spacer2 {
+        line-height: 3.75em;
+    }
 
-.blog-article code.spacer3 {
-    line-height: 5.625em;
-}
+    .blog-article code.spacer3 {
+        line-height: 5.625em;
+    }
 
-.blog-article > main .section:not(.popular-blogs-container) {
-    max-width: 1168px;
-}
+    .blog-article > main .section:not(.popular-blogs-container) {
+        max-width: 1168px;
+    }
 
-.section.blog-hero-container {
-    margin: 64px auto 0;
-}
+    .section.blog-hero-container {
+        margin: 64px auto 0;
+    }
 
-.text-container .tags {
-    flex-direction: column;
-    align-items: center;
-    word-wrap: break-word;
-}
+    .text-container .tags {
+        flex-direction: column;
+        align-items: center;
+        word-wrap: break-word;
+    }
 
-.text-container .social-share {
-    flex-direction: column;
-}
+    .text-container .social-share {
+        flex-direction: column;
+    }
 
-.text-container .social-share .share-list {
-    place-content: center;
-}
+    .text-container .social-share .share-list {
+        place-content: center;
+    }
 
-.fragment-wrapper .button-container {
-    position: unset;
-    width: unset;
-    background-color: unset
-}
+    .fragment-wrapper .button-container {
+        position: unset;
+        width: unset;
+        background-color: unset
+    }
 
-.fragment-wrapper .button-container .button {
-    margin: 0 8px;
-}
+    .fragment-wrapper .button-container .button {
+        margin: 0 8px;
+    }
 
-.blog-article .default-content-wrapper p {
-    line-height: 1.875em;
-}
+    .blog-article .default-content-wrapper p {
+        line-height: 1.875em;
+    }
 
-main .hero-container + .section p {
-    line-height: unset;
-}
+    main .hero-container + .section p {
+        line-height: unset;
+    }
 
-.content-details-wrapper .fragment-wrapper .button-container + p{
-    display: flex;
-    justify-content: center;
+    .content-details-wrapper .fragment-wrapper .button-container + p {
+        display: flex;
+        justify-content: center;
+    }
 }
-}
-
