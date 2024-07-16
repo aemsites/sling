@@ -19,6 +19,7 @@ main .fragment-container .section.global-banner-container[data-section-status="l
   padding: 0;
   z-index: 1;
   background: transparent;
+  width: 100%;
 }
 
 main .block.global-banner:not([data-block-status="loaded"]) {
