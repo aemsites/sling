@@ -117,12 +117,18 @@ main .section.category-container {
   max-width: 368px;
 }
 
-.card-author-date .card-author{
-  color: var(--link-color);
+.category .card-large .card-link .card-content .card-author-date .card-author {
+  color: white;
+  text-decoration: underline;
   font-size: var(--body-font-size-xs);
   line-height: 21px;
 }
 
+.category .card-medium .card-link .card-content .card-author-date .card-author, .category .card-small .card-link .card-content .card-author-date .card-author{
+  color: var(--link-color);
+  font-size: var(--body-font-size-xs);
+  line-height: 21px;
+}
 
 .category .card-large .card-link .card-content .card-author-date .card-date {
   color: white;
@@ -254,11 +260,6 @@ main .section.category-container {
 .category .card-small .card-content .card-author-date .card-date {
   color: var(--header-hover-background-color);
   margin-left: 10px;
-}
-
-.category .card-large .card-link .card-content .card-author-date .card-author{
-  color: white;
-  text-decoration: underline;
 }
 
 @media screen and (width >=768px) {
@@ -412,11 +413,11 @@ main .section.category-container {
     padding-bottom: 16px;
   }
 
-  .category .card-medium .card-link .card-content .card-author-date .card-author  {
-    text-decoration: underline;
-    font-weight: 600;
+  .category .card-medium .card-link .card-content .card-author-date .card-author {
     color: white;
+    text-decoration: underline;
   }
+
 }
 
 @media screen and (width >=1024px) {
