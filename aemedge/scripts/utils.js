@@ -1,5 +1,5 @@
 import {
-  getMetadata, buildBlock, decorateBlock, createOptimizedPicture,
+  getMetadata, buildBlock, decorateBlock, createOptimizedPicture, toCamelCase,
 } from './aem.js';
 
 export const PRODUCTION_DOMAINS = ['sling.com'];
@@ -162,8 +162,7 @@ export function buildPopularBlogs(main) {
 
 /**
  * Function to check whether the page is of type blog-article
- * @param {*} document
- * @returns
+ * @returns {string} - The type of the page based on template
  */
 export function getPageType() {
   const template = getMetadata('template');
@@ -303,4 +302,165 @@ export async function addCardImage(row, style, eagerImage = false) {
     return cardImageDiv;
   }
   return null;
+}
+
+/**
+ * Gets placeholders object.
+ * @param {string} [prefix] Location of placeholders
+ * @param {string} [sheet] Sheet name to fetch placeholders from
+ * @returns {object} Window placeholders object
+ */
+// eslint-disable-next-line import/prefer-default-export, default-param-last
+export async function fetchPlaceholders(prefix = 'default', sheet = '') {
+  window.placeholders = window.placeholders || {};
+  if (!window.placeholders[`${prefix}-${sheet}`]) {
+    window.placeholders[`${prefix}-${sheet}`] = new Promise((resolve) => {
+      fetch(`${prefix === 'default' ? '' : prefix}/placeholders.json`)
+        .then((resp) => {
+          if (resp.ok) {
+            return resp.json();
+          }
+          return {};
+        })
+        .then((json) => {
+          const placeholders = {};
+          let jsonData;
+          if (sheet) {
+            jsonData = json[sheet].data;
+          } else {
+            jsonData = json.data;
+          }
+          jsonData
+            .filter((placeholder) => placeholder.Key)
+            .forEach((placeholder) => {
+              placeholders[toCamelCase(placeholder.Key)] = placeholder.Text;
+            });
+          window.placeholders[prefix] = placeholders;
+          resolve(window.placeholders[prefix]);
+        })
+        .catch(() => {
+          // error loading placeholders
+          window.placeholders[`${prefix}-${sheet}`] = {};
+          resolve(window.placeholders[`${prefix}-${sheet}`]);
+        });
+    });
+  }
+  return window.placeholders[`${prefix}-${sheet}`];
+}
+
+/**
+ * Data from Commerce GraphQL endpoint to populate the plan offer block
+ */
+
+export const GRAPHQL_ENDPOINT = 'https://www.slingcommerce.com/graphql';
+
+export const GQL_QUERIES = Object.freeze({
+  zipcodeAddressVerificationV2: {
+    operationName: 'zipcodeAddressVerificationV2',
+    query: `
+      query zipcodeAddressVerificationV2($zipcode: String!) {
+        zipcodeAddressVerificationV2(zipcode: $zipcode) {
+          zipcode_matched
+          zipcode
+          dma
+          latitude
+          longitude
+          city
+          state
+          __typename
+        }
+      }
+    `,
+    variables: (zipCode) => `{"zipcode":"${zipCode}"}`,
+  },
+  packagesPerZipCode: {
+    operationName: 'packagesPerZipCode',
+    query: `
+      query packagesPerZipcode($zipcode: String!) {
+        packagesPerZipcode(zipcode: $zipcode) {
+          id
+          identifier
+          name
+          guid
+          sku
+          package_type
+          csr_required
+          amount
+          description
+          migrated_to
+          enabled
+          priority
+          __typename
+        }
+      }
+    `,
+    variables: (zipCode) => `{"zipcode":"${zipCode}"}`,
+  },
+  getPackage: {
+    operationName: 'getPackage',
+    query: `
+      query GetPackage($filter: PackageAttributeFilterInput) {
+        packages(filter: $filter) {
+          items {
+            plan {
+              plan_code
+              plan_identifier
+              plan_name
+              __typename
+            }
+            planOffer {
+              plan_offer_identifier
+              discount
+              discount_type
+              plan_offer_name
+              offer_identifier
+              description
+              __typename
+            }
+            package {
+              name
+              base_price
+              sku
+              channels {
+                identifier
+                call_sign
+                name
+                __typename
+              }
+              plan_offer_price
+              canonical_identifier
+              __typename
+            }
+            __typename
+          }
+          __typename
+        }
+      }
+    `,
+    variables: (packageType, isChannelRequired, tagIn, zipCode, planOfferIdentifier, planIdentifier) => `{"filter":{"pck_type":{"in":["${packageType}"]},"is_channel_required":{"eq":${isChannelRequired}},"tag":{"in":["${tagIn}"]},"zipcode":{"eq":"${zipCode}"},"plan_offer_identifier":{"eq":"${planOfferIdentifier}"},"plan_identifier":{"eq":"${planIdentifier}"}}}`,
+  },
+});
+
+export function cleanGQLParam(param) {
+  return param.replace(/\s+/g, ' ').trim();
+}
+
+/** Make GraphQL query to fetch data */
+/**
+ * Fetches data from the GraphQL endpoint
+ * @param {*} query GraphQL Query
+ * @param variables
+ * @param operationName
+ * @returns JSON response from the GraphQL endpoint
+ */
+export async function fetchGQL(query, variables, operationName) {
+  if (!query || !variables || !operationName) return null;
+  const params = new URLSearchParams({
+    query: cleanGQLParam(query),
+    variables: cleanGQLParam(variables),
+    operationName: cleanGQLParam(operationName),
+  });
+  const res = await fetch(`${GRAPHQL_ENDPOINT}?${params}`);
+  const gqlResponse = await res.json();
+  return gqlResponse;
 }
