@@ -30,12 +30,16 @@ header nav[aria-expanded="false"] .zipcode-wrapper {
     border-radius: 3px;
 }
 
-.geo-container {
+.zipcode .geo-container {
     box-sizing: border-box;
     color: var(--header-text-color);
     display: flex;
     width: 100px;
     place-content: space-evenly;
+}
+
+.zipcode.dark .geo-container {
+    color: var(--clr-black);
 }
 
 .geo-container .geo-pin:hover,
@@ -44,10 +48,14 @@ header nav[aria-expanded="false"] .zipcode-wrapper {
     cursor: pointer;
 }
 
-.geo-container img {
+.zipcode .geo-container img {
     filter: invert(1);
     width: 16px;
     height: 16px;
+}
+
+.zipcode.dark .geo-container img {
+    filter: invert(0);
 }
 
 .geo-form-container {
@@ -75,6 +83,7 @@ header nav[aria-expanded="false"] .zipcode-wrapper {
 }
 
 
+/* stylelint-disable-next-line no-descending-specificity */
 .form-close .form-close-btn>img {
     width: 20px;
     height: 20px;

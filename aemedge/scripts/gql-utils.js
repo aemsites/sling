@@ -104,7 +104,9 @@ export async function fetchGQL(query, variables, operationName) {
     variables: cleanGQLParam(variables),
     operationName: cleanGQLParam(operationName),
   });
+  if (window[`${params}`]) return window[`${params}`];
   const res = await fetch(`${GRAPHQL_ENDPOINT}?${params}`);
   const gqlResponse = await res.json();
+  window[`${params}`] = gqlResponse;
   return gqlResponse;
 }

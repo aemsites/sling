@@ -20,6 +20,60 @@ const PACKAGE_TYPES = Object.freeze({
   },
 });
 
+async function getComparisonModalContent(
+  packageType,
+  planOfferPlaceholders,
+  planComparisonPlaceholders,
+  packageJson,
+  blueBasePrice,
+  blueOfferPrice,
+  orangeBasePrice,
+  orangeOfferPrice,
+  blueExclusiveChannels = [],
+  orangeExclusiveChannels = [],
+  commonChannels = [],
+) {
+  const modalContent = createTag('div', { class: 'modal-content' });
+  const modalTitle = createTag('h2', { class: 'title' }, planComparisonPlaceholders?.headerText || 'Header');
+  const modalSubTitle = createTag('p', { class: 'subtitle' }, planComparisonPlaceholders?.subheaderText || 'Sub Header');
+  // const zipCode = buildBlock('zip-code', []);
+  modalContent.appendChild(modalTitle);
+  modalContent.appendChild(modalSubTitle);
+  // modalContent.appendChild(zipCode);
+  return modalContent.childNodes;
+  // const modalBody = createTag('div', { class: 'modal-body' });
+  // const channelsWrapper = createTag('div', { class: 'channels' });
+  // const channels = packageJson.channels.map((channel) => {
+  //   const imageUrl = `https://www.sling.com/${planOfferPlaceholders.iconurlbase}/${channel.call_sign}.svg`;
+  //   const channelImage = createTag('img', {
+  //     src: imageUrl,
+  //     alt: channel.name,
+  //   });
+  //   const channelDiv = createTag('span', { class: 'channel' }, channelImage);
+  //   return channelDiv;
+  // });
+  // const exclusiveChannelsList = exclusiveChannels.map((channel) => {
+  //   const imageUrl = `https://www.sling.com/${planOfferPlaceholders.iconurlbase}/${channel.call_sign}.svg`;
+  //   const channelImage = createTag('img', {
+  //     src: imageUrl,
+  //     alt: channel.name,
+  //   });
+  //   const channelDiv = createTag('span', { class: 'channel' }, channelImage);
+  //   return channelDiv;
+  // });
+  // const carouselContent = [];
+  // exclusiveChannelsList.forEach((channel) => {
+  //   carouselContent.push([channel]);
+  // });
+  // const carouselBlock = buildBlock('carousel', carouselContent);
+  // channelsWrapper.append(carouselBlock);
+  // if (packageType.name !== 'combo') {
+  //   const cardBodyText = createTag('div', { class: 'card-body-text' }, `${channels.length} total channels including` || '');
+  //   const cardBodySubtext = createTag('div', { class: 'card-body-subtext' }, `${exclusiveChannelsList.length} exclusive ${planOfferPlaceholders[`${packageType.name}exclusivechannelsgenres`]}` || '');
+  //   modalBody.appendChild
+  // }
+}
+
 async function createCard(
   packageType,
   planOfferPlaceholders,
@@ -102,10 +156,17 @@ async function createCard(
 
   // Buttons
   const planButton = createTag('a', { class: 'button plan', href: planComparisonPlaceholders[`${packageType.name}servicectalink`] }, planComparisonPlaceholders[`${packageType.name}servicectatext`] || '');
-  const comparePlans = createTag('a', { class: 'button compare', href: '#' }, 'COMPARE PLANS');
+  const comparePlans = createTag('a', { class: 'button compare' }, 'COMPARE PLANS');
   const buttonWrapper = createTag('div', { class: 'button-wrapper' });
   buttonWrapper.appendChild(planButton);
   buttonWrapper.appendChild(comparePlans);
+  comparePlans.addEventListener('click', async (e) => {
+    e.preventDefault();
+    const { createModal } = await import('../modal/modal.js');
+    const modalContent = await getComparisonModalContent();
+    const comparisonModal = await createModal(modalContent);
+    comparisonModal.showModal();
+  });
   cardBody.appendChild(buttonWrapper);
   decorateButtons(buttonWrapper);
   decorateIcons(cardBody);
