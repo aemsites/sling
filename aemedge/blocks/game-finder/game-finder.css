@@ -1,3 +1,27 @@
 .game-finder.block {
-    background: var(--light-color);
+    background: initial;
+}
+
+.game-finder.block > div:not([id]) p {
+    display: none;
+}
+
+.game-finder.block ~ div:not([id]) p {
+    display: none;
+}
+
+.game-finder.block #app {
+    z-index: 0;
+    position: relative;
+}
+
+.game-finder.block #app svg {
+    width: 15px;
+    height: 20px;
+}
+
+.game-finder.block #app button {
+    min-width: unset;
+    margin-top: unset;
+    margin-bottom: unset;
 }
