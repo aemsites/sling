@@ -2,8 +2,9 @@ import {
   readBlockConfig, buildBlock, decorateBlock, loadBlock, decorateButtons,
   decorateIcons,
 } from '../../scripts/aem.js';
-import { GQL_QUERIES, fetchGQL } from '../../scripts/gql-utils.js';
-import { createTag, fetchPlaceholders } from '../../scripts/utils.js';
+import {
+  GQL_QUERIES, fetchGQL, createTag, fetchPlaceholders,
+} from '../../scripts/utils.js';
 
 const PACKAGE_TYPES = Object.freeze({
   blue: {
