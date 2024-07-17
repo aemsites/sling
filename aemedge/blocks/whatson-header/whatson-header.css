@@ -9,7 +9,7 @@ header nav[aria-expanded="true"] .social-menu-container {
 
 header nav[aria-expanded="true"] .list-items-social-label {
     color: #454550;
-    font-size: 24px;
+    font-size: var(--heading-font-size-l);
     font-weight: bold;
 }
 
@@ -252,7 +252,7 @@ header nav .nav-sections ul {
 }
 
 header nav .nav-sections ul > li {
-    font-size: 14px;
+    font-size: 20px;
     font-weight: bold;
     line-height: 20px;
     padding: 1em 2em;
