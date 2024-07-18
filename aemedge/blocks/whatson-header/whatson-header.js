@@ -200,19 +200,6 @@ export default async function decorate(block) {
       });
   }
 
-  // hamburger for mobile
-  const hamburger = document.createElement('div');
-  hamburger.classList.add('nav-hamburger');
-  hamburger.innerHTML = `<button type="button" aria-controls="nav" aria-label="Open navigation">
-      <span class="nav-hamburger-icon"></span>
-    </button>`;
-  hamburger.addEventListener('click', () => toggleMenu(nav, navSections, null));
-  nav.append(hamburger);
-  nav.setAttribute('aria-expanded', 'false');
-  // prevent mobile nav behavior on window resize
-  toggleMenu(nav, navSections, isDesktop.matches);
-  isDesktop.addEventListener('change', () => toggleMenu(nav, navSections, isDesktop.matches));
-
   // secondary social nav
   const socialhtml = `
    <div class="list-items-social">
@@ -240,14 +227,28 @@ export default async function decorate(block) {
    </div>`;
   const socialNav = createTag('div', { class: 'social-menu-container' });
   socialNav.innerHTML = socialhtml;
-  // block.prepend(socialNav);
+  navSections.append(socialNav);
+
+  // hamburger for mobile
+  const hamburger = document.createElement('div');
+  hamburger.classList.add('nav-hamburger');
+  hamburger.innerHTML = `<button type="button" aria-controls="nav" aria-label="Open navigation">
+      <span class="nav-hamburger-icon"></span>
+    </button>`;
+  hamburger.addEventListener('click', () => toggleMenu(nav, navSections, null));
+  nav.append(hamburger);
+  nav.setAttribute('aria-expanded', 'false');
+  // prevent mobile nav behavior on window resize
+  toggleMenu(nav, navSections, isDesktop.matches);
+  isDesktop.addEventListener('change', () => toggleMenu(nav, navSections, isDesktop.matches));
 
   const navWrapper = document.createElement('div');
   navWrapper.className = 'nav-wrapper';
-  nav.append(socialNav);
+  // nav.append(socialNav);
   navWrapper.append(nav);
   block.append(navWrapper);
-
+  const label = nav.querySelector('.list-items-social-label');
+  if (label) label.innerText = 'Connect with Sling:';
   // Search
   const navSearch = nav.querySelector('.nav-tools span.icon-search');
   if (navSearch) {
