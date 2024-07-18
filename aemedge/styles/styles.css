@@ -358,6 +358,10 @@ main .section {
   padding: 0;
 }
 
+.section.cta-banner .columns > div {
+  width: unset;
+}
+
 .section.cta-banner .columns-wrapper {
   position: absolute;
   inset: 0;

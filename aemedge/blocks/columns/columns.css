@@ -1,6 +1,13 @@
+.columns p {
+  font-size:18px;
+  line-height: 20px;
+}
+
 .columns > div {
   display: flex;
   flex-direction: column;
+  width: 80%;
+  margin: 0 auto;
 }
 
 .columns > div > div {
@@ -60,21 +67,12 @@
   width: 80px;
 }
 
-.columns.streams {
-  font-size: 1.125rem;
-}
-
-.columns.streams .icon {
-  height: 30px;
-  width: 30px;
-  margin-right: 16px;
-}
-
 @media (width >= 992px) {
   .columns > div {
     align-items: center;
     flex-direction: unset;
     gap: 8%;
+    width: unset;
   }
 
   .columns > div > div {

@@ -43,7 +43,7 @@ main .blog-hero-container {
   background: linear-gradient(290deg, rgb(25 23 37 / 100%) 25%, rgb(184 149 118/ 100%) 82%);
 }
 
-.hero-container h1 {
+.blog-hero .hero-container h1 {
   text-align: center;
 }
 
