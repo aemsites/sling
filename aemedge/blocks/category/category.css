@@ -2,7 +2,7 @@
 /* stylelint-disable color-function-notation */
 /* stylelint-disable alpha-value-notation */
 main .section.category-container {
-  padding: 45px;
+  padding: 0;
 }
 
 .category-container .default-content-wrapper {
