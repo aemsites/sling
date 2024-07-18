@@ -43,15 +43,15 @@ main .blog-hero-container {
   background: linear-gradient(290deg, rgb(25 23 37 / 100%) 25%, rgb(184 149 118/ 100%) 82%);
 }
 
-.blog-hero .hero-container h1 {
-  text-align: center;
-}
-
 .blog-hero h1 {
   max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
   color: white;
+}
+
+.blog-hero .hero-container h1 {
+  text-align: center;
 }
 
 .blog-hero.category h1 {

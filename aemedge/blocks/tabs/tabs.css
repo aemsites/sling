@@ -28,10 +28,6 @@
   line-height: 1.5rem;
 }
 
-.tabs.columns .tabs-tab p {
-  font-size:1rem;
-}
-
 .tabs.columns > div {
   width: unset;
 }
@@ -42,6 +38,10 @@
   opacity: 0.6;
   padding-bottom: 0.5rem;
   border-bottom: 3px transparent rgb(255 106 19);
+}
+
+.tabs.columns .tabs-tab p {
+  font-size:1rem;
 }
 
 .tabs .tabs-list button[aria-selected="true"] p {
