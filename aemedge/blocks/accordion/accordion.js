@@ -18,13 +18,13 @@ export default function decorate(block) {
     summary.className = 'summary accordion-item-label';
     summary.append(...label.childNodes);
     if (!hasWrapper(summary)) {
-      summary.innerHTML = `<p>${summary.innerHTML}</p>`;
+      summary.innerHTML = `${summary.innerHTML}`;
     }
     // decorate accordion item body
     const body = row.children[1];
     body.className = 'accordion-item-body';
     if (!hasWrapper(body)) {
-      body.innerHTML = `<p>${body.innerHTML}</p>`;
+      body.innerHTML = `${body.innerHTML}`;
     }
     // decorate accordion item
     const details = document.createElement('div');

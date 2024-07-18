@@ -5,7 +5,7 @@
   width: 100%;
   overflow-x: auto;
   justify-content: center;
-  margin-bottom: 24px;
+  /*margin-bottom: 24px; */ /* issue 147 to fix spacing between tabs and accordion*/
 }
 
 .tabs .tabs-list button {
