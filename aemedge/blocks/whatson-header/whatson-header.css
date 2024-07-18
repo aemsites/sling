@@ -243,6 +243,12 @@ header nav[aria-expanded="true"] .nav-brand img {
     padding-top: 35px;
 }
 
+@media (width >=1400px) {
+    header nav[aria-expanded="true"] .nav-brand img {
+        padding-top: 0;
+    }
+}
+
 /* sections */
 header nav .nav-sections {
     grid-area: sections;
@@ -257,6 +263,12 @@ header nav[aria-expanded="true"] .nav-sections {
     visibility: visible;
     align-self: start;
     padding-top: 35px;
+}
+
+@media (width >=1400px) {
+    header nav[aria-expanded="true"] .nav-sections {
+        padding-top: 0;
+    }
 }
 
 header nav .nav-sections ul {
@@ -373,7 +385,7 @@ header nav .nav-sections ul > li > ul > li {
         flex: 0 1 auto;
         position: relative;
         font-size: var(--body-font-size-xs);
-        font-weight: 400;
+        font-weight: 500;
         -webkit-font-smoothing: unset;
         -webkit-tap-highlight-color: unset;
     }
@@ -398,7 +410,9 @@ header nav .nav-sections ul > li > ul > li {
     header nav .nav-sections .default-content-wrapper > ul > li > ul > li {
         padding: 8px 0;
         font-size: var(--body-font-size-xs);
-        font-weight: 400;
+        font-weight: 500;
+        -webkit-font-smoothing: unset;
+        -webkit-tap-highlight-color: unset;
     }
 }
 
