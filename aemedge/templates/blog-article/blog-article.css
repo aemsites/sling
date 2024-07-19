@@ -144,8 +144,13 @@ main .hero-container + .section {
 
 .social-share .social-share-icon a {
     text-decoration: none;
-    color: var(--link-color);
+    color: #0078ad;
     padding: 0 4px
+}
+
+.social-share .social-share-icon a:hover {
+    color: #3abfed;
+    cursor: pointer;
 }
 
 .text-container .social-share .share-list {
