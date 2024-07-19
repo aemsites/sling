@@ -148,7 +148,9 @@ export default async function buildBlogDetails(main) {
   const contentWrapper = createTag('div', { class: 'content-details-wrapper' });
 
   // move all divs into content wrapper div
-  contentSection.querySelectorAll('div').forEach((div) => contentWrapper.append(div));
+  contentSection.querySelectorAll('div[class*="wrapper"]').forEach((div) => {
+    contentWrapper.append(div);
+  });
   authWrapper.prepend(await buildAuthorBlock());
   // append author and content into parent wrapper
   blogContentWrapper.append(authWrapper, contentWrapper);

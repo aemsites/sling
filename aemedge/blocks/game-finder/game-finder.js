@@ -27,7 +27,7 @@ function toPropName(name) {
 
 async function readBlockConfig(block) {
   const config = {};
-  block.querySelectorAll(':scope > div').forEach((row) => {
+  block.querySelectorAll(':scope > div:not([id])').forEach((row) => {
     if (row.children) {
       const cols = [...row.children];
       if (cols[1]) {
@@ -60,6 +60,7 @@ async function readBlockConfig(block) {
       }
     }
   });
+  console.log(config);
   return config;
 }
 
