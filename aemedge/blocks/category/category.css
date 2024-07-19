@@ -119,15 +119,24 @@ main .section.category-container {
 
 .category .card-large .card-link .card-content .card-author-date .card-author {
   color: white;
-  text-decoration: underline;
   font-size: var(--body-font-size-xs);
   line-height: 21px;
 }
+
+.category .card-large .card-link .card-content .card-author-date .card-author a{
+  color: white;
+  text-decoration: underline;
+}
+
 
 .category .card-medium .card-link .card-content .card-author-date .card-author, .category .card-small .card-link .card-content .card-author-date .card-author{
   color: var(--link-color);
   font-size: var(--body-font-size-xs);
   line-height: 21px;
+}
+
+.category .card-medium .card-link .card-content .card-author-date .card-author:hover, .category .card-small .card-link .card-content .card-author-date .card-author:hover{
+  color: var(--link-hover-color);
 }
 
 .category .card-large .card-link .card-content .card-author-date .card-date {
@@ -413,9 +422,17 @@ main .section.category-container {
     padding-bottom: 16px;
   }
 
-  .category .card-medium .card-link .card-content .card-author-date .card-author {
+  .category .card-medium .card-link .card-content .card-author-date .card-author{
+    color: white;
+  }
+
+  .category .card-medium .card-link .card-content .card-author-date .card-author a{
     color: white;
     text-decoration: underline;
+  }
+
+  .category .card-medium .card-link .card-content .card-author-date .card-author:hover {
+    color: white;
   }
 
 }
