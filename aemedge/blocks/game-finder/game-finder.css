@@ -2,13 +2,9 @@
     background: initial;
 }
 
-/* .game-finder.block > div:not([id]) p {
+.game-finder.block > div:not([id]) p {
     display: none;
 }
-
-.game-finder.block ~ div:not([id]) p {
-    display: none;
-} */
 
 .game-finder.block #app {
     z-index: 0;
