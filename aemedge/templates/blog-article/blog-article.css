@@ -329,6 +329,12 @@ body.blog-article.modal-open .modal-content .section:first-of-type > div {
     }
 }
 
+@media (width >=1400px) {
+    .blog-article > main .section.section.blog-hero-container {
+        padding-top: 45px;
+    }
+}
+
 @media (width >=1024px) {
     .blog-article code.spacer2 {
         line-height: 3.75em;
