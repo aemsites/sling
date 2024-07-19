@@ -123,6 +123,22 @@ main .section.category-container {
   line-height: 21px;
 }
 
+.category .card-large .card-link .card-content .card-author-date .card-author a{
+  color: white;
+  text-decoration: underline;
+}
+
+
+.category .card-medium .card-link .card-content .card-author-date .card-author, .category .card-small .card-link .card-content .card-author-date .card-author{
+  color: var(--link-color);
+  font-size: var(--body-font-size-xs);
+  line-height: 21px;
+}
+
+.category .card-medium .card-link .card-content .card-author-date .card-author:hover, .category .card-small .card-link .card-content .card-author-date .card-author:hover{
+  color: var(--link-hover-color);
+}
+
 .category .card-large .card-link .card-content .card-author-date .card-date {
   color: white;
   font-size: var(--body-font-size-xs);
@@ -405,6 +421,20 @@ main .section.category-container {
   .category .card-small .card-content .card-author-date {
     padding-bottom: 16px;
   }
+
+  .category .card-medium .card-link .card-content .card-author-date .card-author{
+    color: white;
+  }
+
+  .category .card-medium .card-link .card-content .card-author-date .card-author a{
+    color: white;
+    text-decoration: underline;
+  }
+
+  .category .card-medium .card-link .card-content .card-author-date .card-author:hover {
+    color: white;
+  }
+
 }
 
 @media screen and (width >=1024px) {
