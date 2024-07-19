@@ -26,7 +26,7 @@
   line-height: normal;
   margin: 0;
   color: rgb(23 23 37);
-  padding-bottom: 1rem; /* issue 147 to reduce spacing between accordions summary and body*/
+  padding-bottom: 1rem; /* issue 147 to reduce spacing between accordions summary and body */
 }
 
 .accordion .details.open .summary {
@@ -45,7 +45,7 @@
   background: url('../../icons/accordion-arrow-down.svg') no-repeat;
   width: 16px;
   height: 16px;
-  margin: 4px 1.5rem 0 1rem;
+  margin: 1px 1.5rem 0 1rem; /* issue 147 - margin top updates */
   transition: transform 0.5s ease 0s;
 }
 
