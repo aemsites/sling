@@ -60,6 +60,17 @@ export async function createCard(row, style, eagerImage, isLarge = false) {
     author: row.author,
     date: row.date ? convertExcelDate(row.date) : null,
   });
+  const author = card.querySelector('.card .card-link .card-content .card-author-date .card-author');
+  const authorlink = document.createElement('a');
+  const authorname = author.innerHTML.trim().toLowerCase().replace(' ', '-');
+  authorlink.href = `https://main--sling--aemsites.aem.page/whatson/author/${authorname}`;
+  authorlink.textContent = author.textContent;
+  author.textContent = '';
+  author.appendChild(authorlink);
+  author.addEventListener('click', (event) => {
+    event.stopPropagation();
+    window.location.href = authorlink;
+  });
   return card;
 }
 

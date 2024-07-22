@@ -131,6 +131,10 @@ function toggleMenu(nav, navSections, forceExpanded = null) {
       drop.removeEventListener('focus', focusNavSection);
     });
   }
+
+  // change the social icons label
+  const label = nav.querySelector('.list-items-social-label');
+  if (label) label.innerText = 'SOCIAL';
   // enable menu collapse on escape keypress or click outside the nav
   if (!expanded || isDesktop.matches) {
     // collapse menu on escape press
@@ -196,6 +200,35 @@ export default async function decorate(block) {
       });
   }
 
+  // secondary social nav
+  const socialhtml = `
+   <div class="list-items-social">
+       <span class="list-items-social-label">Connect with Sling:</span>
+       <ul class="list-inline">
+           <li class="social-list-item">
+               <a class="social-icon" href="https://www.facebook.com/sling/" target="_blank" aria-label="social media links">
+                   <span class="fa fa-facebook-official"></span>
+                   <span class="hidden-on-load">Social Media Links</span>
+               </a>
+           </li>
+           <li class="social-list-item">
+               <a class="social-icon" href="https://twitter.com/sling" target="_blank" aria-label="social media links">
+                   <span class="fa fa-twitter"></span>
+                   <span class="hidden-on-load">Social Media Links</span>
+               </a>
+           </li>
+           <li class="social-list-item">
+               <a class="social-icon" href="http://instagram.com/sling" target="_blank" aria-label="social media links">
+                   <span class="fa fa-instagram"></span>
+                   <span class="hidden-on-load">Social Media Links</span>
+               </a>
+           </li>
+       </ul>
+   </div>`;
+  const socialNav = createTag('div', { class: 'social-menu-container' });
+  socialNav.innerHTML = socialhtml;
+  navSections.append(socialNav);
+
   // hamburger for mobile
   const hamburger = document.createElement('div');
   hamburger.classList.add('nav-hamburger');
@@ -211,9 +244,11 @@ export default async function decorate(block) {
 
   const navWrapper = document.createElement('div');
   navWrapper.className = 'nav-wrapper';
+  // nav.append(socialNav);
   navWrapper.append(nav);
   block.append(navWrapper);
-
+  const label = nav.querySelector('.list-items-social-label');
+  if (label) label.innerText = 'Connect with Sling:';
   // Search
   const navSearch = nav.querySelector('.nav-tools span.icon-search');
   if (navSearch) {

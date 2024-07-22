@@ -126,7 +126,19 @@ export async function buildAuthorBlock() {
     socialListItm.append(span);
     socialList.append(socialListItm);
   });
-
+  const fashareLink = socialList.querySelector('a.fa-facebook');
+  const twitterShareLink = socialList.querySelector('a.fa-twitter');
+  const blogUrl = window.location.href;
+  const top = window.screen.height / 2 - 260;
+  const left = window.screen.width / 2 - 175;
+  fashareLink.addEventListener('click', (event) => {
+    const faImg = document.querySelector('head > meta[property = "og:image"]')?.content;
+    window.open(`https://www.facebook.com/sharer.php?s=100&p[summary]=${event}&p[url]=${blogUrl}&p[images][0]=${faImg}`, 'sharer', `top=${top},left=${left},toolbar=0,status=0,width=520,height=350`);
+  });
+  twitterShareLink.addEventListener('click', (event) => {
+    const twitterImg = document.querySelector('head > meta[property = "twitter:image"]')?.content;
+    window.open(`https://twitter.com/intent/tweet?url=${blogUrl}&p[summary]=${event}&p[images][0]=${twitterImg}`, 'sharer', `top=${top},left=${left},toolbar=0,status=0,width=520,height=350`);
+  });
   socialContainer.append(shareText, socialList);
   authTxtContainer.append(socialContainer);
   const section = document.createElement('div');
@@ -148,7 +160,9 @@ export default async function buildBlogDetails(main) {
   const contentWrapper = createTag('div', { class: 'content-details-wrapper' });
 
   // move all divs into content wrapper div
-  contentSection.querySelectorAll('div').forEach((div) => contentWrapper.append(div));
+  contentSection.querySelectorAll('div[class*="wrapper"]').forEach((div) => {
+    contentWrapper.append(div);
+  });
   authWrapper.prepend(await buildAuthorBlock());
   // append author and content into parent wrapper
   blogContentWrapper.append(authWrapper, contentWrapper);
