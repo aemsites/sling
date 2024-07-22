@@ -3,7 +3,7 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  padding: 0.75rem 1rem 0 2rem;
+  padding: 0.75rem 1rem 0 0;
 }
 
 /* stylelint-disable-next-line no-descending-specificity */
@@ -23,7 +23,7 @@
   border: none;
   width: 100%;
   text-align: left;
-  line-height: normal;
+  line-height: 1.375;
   margin: 0;
   color: rgb(23 23 37);
   padding-bottom: 1rem; /* issue 147 to reduce spacing between accordions summary and body */
@@ -76,8 +76,16 @@
   padding: 0.5rem 0;
 }
 
+.accordion .block {
+  margin-left: -16px !important;
+}
+
 /* width greater than 768px */
 @media (width >= 768px) {
+  .accordion .block {
+    margin-left: 0 !important;
+  }
+
   .accordion .details .accordion-item-body ul li {
     padding: 0.5rem 4rem 0.5rem 0;
   }
@@ -89,6 +97,7 @@
   .accordion .details .accordion-item-body {
     padding-left: 65px;
     padding-right: 4.25rem;
+    line-height: 1.5rem;
   }
 
   .accordion .details.open .accordion-item-body {
@@ -103,5 +112,6 @@
     margin: 0 auto 4rem;
     max-width: 780px;
     width: 66%;
+    padding: 0 1rem 0 5rem;
   }
 }
