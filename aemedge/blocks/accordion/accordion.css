@@ -3,7 +3,7 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  padding: 0.75rem 1rem 0 0;
+  padding: 0.75rem 1rem 0 2rem;
 }
 
 /* stylelint-disable-next-line no-descending-specificity */
@@ -78,10 +78,6 @@
 
 /* width greater than 768px */
 @media (width >= 768px) {
-  .accordion .details {
-    padding: 0.75rem 1rem 0 2rem;
-  }
-
   .accordion .details .accordion-item-body ul li {
     padding: 0.5rem 4rem 0.5rem 0;
   }

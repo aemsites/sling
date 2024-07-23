@@ -1,13 +1,13 @@
 /* stylelint-disable no-descending-specificity */
 main .section.plan-offer-container {
-    padding: 0;
+    padding: 0 0 64px;
 }
 
 .plan-offer {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 32px 0;
+    padding: 32px 0 64px;
     margin-bottom: 16px;
     text-align: center;
     line-height: 1.1;
