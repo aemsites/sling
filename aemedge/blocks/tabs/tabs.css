@@ -1,7 +1,7 @@
 .tabs .tabs-list {
   display: flex;
   flex-direction: row;
-  gap: 8px;
+  gap: 7px;
   width: 100%;
   overflow-x: auto;
   justify-content: center;

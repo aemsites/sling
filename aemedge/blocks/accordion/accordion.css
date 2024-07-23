@@ -9,6 +9,7 @@
 /* stylelint-disable-next-line no-descending-specificity */
 .accordion .details + .details {
   margin-top: 10px;
+  width: 100%;
 }
 
 .accordion .details .summary {
@@ -21,7 +22,6 @@
   font-size: 1.125rem;
   font-weight: 600;
   border: none;
-  width: 100%;
   text-align: left;
   line-height: 1.375;
   margin: 0;
@@ -45,7 +45,7 @@
   background: url('../../icons/accordion-arrow-down.svg') no-repeat;
   width: 16px;
   height: 16px;
-  margin: 1px 1.5rem 0 1rem; /* issue 147 - margin top updates */
+  margin: 1px 1.5rem 0 0; /* issue 147 - margin top updates */
   transition: transform 0.5s ease 0s;
 }
 
@@ -64,7 +64,7 @@
   height: auto;
   max-height: 0;
   overflow: hidden;
-  padding-left: 55px;
+  padding-left: 42px;
   transition: max-height 500ms ease-in-out 0s;
 }
 
@@ -76,16 +76,8 @@
   padding: 0.5rem 0;
 }
 
-.accordion .block {
-  margin-left: -16px !important;
-}
-
 /* width greater than 768px */
 @media (width >= 768px) {
-  .accordion .block {
-    margin-left: 0 !important;
-  }
-
   .accordion .details .accordion-item-body ul li {
     padding: 0.5rem 4rem 0.5rem 0;
   }
