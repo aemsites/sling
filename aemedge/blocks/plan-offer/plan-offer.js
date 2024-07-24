@@ -65,12 +65,14 @@ async function createChannelRows(
       src: imageUrl,
       alt: channel.name,
     });
-    const channelImageSpan = createTag('span', { class: 'channel-image' }, channelImage);
-    const channelNameSpan = createTag('span', { class: 'channel-name' }, channel.name);
+    const channelDetails = createTag('div', { class: 'channel-details' });
+    const channelImageSpan = createTag('div', { class: 'channel-image' }, channelImage);
+    const channelNameSpan = createTag('div', { class: 'channel-name' }, channel.name);
+    channelDetails.append(channelImageSpan);
+    channelDetails.append(channelNameSpan);
+    channelDiv.appendChild(channelDetails);
     const checkMark = createTag('span', { class: 'icon icon-checkmark' });
     const dashMark = createTag('span', { class: 'icon icon-dashmark' });
-    channelDiv.append(channelImageSpan);
-    channelDiv.append(channelNameSpan);
     if (packageType === PACKAGE_TYPES.orange.name) {
       channelDiv.appendChild(checkMark.cloneNode());
       channelDiv.appendChild(dashMark.cloneNode());
@@ -123,10 +125,17 @@ async function getComparisonTable(planComparisonPlaceholders, packages) {
   theadRow.append(blueColHeader);
   theadRow.append(comboColHeader);
   table.append(theadRow);
+  const orangeRows = createTag('div', { class: 'orange-rows' });
+  const blueRows = createTag('div', { class: 'blue-rows' });
+  const commonRows = createTag('div', { class: 'common-rows' });
+  table.append(orangeRows);
+  table.append(blueRows);
+  table.append(commonRows);
+
   // Orange Channels
   await createChannelRows(
     planComparisonPlaceholders,
-    table,
+    orangeRows,
     orangeExclusiveChannels,
     comboPackageJson,
     PACKAGE_TYPES.orange.name,
@@ -135,7 +144,7 @@ async function getComparisonTable(planComparisonPlaceholders, packages) {
   // Blue Channels
   await createChannelRows(
     planComparisonPlaceholders,
-    table,
+    blueRows,
     blueExclusiveChannels,
     comboPackageJson,
     PACKAGE_TYPES.blue.name,
@@ -144,7 +153,7 @@ async function getComparisonTable(planComparisonPlaceholders, packages) {
   // Common Channels
   await createChannelRows(
     planComparisonPlaceholders,
-    table,
+    commonRows,
     commonChannels,
     comboPackageJson,
     PACKAGE_TYPES.combo.name,
@@ -174,16 +183,6 @@ async function getComparisonModalContent(
   decorateBlock(zipBlock);
   await loadBlock(zipBlock);
   return modalContent.childNodes;
-  // const channelsWrapper = createTag('div', { class: 'channels' });
-  // const channels = packageJson.channels.map((channel) => {
-  //   const imageUrl = `https://www.sling.com/${planOfferPlaceholders.iconurlbase}/${channel.call_sign}.svg`;
-  //   const channelImage = createTag('img', {
-  //     src: imageUrl,
-  //     alt: channel.name,
-  //   });
-  //   const channelDiv = createTag('span', { class: 'channel' }, channelImage);
-  //   return channelDiv;
-  // });
 }
 
 async function createCard(

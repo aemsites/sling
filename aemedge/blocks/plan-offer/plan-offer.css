@@ -289,6 +289,32 @@ main .section.plan-offer-container {
     filter: invert(0);
 }
 
+.modal.block .modal-content .comparison-table-content {
+    padding-top: 2em;
+}
+
+.modal.block .modal-content .comparison-table-content .header-row,
+.modal.block .modal-content .comparison-table-content .channel-div {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    align-items: center;
+}
+
+.modal.block .modal-content .comparison-table-content .channel-div .channel-details {
+    display: flex;
+    align-items: center;
+}
+
+.modal.block .modal-content .comparison-table-content .channel-div img {
+    width: 3.125rem;
+    margin-right: 1.375rem;    
+}
+
+.modal.block .modal-content .comparison-table-content .header-row .base-price {
+    text-align: center;
+    text-decoration: line-through;
+}
+
 @media (width >= 768px) {
     .plan-offer {
         margin-bottom: 64px;
