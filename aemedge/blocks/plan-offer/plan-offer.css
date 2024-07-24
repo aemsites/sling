@@ -280,6 +280,15 @@ main .section.plan-offer-container {
     padding-top: 16px;
 }
 
+.modal.block .modal-content .zipcode .geo-container {
+    color: black;
+}
+
+.modal.block .modal-content .zipcode .geo-container .geo-pin img,
+.modal.block .modal-content .zipcode .geo-container .geo-selector img {
+    filter: invert(0);
+}
+
 @media (width >= 768px) {
     .plan-offer {
         margin-bottom: 64px;

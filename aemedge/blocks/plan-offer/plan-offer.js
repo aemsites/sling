@@ -21,11 +21,177 @@ const PACKAGE_TYPES = Object.freeze({
   },
 });
 
+async function getPrice(packageJson, extended = false) {
+  const price = createTag('div', { class: 'price' });
+  const basePrice = Number(packageJson.base_price) || '';
+  const offerPrice = Number(packageJson.plan_offer_price) || '';
+  const discountPrice = basePrice - offerPrice;
+  const basePriceText = extended ? `$${basePrice}/month ` : `$${basePrice}/mo ` || ' ';
+  const offerPriceText = `$${offerPrice}` || '';
+  const basePriceSpan = createTag('span', { class: 'base-price' }, basePriceText);
+  const offerPriceSpan = createTag('span', { class: 'offer-price' }, offerPriceText);
+  price.appendChild(basePriceSpan);
+  price.appendChild(offerPriceSpan);
+  if (extended) {
+    const discountPriceSpan = createTag('div', { class: 'discount-price' }, `$${discountPrice} off your first month` || '');
+    price.appendChild(discountPriceSpan);
+  }
+  return price;
+}
+
+async function createChannelRows(
+  planComparisonPlaceholders,
+  table,
+  exclusiveChannels,
+  comboPackageJson,
+  packageType,
+) {
+  let headerText;
+  if (packageType === PACKAGE_TYPES.orange.name) {
+    headerText = planComparisonPlaceholders.domesticsegmentsectiontext.replace('{channelCount}', exclusiveChannels.length);
+  }
+  if (packageType === PACKAGE_TYPES.blue.name) {
+    headerText = planComparisonPlaceholders.slingmsssegmentsectiontext.replace('{channelCount}', exclusiveChannels.length);
+  }
+  if (packageType === PACKAGE_TYPES.combo.name) {
+    headerText = planComparisonPlaceholders.slingcombosegmentsectiontext.replace('{channelCount}', exclusiveChannels.length);
+  }
+  const header = createTag('div', { class: `${packageType}-header` }, headerText);
+  table.append(header);
+  exclusiveChannels.forEach((channel) => {
+    const channelDiv = createTag('div', { class: 'channel-div' });
+    const imageUrl = `https://www.sling.com/${planComparisonPlaceholders.compareiconurlbase}/${channel.call_sign}.svg`;
+    const channelImage = createTag('img', {
+      src: imageUrl,
+      alt: channel.name,
+    });
+    const channelImageSpan = createTag('span', { class: 'channel-image' }, channelImage);
+    const channelNameSpan = createTag('span', { class: 'channel-name' }, channel.name);
+    const checkMark = createTag('span', { class: 'icon icon-checkmark' });
+    const dashMark = createTag('span', { class: 'icon icon-dashmark' });
+    channelDiv.append(channelImageSpan);
+    channelDiv.append(channelNameSpan);
+    if (packageType === PACKAGE_TYPES.orange.name) {
+      channelDiv.appendChild(checkMark.cloneNode());
+      channelDiv.appendChild(dashMark.cloneNode());
+    } else if (packageType === PACKAGE_TYPES.blue.name) {
+      channelDiv.appendChild(dashMark.cloneNode());
+      channelDiv.appendChild(checkMark.cloneNode());
+    } else {
+      channelDiv.appendChild(checkMark.cloneNode());
+      channelDiv.appendChild(checkMark.cloneNode());
+    }
+    if (comboPackageJson.channels.some((e) => e.name === channel.name)) {
+      channelDiv.appendChild(checkMark.cloneNode());
+    } else {
+      channelDiv.appendChild(dashMark.cloneNode());
+    }
+    decorateIcons(channelDiv);
+    table.append(channelDiv);
+  });
+}
+
+async function getComparisonTable(planComparisonPlaceholders, packages) {
+  const orangePackageJson = packages
+    .filter((p) => p.name === PACKAGE_TYPES.orange.title)[0];
+  const bluePackageJson = packages
+    .filter((p) => p.name === PACKAGE_TYPES.blue.title)[0];
+  const comboPackageJson = packages
+    .filter((p) => p.name === PACKAGE_TYPES.combo.title)[0];
+  const orangeExclusiveChannels = orangePackageJson.channels.filter(
+    ({ name }) => !bluePackageJson.channels.some((e) => e.name === name),
+  );
+  const blueExclusiveChannels = bluePackageJson.channels.filter(
+    ({ name }) => !orangePackageJson.channels.some((e) => e.name === name),
+  );
+  const commonChannels = orangePackageJson.channels.filter(
+    ({ name }) => bluePackageJson.channels.some((e) => e.name === name),
+  );
+
+  // Price for each package
+  const orangePrice = await getPrice(orangePackageJson);
+  const bluePrice = await getPrice(bluePackageJson);
+  const comboPrice = await getPrice(comboPackageJson);
+  const table = createTag('div', { class: 'comparison-table-content' });
+  const emptyColHeader = createTag('div', { }, '');
+  const orangeColHeader = createTag('div', { }, orangePrice);
+  const blueColHeader = createTag('div', { }, bluePrice);
+  const comboColHeader = createTag('div', { }, comboPrice);
+  const theadRow = createTag('div', { class: 'header-row' });
+  theadRow.append(emptyColHeader);
+  theadRow.append(orangeColHeader);
+  theadRow.append(blueColHeader);
+  theadRow.append(comboColHeader);
+  table.append(theadRow);
+  // Orange Channels
+  await createChannelRows(
+    planComparisonPlaceholders,
+    table,
+    orangeExclusiveChannels,
+    comboPackageJson,
+    PACKAGE_TYPES.orange.name,
+  );
+
+  // Blue Channels
+  await createChannelRows(
+    planComparisonPlaceholders,
+    table,
+    blueExclusiveChannels,
+    comboPackageJson,
+    PACKAGE_TYPES.blue.name,
+  );
+
+  // Common Channels
+  await createChannelRows(
+    planComparisonPlaceholders,
+    table,
+    commonChannels,
+    comboPackageJson,
+    PACKAGE_TYPES.combo.name,
+  );
+  return table;
+}
+
+async function getComparisonModalContent(
+  packageType,
+  planOfferPlaceholders,
+  planComparisonPlaceholders,
+  packageJson,
+  packages,
+) {
+  const modalContent = createTag('div', { class: 'modal-content' });
+  const modalTitle = createTag('h2', { class: 'title' }, planComparisonPlaceholders?.headertext || 'Header');
+  const modalSubTitle = createTag('p', { class: 'subtitle' }, planComparisonPlaceholders?.subheadertext || 'Sub Header');
+  const zipWrapper = createTag('div');
+  const zipBlock = buildBlock('zipcode', createTag('div'));
+  zipWrapper.append(zipBlock);
+  modalContent.appendChild(modalTitle);
+  modalContent.appendChild(modalSubTitle);
+  modalContent.appendChild(zipWrapper);
+  const comparisonTable = await getComparisonTable(planComparisonPlaceholders, packages);
+  const comparisonTableDiv = createTag('div', { class: 'comparison-table' }, comparisonTable);
+  modalContent.appendChild(comparisonTableDiv);
+  decorateBlock(zipBlock);
+  await loadBlock(zipBlock);
+  return modalContent.childNodes;
+  // const channelsWrapper = createTag('div', { class: 'channels' });
+  // const channels = packageJson.channels.map((channel) => {
+  //   const imageUrl = `https://www.sling.com/${planOfferPlaceholders.iconurlbase}/${channel.call_sign}.svg`;
+  //   const channelImage = createTag('img', {
+  //     src: imageUrl,
+  //     alt: channel.name,
+  //   });
+  //   const channelDiv = createTag('span', { class: 'channel' }, channelImage);
+  //   return channelDiv;
+  // });
+}
+
 async function createCard(
   packageType,
   planOfferPlaceholders,
   planComparisonPlaceholders,
   packageJson,
+  packages,
   exclusiveChannels = [],
   comboExclusiveChannels = [],
 ) {
@@ -40,16 +206,7 @@ async function createCard(
   const title = createTag('h3', {}, planComparisonPlaceholders[`${packageType.name}servicetitletext`] || '');
   cardTitle.appendChild(title);
   cardHeader.appendChild(cardTitle);
-  const price = createTag('div', { class: 'price' });
-  const basePrice = Number(packageJson.base_price) || '';
-  const offerPrice = Number(packageJson.plan_offer_price) || '';
-  const discountPrice = basePrice - offerPrice;
-  const basePriceSpan = createTag('span', { class: 'base-price' }, `$${basePrice}/month ` || ' ');
-  const offerPriceSpan = createTag('span', { class: 'offer-price' }, `$${offerPrice}` || '');
-  const discountPriceSpan = createTag('div', { class: 'discount-price' }, `$${discountPrice} off your first month` || '');
-  price.appendChild(basePriceSpan);
-  price.appendChild(offerPriceSpan);
-  price.appendChild(discountPriceSpan);
+  const price = await getPrice(packageJson, true);
   cardHeader.appendChild(price);
   card.appendChild(cardHeader);
   const cardBody = createTag('div', { class: 'card-body' });
@@ -105,10 +262,26 @@ async function createCard(
 
   // Buttons
   const planButton = createTag('a', { class: 'button plan', href: planComparisonPlaceholders[`${packageType.name}servicectalink`] }, planComparisonPlaceholders[`${packageType.name}servicectatext`] || '');
-  const comparePlans = createTag('a', { class: 'button compare', href: '#' }, 'COMPARE PLANS');
   const buttonWrapper = createTag('div', { class: 'button-wrapper' });
   buttonWrapper.appendChild(planButton);
-  buttonWrapper.appendChild(comparePlans);
+  if (packageType.name !== 'combo') {
+    const comparePlans = createTag('a', { class: 'button compare', href: '#' }, 'COMPARE PLANS');
+    buttonWrapper.appendChild(comparePlans);
+    // Compare plans modal
+    comparePlans.addEventListener('click', async (e) => {
+      e.preventDefault();
+      const { createModal } = await import('../modal/modal.js');
+      const modalContent = await getComparisonModalContent(
+        packageType,
+        planOfferPlaceholders,
+        planComparisonPlaceholders,
+        packageJson,
+        packages,
+      );
+      const comparisonModal = await createModal(modalContent);
+      comparisonModal.showModal();
+    });
+  }
   cardBody.appendChild(buttonWrapper);
   decorateButtons(buttonWrapper);
   decorateIcons(cardBody);
@@ -151,6 +324,7 @@ export default async function decorate(block) {
   const sectionSubtitle = createTag('div', { class: 'section-subtitle' }, sectionSubtitleValue);
   block.appendChild(sectionTitle);
   block.appendChild(sectionSubtitle);
+  const allPackages = planOfferJson.data.packages.items.package;
   const orangePackageJson = planOfferJson.data.packages.items.package
     .filter((p) => p.name === PACKAGE_TYPES.orange.title)[0];
   const bluePackageJson = planOfferJson.data.packages.items.package
@@ -168,6 +342,7 @@ export default async function decorate(block) {
     planOfferPlaceholders,
     planComparisonPlaceholders,
     orangePackageJson,
+    allPackages,
     orangeExclusiveChannels,
   );
   const blueCard = await createCard(
@@ -175,6 +350,7 @@ export default async function decorate(block) {
     planOfferPlaceholders,
     planComparisonPlaceholders,
     bluePackageJson,
+    allPackages,
     blueExclusiveChannels,
   );
   const comboCard = await createCard(
@@ -182,6 +358,7 @@ export default async function decorate(block) {
     planOfferPlaceholders,
     planComparisonPlaceholders,
     comboPackageJson,
+    [],
     [],
     [...orangeExclusiveChannels, ...blueExclusiveChannels],
   );
