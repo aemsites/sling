@@ -66,6 +66,7 @@
   overflow: hidden;
   padding-left: 42px;
   transition: max-height 500ms ease-in-out 0s;
+  font-size: 1rem;
 }
 
 .accordion.details.open .accordion-item-body ul {
@@ -104,6 +105,7 @@
     margin: 0 auto 4rem;
     max-width: 780px;
     width: 66%;
-    padding: 0 1rem 0 5rem;
+    padding: 0 1rem 0 6rem;
   }
+
 }
