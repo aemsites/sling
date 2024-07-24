@@ -1,13 +1,9 @@
-header nav .social-menu-container {
-    display: none;
-}
-
-header nav[aria-expanded="true"] .social-menu-container {
+header .nav-wrapper .social-menu-container {
     padding: 50px 0 30px;
     display: block;
 }
 
-header nav[aria-expanded="true"] .list-items-social-label {
+header .nav-wrapper .list-items-social-label {
     color: #454550;
     font-size: var(--heading-font-size-l);
     font-weight: bold;
@@ -56,14 +52,13 @@ header .social-menu-container .social-list-item {
 }
 
 @media (width >=1400px) {
-    header nav[aria-expanded="true"] .social-menu-container {
+    header .nav-wrapper .social-menu-container {
         align-items: center;
         background-color: #454545;
         display: flex;
         justify-content: flex-end;
         max-height: 45px;
         padding: 12px 10%;
-        position: fixed;
         top: 0;
         left: 0;
         right: 0;
@@ -73,9 +68,23 @@ header .social-menu-container .social-list-item {
 
     header .social-menu-container .list-items-social {
         display: flex;
+        align-items: center;
     }
 
-    header nav[aria-expanded="true"] .social-menu-container .list-items-social-label {
+    .nav-wrapper .sticky{
+        position: fixed;
+        top: 0;
+        right: 0;
+        left: 0;
+        background-color: var(--header-background-color);
+        color: var(--header-text-color);
+        z-index: 2000;
+        min-width: 100%;
+        display: flex;
+        justify-content: space-around;
+    }
+
+    header .nav-wrapper .social-menu-container .list-items-social-label {
         color: var(--header-text-color);
         font-size: 14px;
         font-weight: bold;
@@ -116,10 +125,6 @@ header .social-menu-container .social-list-item {
         color: var(--link-hover-color);
         text-decoration: none
     }
-
-    header .nav-wrapper {
-        top: 45px;
-    }
 }
 
 /* header and nav layout */
@@ -127,8 +132,8 @@ header .nav-wrapper {
     background-color: var(--header-background-color);
     color: var(--header-text-color);
     width: 100%;
-    z-index: 200;
-    position: fixed;
+    z-index: 2000;
+    position: sticky;
 }
 
 header nav {
@@ -166,7 +171,7 @@ header nav[aria-expanded="true"] ul > li {
         display: flex;
         justify-content: space-between;
         position: relative;
-        max-width: 85%;
+        width: 100%;
     }
 
     header nav[aria-expanded="true"] {
@@ -252,7 +257,6 @@ header nav[aria-expanded="true"] .nav-brand img {
 /* sections */
 header nav .nav-sections {
     grid-area: sections;
-    flex: 1 1 auto;
     display: none;
     visibility: hidden;
     background-color: var(--overlay-color);

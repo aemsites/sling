@@ -13,6 +13,25 @@ function debounce(callback, delay) {
   };
 }
 
+function createObserver() {
+  const header = document.querySelector('#nav');
+  const nav = document.querySelector('.social-menu-container');
+  const options = {
+    root: null,
+    rootMargin: '',
+    threshold: 0,
+  };
+
+  const observer = new IntersectionObserver((entities) => {
+    if (!entities[0].isIntersecting) {
+      header.classList.add('sticky');
+    } else {
+      header.classList.remove('sticky');
+    }
+  }, options);
+  observer.observe(nav);
+}
+
 async function searchOnType(e) {
   const searchInput = e.target;
   const searchValue = searchInput.value;
@@ -227,7 +246,7 @@ export default async function decorate(block) {
    </div>`;
   const socialNav = createTag('div', { class: 'social-menu-container' });
   socialNav.innerHTML = socialhtml;
-  navSections.append(socialNav);
+  // navSections.append(socialNav);
 
   // hamburger for mobile
   const hamburger = document.createElement('div');
@@ -244,7 +263,7 @@ export default async function decorate(block) {
 
   const navWrapper = document.createElement('div');
   navWrapper.className = 'nav-wrapper';
-  // nav.append(socialNav);
+  navWrapper.append(socialNav);
   navWrapper.append(nav);
   block.append(navWrapper);
   const label = nav.querySelector('.list-items-social-label');
@@ -290,4 +309,5 @@ export default async function decorate(block) {
     if (searchDiv) searchDiv.classList.remove('visible');
     if (navSearch) navSearch.classList.remove('active');
   });
+  createObserver();
 }
