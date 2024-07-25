@@ -74,7 +74,8 @@ export async function buildAuthorBlock() {
   const authName = getMetadata('author') || 'Sling Staff';
   const authPhoto = getAuthorPhoto(authName);
   const pubDate = getMetadata('publication-date');
-  const tags = getMetadata('article:tag')?.split(',');
+  const tags = getMetadata('article:tag')?.split(',')
+    .filter((t) => t !== 'Featured' || t !== 'Popular');
   const authImgContainer = createTag('div', { class: 'image-container' });
   const authImgLink = buildAuthorLink(authName);
   const authImg = createTag('img', {
