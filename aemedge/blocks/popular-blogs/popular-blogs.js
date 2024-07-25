@@ -1,5 +1,5 @@
 import { createOptimizedPicture } from '../../scripts/aem.js';
-import { createTag, getBlogs } from '../../scripts/utils.js';
+import { createTag, getPopularBlogs } from '../../scripts/utils.js';
 
 function buildPopularCard(blog, index) {
   const link = createTag('a', { class: 'blog-link', href: blog.path });
@@ -102,26 +102,36 @@ function enableSlider(e, block) {
     container?.append(headingWrapper, cardsWrapper);
   }
 }
-
+function toTag(cat) {
+  let modified = cat;
+  if (cat.includes('-and-')) {
+    modified = cat.replace('-and-', ' & ');
+  } else if (cat.includes('-')) {
+    modified = cat.replace('-', ' ');
+  }
+  return modified;
+}
 export default async function decorate(block) {
   const observer = new IntersectionObserver(async (entries) => {
     if (entries.some((entry) => entry.isIntersecting)) {
       observer.disconnect();
       // get tags from url
-      const categories = new URL(window.location.href).pathname.split('/').filter((path) => path);
+      let categories = new URL(window.location.href).pathname.split('/').filter((path) => path);
       let mergedCategories = [];
       // remove whatson from the categories
       categories.shift();
       const curPage = categories.pop();
+      categories = categories.map(toTag);
       // get the popular blogs for the current page
       if (categories.includes('movies') || categories.includes('entertainment')) {
-        // const add = ['movies', 'entertainment'].filter((cat) => cat !== categories[0])[0];
-        // categories.push(add);
         const newArr = ['movies', 'entertainment'];
         const updatedArr = [...categories, ...newArr];
         mergedCategories = [...new Set(updatedArr)];
+      } else {
+        mergedCategories.push(categories);
       }
-      const blogs = await getBlogs(mergedCategories, 7);
+      // const blogs = await getBlogs(mergedCategories, 7, 'Popular');
+      const blogs = await getPopularBlogs(mergedCategories, 6, 'Popular');
       // create the dom structure
       const container = block.querySelector('.slides-container');
       const headlineWrapper = createTag('div', { class: 'heading-wrapper' });

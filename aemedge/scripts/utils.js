@@ -209,14 +209,14 @@ function compareArrays(arr, arr2) {
  * @param {number} num - The number of blogs to retrieve
  * @returns {Promise<Array>} - A promise resolving to the filtered blogs array
  */
-export async function getBlogs(categories, num) {
+export async function getFeaturedBlogs(categories, num) {
   if (!window.allBlogs) {
     window.allBlogs = await fetchData('/whatson/query-index.json');
   }
-
   const blogArticles = window.allBlogs.filter(
     (e) => (e.tags.includes('Featured') && e.template !== 'blog-category' && e.image !== '' && !e.image.startsWith('//aemedge/default-meta-image.png')),
   );
+
   if (categories && categories.length > 0) {
     const filteredList = blogArticles.filter((e) => {
       const rawTags = JSON.parse(e.tags);
@@ -232,6 +232,31 @@ export async function getBlogs(categories, num) {
     return blogArticles.slice(0, num);
   }
   return blogArticles;
+}
+
+/**
+ * Retrieves blogs matching specific tags
+ * @param {Array} categories - An array of categories to filter by
+ * @param {number} num - The number of blogs to retrieve
+ * @returns {Promise<Array>} - A promise resolving to the filtered blogs array
+ */
+export async function getPopularBlogs(categories, num) {
+  if (!window.allBlogs) {
+    window.allBlogs = await fetchData('/whatson/query-index.json');
+  }
+  // get all popular blogs
+  const popularBlogs = window.allBlogs.filter(
+    (e) => (e.tags.includes('Popular') && e.template !== 'blog-category' && e.image !== '' && !e.image.startsWith('//aemedge/default-meta-image.png')),
+  );
+
+  const filteredBlogs = popularBlogs.filter(
+    (blog) => JSON.parse(blog.tags).map((tag) => tag.trim().toLowerCase())
+      .some((tag) => categories.includes(tag)),
+  );
+  if (num) {
+    return filteredBlogs.slice(0, num);
+  }
+  return filteredBlogs;
 }
 
 // Adding tags
