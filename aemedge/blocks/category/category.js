@@ -53,7 +53,7 @@ export async function createCard(row, style, eagerImage, isLarge = false) {
   link.append(cardImage);
   card.prepend(link);
   addCardContent(link, {
-    tags: row.tags ? JSON.parse(row.tags).filter((t) => (!t.trim().includes('Featured') && !t.trim().includes('Popular'))) : null,
+    tags: row.tags ? JSON.parse(row.tags) : null,
     title: row.title,
     description: row.description,
     author: row.author,
