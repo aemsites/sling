@@ -221,7 +221,6 @@ export async function getBlogs(categories, num) {
     const filteredList = blogArticles.filter((e) => {
       const rawTags = JSON.parse(e.tags);
       const tags = rawTags.map((tag) => tag.trim().toLowerCase());
-      console.log(` ${categories} -- ${tags} -- ${compareArrays(categories, tags)}`);
       return compareArrays(categories, tags);
     });
     if (num) {
@@ -235,6 +234,19 @@ export async function getBlogs(categories, num) {
   return blogArticles;
 }
 
+export async function getBlogsByPaths(paths) {
+  if (!window.allBlogs) {
+    window.allBlogs = await fetchData('/whatson/query-index.json');
+  }
+  const blogArticles = window.allBlogs.filter(
+    (e) => (e.template !== 'blog-category' && e.image !== '' && !e.image.startsWith('//aemedge/default-meta-image.png')),
+  );
+  let filterArticles = [];
+  if (paths && paths.length > 0) {
+    filterArticles = blogArticles.filter((b) => paths.includes(b.path));
+  }
+  return filterArticles;
+}
 // Adding tags
 function addTags(container, tags) {
   const tagsDiv = createTag('div', { class: 'card-tags' });
