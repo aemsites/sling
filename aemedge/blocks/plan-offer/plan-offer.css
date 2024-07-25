@@ -167,6 +167,7 @@ main .section.plan-offer-container {
         border-radius: inherit;
     }
 
+.modal-content .card-header, 
 .plan-offer .card .card-header {
     justify-content: space-between;
     padding: 8px 16px;
@@ -176,6 +177,7 @@ main .section.plan-offer-container {
     align-items: center;
 }
 
+.modal-content .card-header h3,
 .plan-offer .card .card-header h3 {
     font-size: 18px;
     letter-spacing: 2px;
@@ -207,11 +209,13 @@ main .section.plan-offer-container {
     display: none;
 }
 
+.modal-content .card-header .price,
 .plan-offer .card .card-header .price {
     text-align: end;
     line-height: 18px;
 }
 
+.modal-content .card-header .base-price,
 .plan-offer .card .card-header .base-price {
     font-size: 18px;
     font-weight: 600;
@@ -219,11 +223,13 @@ main .section.plan-offer-container {
     text-decoration: line-through;
 }
 
+.modal-content .card-header .offer-price,
 .plan-offer .card .card-header .offer-price {
     font-size: 18px;
     font-weight: 600;
 }
 
+.modal-content .card-header .discount-price,
 .plan-offer .card .card-header .discount-price {
     font-weight: unset;
 }
@@ -269,6 +275,7 @@ main .section.plan-offer-container {
     padding: 0;
 }
 
+.modal-content .stream-devices,
 .plan-offer .card.single .stream-devices {
     position: relative;
     display: flex;
@@ -305,6 +312,8 @@ main .section.plan-offer-container {
     align-items: center;
 }
 
+.modal.block .modal-content .shared-channels .channel img,
+.modal.block .modal-content .exclusive-channels .channel img,
 .modal.block .modal-content .comparison-table-content .channel-div img {
     width: 3.125rem;
     margin-right: 1.375rem;    
@@ -313,6 +322,11 @@ main .section.plan-offer-container {
 .modal.block .modal-content .comparison-table-content .header-row .base-price {
     text-align: center;
     text-decoration: line-through;
+}
+
+.modal.block .modal-content .dvr-storage {
+    display: flex;
+    gap: 0.5em;
 }
 
 @media (width >= 768px) {
@@ -378,10 +392,12 @@ main .section.plan-offer-container {
         padding: 12px 16px 8px 0;
     }
 
+    .modal-content .card-header h3,
     .plan-offer .card.combo .card-header h3 {
         margin: 0;
     }
 
+    .modal-content .card-header .price,
     .plan-offer .card .card-header .price {
         margin-top: 4px;
     }

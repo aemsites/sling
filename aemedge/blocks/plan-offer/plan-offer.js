@@ -161,6 +161,55 @@ async function getComparisonTable(planComparisonPlaceholders, packages) {
   return table;
 }
 
+async function getWhatsIncludedContent(
+  cardHeader,
+  exclusiveChannelsList,
+  commonChannels,
+  streamDevices,
+  planOfferPlaceholders,
+  packageName,
+) {
+  // Modal Header
+  const modalContent = createTag('div', { class: 'whats-included' });
+  modalContent.appendChild(cardHeader);
+  // Exclusive Channels
+  const exclusiveChannelsContent = createTag('div', { class: 'exclusive-channels-content' }, `${exclusiveChannelsList.length} exclusive ${planOfferPlaceholders[`${packageName}exclusivechannelsgenres`]} channels` || '');
+  modalContent.appendChild(exclusiveChannelsContent);
+  const exclusiveChannels = createTag('div', { class: 'exclusive-channels' });
+  exclusiveChannelsList.forEach((channel) => {
+    exclusiveChannels.appendChild(channel.cloneNode(true));
+  });
+  modalContent.appendChild(exclusiveChannels);
+  // Shared Channels
+  const sharedChannelsContent = createTag('div', { class: 'shared-channels-content' }, `${commonChannels.length} shared channels on every plan` || '');
+  modalContent.appendChild(sharedChannelsContent);
+  const sharedChannels = createTag('div', { class: 'shared-channels' });
+  const channelsWrapper = createTag('div', { class: 'channels' });
+  const channelsContent = commonChannels.map((channel) => {
+    const imageUrl = `https://www.sling.com/${planOfferPlaceholders.iconurlbase}/${channel.call_sign}.svg`;
+    const channelImage = createTag('img', {
+      src: imageUrl,
+      alt: channel.name,
+    });
+    const channelDiv = createTag('span', { class: 'channel' }, channelImage);
+    return channelDiv;
+  });
+  channelsWrapper.append(...channelsContent);
+  sharedChannels.append(channelsWrapper);
+  modalContent.appendChild(sharedChannels);
+  // DVR Storage
+  const dvrStorageContent = createTag('div', { class: 'dvr-storage' });
+  const dvrStorageIcon = createTag('span', { class: 'icon icon-dvr' });
+  const dvrStorageText = createTag('div', { class: 'dvr-storage-text' }, planOfferPlaceholders[`${packageName}servicedvrtext`] || '');
+  dvrStorageContent.appendChild(dvrStorageIcon);
+  dvrStorageContent.appendChild(dvrStorageText);
+  decorateIcons(dvrStorageContent);
+  modalContent.appendChild(dvrStorageContent);
+  // Stream Devices
+  modalContent.appendChild(streamDevices);
+  return modalContent.childNodes;
+}
+
 async function getComparisonModalContent(
   packageType,
   planOfferPlaceholders,
@@ -234,10 +283,10 @@ async function createCard(
   });
   const carouselBlock = buildBlock('carousel', carouselContent);
   channelsWrapper.append(carouselBlock);
+  const planLink = createTag('a', { class: 'plan-link', href: '#' }, 'What\'s included');
   if (packageType.name !== 'combo') {
     const cardBodyText = createTag('div', { class: 'card-body-text' }, `${channels.length} total channels including` || '');
     const cardBodySubtext = createTag('div', { class: 'card-body-subtext' }, `${exclusiveChannelsList.length} exclusive ${planOfferPlaceholders[`${packageType.name}exclusivechannelsgenres`]} channels` || '');
-    const planLink = createTag('a', { class: 'plan-link', href: '#' }, 'What\'s included');
     cardBody.appendChild(cardBodyText);
     cardBody.appendChild(cardBodySubtext);
     channelsWrapper.appendChild(planLink);
@@ -258,7 +307,35 @@ async function createCard(
   streamDevices.appendChild(streamDevicesContent);
   streamDevices.appendChild(streamDevicesInfoModal);
   cardBody.appendChild(streamDevices);
-
+  if (packageType.name !== 'combo') {
+    planLink.addEventListener('click', async (e) => {
+      e.preventDefault();
+      const { createModal } = await import('../modal/modal.js');
+      const comboChannels = packages.filter(
+        (pkg) => pkg.name === PACKAGE_TYPES.combo.title,
+      )[0].channels;
+      const blueChannels = packages.filter(
+        (pkg) => (pkg.name === PACKAGE_TYPES.blue.title),
+      )[0].channels;
+      const orangeChannels = packages.filter(
+        (pkg) => (pkg.name === PACKAGE_TYPES.orange.title),
+      )[0].channels;
+      const commonChannels = comboChannels.filter(
+        ({ name }) => blueChannels.some((bchannel) => bchannel.name === name)
+          && orangeChannels.some((ochannel) => ochannel.name === name),
+      );
+      const modalContent = await getWhatsIncludedContent(
+        cardHeader.cloneNode(true),
+        exclusiveChannelsList,
+        commonChannels,
+        streamDevices.cloneNode(true),
+        planOfferPlaceholders,
+        packageType.name,
+      );
+      const comparisonModal = await createModal(modalContent);
+      comparisonModal.showModal();
+    });
+  }
   // Buttons
   const planButton = createTag('a', { class: 'button plan', href: planComparisonPlaceholders[`${packageType.name}servicectalink`] }, planComparisonPlaceholders[`${packageType.name}servicectatext`] || '');
   const buttonWrapper = createTag('div', { class: 'button-wrapper' });
