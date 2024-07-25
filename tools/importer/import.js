@@ -99,8 +99,7 @@ export default {
     // Handle category pages
     const isCategoryPage = document.querySelector('.homepage-wrapper .blog-homepage--outer');
     let category = false;
-    let featured = null;
-    const popular = [];
+    const featured = [];
     if (isCategoryPage) {
       const cells = [
         ['Category'],
@@ -112,17 +111,19 @@ export default {
       // add metadata field
       meta.Category = 'true';
       category = true;
-      featured = new URL(isCategoryPage.querySelector('.blog-homepage--featured-article-container a').href).pathname;
+      featured.push(new URL(isCategoryPage.querySelector('.blog-homepage--featured-article-container a').href).pathname);
       isCategoryPage.querySelectorAll('.blog-homepage--large-article-col-54 a.article-summary--link-container-large-format').forEach((a) => {
         const popularurl = new URL(a.href);
-        popular.push(popularurl.pathname);
+        featured.push(popularurl.pathname);
       });
 
       isCategoryPage.querySelectorAll('.blog-homepage--medium-article-col-26 a.article-summary--link-container-medium-format').forEach((a) => {
         const popularurl = new URL(a.href);
-        popular.push(popularurl.pathname);
+        featured.push(popularurl.pathname);
       });
     }
+    // most popular from blog articles
+    const popular = [];
     const popularContent = document.querySelectorAll('.popular-content--image-text-container a');
     popularContent.forEach((a) => {
       popular.push((new URL(a.href)).pathname);
@@ -190,11 +191,11 @@ export default {
       element: main,
       path: newPath,
       report: {
-        'Destination Path': newPath,
-        'Author Image': authorImage,
-        'Category Page': category,
-        'Featured Page': featured,
-        'Popular Pages': popular.join(),
+        path: newPath,
+        authorImage,
+        category,
+        featured: featured.join(),
+        popular: popular.join(),
       },
     });
     return results;
