@@ -5,6 +5,7 @@ import {
 import {
   GQL_QUERIES, fetchGQL, createTag, fetchPlaceholders,
 } from '../../scripts/utils.js';
+import { getZipcode } from '../zipcode/zipcode.js';
 
 const PACKAGE_TYPES = Object.freeze({
   blue: {
@@ -368,7 +369,6 @@ async function createCard(
 }
 
 export default async function decorate(block) {
-  window.zipCode = '90210';
   const blockConfig = await readBlockConfig(block);
   const planOfferPlaceholders = await fetchPlaceholders('default', 'plan-offer');
   const planIdentifier = blockConfig['plan-identifier'] || planOfferPlaceholders.planIdentifier || 'one-month';
@@ -376,7 +376,7 @@ export default async function decorate(block) {
   const packageType = blockConfig['package-type'] || planOfferPlaceholders.packageType || 'base_linear';
   const isChannelRequired = blockConfig['is-channel-required'] || planOfferPlaceholders.isChannelRequired || 'true';
   const tagIn = blockConfig['tag-in'] || planOfferPlaceholders.tagIn || 'us';
-  const zipCode = window.zipCode || planOfferPlaceholders.defaultZipCode;
+  const zipCode = await getZipcode() || planOfferPlaceholders.defaultZipCode;
   block.innerHTML = '';
   const planOfferJson = await fetchGQL(
     GQL_QUERIES.getPackage.query,
@@ -443,4 +443,8 @@ export default async function decorate(block) {
   cardWrapper.append(blueCard);
   cardWrapper.append(comboCard);
   block.append(cardWrapper);
+  // listen to zipcode changes and redecorate
+  document.addEventListener('zipupdate', () => {
+    decorate(block);
+  }, { once: true });
 }
