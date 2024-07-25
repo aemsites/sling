@@ -1,5 +1,5 @@
 import { createOptimizedPicture } from '../../scripts/aem.js';
-import { createTag, getPopularBlogs } from '../../scripts/utils.js';
+import { createTag, getBlogs } from '../../scripts/utils.js';
 
 function buildPopularCard(blog, index) {
   const link = createTag('a', { class: 'blog-link', href: blog.path });
@@ -117,21 +117,11 @@ export default async function decorate(block) {
       observer.disconnect();
       // get tags from url
       let categories = new URL(window.location.href).pathname.split('/').filter((path) => path);
-      let mergedCategories = [];
       // remove whatson from the categories
       categories.shift();
       const curPage = categories.pop();
       categories = categories.map(toTag);
-      // get the popular blogs for the current page
-      if (categories.includes('movies') || categories.includes('entertainment')) {
-        const newArr = ['movies', 'entertainment'];
-        const updatedArr = [...categories, ...newArr];
-        mergedCategories = [...new Set(updatedArr)];
-      } else {
-        mergedCategories.push(categories);
-      }
-      // const blogs = await getBlogs(mergedCategories, 7, 'Popular');
-      const blogs = await getPopularBlogs(mergedCategories, 6, 'Popular');
+      const blogs = await getBlogs(categories, 7);
       // create the dom structure
       const container = block.querySelector('.slides-container');
       const headlineWrapper = createTag('div', { class: 'heading-wrapper' });

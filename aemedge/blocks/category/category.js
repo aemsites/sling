@@ -1,6 +1,6 @@
 import { getMetadata, createOptimizedPicture } from '../../scripts/aem.js';
 import {
-  createTag, getFeaturedBlogs, convertExcelDate, addCardImage, addCardContent,
+  createTag, getBlogs, convertExcelDate, addCardImage, addCardContent,
 } from '../../scripts/utils.js';
 
 // Create cardLarge images for 2 breakpoints
@@ -85,7 +85,7 @@ export default async function decorate(block) {
   categories.shift();
   categories.map((cat) => cat.replace('-and-', '&'));
   // Get blogs
-  const blogs = await getFeaturedBlogs(categories.map((cat) => cat.replace('-and-', ' & ')), 7, 'Featured');
+  const blogs = await getBlogs(categories.map((cat) => cat.replace('-and-', ' & ')), 7);
   blogs.forEach(async (blog, i) => {
     if (blog.image === '') return;
     let card;
