@@ -102,26 +102,26 @@ function enableSlider(e, block) {
     container?.append(headingWrapper, cardsWrapper);
   }
 }
-
+function toTag(cat) {
+  let modified = cat;
+  if (cat.includes('-and-')) {
+    modified = cat.replace('-and-', ' & ');
+  } else if (cat.includes('-')) {
+    modified = cat.replace('-', ' ');
+  }
+  return modified;
+}
 export default async function decorate(block) {
   const observer = new IntersectionObserver(async (entries) => {
     if (entries.some((entry) => entry.isIntersecting)) {
       observer.disconnect();
       // get tags from url
-      const categories = new URL(window.location.href).pathname.split('/').filter((path) => path);
-      let mergedCategories = [];
+      let categories = new URL(window.location.href).pathname.split('/').filter((path) => path);
       // remove whatson from the categories
       categories.shift();
       const curPage = categories.pop();
-      // get the popular blogs for the current page
-      if (categories.includes('movies') || categories.includes('entertainment')) {
-        // const add = ['movies', 'entertainment'].filter((cat) => cat !== categories[0])[0];
-        // categories.push(add);
-        const newArr = ['movies', 'entertainment'];
-        const updatedArr = [...categories, ...newArr];
-        mergedCategories = [...new Set(updatedArr)];
-      }
-      const blogs = await getBlogs(mergedCategories, 7);
+      categories = categories.map(toTag);
+      const blogs = await getBlogs(categories, 7);
       // create the dom structure
       const container = block.querySelector('.slides-container');
       const headlineWrapper = createTag('div', { class: 'heading-wrapper' });

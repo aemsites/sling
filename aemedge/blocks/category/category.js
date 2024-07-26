@@ -1,6 +1,6 @@
 import { getMetadata, createOptimizedPicture } from '../../scripts/aem.js';
 import {
-  createTag, getBlogs, convertExcelDate, addCardImage, addCardContent,
+  createTag, getBlogs, getBlogsByPaths, convertExcelDate, addCardImage, addCardContent,
 } from '../../scripts/utils.js';
 
 // Create cardLarge images for 2 breakpoints
@@ -52,7 +52,6 @@ export async function createCard(row, style, eagerImage, isLarge = false) {
 
   link.append(cardImage);
   card.prepend(link);
-
   addCardContent(link, {
     tags: row.tags ? JSON.parse(row.tags) : null,
     title: row.title,
@@ -75,6 +74,10 @@ export async function createCard(row, style, eagerImage, isLarge = false) {
 }
 
 export default async function decorate(block) {
+  let numberofblogs = 7;
+  // get 7 links which is max
+  const links = Array.from(block.querySelectorAll('a[href]')).slice(0, numberofblogs);
+  const paths = links.map((a) => new URL(a.href).pathname);
   block.textContent = '';
   // check if category page
   const category = getMetadata('template');
@@ -85,9 +88,22 @@ export default async function decorate(block) {
   // remove whatson from the categories
   categories.shift();
   categories.map((cat) => cat.replace('-and-', '&'));
-  // Get blogs
-  const blogs = await getBlogs(categories.map((cat) => cat.replace('-and-', ' & ')), 7);
-  blogs.forEach(async (blog, i) => {
+  const blogsbypaths = await getBlogsByPaths(paths);
+
+  let blogs;
+  let mergedBlogs;
+  if (blogsbypaths && (blogsbypaths.length > 0 && blogsbypaths.length < 8)) {
+    numberofblogs -= blogsbypaths.length;
+    // Get blogs
+    if (numberofblogs > 0) {
+      blogs = await getBlogs(categories.map((cat) => cat.replace('-and-', ' & ')), numberofblogs);
+      mergedBlogs = [...blogs, ...blogsbypaths];
+    }
+  } else {
+    mergedBlogs = await getBlogs(categories.map((cat) => cat.replace('-and-', ' & ')), numberofblogs);
+  }
+
+  mergedBlogs.forEach(async (blog, i) => {
     if (blog.image === '') return;
     let card;
     if (i === 0) {
