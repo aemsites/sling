@@ -6,7 +6,20 @@ export default {
     url,
     params,
   }) => {
-    const CTA_FRAGMENT_URL = 'https://main--sling--aemsites.aem.page/fragments/try-sling';
+    const BLUE_CTA_LINK = '/cart/magento/account?classification=us&plan=one-month&plan_offer=one-month-stair-step-10&sb=sling-mss';
+    const ORANGE_CTA_LINK = '/cart/magento/account?classification=us&plan=one-month&plan_offer=one-month-stair-step-10&sb=domestic';
+    const COMBO_CTA_LINK = '/cart/magento/account?classification=us&plan=one-month&plan_offer=one-month-stair-step-10&sb=sling-combo';
+    const COMBO_SPORTS_LINK = '/cart/magento/account?classification=us&plan=one-month&plan_offer=extra-stair-step-2&sb=sling-combo&ats=sports-extra';
+    const CTA_BLUE_FRAGMENT_URL = 'https://main--sling--aemsites.aem.page/fragments/try-sling-blue';
+    const CTA_ORANGE_FRAGMENT_URL = 'https://main--sling--aemsites.aem.page/fragments/try-sling-orange';
+    const CTA_COMBO_FRAGMENT_URL = 'https://main--sling--aemsites.aem.page/fragments/try-sling-combo';
+    const CTA_COMBO_SPORTS_FRAGMENT_URL = 'https://main--sling--aemsites.aem.page/fragments/try-sling-cpmbo-sports';
+    const CTA_MAP = new Map();
+    CTA_MAP.set(BLUE_CTA_LINK, CTA_BLUE_FRAGMENT_URL);
+    CTA_MAP.set(ORANGE_CTA_LINK, CTA_ORANGE_FRAGMENT_URL);
+    CTA_MAP.set(COMBO_CTA_LINK, CTA_COMBO_FRAGMENT_URL);
+    CTA_MAP.set(COMBO_SPORTS_LINK, CTA_COMBO_SPORTS_FRAGMENT_URL);
+
     const HOSTNAME = new URL(params.originalURL).origin;
     // Remove unnecessary parts of the content
     const main = document.querySelector('main');
@@ -37,14 +50,15 @@ export default {
       iframe.parentElement.replaceChild(video, iframe);
     });
 
-    // Handle CTAs
+    // Handle different CTAs
     const ctas = document.querySelectorAll('.action-component .js-react-action-component');
     ctas.forEach((cta) => {
       const slingProps = JSON.parse(cta.getAttribute('data-sling-props'));
-      if (slingProps.ctaText === 'TRY SLING TV TODAY!') {
+      const { ctaUrl } = slingProps;
+      if (CTA_MAP.has(ctaUrl)) {
         const ctaFragment = document.createElement('a');
-        ctaFragment.href = CTA_FRAGMENT_URL;
-        ctaFragment.textContent = CTA_FRAGMENT_URL;
+        ctaFragment.href = CTA_MAP.get(ctaUrl);
+        ctaFragment.textContent = CTA_MAP.get(ctaUrl);
         cta.parentElement.replaceChild(ctaFragment, cta);
       }
     });
