@@ -4,7 +4,7 @@ const ZIPCODE_ENDPOINT = 'https://p-geo.movetv.com/geo';
 const DEFAULT_ZIPCODE = '90020';
 const ZIPCODE_KEY = 'user_zip';
 
-async function getZipcode() {
+export async function getZipcode() {
   let zipcode = localStorage.getItem(ZIPCODE_KEY);
   if (!zipcode) {
     const response = await fetch(ZIPCODE_ENDPOINT);
