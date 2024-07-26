@@ -3,12 +3,13 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  padding: 0.75rem 1rem 0 2rem;
+  padding: 0.75rem 1rem 0 0;
 }
 
 /* stylelint-disable-next-line no-descending-specificity */
 .accordion .details + .details {
   margin-top: 10px;
+  width: 100%;
 }
 
 .accordion .details .summary {
@@ -21,12 +22,11 @@
   font-size: 1.125rem;
   font-weight: 600;
   border: none;
-  width: 100%;
   text-align: left;
-  line-height: normal;
+  line-height: 1.375;
   margin: 0;
   color: rgb(23 23 37);
-  padding-bottom: 1.25rem;
+  padding-bottom: 1rem; /* issue 147 to reduce spacing between accordions summary and body */
 }
 
 .accordion .details.open .summary {
@@ -45,7 +45,7 @@
   background: url('../../icons/accordion-arrow-down.svg') no-repeat;
   width: 16px;
   height: 16px;
-  margin: 4px 1.5rem 0 1rem;
+  margin: 1px 1.5rem 0 0; /* issue 147 - margin top updates */
   transition: transform 0.5s ease 0s;
 }
 
@@ -64,8 +64,9 @@
   height: auto;
   max-height: 0;
   overflow: hidden;
-  padding-left: 55px;
+  padding-left: 42px;
   transition: max-height 500ms ease-in-out 0s;
+  font-size: 1rem;
 }
 
 .accordion.details.open .accordion-item-body ul {
@@ -89,6 +90,7 @@
   .accordion .details .accordion-item-body {
     padding-left: 65px;
     padding-right: 4.25rem;
+    line-height: 1.5rem;
   }
 
   .accordion .details.open .accordion-item-body {
@@ -103,5 +105,7 @@
     margin: 0 auto 4rem;
     max-width: 780px;
     width: 66%;
+    padding: 0 1rem 0 6rem;
   }
+
 }
