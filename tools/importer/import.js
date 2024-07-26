@@ -20,16 +20,34 @@ export default {
     CTA_MAP.set(COMBO_CTA_LINK, CTA_COMBO_FRAGMENT_URL);
     CTA_MAP.set(COMBO_SPORTS_LINK, CTA_COMBO_SPORTS_FRAGMENT_URL);
 
+    const REMOVED_AUTHORS_LIST = [
+      'Alex Castle',
+      'Ben Macaluso',
+      'Brad Koch',
+      'Chase Cambria',
+      'Emma Dell',
+      'Joseph Berman',
+      'Michele Drohan',
+      'Oscar Enrqie Lorandi',
+      'Scott Ross',
+      'Tasha Shayne',
+      'Wayne Mitchel',
+    ];
     const HOSTNAME = new URL(params.originalURL).origin;
     // Remove unnecessary parts of the content
     const main = document.querySelector('main');
     const results = [];
     const meta = WebImporter.Blocks.getMetadata(document);
-    const authorName = document.querySelector('.author-card--author-name')?.textContent;
+    let authorImage = document.querySelector('.author-card--author-image')?.src;
+    let authorName = document.querySelector('.author-card--author-name')?.textContent;
+    if (REMOVED_AUTHORS_LIST.includes(authorName)) {
+      authorName = 'Sling Staff';
+      authorImage = 'https://dish.scene7.com/is/image/dishenterprise/SLING%202023%20LOGO%201200x1200?$transparent-png-desktop$';
+    }
     const publishDate = document.querySelector('.author-card--date')?.textContent || '';
     const tags = document.querySelectorAll('.author-card--tags a');
     const ogImage = document.querySelector('meta[property="og:image"]')?.content;
-    const authorImage = document.querySelector('.author-card--author-image')?.src;
+
     meta.Author = authorName || '';
     if (publishDate === '') {
       meta['Publication Date'] = '';
