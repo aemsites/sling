@@ -159,12 +159,24 @@ export default {
     const block = WebImporter.Blocks.getMetadataBlock(document, meta);
 
     // Handle anchor links or odd links
-    if (main.querySelector('a[href^="#"]')) {
-      const u = new URL(url);
-      const links = main.querySelectorAll('a[href^="#"]');
-      for (let i = 0; i < links.length; i += 1) {
-        const a = links[i];
-        a.href = `${u.pathname}${a.getAttribute('href')}`;
+    // commenting due to the issue - https://github.com/aemsites/sling/issues/122
+    // if (main.querySelector('a[href^="#"]')) {
+    //   const u = new URL(url);
+    //   const links = main.querySelectorAll('a[href^="#"]');
+    //   for (let i = 0; i < links.length; i += 1) {
+    //     const a = links[i];
+    //     a.href = `${u.pathname}${a.getAttribute('href')}`;
+    //   }
+    // }
+
+    // issue - https://github.com/aemsites/sling/issues/122
+    // treating h2s with 16px as h4
+    if (main.querySelector('h2[style*="font-size: 16.0px"]')) {
+      const h2s = main.querySelectorAll('h2[style*="font-size: 16.0px"]');
+      for (let i = 0; i < h2s.length; i += 1) {
+        const h4 = document.createElement('h4');
+        h4.innerHTML = h2s[i].innerHTML;
+        h2s[i].replaceWith(h4);
       }
     }
 
