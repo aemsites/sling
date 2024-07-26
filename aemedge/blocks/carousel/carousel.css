@@ -163,7 +163,7 @@
 
 @media (width >= 768px) {
   .carousel {
-    padding: 40px 40px 0 30px;
+    padding: 40px 10px 0;
   }
 
   .carousel .carousel-slide {

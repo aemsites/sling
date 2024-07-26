@@ -12,7 +12,7 @@
 
 :root {
   /* colors */
-  --link-color: #005C8A;
+  --link-color: #0078ad;
   --link-hover-color: #3abfed;
   --background-color: #f5f5f6;
   --header-background-color: #0f101f;
@@ -408,7 +408,7 @@ main .section {
 /* specially for supported devices illustration */
 .section.dark.center.columns-container span.icon:first-of-type {
   height: 103px;
-  width: 108px;
+  width: 180px;
 }
 
 @media (width >=768px) {

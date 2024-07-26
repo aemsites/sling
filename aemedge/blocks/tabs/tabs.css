@@ -4,7 +4,7 @@
   gap: 7px;
   width: 100%;
   overflow-x: auto;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .tabs .tabs-list button {
@@ -35,8 +35,8 @@
   max-width: fit-content;
   color: rgb(23 23 37);
   opacity: 0.6;
-  padding-bottom: 0.5rem;
-  border-bottom: 3px transparent rgb(255 106 19);
+  padding-bottom: 4px;
+  border-bottom: 3px transparent;
 }
 
 .tabs.columns .tabs-tab p {
@@ -73,3 +73,8 @@
   display: none;
 }
 
+@media (width >= 768px) {
+  .tabs .tabs-list {
+    justify-content: center;
+  }
+}

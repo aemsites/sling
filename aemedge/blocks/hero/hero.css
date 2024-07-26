@@ -22,7 +22,7 @@ main .hero-container {
 .hero-content {
   border: none;
   padding: 48px 32px 6%;
-  min-height: 500px;
+  min-height: 670px;
   display: flex;
   -webkit-box-pack: justify;
   justify-content: center;

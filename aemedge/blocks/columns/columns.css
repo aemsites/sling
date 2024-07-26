@@ -48,13 +48,12 @@
 .columns.icons {
   place-content: normal center;
   align-items: center;
-  fill-opacity: 0.6;
+  opacity: 0.6;
 }
 
 .columns.icons span {
   display: flex;
   align-items: center;
-  fill-opacity: 0.6;
   margin: 20px;
 }
 
@@ -67,12 +66,11 @@
   width: 80px;
 }
 
-@media (width >= 992px) {
+@media (width >= 768px) {
   .columns > div {
-    align-items: center;
     flex-direction: unset;
     gap: 8%;
-    width: unset;
+    max-width: 40rem;
   }
 
   .columns > div > div {
@@ -80,6 +78,12 @@
     order: unset;
   }
 
+  .tabs-panel .columns > div {
+    flex-direction: column;
+  }
+}
+
+@media (width >=1024px) {
   .columns.icons span.icon img {
     width: 96px;
     height: 36px;
