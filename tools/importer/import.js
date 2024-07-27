@@ -56,7 +56,10 @@ export default {
       meta['Publication Date'] = new Date(publishDate).toISOString().split('T')[0];
     }
     meta.Tags = Array.from(tags).map((tag) => tag.textContent).join(', ') || '';
-    meta.Image = ogImage.replace('https://www.sling.com', '') || '';
+    // meta.Image = ogImage.replace('https://www.sling.com', '') || '';
+    const img = document.createElement('img');
+    img.src = ogImage.replace('https://www.sling.comhttps://dish.scene7.com', 'https://dish.scene7.com') || '';
+    meta.Image = img;
     const videoIframes = document.querySelectorAll('iframe[src*="youtube"], iframe[src*="platform.twitter.com"]');
     // Handle embed youtube or twitter videos
     videoIframes.forEach((iframe) => {
@@ -73,11 +76,18 @@ export default {
     ctas.forEach((cta) => {
       const slingProps = JSON.parse(cta.getAttribute('data-sling-props'));
       const { ctaUrl } = slingProps;
+      const { ctaText } = slingProps;
+      const ctaFragment = document.createElement('a');
       if (CTA_MAP.has(ctaUrl)) {
-        const ctaFragment = document.createElement('a');
         ctaFragment.href = CTA_MAP.get(ctaUrl);
         ctaFragment.textContent = CTA_MAP.get(ctaUrl);
         cta.parentElement.replaceChild(ctaFragment, cta);
+      } else {
+        ctaFragment.href = ctaUrl;
+        ctaFragment.textContent = ctaText;
+        const strong = document.createElement('strong');
+        strong.append(ctaFragment);
+        cta.parentElement.replaceChild(strong, cta);
       }
     });
 
@@ -131,7 +141,6 @@ export default {
     // Handle category pages
     const isCategoryPage = document.querySelector('.homepage-wrapper .blog-homepage--outer');
     let category = false;
-    const featured = [];
     if (isCategoryPage) {
       const cells = [
         ['Category'],
@@ -141,25 +150,10 @@ export default {
       // replace blog-homepage--outer with the category block
       isCategoryPage.parentElement.replaceChild(categoryBlock, isCategoryPage);
       // add metadata field
-      meta.Category = 'true';
+      meta.Template = 'blog-category';
       category = true;
-      featured.push(new URL(isCategoryPage.querySelector('.blog-homepage--featured-article-container a').href).pathname);
-      isCategoryPage.querySelectorAll('.blog-homepage--large-article-col-54 a.article-summary--link-container-large-format').forEach((a) => {
-        const popularurl = new URL(a.href);
-        featured.push(popularurl.pathname);
-      });
-
-      isCategoryPage.querySelectorAll('.blog-homepage--medium-article-col-26 a.article-summary--link-container-medium-format').forEach((a) => {
-        const popularurl = new URL(a.href);
-        featured.push(popularurl.pathname);
-      });
     }
-    // most popular from blog articles
-    const popular = [];
-    const popularContent = document.querySelectorAll('.popular-content--image-text-container a');
-    popularContent.forEach((a) => {
-      popular.push((new URL(a.href)).pathname);
-    });
+
     // Remove subscribe form at the bottom of the articles
     const subscribeForm = document.querySelector('.email-capture-new')?.parentElement;
     if (subscribeForm) {
@@ -238,8 +232,6 @@ export default {
         path: newPath,
         authorImage,
         category,
-        featured: featured.join(),
-        popular: popular.join(),
       },
     });
     return results;
