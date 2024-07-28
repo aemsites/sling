@@ -1,11 +1,3 @@
-.accordion-wrapper {
-  padding-left: 2.5rem;
-}
-
-.tabs-panel .accordion-wrapper {
-  padding-left: 0;
-}
-
 .accordion .details {
   overflow-x: hidden;
   position: relative;
@@ -97,7 +89,7 @@
 
   .accordion .details .accordion-item-body {
     padding-left: 65px;
-    padding-right: 8rem;
+    padding-right: 4.25rem;
     line-height: 1.5rem;
   }
 
@@ -111,15 +103,9 @@
 
   .accordion-wrapper {
     margin: 0 auto 4rem;
-    width: 66%;
-    padding-left: 4rem;
-  }
-
-  .tabs-panel .accordion-wrapper {
-    padding-left: 1rem;
-    width: unset;
     max-width: 780px;
-    margin: auto;
+    width: 66%;
+    padding: 0 1rem 0 6rem;
   }
 
 }
