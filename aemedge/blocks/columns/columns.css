@@ -6,15 +6,10 @@
 .columns > div {
   display: flex;
   flex-direction: column;
-
-/*  width: 80%;
-  margin: 0 auto; */
 }
 
 .columns > div > div {
   order: 1;
- /* width: 90%;
-  margin: 0 auto; */
 }
 
 .columns.icons > div {
