@@ -60,13 +60,8 @@
 }
 
 .tabs .tabs-panel {
-  margin-top: -1px;
   padding: 0 16px;
   overflow: auto;
-}
-
-.tabs.columns .tabs-panel {
-  padding: 0;
 }
 
 .tabs .tabs-panel[aria-hidden="true"] {
@@ -74,6 +69,12 @@
 }
 
 @media (width >= 768px) {
+  .tabs.accordion .tabs-list {
+    justify-content: center;
+  }
+}
+
+@media (width >= 1200px) {
   .tabs .tabs-list {
     justify-content: center;
   }

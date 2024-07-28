@@ -331,7 +331,8 @@ main img {
 
 /* sections */
 main .section {
-  padding: 64px 16px;
+  padding: 0 16px;
+  margin: 64px 0;
 }
 
 /* FAQ Section */
@@ -351,6 +352,8 @@ main .section {
   position: relative;
   text-align: center;
   color: white;
+  margin: 0;
+  height: fit-content;
 }
 
 .section.cta-banner .section {
@@ -379,6 +382,7 @@ main .section {
 
 .section.cta-banner .columns.block {
   width: 100%;
+  height: fit-content;
 }
 
 .section.cta-banner .blog-hero picture {
@@ -399,6 +403,8 @@ main .section {
 .section.dark {
   background-color: var(--dark-background-color);
   color: var(--light-color);
+  margin: 0;
+  padding: 64px 8%;
 }
 
 .section.center {
@@ -406,6 +412,10 @@ main .section {
 }
 
 /* specially for supported devices illustration */
+.section.dark .section.dark {
+  padding: 0;
+}
+
 .section.dark.center.columns-container span.icon:first-of-type {
   height: 103px;
   width: 180px;
@@ -413,14 +423,14 @@ main .section {
 
 @media (width >=768px) {
   main .section {
-    padding: 64px 32px;
+  padding: 0 48px;
   }
 
   /* CTA Banner Section */
   .section.cta-banner .columns-wrapper {
     flex-direction: row;
     justify-content: space-between;
-    padding: 3.75rem;
+    height: fit-content;
   }
 
   /* Section with Dark or Centered content */
@@ -431,6 +441,19 @@ main .section {
     margin: 0 auto;
   }
 
+  .section.dark {
+    padding: 64px 32px;
+  }
+}
+
+@media (width >=1024px) {
+  /* CTA Banner Section */
+  .section.cta-banner .columns-wrapper {
+    padding: 5rem 6.25rem;
+    -webkit-box-pack: center;
+    justify-content: center;
+    align-items: flex-start;
+  }
 }
 
 /* section metadata */

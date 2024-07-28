@@ -6,6 +6,7 @@ main .hero-container > div {
 
 main .hero-container {
   padding: 0;
+  margin: 0;
 }
 
 .hero-container h1 {
@@ -21,7 +22,7 @@ main .hero-container {
 
 .hero-content {
   border: none;
-  padding: 48px 32px 6%;
+  padding: 64px 6%;
   min-height: 670px;
   display: flex;
   -webkit-box-pack: justify;
@@ -32,7 +33,6 @@ main .hero-container {
   background: linear-gradient(rgba(51 51 76 / 0%) 50%, 85%, rgb(23 23 37) 100%), radial-gradient(110% 100% at 75% 25%, rgba(32 32 50 / 0%) 0%, rgb(23 23 37) 100%);
   box-sizing: border-box;
   width: 100%;
-  padding-right: 0;
   color: rgb(255 255 255);
   -webkit-box-align: start;
   align-items: start;

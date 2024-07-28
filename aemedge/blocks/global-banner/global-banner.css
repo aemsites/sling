@@ -13,7 +13,6 @@ main .fragment-container.global-banner-container .section.global-banner-containe
 }
 
 main .fragment-container .section.global-banner-container[data-section-status="loaded"] {
-  position: absolute;
   top: 0;
   margin: 0;
   padding: 0;

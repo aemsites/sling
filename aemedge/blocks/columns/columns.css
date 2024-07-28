@@ -13,8 +13,8 @@
 
 .columns > div > div {
   order: 1;
-  width: 90%;
-  margin: 0 auto;
+ /* width: 90%;
+  margin: 0 auto; */
 }
 
 .columns.icons > div {
@@ -52,6 +52,8 @@
   place-content: normal center;
   align-items: center;
   opacity: 0.6;
+  max-width: 640px;
+  margin: 0 auto;
 }
 
 .columns.icons span {
@@ -73,7 +75,6 @@
   .columns > div {
     flex-direction: unset;
     gap: 8%;
-    max-width: 40rem;
   }
 
   .columns > div > div {
@@ -90,5 +91,6 @@
   .columns.icons span.icon img {
     width: 96px;
     height: 36px;
+    padding-bottom: 24px;
   }
 }

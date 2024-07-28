@@ -1,14 +1,9 @@
 /* stylelint-disable no-descending-specificity */
-main .section.plan-offer-container {
-    padding: 0 0 64px;
-}
-
 .plan-offer {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 32px 0 64px;
-    margin-bottom: 16px;
+    padding-bottom: 64px;
     text-align: center;
     line-height: 1.1;
 }
@@ -363,10 +358,6 @@ main .section.plan-offer-container {
         filter: none;
         backdrop-filter: opacity(1);
         background: transparent;
-    }
-
-    main .section.plan-offer-container {
-        padding: 64px 0;
     }
 
     .plan-offer .card.combo .card-body-text {
