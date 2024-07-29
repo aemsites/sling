@@ -335,7 +335,10 @@ header nav .nav-sections ul > li > ul > li {
 @media (width >=1400px) {
 
     /* stylelint-disable-next-line rule-empty-line-before */
-    header,
+    header{
+        height: 125px;
+    }
+    
     header nav {
         height: 85px;
     }
