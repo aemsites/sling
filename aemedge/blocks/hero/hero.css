@@ -6,10 +6,11 @@ main .hero-container > div {
 
 main .hero-container {
   padding: 0;
+  margin: 0;
 }
 
 .hero-container h1 {
-  text-align: center;
+  text-align: left;
 }
 
 .hero {
@@ -21,8 +22,8 @@ main .hero-container {
 
 .hero-content {
   border: none;
-  padding: 48px 32px 6%;
-  min-height: 500px;
+  padding: 64px 6%;
+  min-height: 670px;
   display: flex;
   -webkit-box-pack: justify;
   justify-content: center;
@@ -32,7 +33,6 @@ main .hero-container {
   background: linear-gradient(rgba(51 51 76 / 0%) 50%, 85%, rgb(23 23 37) 100%), radial-gradient(110% 100% at 75% 25%, rgba(32 32 50 / 0%) 0%, rgb(23 23 37) 100%);
   box-sizing: border-box;
   width: 100%;
-  padding-right: 0;
   color: rgb(255 255 255);
   -webkit-box-align: start;
   align-items: start;
@@ -118,6 +118,11 @@ main .hero-container {
   object-fit: cover;
   width: 100%;
   height: 100%;
+}
+
+.hero p {
+  font-size: 24px;
+  line-height: 30px;
 }
 
 .hero a {

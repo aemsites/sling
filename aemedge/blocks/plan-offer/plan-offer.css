@@ -1,14 +1,9 @@
 /* stylelint-disable no-descending-specificity */
-main .section.plan-offer-container {
-    padding: 0;
-}
-
 .plan-offer {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 32px 0;
-    margin-bottom: 16px;
+    padding-bottom: 64px;
     text-align: center;
     line-height: 1.1;
 }
@@ -105,13 +100,14 @@ main .section.plan-offer-container {
 
 .plan-offer .card-body .button.compare {
     background: linear-gradient(to right, rgb(32 34 48), rgb(68 68 79));
+    color: white;
 }
 
 .plan-offer .carousel .carousel-slide .carousel-slide-image {
     aspect-ratio: 1;
 }
 
-.plan-offer .card.single.orange, .plan-offer .card .button.plan {
+.plan-offer .card.single.orange, .plan-offer .card .button.plan, .plan-offer .card-body .button  {
     background: linear-gradient(to right, rgb(255 163 0), rgb(255 208 60));
     color: rgb(23 23 37);
 }
@@ -167,7 +163,7 @@ main .section.plan-offer-container {
         border-radius: inherit;
     }
 
-.modal-content .card-header, 
+.modal-content .card-header,
 .plan-offer .card .card-header {
     justify-content: space-between;
     padding: 8px 16px;
@@ -316,7 +312,7 @@ main .section.plan-offer-container {
 .modal.block .modal-content .exclusive-channels .channel img,
 .modal.block .modal-content .comparison-table-content .channel-div img {
     width: 3.125rem;
-    margin-right: 1.375rem;    
+    margin-right: 1.375rem;
 }
 
 .modal.block .modal-content .comparison-table-content .header-row .base-price {
@@ -362,10 +358,6 @@ main .section.plan-offer-container {
         filter: none;
         backdrop-filter: opacity(1);
         background: transparent;
-    }
-
-    main .section.plan-offer-container {
-        padding: 64px 0;
     }
 
     .plan-offer .card.combo .card-body-text {

@@ -4,6 +4,7 @@
 
 main .blog-hero-container {
   padding: 0;
+  margin: 0;
 }
 
 .blog-hero.category {
@@ -16,6 +17,11 @@ main .blog-hero-container {
 .blog-hero.category.purple {
   background: rgb(25 23 37);
   background: linear-gradient(290deg, rgb(25 23 37 / 100%) 25%, rgb(95 43 105 / 100%) 82%);
+}
+
+.blog-hero.category.red {
+  background: rgb(25 23 37);
+  background: linear-gradient(290deg, rgb(25 23 37 / 100%) 25%, rgb(164 30 32 / 100%) 82%);
 }
 
 .blog-hero.category.cyan {
@@ -43,15 +49,15 @@ main .blog-hero-container {
   background: linear-gradient(290deg, rgb(25 23 37 / 100%) 25%, rgb(184 149 118/ 100%) 82%);
 }
 
-.hero-container h1 {
-  text-align: center;
-}
-
 .blog-hero h1 {
   max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
   color: white;
+}
+
+.blog-hero .hero-container h1 {
+  text-align: center;
 }
 
 .blog-hero.category h1 {
@@ -121,9 +127,5 @@ main .blog-hero-container {
 
   .blog-hero.category > div > div {
     width: 33%;
-  }
-
-  .cta-banner .blog-hero {
-    max-height: 300px;
   }
 }

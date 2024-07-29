@@ -1,9 +1,10 @@
 .carousel {
-  padding: 50px 10% 0 6%;
+  padding: 48px 0 0;
 }
 
 .carousel .carousel-slides-container {
   position: relative;
+  width: calc(100% - 20px);
 }
 
 .carousel .carousel-slides,
@@ -163,7 +164,7 @@
 
 @media (width >= 768px) {
   .carousel {
-    padding: 40px 40px 0 30px;
+    padding: 40px 10px 0;
   }
 
   .carousel .carousel-slide {

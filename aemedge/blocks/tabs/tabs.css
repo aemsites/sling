@@ -4,7 +4,7 @@
   gap: 7px;
   width: 100%;
   overflow-x: auto;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .tabs .tabs-list button {
@@ -23,12 +23,24 @@
   line-height: normal;
 }
 
+.tabs.columns p {
+  line-height: 1.5rem;
+}
+
+.tabs.columns > div {
+  width: unset;
+}
+
 .tabs .tabs-list button p {
   max-width: fit-content;
   color: rgb(23 23 37);
   opacity: 0.6;
-  padding-bottom: 0.5rem;
-  border-bottom: 3px transparent rgb(255 106 19);
+  padding-bottom: 4px;
+  border-bottom: 3px transparent;
+}
+
+.tabs.columns .tabs-tab p {
+  font-size:1rem;
 }
 
 .tabs .tabs-list button[aria-selected="true"] p {
@@ -48,11 +60,22 @@
 }
 
 .tabs .tabs-panel {
-  margin-top: -1px;
   padding: 0 16px;
   overflow: auto;
 }
 
 .tabs .tabs-panel[aria-hidden="true"] {
   display: none;
+}
+
+@media (width >= 768px) {
+  .tabs.accordion .tabs-list {
+    justify-content: center;
+  }
+}
+
+@media (width >= 1200px) {
+  .tabs .tabs-list {
+    justify-content: center;
+  }
 }
