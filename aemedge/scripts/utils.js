@@ -74,6 +74,18 @@ export function createTag(tag, attributes, html = undefined) {
   return element;
 }
 
+export const pathToTag = (
+  (name) => {
+    let path = name;
+    if (name.toLowerCase().includes('-')) {
+      path = name.toLowerCase().replace('-', ' ');
+    }
+    if (name.toLowerCase().includes('-and-')) {
+      path = name.toLowerCase().replace('-and-', ' & ');
+    }
+    return path.toLowerCase();
+  }
+);
 // blog details related functions
 
 /**
@@ -88,7 +100,7 @@ export function buildBlogBreadcrumb() {
     const breamCrumbs = ['BLOG'];
     let pathElements = urlPath.split('/');
     pathElements = pathElements.slice(2, pathElements.length - 1);
-    pathElements.forEach((path) => (breamCrumbs.push(path.trim().replace('-', ' ').toUpperCase())));
+    pathElements.forEach((path) => (breamCrumbs.push(pathToTag(path).toUpperCase())));
 
     breamCrumbs.map((breadCrumb, index) => {
       const href = urlPath.substring(0, urlPath.indexOf(urlPath.split('/')[index + 2]) - 1);

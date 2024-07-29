@@ -1,6 +1,12 @@
 import { getMetadata, createOptimizedPicture } from '../../scripts/aem.js';
 import {
-  createTag, getBlogs, getBlogsByPaths, convertExcelDate, addCardImage, addCardContent,
+  createTag,
+  getBlogs,
+  getBlogsByPaths,
+  convertExcelDate,
+  addCardImage,
+  addCardContent,
+  pathToTag,
 } from '../../scripts/utils.js';
 
 // Create cardLarge images for 2 breakpoints
@@ -71,19 +77,6 @@ export async function createCard(row, style, eagerImage, isLarge = false) {
   });
   return card;
 }
-
-const pathToTag = (
-  (name) => {
-    let path = name;
-    if (name.toLowerCase().includes('-')) {
-      path = name.toLowerCase().replace('-', ' ');
-    }
-    if (name.toLowerCase().includes('-and-')) {
-      path = name.toLowerCase().replace('-and-', ' & ');
-    }
-    return path.toLowerCase();
-  }
-);
 
 export default async function decorate(block) {
   let numberofblogs = 7;
