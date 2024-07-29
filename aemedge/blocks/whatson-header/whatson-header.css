@@ -56,31 +56,38 @@ header .social-menu-container .social-list-item {
 }
 
 @media (width >=1400px) {
-    header nav[aria-expanded="true"] .social-menu-container {
-        align-items: center;
+    header #nav-social .social-menu-container {
         background-color: #454545;
         display: flex;
+        align-items: center;
         justify-content: flex-end;
         max-height: 45px;
         padding: 12px 10%;
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
         z-index: 200;
         box-sizing: border-box;
     }
 
-    header .social-menu-container .list-items-social {
-        display: flex;
+    header .nav-wrapper.sticky{
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background-color: var(--header-background-color);
+        color: var(--header-text-color);
+        z-index: 200;
     }
 
-    header nav[aria-expanded="true"] .social-menu-container .list-items-social-label {
+    header #nav-social .social-menu-container .list-items-social {
+        display: flex;
+        align-items: center;
+    }
+
+    header #nav-social .social-menu-container .list-items-social-label {
         color: var(--header-text-color);
         font-size: 14px;
         font-weight: bold;
         line-height: 20px;
-        padding: 10px 10px 0 0;
+        margin-right: 20px;
         opacity: .5;
     }
 
@@ -116,10 +123,6 @@ header .social-menu-container .social-list-item {
         color: var(--link-hover-color);
         text-decoration: none
     }
-
-    header .nav-wrapper {
-        top: 45px;
-    }
 }
 
 /* header and nav layout */
@@ -127,8 +130,8 @@ header .nav-wrapper {
     background-color: var(--header-background-color);
     color: var(--header-text-color);
     width: 100%;
+    position: absolute;
     z-index: 200;
-    position: fixed;
 }
 
 header nav {
@@ -332,7 +335,10 @@ header nav .nav-sections ul > li > ul > li {
 @media (width >=1400px) {
 
     /* stylelint-disable-next-line rule-empty-line-before */
-    header,
+    header{
+        height: 125px;
+    }
+    
     header nav {
         height: 85px;
     }

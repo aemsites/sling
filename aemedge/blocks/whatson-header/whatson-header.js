@@ -13,6 +13,39 @@ function debounce(callback, delay) {
   };
 }
 
+function createObserver() {
+  const header = document.querySelector('.nav-wrapper');
+  const nav = document.querySelector('.social-menu-container');
+  const options = {
+    root: null,
+    rootMargin: '',
+    threshold: 0,
+  };
+
+  const observer = new IntersectionObserver((entities) => {
+    if (!entities[0].isIntersecting) {
+      header.classList.add('sticky');
+    } else {
+      header.classList.remove('sticky');
+    }
+  }, options);
+  observer.observe(nav);
+}
+
+function handleMediaQueryChange() {
+  const mediaQuery = window.matchMedia('(max-width: 1400px)').matches;
+  const navSocial = document.getElementById('nav-social');
+  const navSections = document.querySelector('.nav-sections');
+  const navWrapper = document.querySelector('.nav-wrapper');
+  const block = document.querySelector('.block');
+  if (mediaQuery) {
+    navSections.append(navSocial);
+  } else {
+    block.insertBefore(navSocial, navWrapper);
+    navSocial.querySelector('.social-menu-container .list-items-social .list-items-social-label').innerHTML = 'Connect with sling:';
+  }
+}
+
 async function searchOnType(e) {
   const searchInput = e.target;
   const searchValue = searchInput.value;
@@ -156,7 +189,9 @@ export default async function decorate(block) {
 
   // decorate nav DOM
   const nav = document.createElement('nav');
+  const navsocial = document.createElement('nav-social');
   nav.id = 'nav';
+  navsocial.id = 'nav-social';
   while (fragment.firstElementChild) nav.append(fragment.firstElementChild);
 
   const classes = ['brand', 'sections', 'tools'];
@@ -227,7 +262,6 @@ export default async function decorate(block) {
    </div>`;
   const socialNav = createTag('div', { class: 'social-menu-container' });
   socialNav.innerHTML = socialhtml;
-  navSections.append(socialNav);
 
   // hamburger for mobile
   const hamburger = document.createElement('div');
@@ -244,8 +278,10 @@ export default async function decorate(block) {
 
   const navWrapper = document.createElement('div');
   navWrapper.className = 'nav-wrapper';
-  // nav.append(socialNav);
+  navsocial.append(socialNav);
+  navWrapper.append(navsocial);
   navWrapper.append(nav);
+  block.append(navsocial);
   block.append(navWrapper);
   const label = nav.querySelector('.list-items-social-label');
   if (label) label.innerText = 'Connect with Sling:';
@@ -290,4 +326,8 @@ export default async function decorate(block) {
     if (searchDiv) searchDiv.classList.remove('visible');
     if (navSearch) navSearch.classList.remove('active');
   });
+  createObserver();
+  handleMediaQueryChange();
+  window.addEventListener('load', handleMediaQueryChange);
+  window.addEventListener('resize', handleMediaQueryChange);
 }
