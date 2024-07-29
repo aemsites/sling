@@ -32,15 +32,17 @@ function createObserver() {
   observer.observe(nav);
 }
 
-function handleMediaQueryChange(event) {
+function handleMediaQueryChange() {
+  const mediaQuery = window.matchMedia('(max-width: 1400px)').matches;
   const navSocial = document.getElementById('nav-social');
   const navSections = document.querySelector('.nav-sections');
   const navWrapper = document.querySelector('.nav-wrapper');
   const block = document.querySelector('.block');
-  if (event.matches) {
+  if (mediaQuery) {
     navSections.append(navSocial);
   } else {
     block.insertBefore(navSocial, navWrapper);
+    navSocial.querySelector('.social-menu-container .list-items-social .list-items-social-label').innerHTML = 'Connect with sling:';
   }
 }
 
@@ -325,7 +327,7 @@ export default async function decorate(block) {
     if (navSearch) navSearch.classList.remove('active');
   });
   createObserver();
-  const mediaQuery = window.matchMedia('(max-width: 1400px)');
-  mediaQuery.addEventListener('change', handleMediaQueryChange);
   handleMediaQueryChange();
+  window.addEventListener('load', handleMediaQueryChange);
+  window.addEventListener('resize', handleMediaQueryChange);
 }
