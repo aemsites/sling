@@ -279,7 +279,7 @@ export default async function decorate(block) {
   const navWrapper = document.createElement('div');
   navWrapper.className = 'nav-wrapper';
   navsocial.append(socialNav);
-  // navWrapper.append(navsocial);
+  navWrapper.append(navsocial);
   navWrapper.append(nav);
   block.append(navsocial);
   block.append(navWrapper);
