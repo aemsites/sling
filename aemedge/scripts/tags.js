@@ -1,6 +1,17 @@
 const tagsEndpoint = '/tags.json';
 let tagsPromise;
-const titleToName = ((name) => name.toLowerCase().replace(' ', '-'));
+const tagToPath = (
+  (name) => {
+    const path = name;
+    if (name.toLowerCase().includes(' & ')) {
+      return name.toLowerCase().replace(' & ', '-and-');
+    }
+    if (name.toLowerCase().includes(' ')) {
+      return name.toLowerCase().replace(' ', '-');
+    }
+    return path.toLowerCase();
+  }
+);
 const fetchTags = (() => {
   if (!tagsPromise) {
     tagsPromise = new Promise((resolve, reject) => {
@@ -17,7 +28,7 @@ const fetchTags = (() => {
               root = row.root;
               tags[root] = {
                 title: root,
-                name: titleToName(root),
+                name: tagToPath(root),
               };
             }
 
@@ -25,14 +36,14 @@ const fetchTags = (() => {
               l1 = row.level1;
               tags[root][l1] = {
                 title: l1,
-                name: titleToName(l1),
+                name: tagToPath(l1),
               };
             }
             if (row.level2) {
               l2 = row.level2;
               tags[root][l1][l2] = {
                 title: l2,
-                name: `${titleToName(l1)}/${titleToName(l2)}`,
+                name: `${tagToPath(l1)}/${tagToPath(l2)}`,
               };
             }
           });

@@ -49,7 +49,6 @@ export async function createCard(row, style, eagerImage, isLarge = false) {
   const link = createTag('a', { class: 'card-link', href: row.path, alt: row.title });
   const cardImageFunction = isLarge ? addCardImageLarge : addCardImage;
   const cardImage = await cardImageFunction(row, style, eagerImage);
-
   link.append(cardImage);
   card.prepend(link);
   addCardContent(link, {
@@ -73,6 +72,19 @@ export async function createCard(row, style, eagerImage, isLarge = false) {
   return card;
 }
 
+const pathToTag = (
+  (name) => {
+    let path = name;
+    if (name.toLowerCase().includes('-')) {
+      path = name.toLowerCase().replace('-', ' ');
+    }
+    if (name.toLowerCase().includes('-and-')) {
+      path = name.toLowerCase().replace('-and-', ' & ');
+    }
+    return path.toLowerCase();
+  }
+);
+
 export default async function decorate(block) {
   let numberofblogs = 7;
   // get 7 links which is max
@@ -87,8 +99,9 @@ export default async function decorate(block) {
   const categories = new URL(window.location.href).pathname.split('/').filter((path) => path);
   // remove whatson from the categories
   categories.shift();
-  categories.map((cat) => cat.replace('-and-', '&'));
-  const blogsbypaths = await getBlogsByPaths(paths);
+  // categories.map((cat) => titleToName(cat));
+  let blogsbypaths;
+  if (paths.length > 1) blogsbypaths = await getBlogsByPaths(paths);
 
   let blogs;
   let mergedBlogs;
@@ -96,11 +109,11 @@ export default async function decorate(block) {
     numberofblogs -= blogsbypaths.length;
     // Get blogs
     if (numberofblogs > 0) {
-      blogs = await getBlogs(categories.map((cat) => cat.replace('-and-', ' & ')), numberofblogs);
+      blogs = await getBlogs(categories.map((cat) => pathToTag(cat)), numberofblogs);
       mergedBlogs = [...blogs, ...blogsbypaths];
     }
   } else {
-    mergedBlogs = await getBlogs(categories.map((cat) => cat.replace('-and-', ' & ')), numberofblogs);
+    mergedBlogs = await getBlogs(categories.map((cat) => pathToTag(cat)), numberofblogs);
   }
 
   mergedBlogs.forEach(async (blog, i) => {

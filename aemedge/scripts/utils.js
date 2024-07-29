@@ -2,6 +2,8 @@ import {
   getMetadata, buildBlock, decorateBlock, createOptimizedPicture, toCamelCase,
 } from './aem.js';
 
+import { getTag } from './tags.js';
+
 export const PRODUCTION_DOMAINS = ['sling.com'];
 
 const domainCheckCache = {};
@@ -250,8 +252,9 @@ export async function getBlogsByPaths(paths) {
 // Adding tags
 function addTags(container, tags) {
   const tagsDiv = createTag('div', { class: 'card-tags' });
-  tags.forEach((tag) => {
-    const tagElement = createTag('a', { class: 'card-tag-link', href: `/whatson/${tag.toLowerCase()}` }, tag.toUpperCase());
+  tags.forEach(async (tag) => {
+    const tagObject = await getTag(tag.trim());
+    const tagElement = createTag('a', { class: 'card-tag-link', href: `/whatson/${tagObject.name}` }, tag.toUpperCase());
     tagsDiv.append(tagElement);
   });
   container.append(tagsDiv);
