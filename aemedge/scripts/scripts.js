@@ -171,15 +171,29 @@ export function decorateButtons(element) {
           up.classList.add('button-container');
           a.append(linkTextEl);
         }
-        if (
+        // primary buttons in whatson pages
+        if (window.location?.pathname?.includes('/whatson/')) {
+          if (
+            up.childNodes.length === 1
+            && up.tagName === 'STRONG'
+            && twoup.childNodes.length === 1
+            && (twoup.tagName === 'P' || twoup.tagName === 'DIV')
+            // http://localhost:3000/whatson/freestream/tate-mcrae-vevo-extended-play
+            && (
+              !twoup.previousElementSibling?.innerHTML.startsWith('<strong><a href="')
+              && !twoup.nextElementSibling?.innerHTML.startsWith('<strong><a href="'))) {
+            a.className = 'button primary';
+            twoup.classList.add('button-container');
+          }
+        } else if (
           up.childNodes.length === 1
           && up.tagName === 'STRONG'
           && twoup.childNodes.length === 1
-          && (twoup.tagName === 'P' || twoup.tagName === 'DIV')
-        ) {
+          && (twoup.tagName === 'P' || twoup.tagName === 'DIV')) {
           a.className = 'button primary';
           twoup.classList.add('button-container');
         }
+
         if (
           up.childNodes.length === 1
           && up.tagName === 'EM'
