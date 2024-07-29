@@ -2,6 +2,8 @@ import {
   getMetadata, buildBlock, decorateBlock, createOptimizedPicture, toCamelCase,
 } from './aem.js';
 
+import { getTag } from './tags.js';
+
 export const PRODUCTION_DOMAINS = ['sling.com'];
 
 const domainCheckCache = {};
@@ -72,6 +74,18 @@ export function createTag(tag, attributes, html = undefined) {
   return element;
 }
 
+export const pathToTag = (
+  (name) => {
+    let path = name;
+    if (name.toLowerCase().includes('-')) {
+      path = name.toLowerCase().replace('-', ' ');
+    }
+    if (name.toLowerCase().includes('-and-')) {
+      path = name.toLowerCase().replace('-and-', ' & ');
+    }
+    return path.toLowerCase();
+  }
+);
 // blog details related functions
 
 /**
@@ -86,7 +100,7 @@ export function buildBlogBreadcrumb() {
     const breamCrumbs = ['BLOG'];
     let pathElements = urlPath.split('/');
     pathElements = pathElements.slice(2, pathElements.length - 1);
-    pathElements.forEach((path) => (breamCrumbs.push(path.trim().replace('-', ' ').toUpperCase())));
+    pathElements.forEach((path) => (breamCrumbs.push(pathToTag(path).toUpperCase())));
 
     breamCrumbs.map((breadCrumb, index) => {
       const href = urlPath.substring(0, urlPath.indexOf(urlPath.split('/')[index + 2]) - 1);
@@ -250,8 +264,9 @@ export async function getBlogsByPaths(paths) {
 // Adding tags
 function addTags(container, tags) {
   const tagsDiv = createTag('div', { class: 'card-tags' });
-  tags.forEach((tag) => {
-    const tagElement = createTag('a', { class: 'card-tag-link', href: `/whatson/${tag.toLowerCase()}` }, tag.toUpperCase());
+  tags.forEach(async (tag) => {
+    const tagObject = await getTag(tag.trim());
+    const tagElement = createTag('a', { class: 'card-tag-link', href: `/whatson/${tagObject.name}` }, tag.toUpperCase());
     tagsDiv.append(tagElement);
   });
   container.append(tagsDiv);
