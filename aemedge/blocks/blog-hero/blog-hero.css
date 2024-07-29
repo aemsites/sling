@@ -26,7 +26,7 @@ main .blog-hero-container {
 
 .blog-hero.category.cyan {
   background: rgb(25 23 37);
-  background: linear-gradient(290deg, rgb(25 23 37 / 100%) 25%, rgb(25 81 118 / 100%) 82%);
+  background: linear-gradient(to bottom, #01adee 0%,#015778 98%,#fff 29%,#fff 100%);
 }
 
 .blog-hero.category.blue-orange {
