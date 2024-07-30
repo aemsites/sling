@@ -26,7 +26,27 @@ main .blog-hero-container {
 
 .blog-hero.category.cyan {
   background: rgb(25 23 37);
-  background: linear-gradient(to bottom, #01adee 0%,#015778 98%,#fff 29%,#fff 100%);
+  background: linear-gradient(to bottom, rgb(2 174 240 / 100%) 0%,rgb(0 39 54 / 100%) 100%);
+}
+
+.blog-hero.category.green {
+  background: rgb(25 23 37);
+  background: linear-gradient(to bottom, rgb(1 241 237 / 100%) 15%,rgb(0 54 53 / 100%) 100%);
+}
+
+.blog-hero.category.dark-orange {
+  background: rgb(25 23 37);
+  background: linear-gradient(to bottom, rgb(239 100 1 / 100%) 15%,rgb(53 23 0 / 100%) 100%);
+}
+
+.blog-hero.category.yellow {
+  background: rgb(0 15 65);
+  background: linear-gradient(to bottom, rgb(255 201 63 / 100%) 0%,rgb(254 188 15 / 100%) 19%,rgb(255 186 5 / 100%) 21%,rgb(252 183 2 / 100%) 24%,rgb(218 156 2 / 100%) 37%,rgb(62 43 0 / 100%) 97%,rgb(52 38 0 / 100%) 100%,rgb(65 52 16 / 100%) 100%);
+}
+
+.blog-hero.category.orange {
+  background: rgb(0 15 65);
+  background: linear-gradient(to bottom, rgb(226 144 1 / 100%) 15%,rgb(54 34 0 / 100%) 100%);
 }
 
 .blog-hero.category.blue-orange {
@@ -41,7 +61,7 @@ main .blog-hero-container {
 
 .blog-hero.category.blue {
   background: rgb(0 15 65);
-  background: linear-gradient(290deg, rgb(0 50 174 / 100%) 25%, rgb(0 15 65 / 100%) 82%);
+  background: linear-gradient(to bottom, rgb(1 125 239 / 100%) 10%,rgb(1 28 55 / 100%) 100%);
 }
 
 .blog-hero.category.tan {
