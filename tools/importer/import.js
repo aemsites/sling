@@ -92,23 +92,32 @@ export default {
     });
 
     // Handle tables
+    const tableElement = document.querySelector('table');
     const tables = document.querySelectorAll('table');
-    tables.forEach((table) => {
-      let blockName = 'Table';
-      // handling table variants
-      const style = document.querySelector('table > tbody > tr > td[style]')?.getAttribute('style');
-      if (style) {
-        if (style.indexOf('rgb(0,30,120)') > -1) {
-          blockName = 'Table(schedule)';
-        } else if (style.indexOf('rgb(84,172,210)') > -1) {
-          blockName = 'Table(playoffs)';
+    let hasTable = 'false';
+    if (tableElement) {
+      hasTable = 'true';
+      tables.forEach((table) => {
+        let blockName = 'Table';
+        // handling table variants
+        const style = document.querySelector('table > tbody > tr > td[style]')?.getAttribute('style');
+        if (style) {
+          if (style.indexOf('rgb(0,30,120)') > -1) {
+            blockName = 'Table(schedule)';
+          } else if (style.indexOf('rgb(84,172,210)') > -1) {
+            blockName = 'Table(playoffs)';
+          }
         }
-      }
-      const cells = [[blockName], [table.outerHTML]];
-      const newTable = WebImporter.DOMUtils.createTable(cells, document);
-      table.parentElement.replaceChild(newTable, table);
-    });
-
+        const cells = [[blockName]];
+        const trs = document.querySelectorAll('table > tbody > tr');
+        const newTable = WebImporter.DOMUtils.createTable(cells, document);
+        const colspan = [...trs][0]?.children.length;
+        trs.forEach((row) => newTable.append(row));
+        const firstTH = newTable.querySelector('tr>th');
+        firstTH.setAttribute('colspan', colspan);
+        table.parentElement.replaceChild(newTable, table);
+      });
+    }
     // Handle Gamefinder block
     const gameFinders = document.querySelectorAll('div.gamefinder');
     gameFinders.forEach((gameFinder) => {
@@ -232,6 +241,7 @@ export default {
         path: newPath,
         authorImage,
         category,
+        hasTable,
       },
     });
     return results;
