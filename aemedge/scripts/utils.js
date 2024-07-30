@@ -73,12 +73,14 @@ export function createTag(tag, attributes, html = undefined) {
   }
   return element;
 }
-
+const TAGS_NOT_TO_BE_TRANSLATED = ['latino-es', 'sci-fi'];
 export const pathToTag = (
   (name) => {
     let path = name;
-    if (name.toLowerCase().includes('-')) {
-      path = name.toLowerCase().replace('-', ' ');
+    if (!TAGS_NOT_TO_BE_TRANSLATED.includes(name)) {
+      if (name.toLowerCase().includes('-')) {
+        path = name.toLowerCase().replace('-', ' ');
+      }
     }
     if (name.toLowerCase().includes('-and-')) {
       path = name.toLowerCase().replace('-and-', ' & ');
