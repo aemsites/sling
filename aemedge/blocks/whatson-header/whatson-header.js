@@ -227,9 +227,21 @@ export default async function decorate(block) {
           const navDropIcon = document.createElement('span');
           navDropIcon.className = 'nav-drop-icon';
           navSection.insertBefore(navDropIcon, children);
-          navDropIcon.addEventListener('click', () => {
-            const dropExpanded = navSection.getAttribute('aria-expanded') === 'true';
-            navSection.setAttribute('aria-expanded', dropExpanded ? 'false' : 'true');
+          const expandSection = (event) => {
+            event.stopPropagation();
+            navDropIcon.classList.add('minus');
+            navSection.setAttribute('aria-expanded', 'true');
+          };
+          const collapseSection = (event) => {
+            event.stopPropagation();
+            navSection.setAttribute('aria-expanded', 'false');
+            navDropIcon.classList.remove('minus');
+          };
+          navSection.addEventListener('click', expandSection);
+          navDropIcon.addEventListener('click', (event) => {
+            if (navDropIcon.classList.contains('minus')) {
+              collapseSection(event);
+            }
           });
         }
       });
