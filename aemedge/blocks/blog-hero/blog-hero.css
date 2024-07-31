@@ -14,11 +14,6 @@ main .blog-hero-container {
   min-height: unset;
 }
 
-.blog-hero.category.purple {
-  background: rgb(25 23 37);
-  background: linear-gradient(290deg, rgb(25 23 37 / 100%) 25%, rgb(95 43 105 / 100%) 82%);
-}
-
 .blog-hero.category.red {
   background: rgb(25 23 37);
   background: linear-gradient(290deg, rgb(25 23 37 / 100%) 25%, rgb(164 30 32 / 100%) 82%);
@@ -49,24 +44,9 @@ main .blog-hero-container {
   background: linear-gradient(to bottom, rgb(226 144 1 / 100%) 15%,rgb(54 34 0 / 100%) 100%);
 }
 
-.blog-hero.category.blue-orange {
-  background: rgb(26 12 91);
-  background: linear-gradient(290deg, rgb(124 54 20 / 100%) 25%, rgb(26 12 91 / 100%) 82%);
-}
-
-.blog-hero.category.gray {
-  background: rgb(52 56 59);
-  background: linear-gradient(290deg, rgb(41 43 45 / 100%) 25%, rgb(52 56 59 / 100%) 82%);
-}
-
 .blog-hero.category.blue {
   background: rgb(0 15 65);
   background: linear-gradient(to bottom, rgb(1 125 239 / 100%) 10%,rgb(1 28 55 / 100%) 100%);
-}
-
-.blog-hero.category.tan {
-  background: rgb(184 149 118);
-  background: linear-gradient(290deg, rgb(25 23 37 / 100%) 25%, rgb(184 149 118/ 100%) 82%);
 }
 
 .blog-hero h1 {
@@ -92,6 +72,7 @@ main .blog-hero-container {
 .blog-hero.category > div {
   max-width: 1168px;
   margin: 0 auto;
+  width: 100%
 }
 
 .blog-hero.category > div > div {
