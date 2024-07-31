@@ -47,6 +47,7 @@ export default {
     const publishDate = document.querySelector('.author-card--date')?.textContent || '';
     const tags = document.querySelectorAll('.author-card--tags a');
     const ogImage = document.querySelector('meta[property="og:image"]')?.content;
+    const robots = document.querySelector('head > meta[name="robots"]')?.content;
 
     meta.Author = authorName || '';
     if (publishDate === '') {
@@ -60,6 +61,7 @@ export default {
     const img = document.createElement('img');
     img.src = ogImage.replace('https://www.sling.comhttps://dish.scene7.com', 'https://dish.scene7.com') || '';
     meta.Image = img;
+    if (robots && robots !== 'index') meta.robots = robots;
     const videoIframes = document.querySelectorAll('iframe[src*="youtube"], iframe[src*="platform.twitter.com"]');
     // Handle embed youtube or twitter videos
     videoIframes.forEach((iframe) => {
@@ -242,6 +244,7 @@ export default {
         authorImage,
         category,
         hasTable,
+        robots,
       },
     });
     return results;
