@@ -22,14 +22,19 @@ function createObserver() {
     threshold: 0,
   };
 
-  const observer = new IntersectionObserver((entities) => {
-    if (!entities[0].isIntersecting) {
-      header.classList.add('sticky');
-    } else {
-      header.classList.remove('sticky');
-    }
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) {
+        header.classList.add('sticky');
+      } else {
+        header.classList.remove('sticky');
+      }
+    });
   }, options);
-  observer.observe(nav);
+
+  if (nav) {
+    observer.observe(nav);
+  }
 }
 
 function handleMediaQueryChange() {
