@@ -227,26 +227,18 @@ export default async function decorate(block) {
           const navDropIcon = document.createElement('span');
           navDropIcon.className = 'nav-drop-icon';
           navSection.insertBefore(navDropIcon, children);
-          const expandSection = (event) => {
+          navSection.addEventListener('click', () => {
+            const dropExpanded = navSection.getAttribute('aria-expanded') === 'true';
+            navSection.setAttribute('aria-expanded', dropExpanded ? 'false' : 'true');
+          });
+
+          // Prevent click events on submenu items from propagating to the parent li
+          children.addEventListener('click', (event) => {
             event.stopPropagation();
-            navDropIcon.classList.add('minus');
-            navSection.setAttribute('aria-expanded', 'true');
-          };
-          const collapseSection = (event) => {
-            event.stopPropagation();
-            navSection.setAttribute('aria-expanded', 'false');
-            navDropIcon.classList.remove('minus');
-          };
-          navSection.addEventListener('click', expandSection);
-          navDropIcon.addEventListener('click', (event) => {
-            if (navDropIcon.classList.contains('minus')) {
-              collapseSection(event);
-            }
           });
         }
       });
   }
-
   // secondary social nav
   const socialhtml = `
    <div class="list-items-social">
