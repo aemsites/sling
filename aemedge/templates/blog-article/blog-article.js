@@ -59,7 +59,7 @@ async function buildTagsDiv(tags) {
  */
 const buildAuthorLink = (authName) => {
   const authLink = createTag('a', {
-    href: `${window.location.origin}/whatson/${authName.trim().toLowerCase().replace(' ', '-')}`,
+    href: `${window.location.origin}/whatson/author/${authName.trim().toLowerCase().replace(' ', '-')}`,
   });
   return authLink;
 };
