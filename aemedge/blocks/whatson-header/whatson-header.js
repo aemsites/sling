@@ -22,14 +22,19 @@ function createObserver() {
     threshold: 0,
   };
 
-  const observer = new IntersectionObserver((entities) => {
-    if (!entities[0].isIntersecting) {
-      header.classList.add('sticky');
-    } else {
-      header.classList.remove('sticky');
-    }
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) {
+        header.classList.add('sticky');
+      } else {
+        header.classList.remove('sticky');
+      }
+    });
   }, options);
-  observer.observe(nav);
+
+  if (nav) {
+    observer.observe(nav);
+  }
 }
 
 function handleMediaQueryChange() {
@@ -227,14 +232,18 @@ export default async function decorate(block) {
           const navDropIcon = document.createElement('span');
           navDropIcon.className = 'nav-drop-icon';
           navSection.insertBefore(navDropIcon, children);
-          navDropIcon.addEventListener('click', () => {
+          navSection.addEventListener('click', () => {
             const dropExpanded = navSection.getAttribute('aria-expanded') === 'true';
             navSection.setAttribute('aria-expanded', dropExpanded ? 'false' : 'true');
+          });
+
+          // Prevent click events on submenu items from propagating to the parent li
+          children.addEventListener('click', (event) => {
+            event.stopPropagation();
           });
         }
       });
   }
-
   // secondary social nav
   const socialhtml = `
    <div class="list-items-social">
