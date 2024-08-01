@@ -45,6 +45,18 @@
     margin: 16px auto;
 }
 
+.section.rtl h2,
+.section.rtl h3,
+.section.rtl h4,
+.section.rtl h5,
+.section.rtl h6,
+.section.rtl p,
+.section.rtl ul,
+.section.rtl ol {
+    text-align: right;
+}
+
+
 main .hero-container + .section {
     display: flex;
     max-width: 80%;
