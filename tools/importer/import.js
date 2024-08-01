@@ -149,6 +149,27 @@ export default {
       p.append(strongH);
       h.replaceWith(p);
     });
+
+    // handle arabic pages
+    const pagepath = new URL(params.originalURL).pathname;
+    if (pagepath.includes('/whatson/international/arabic/')) {
+      const rightaligned = document.querySelectorAll('[style="text-align: right;"]');
+      if (rightaligned && rightaligned.length > 0) {
+        const elements = Array.from(rightaligned);
+        if (elements.length > 0) {
+          const lastElement = elements.pop();
+          const seperator = document.createElement('hr');
+          const section = [['Section Metadata'], ['Style', 'rtl']];
+          const sectionMetadata = WebImporter.DOMUtils.createTable(section, document);
+          lastElement.append(document.createElement('br'), sectionMetadata, seperator);
+        }
+      }
+      // delete related content
+      const relatedcontent = document.querySelector('.related-content');
+      if (relatedcontent) {
+        relatedcontent.parentElement.innerHTML = '';
+      }
+    }
     // Handle category pages
     const isCategoryPage = document.querySelector('.homepage-wrapper .blog-homepage--outer');
     let category = false;
