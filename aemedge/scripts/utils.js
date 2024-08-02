@@ -273,7 +273,7 @@ export async function getBlogsByAuthor(author) {
   );
   let filterArticles = [];
   if (author) {
-    filterArticles = blogArticles.filter((b) => b.author.includes(author));
+    filterArticles = blogArticles.filter((b) => (b.author.includes(author) && !b.path.includes('/author')));
   }
   return filterArticles;
 }
@@ -349,6 +349,50 @@ export async function addCardImage(row, style, eagerImage = false) {
   return null;
 }
 
+/**
+ * utility to create a tag with link to author page
+ * @param {*} authName - author name mentioned in the page metadata
+ * @returns a element
+ */
+export function buildAuthorLink(authName) {
+  const authLink = createTag('a', {
+    href: `${window.location.origin}/whatson/author/${authName.trim().toLowerCase().replace(' ', '-')}`,
+  });
+  return authLink;
+}
+
+export async function createBlogByAuthorCard(item) {
+  const cardContainer = createTag('div', { class: 'card-container' });
+  // image container
+  const imageContainer = createTag('div', { class: 'image-container' });
+  const imageLink = createTag('a', { class: 'image-link' });
+  imageLink.href = item.path;
+  const image = await addCardImage(item);
+  imageLink.append(image);
+  imageContainer.append(imageLink);
+
+  // article text container
+  const textContainer = createTag('div', { class: 'text-container' });
+  const titleContainer = createTag('div', { class: 'title-container' });
+  const titleLink = createTag('a', { class: 'title-link' });
+  titleLink.href = item.path;
+  titleLink.innerHTML = `<span class="blog-title">${item.title}</span>`;
+  textContainer.append(titleLink);
+  const descContainer = createTag('div', { class: 'description-container' });
+  descContainer.innerText = item.description;
+  const dateContainer = createTag('div', { class: 'date-container' });
+  const authContainer = createTag('div', { class: 'auth-container' });
+  authContainer.innerHTML = `<span class="author-name">${item.author}</span>`;
+  const publicationDate = createTag('div', { class: 'publication-date' });
+  const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
+  const pubDate = convertExcelDate(item.date);
+  const formattedDate = pubDate.toLocaleDateString('en-US', dateOptions);
+  publicationDate.innerHTML = `<span class="author-name">${formattedDate}</span>`;
+  dateContainer.append(authContainer, publicationDate);
+  textContainer.append(titleContainer, descContainer, dateContainer);
+  cardContainer.append(imageContainer, textContainer);
+  return cardContainer;
+}
 /**
  * Gets placeholders object.
  * @param {string} [prefix] Location of placeholders

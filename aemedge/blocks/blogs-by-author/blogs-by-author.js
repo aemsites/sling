@@ -1,4 +1,8 @@
-import { getBlogsByAuthor, createTag } from '../../scripts/utils.js';
+import {
+  getBlogsByAuthor,
+  createTag,
+  createBlogByAuthorCard,
+} from '../../scripts/utils.js';
 
 const itemsPerPage = 10;
 let numberOfPages = 0;
@@ -23,9 +27,13 @@ function displayItems(data, page, block) {
   cardsContainer.innerHTML = '';
 
   // Display current page items
-  pageItems.forEach((item) => {
+  pageItems.forEach(async (item) => {
     const itemElement = document.createElement('div');
-    itemElement.innerHTML = `${item.title}</br>`;
+    const card = await createBlogByAuthorCard(item);
+    const cardseparator = createTag('hr', { class: 'card-separator' });
+
+    itemElement.append(card, cardseparator);
+    // itemElement.innerHTML = `${item.title}</br>`;
     cardsContainer.appendChild(itemElement);
   });
 
@@ -58,9 +66,9 @@ export default async function decorate(block) {
       currentPage = 1;
       const cardsContainer = createTag('div', { class: 'cards-container' });
       const btnContainer = createTag('div', { class: 'pagination-container' });
-      const prevBtn = createTag('button', { class: 'previous-button' });
+      const prevBtn = createTag('button', { class: 'previous-button paginate-btn inactive' });
       prevBtn.innerText = 'Previous';
-      const nextBtn = createTag('button', { class: 'next-button' });
+      const nextBtn = createTag('button', { class: 'next-button paginate-btn active' });
       nextBtn.innerText = 'Next';
       const pageInfo = createTag('span', { class: 'pagination-info-text' });
       pageInfo.innerHTML = `Page ${currentPage} of ${numberOfPages}`;

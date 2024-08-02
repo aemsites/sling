@@ -2,6 +2,7 @@ import {
   createTag,
   buildVideoBlocks,
   buildFragmentBlocks,
+  buildAuthorLink,
 } from '../../scripts/utils.js';
 
 import {
@@ -52,17 +53,6 @@ async function buildTagsDiv(tags) {
   });
   return tagsDiv;
 }
-/**
- * utility to create a tag with link to author page
- * @param {*} authName - author name mentioned in the page metadata
- * @returns a element
- */
-const buildAuthorLink = (authName) => {
-  const authLink = createTag('a', {
-    href: `${window.location.origin}/whatson/author/${authName.trim().toLowerCase().replace(' ', '-')}`,
-  });
-  return authLink;
-};
 
 /**
  * Function that will build the author block with
