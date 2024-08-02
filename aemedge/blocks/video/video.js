@@ -87,6 +87,7 @@ const loadVideoEmbed = (block, link, replacePlaceholder, autoplay) => {
   const isYoutube = link.includes('youtube') || link.includes('youtu.be');
   const isVimeo = link.includes('vimeo');
   const isMp4 = link.includes('.mp4');
+
   let embedEl;
   if (isYoutube) {
     embedEl = embedYoutube(url, replacePlaceholder, autoplay);
@@ -104,6 +105,7 @@ export default async function decorate(block) {
   const placeholder = block.querySelector('picture');
   const link = block.querySelector('a').href;
   block.textContent = '';
+
   if (placeholder) {
     const wrapper = document.createElement('div');
     wrapper.className = 'video-placeholder';
