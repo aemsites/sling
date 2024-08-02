@@ -144,6 +144,11 @@ export function buildVideoBlocks(main) {
         a.replaceWith(embedBlock);
         decorateBlock(embedBlock);
       }
+      if (a.href.includes('watch.sling') && linkTextIncludesHref(a)) {
+        const embedBlock = buildBlock('embed', a.cloneNode(true));
+        a.replaceWith(embedBlock);
+        decorateBlock(embedBlock);
+      }
     });
   }
 }
