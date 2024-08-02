@@ -95,7 +95,7 @@ export default async function decorate(block) {
   // categories.map((cat) => titleToName(cat));
   const currentCategory = categories[categories.length - 1];
   let lastSegmentOfURL;
-  if (currentCategory.includes('and')) {
+  if (currentCategory && currentCategory.includes('and')) {
     lastSegmentOfURL = currentCategory.replace('and', '&');
   } else {
     lastSegmentOfURL = currentCategory;
