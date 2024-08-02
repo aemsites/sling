@@ -259,7 +259,7 @@ export async function getBlogsByPaths(paths) {
   );
   let filterArticles = [];
   if (paths && paths.length > 0) {
-    filterArticles = blogArticles.filter((b) => paths.includes(b.path));
+    filterArticles = blogArticles.filter((b) => (paths.includes(b.path)));
   }
   return filterArticles;
 }
