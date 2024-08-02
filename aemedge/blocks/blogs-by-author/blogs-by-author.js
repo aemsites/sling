@@ -13,37 +13,38 @@ function titleCase(str) {
   return splitStr.join(' ');
 }
 
-function displayItems(data, page, cardsContainer, pageInfo) {
+function displayItems(data, page, block) {
   const startIndex = (page - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const pageItems = data.slice(startIndex, endIndex);
 
   // Clear previous content
-  //  const container = block.querySelector('.cards-container');
+  const cardsContainer = block.querySelector('.cards-container');
   cardsContainer.innerHTML = '';
 
   // Display current page items
   pageItems.forEach((item) => {
     const itemElement = document.createElement('div');
-    itemElement.textContent = item;
+    itemElement.innerHTML = `${item.title}</br>`;
     cardsContainer.appendChild(itemElement);
   });
 
   // Display current page number
+  const pageInfo = block.querySelector('.pagination-info-text');
   pageInfo.textContent = `Page ${page} of ${Math.ceil(data.length / itemsPerPage)}`;
 }
 
-function goToPreviousPage(blogs) {
+function goToPreviousPage(blogs, block) {
   if (currentPage > 1) {
     currentPage -= 1;
-    displayItems(blogs, currentPage);
+    displayItems(blogs, currentPage, block);
   }
 }
 
-function goToNextPage(blogs) {
+function goToNextPage(blogs, block) {
   if (currentPage < Math.ceil(blogs.length / itemsPerPage)) {
     currentPage += 1;
-    displayItems(blogs, currentPage);
+    displayItems(blogs, currentPage, block);
   }
 }
 
@@ -59,15 +60,15 @@ export default async function decorate(block) {
       const btnContainer = createTag('div', { class: 'pagination-container' });
       const prevBtn = createTag('button', { class: 'previous-button' });
       prevBtn.innerText = 'Previous';
-      prevBtn.addEventListener('click', (() => goToPreviousPage(blogs)));
       const nextBtn = createTag('button', { class: 'next-button' });
       nextBtn.innerText = 'Next';
-      nextBtn.addEventListener('click', (() => goToNextPage(blogs)));
       const pageInfo = createTag('span', { class: 'pagination-info-text' });
       pageInfo.innerHTML = `Page ${currentPage} of ${numberOfPages}`;
       btnContainer.append(prevBtn, pageInfo, nextBtn);
       block.append(cardsContainer, btnContainer);
-      displayItems(blogs, currentPage, cardsContainer, pageInfo);
+      displayItems(blogs, currentPage, block);
+      block.querySelector('.previous-button').addEventListener('click', (() => goToPreviousPage(blogs, block)));
+      block.querySelector('.next-button').addEventListener('click', (() => goToNextPage(blogs, block)));
     } else {
       block.innerHTML = 'No Blogs Found';
     }
