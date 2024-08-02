@@ -95,7 +95,7 @@ export default async function decorate(block) {
   // categories.map((cat) => titleToName(cat));
   const currentCategory = categories[categories.length - 1];
   let lastSegmentOfURL;
-  if (currentCategory.includes('and')) {
+  if (currentCategory && currentCategory.includes('and')) {
     lastSegmentOfURL = currentCategory.replace('and', '&');
   } else {
     lastSegmentOfURL = currentCategory;
@@ -118,6 +118,7 @@ export default async function decorate(block) {
   }
   mergedBlogs.forEach(async (blog, i) => {
     if (blog.image === '') return;
+    if (blog.path.includes('/author/')) return;
     let card;
     if (i === 0) {
       card = await createCard(blog, 'card card-large', lastSegmentOfURL, true, true);
