@@ -93,7 +93,13 @@ export default async function decorate(block) {
   // remove whatson from the categories
   categories.shift();
   // categories.map((cat) => titleToName(cat));
-  const lastSegmentOfURL = categories[categories.length - 1];
+  const currentCategory = categories[categories.length - 1];
+  let lastSegmentOfURL;
+  if (currentCategory.includes('and')) {
+    lastSegmentOfURL = currentCategory.replace('and', '&');
+  } else {
+    lastSegmentOfURL = currentCategory;
+  }
 
   let blogsbypaths;
   if (paths.length > 1) blogsbypaths = await getBlogsByPaths(paths);
