@@ -1,0 +1,12 @@
+.pagination-container {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    margin: 0 auto 134px;
+    max-width: 1166px;
+}
+
+.cards-container {
+    margin: 0 auto;
+    max-width: 1166px;
+}
