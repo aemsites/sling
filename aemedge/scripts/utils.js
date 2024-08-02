@@ -263,6 +263,21 @@ export async function getBlogsByPaths(paths) {
   }
   return filterArticles;
 }
+
+export async function getBlogsByAuthor(author) {
+  if (!window.allBlogs) {
+    window.allBlogs = await fetchData('/whatson/query-index.json');
+  }
+  const blogArticles = window.allBlogs.filter(
+    (e) => (e.template !== 'blog-category' && e.image !== '' && !e.image.startsWith('//aemedge/default-meta-image.png')),
+  );
+  let filterArticles = [];
+  if (author) {
+    filterArticles = blogArticles.filter((b) => b.author.includes(author));
+  }
+  return filterArticles;
+}
+
 // Adding tags
 function addTags(container, tags) {
   const tagsDiv = createTag('div', { class: 'card-tags' });
