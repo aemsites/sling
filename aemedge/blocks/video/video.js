@@ -52,27 +52,6 @@ function embedVimeo(url, replacePlaceholder, autoplay) {
   return temp.children.item(0);
 }
 
-function embedsling(url, replacePlaceholder, autoplay) {
-  const [, video] = url.pathname.split('/');
-  let suffix = '';
-  if (replacePlaceholder || autoplay) {
-    const suffixParams = {
-      autoplay: '1',
-      background: autoplay ? '1' : '0',
-    };
-    suffix = `?${Object.entries(suffixParams).map(([k, v]) => `${k}=${encodeURIComponent(v)}`).join('&')}`;
-  }
-  const temp = document.createElement('div');
-
-  temp.innerHTML = `<div style="left: 0; width: 100%; height: 0; position: relative; padding-bottom: 56.25%;">
-        <iframe src="src="https://watch.sling.com/video/${video}${suffix}" 
-        style="border: 0; top: 0; left: 0; width: 100%; height: 100%; position: absolute;" 
-        frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen  
-        title="Content from Vimeo" loading="lazy"></iframe>
-      </div>`;
-  return temp.children.item(0);
-}
-
 function getVideoElement(source, replacePlaceholder, autoplay) {
   const video = document.createElement('video');
   video.setAttribute('controls', '');
@@ -108,18 +87,13 @@ const loadVideoEmbed = (block, link, replacePlaceholder, autoplay) => {
   const isYoutube = link.includes('youtube') || link.includes('youtu.be');
   const isVimeo = link.includes('vimeo');
   const isMp4 = link.includes('.mp4');
-  const isSling = link.includes('.sling');
   let embedEl;
   if (isYoutube) {
-    console.log('yt called');
     embedEl = embedYoutube(url, replacePlaceholder, autoplay);
   } else if (isVimeo) {
     embedEl = embedVimeo(url, replacePlaceholder, autoplay);
   } else if (isMp4) {
     embedEl = getVideoElement(link, replacePlaceholder, autoplay);
-  } else if (isSling) {
-    console.log('sling called');
-    embedEl = embedsling(link, replacePlaceholder, autoplay);
   }
   block.replaceChildren(embedEl);
 

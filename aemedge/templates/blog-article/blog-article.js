@@ -142,7 +142,6 @@ export async function buildAuthorBlock() {
   socialContainer.append(shareText, socialList);
   authTxtContainer.append(socialContainer);
   const section = document.createElement('div');
-  section.classList.add('rtl');
   section.append(buildBlock('author-card', { elems: [authImgContainer, authTxtContainer] }));
   return section;
 }
