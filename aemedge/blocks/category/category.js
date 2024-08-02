@@ -118,7 +118,6 @@ export default async function decorate(block) {
   }
   mergedBlogs.forEach(async (blog, i) => {
     if (blog.image === '') return;
-    if (blog.path.includes('/author/')) return;
     let card;
     if (i === 0) {
       card = await createCard(blog, 'card card-large', lastSegmentOfURL, true, true);
