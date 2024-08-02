@@ -49,7 +49,7 @@ export async function addCardImageLarge(row, style, eagerImage = true) {
   return cardImageDiv;
 }
 
-export async function createCard(row, style, eagerImage, isLarge = false) {
+export async function createCard(row, style, lastSegmentOfURL, eagerImage, isLarge = false) {
   const cardClass = isLarge ? 'card card-large' : style || 'card';
   const card = createTag('div', { class: cardClass });
   const link = createTag('a', { class: 'card-link', href: row.path, alt: row.title });
@@ -57,7 +57,7 @@ export async function createCard(row, style, eagerImage, isLarge = false) {
   const cardImage = await cardImageFunction(row, style, eagerImage);
   link.append(cardImage);
   card.prepend(link);
-  addCardContent(link, {
+  addCardContent(link, lastSegmentOfURL, {
     tags: row.tags ? JSON.parse(row.tags) : null,
     title: row.title,
     description: row.description,
@@ -93,6 +93,14 @@ export default async function decorate(block) {
   // remove whatson from the categories
   categories.shift();
   // categories.map((cat) => titleToName(cat));
+  const currentCategory = categories[categories.length - 1];
+  let lastSegmentOfURL;
+  if (currentCategory.includes('and')) {
+    lastSegmentOfURL = currentCategory.replace('and', '&');
+  } else {
+    lastSegmentOfURL = currentCategory;
+  }
+
   let blogsbypaths;
   if (paths.length > 1) blogsbypaths = await getBlogsByPaths(paths);
 
@@ -112,11 +120,11 @@ export default async function decorate(block) {
     if (blog.image === '') return;
     let card;
     if (i === 0) {
-      card = await createCard(blog, 'card card-large', true, true);
+      card = await createCard(blog, 'card card-large', lastSegmentOfURL, true, true);
     } else if (i % 2 !== 0) {
-      card = await createCard(blog, 'card card-medium', false, false);
+      card = await createCard(blog, 'card card-medium', null, false, false);
     } else {
-      card = await createCard(blog, 'card card-small', false, false);
+      card = await createCard(blog, 'card card-small', null, false, false);
     }
     block.append(card);
   });

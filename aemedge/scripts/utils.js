@@ -268,8 +268,26 @@ function addTags(container, tags) {
   const tagsDiv = createTag('div', { class: 'card-tags' });
   tags.forEach(async (tag) => {
     const tagObject = await getTag(tag.trim());
-    const tagElement = createTag('a', { class: 'card-tag-link', href: `/whatson/${tagObject.name}` }, tag.toUpperCase());
+    const tagElement = createTag('a', {
+      class: 'card-tag-link',
+      href: `/whatson/${tagObject.name}`,
+    }, tag.toUpperCase());
     tagsDiv.append(tagElement);
+  });
+  container.append(tagsDiv);
+}
+
+function addTagsOnLargeCards(container, tags, lastSegmentOfURL) {
+  const tagsDiv = createTag('div', { class: 'card-tags' });
+  tags.forEach(async (tag) => {
+    if (tag.trim() === lastSegmentOfURL.trim().toUpperCase().replace(/-/g, ' ')) {
+      const tagObject = await getTag(tag.trim());
+      const tagElement = createTag('a', {
+        class: 'card-tag-link',
+        href: `/whatson/${tagObject.name}`,
+      }, tag.toUpperCase());
+      tagsDiv.append(tagElement);
+    }
   });
   container.append(tagsDiv);
 }
@@ -301,14 +319,18 @@ function addAuthorAndDate(container, authorName, publishDate) {
 }
 
 // Creating card content
-export async function addCardContent(container, {
+export async function addCardContent(container, lastSegmentOfURL, {
   tags, title, description, author, date,
 }) {
   const cardContent = createTag('div', { class: 'card-content' });
   container.append(cardContent);
 
   if (tags) {
-    addTags(cardContent, tags);
+    if (typeof lastSegmentOfURL !== 'undefined' && lastSegmentOfURL != null) {
+      addTagsOnLargeCards(cardContent, tags, lastSegmentOfURL);
+    } else {
+      addTags(cardContent, tags);
+    }
   }
   if (title) {
     addTitle(cardContent, title);
