@@ -28,7 +28,9 @@
   --input-background-color: #eaeaec;
   --dark-background-color: rgb(23 23 37);
   --clr-white: #fff;
-  --clr-black: #000
+  --clr-black: #000;
+  --dark-grey-color: #707070;
+
     /* fonts */
   ;
   --body-font-family: proxima-nova, proxima-nova-fallback, sans-serif;
@@ -99,6 +101,7 @@ h6 {
   font-family: var(--heading-font-family);
   font-weight: 700;
   line-height: 1.25;
+  text-wrap: balance;
   scroll-margin: calc(var(--nav-height) + 1em);
 }
 
@@ -133,6 +136,7 @@ ul,
 pre,
 blockquote {
   margin: 0 0 10px;
+  text-wrap: balance;
 }
 
 code,
@@ -310,6 +314,42 @@ button.text:hover {
 .offer-details .button-container p {
   line-height: 1em;
   margin: 0;
+}
+
+.block.blog-breadcrumb {
+  background: 0;
+  color: var(--text-color);
+  font-size: 18px;
+  margin: 0 auto;
+  padding: 8px 10% 14px;
+  text-align: center;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.blog-breadcrumb .blog-breadcrumb-active-article {
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+a.blog-breadcrumb-link {
+  color: var(--dark-grey-color);
+}
+
+.blog-breadcrumb span.icon-fw-arrow {
+  width: unset;
+  height: unset;
+  margin: 0 14px;
+  display: inline-block;
+  font: normal normal normal 20px / 1 var(--font-awesome);
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.blog-breadcrumb span.icon-fw-arrow::before {
+  content: "\f105";
 }
 
 main img {

@@ -168,6 +168,7 @@ export function getPageType() {
   const template = getMetadata('template');
   if (template === 'blog-article') return 'blog';
   if (template === 'blog-category') return 'category';
+  if (template === 'blog-author') return 'author';
   return '';
 }
 
@@ -214,7 +215,7 @@ export async function getBlogs(categories, num) {
     window.allBlogs = await fetchData('/whatson/query-index.json');
   }
   const blogArticles = window.allBlogs.filter(
-    (e) => (e.template !== 'blog-category' && e.image !== '' && !e.image.startsWith('//aemedge/default-meta-image.png')),
+    (e) => (e.template === 'blog-article') && e.image !== '' && !e.image.startsWith('//aemedge/default-meta-image.png'),
   );
 
   if (categories && categories.length > 0) {
