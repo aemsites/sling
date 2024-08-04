@@ -390,7 +390,6 @@ export default async function decorate(block) {
     ),
     GQL_QUERIES.getPackage.operationName,
   );
-  console.log(planOfferJson);
 
   const planComparisonPlaceholders = await fetchPlaceholders('default', 'plan-comparison');
   // Create the Section Title & Subtitle

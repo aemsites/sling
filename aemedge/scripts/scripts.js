@@ -22,7 +22,7 @@ import {
   createTag,
 } from './utils.js';
 
-const LCP_BLOCKS = []; // add your LCP blocks to the list
+const LCP_BLOCKS = ['category']; // add your LCP blocks to the list
 const TEMPLATES = ['blog-article', 'blog-category']; // add your templates here
 const TEMPLATE_META = 'template';
 
@@ -31,14 +31,68 @@ const TEMPLATE_META = 'template';
  * @param {Element} main The container element
  */
 function buildHeroBlock(main) {
-  const picture = main.querySelector('picture');
-  if ((getPageType() === 'blog' && picture) || (getPageType() === 'category' && picture)) {
+  const pictures = main.querySelectorAll('picture');
+  if ((getPageType() === 'blog' && pictures?.length > 0) || (getPageType() === 'category' && pictures?.length > 0)) {
     const h1 = main.querySelector('h1');
-    if (h1) h1.classList.add('blog-primary-title');
     const images = [];
-    main.querySelectorAll('picture').forEach((image, idx) => {
-      // eslint-disable-next-line no-bitwise
-      if (h1 && (h1.compareDocumentPosition(image) & Node.DOCUMENT_POSITION_PRECEDING)) {
+    if (h1) {
+      h1.classList.add('blog-primary-title');
+      if (pictures.length >= 2) {
+        main.querySelectorAll('picture').forEach((image, idx) => {
+          // eslint-disable-next-line no-bitwise
+          if (h1 && (h1.compareDocumentPosition(image) & Node.DOCUMENT_POSITION_PRECEDING)) {
+            images.push(image);
+            if (idx === 0) {
+              image.classList.add('desktop');
+              // load desktop image eager on desktop
+              const mquery = window.matchMedia('(min-width: 769px)');
+              if (mquery.matches) {
+                image.querySelector('img').setAttribute('loading', 'eager');
+              } else {
+                image.querySelector('img').setAttribute('loading', 'lazy');
+              }
+            }
+            if (idx === 1) {
+              image.classList.add('mobile');
+              // load mobile image eager on mobile
+              const mquery = window.matchMedia('(max-width: 768px)');
+              if (mquery.matches) {
+                image.querySelector('img').setAttribute('loading', 'eager');
+              } else {
+                image.querySelector('img').setAttribute('loading', 'lazy');
+              }
+            }
+          }
+        });
+      } else if (pictures.length === 1) {
+        const image = main.querySelector('picture');
+        if (h1 && (h1.compareDocumentPosition(image) && Node.DOCUMENT_POSITION_PRECEDING)) {
+          images.push(image);
+
+          image.classList.add('desktop,mobile');
+          // load desktop image eager on desktop
+          const mquery = window.matchMedia('(min-width: 769px)');
+          if (mquery.matches) {
+            image.querySelector('img').setAttribute('loading', 'eager');
+          } else {
+            image.querySelector('img').setAttribute('loading', 'lazy');
+          }
+        }
+      }
+      if (getPageType() === 'blog') {
+        const section = document.createElement('div');
+        section.append(buildBlock('blog-hero', { elems: images }));
+        const breadCrumb = buildBlogBreadcrumb();
+        if (breadCrumb) {
+          breadCrumb.classList.add('blog-details-breadcrumb');
+          section.append(breadCrumb);
+        }
+        section.append(h1);
+        main.prepend(section);
+      }
+    } else if (pictures.length >= 2) {
+      main.querySelectorAll('picture').forEach((image, idx) => {
+        // eslint-disable-next-line no-bitwise
         images.push(image);
         if (idx === 0) {
           image.classList.add('desktop');
@@ -60,18 +114,20 @@ function buildHeroBlock(main) {
             image.querySelector('img').setAttribute('loading', 'lazy');
           }
         }
+      });
+    } else if (pictures.length === 1) {
+      const image = main.querySelector('picture');
+
+      images.push(image);
+
+      image.classList.add('desktop,mobile');
+      // load desktop image eager on desktop
+      const mquery = window.matchMedia('(min-width: 769px)');
+      if (mquery.matches) {
+        image.querySelector('img').setAttribute('loading', 'eager');
+      } else {
+        image.querySelector('img').setAttribute('loading', 'lazy');
       }
-    });
-    if (getPageType() === 'blog') {
-      const section = document.createElement('div');
-      section.append(buildBlock('blog-hero', { elems: images }));
-      const breadCrumb = buildBlogBreadcrumb();
-      if (breadCrumb) {
-        breadCrumb.classList.add('blog-details-breadcrumb');
-        section.append(breadCrumb);
-      }
-      section.append(h1);
-      main.prepend(section);
     }
   }
 }
@@ -146,9 +202,9 @@ async function buildGlobalBanner(main) {
 }
 
 /**
- * Decorates paragraphs containing a single link as buttons.
- * @param {Element} element container element
- */
+   * Decorates paragraphs containing a single link as buttons.
+   * @param {Element} element container element
+   */
 export function decorateButtons(element) {
   element.querySelectorAll('a').forEach((a) => {
     a.title = a.title || a.textContent;
@@ -209,8 +265,8 @@ export function decorateButtons(element) {
 }
 
 /**
- * load fonts.css and set a session storage flag
- */
+   * load fonts.css and set a session storage flag
+   */
 async function loadFonts() {
   await loadCSS(`${window.hlx.codeBasePath}/styles/fonts.css`);
   try {
@@ -220,10 +276,10 @@ async function loadFonts() {
   }
 }
 /**
- * Sanitizes a string for use as class name.
- * @param {string} name The unsanitized string
- * @returns {string} The class name
- */
+   * Sanitizes a string for use as class name.
+   * @param {string} name The unsanitized string
+   * @returns {string} The class name
+   */
 export function toClassName(name) {
   return typeof name === 'string'
     ? name
@@ -234,8 +290,8 @@ export function toClassName(name) {
     : '';
 }
 /**
- * load the template specific js and css
- */
+   * load the template specific js and css
+   */
 async function loadTemplate(main) {
   try {
     const template = getMetadata(TEMPLATE_META) ? toClassName(getMetadata(TEMPLATE_META)) : null;
@@ -256,9 +312,9 @@ async function loadTemplate(main) {
 }
 
 /**
- * Builds a spacer out of a code block with the text 'spacer'.
- * add up to 3 spacers with 'spacer1', 'spacer2', 'spacer3'
- */
+   * Builds a spacer out of a code block with the text 'spacer'.
+   * add up to 3 spacers with 'spacer1', 'spacer2', 'spacer3'
+   */
 function buildSpacer(main) {
   const allPageSpacers = main.querySelectorAll('code');
 
@@ -281,9 +337,9 @@ function buildSpacer(main) {
 }
 
 /**
- * Builds all synthetic blocks in a container element.
- * @param {Element} main The container element
- */
+   * Builds all synthetic blocks in a container element.
+   * @param {Element} main The container element
+   */
 function buildAutoBlocks(main) {
   try {
     buildHeroBlock(main);
@@ -295,9 +351,9 @@ function buildAutoBlocks(main) {
 }
 
 /**
- * Decorates the main element.
- * @param {Element} main The main element
- */
+   * Decorates the main element.
+   * @param {Element} main The main element
+   */
 // eslint-disable-next-line import/prefer-default-export
 export function decorateMain(main) {
   // hopefully forward compatible button decoration
@@ -311,9 +367,9 @@ export function decorateMain(main) {
 }
 
 /**
- * Loads everything needed to get to LCP.
- * @param {Element} doc The container element
- */
+   * Loads everything needed to get to LCP.
+   * @param {Element} doc The container element
+   */
 async function loadEager(doc) {
   document.documentElement.lang = 'en';
   decorateTemplateAndTheme();
@@ -339,10 +395,10 @@ async function loadEager(doc) {
 }
 
 /**
- * Loads a block named 'header' into header
- * @param {Element} header header element
- * @returns {Promise}
- */
+   * Loads a block named 'header' into header
+   * @param {Element} header header element
+   * @returns {Promise}
+   */
 async function loadHeader(header) {
   let block = 'header';
   const template = getMetadata('template');
@@ -358,9 +414,9 @@ async function loadHeader(header) {
 }
 
 /**
- * Loads everything that doesn't need to be delayed.
- * @param {Element} doc The container element
- */
+   * Loads everything that doesn't need to be delayed.
+   * @param {Element} doc The container element
+   */
 async function loadLazy(doc) {
   autolinkModals(doc);
   const main = doc.querySelector('main');
@@ -380,9 +436,9 @@ async function loadLazy(doc) {
 }
 
 /**
- * Loads everything that happens a lot later,
- * without impacting the user experience.
- */
+   * Loads everything that happens a lot later,
+   * without impacting the user experience.
+   */
 function loadDelayed() {
   // eslint-disable-next-line import/no-cycle
   window.setTimeout(() => import('./delayed.js'), 3000);

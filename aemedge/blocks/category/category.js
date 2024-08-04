@@ -1,6 +1,12 @@
 import { getMetadata, createOptimizedPicture } from '../../scripts/aem.js';
 import {
-  createTag, getBlogs, getBlogsByPaths, convertExcelDate, addCardImage, addCardContent,
+  createTag,
+  getBlogs,
+  getBlogsByPaths,
+  convertExcelDate,
+  addCardImage,
+  addCardContent,
+  pathToTag,
 } from '../../scripts/utils.js';
 
 // Create cardLarge images for 2 breakpoints
@@ -43,16 +49,15 @@ export async function addCardImageLarge(row, style, eagerImage = true) {
   return cardImageDiv;
 }
 
-export async function createCard(row, style, eagerImage, isLarge = false) {
+export async function createCard(row, style, lastSegmentOfURL, eagerImage, isLarge = false) {
   const cardClass = isLarge ? 'card card-large' : style || 'card';
   const card = createTag('div', { class: cardClass });
   const link = createTag('a', { class: 'card-link', href: row.path, alt: row.title });
   const cardImageFunction = isLarge ? addCardImageLarge : addCardImage;
   const cardImage = await cardImageFunction(row, style, eagerImage);
-
   link.append(cardImage);
   card.prepend(link);
-  addCardContent(link, {
+  addCardContent(link, lastSegmentOfURL, {
     tags: row.tags ? JSON.parse(row.tags) : null,
     title: row.title,
     description: row.description,
@@ -87,8 +92,17 @@ export default async function decorate(block) {
   const categories = new URL(window.location.href).pathname.split('/').filter((path) => path);
   // remove whatson from the categories
   categories.shift();
-  categories.map((cat) => cat.replace('-and-', '&'));
-  const blogsbypaths = await getBlogsByPaths(paths);
+  // categories.map((cat) => titleToName(cat));
+  const currentCategory = categories[categories.length - 1];
+  let lastSegmentOfURL;
+  if (currentCategory && currentCategory.includes('and')) {
+    lastSegmentOfURL = currentCategory.replace('and', '&');
+  } else {
+    lastSegmentOfURL = currentCategory;
+  }
+
+  let blogsbypaths;
+  if (paths.length > 1) blogsbypaths = await getBlogsByPaths(paths);
 
   let blogs;
   let mergedBlogs;
@@ -96,22 +110,21 @@ export default async function decorate(block) {
     numberofblogs -= blogsbypaths.length;
     // Get blogs
     if (numberofblogs > 0) {
-      blogs = await getBlogs(categories.map((cat) => cat.replace('-and-', ' & ')), numberofblogs);
+      blogs = await getBlogs(categories.map((cat) => pathToTag(cat)), numberofblogs);
       mergedBlogs = [...blogs, ...blogsbypaths];
     }
   } else {
-    mergedBlogs = await getBlogs(categories.map((cat) => cat.replace('-and-', ' & ')), numberofblogs);
+    mergedBlogs = await getBlogs(categories.map((cat) => pathToTag(cat)), numberofblogs);
   }
-
   mergedBlogs.forEach(async (blog, i) => {
     if (blog.image === '') return;
     let card;
     if (i === 0) {
-      card = await createCard(blog, 'card card-large', true, true);
+      card = await createCard(blog, 'card card-large', lastSegmentOfURL, true, true);
     } else if (i % 2 !== 0) {
-      card = await createCard(blog, 'card card-medium', false, false);
+      card = await createCard(blog, 'card card-medium', null, false, false);
     } else {
-      card = await createCard(blog, 'card card-small', false, false);
+      card = await createCard(blog, 'card card-small', null, false, false);
     }
     block.append(card);
   });

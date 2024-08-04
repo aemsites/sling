@@ -2,6 +2,8 @@ import {
   getMetadata, buildBlock, decorateBlock, createOptimizedPicture, toCamelCase,
 } from './aem.js';
 
+import { getTag } from './tags.js';
+
 export const PRODUCTION_DOMAINS = ['sling.com'];
 
 const domainCheckCache = {};
@@ -71,7 +73,21 @@ export function createTag(tag, attributes, html = undefined) {
   }
   return element;
 }
-
+const TAGS_NOT_TO_BE_TRANSLATED = ['latino-es', 'sci-fi'];
+export const pathToTag = (
+  (name) => {
+    let path = name;
+    if (!TAGS_NOT_TO_BE_TRANSLATED.includes(name)) {
+      if (name.toLowerCase().includes('-')) {
+        path = name.toLowerCase().replace('-', ' ');
+      }
+    }
+    if (name.toLowerCase().includes('-and-')) {
+      path = name.toLowerCase().replace('-and-', ' & ');
+    }
+    return path.toLowerCase();
+  }
+);
 // blog details related functions
 
 /**
@@ -86,7 +102,7 @@ export function buildBlogBreadcrumb() {
     const breamCrumbs = ['BLOG'];
     let pathElements = urlPath.split('/');
     pathElements = pathElements.slice(2, pathElements.length - 1);
-    pathElements.forEach((path) => (breamCrumbs.push(path.trim().replace('-', ' ').toUpperCase())));
+    pathElements.forEach((path) => (breamCrumbs.push(pathToTag(path).toUpperCase())));
 
     breamCrumbs.map((breadCrumb, index) => {
       const href = urlPath.substring(0, urlPath.indexOf(urlPath.split('/')[index + 2]) - 1);
@@ -123,7 +139,7 @@ export function buildVideoBlocks(main) {
         a.replaceWith(videoBlock);
         decorateBlock(videoBlock);
       }
-      if ((a.href.includes('twitter.com') || a.href.includes('facebook.com') || a.href.includes('instagram.com')) && linkTextIncludesHref(a)) {
+      if ((a.href.includes('twitter.com') || a.href.includes('facebook.com') || a.href.includes('instagram.com') || a.href.includes('watch.sling.com')) && linkTextIncludesHref(a)) {
         const embedBlock = buildBlock('embed', a.cloneNode(true));
         a.replaceWith(embedBlock);
         decorateBlock(embedBlock);
@@ -244,16 +260,50 @@ export async function getBlogsByPaths(paths) {
   );
   let filterArticles = [];
   if (paths && paths.length > 0) {
-    filterArticles = blogArticles.filter((b) => paths.includes(b.path));
+    filterArticles = blogArticles.filter((b) => (paths.includes(b.path)));
   }
   return filterArticles;
 }
+
+export async function getBlogsByAuthor(author) {
+  if (!window.allBlogs) {
+    window.allBlogs = await fetchData('/whatson/query-index.json');
+  }
+  const blogArticles = window.allBlogs.filter(
+    (e) => (e.template !== 'blog-category' && e.image !== '' && !e.image.startsWith('//aemedge/default-meta-image.png')),
+  );
+  let filterArticles = [];
+  if (author) {
+    filterArticles = blogArticles.filter((b) => (b.author.includes(author) && !b.path.includes('/author')));
+  }
+  return filterArticles;
+}
+
 // Adding tags
 function addTags(container, tags) {
   const tagsDiv = createTag('div', { class: 'card-tags' });
-  tags.forEach((tag) => {
-    const tagElement = createTag('a', { class: 'card-tag-link', href: `/whatson/${tag.toLowerCase()}` }, tag.toUpperCase());
+  tags.forEach(async (tag) => {
+    const tagObject = await getTag(tag.trim());
+    const tagElement = createTag('a', {
+      class: 'card-tag-link',
+      href: `/whatson/${tagObject.name}`,
+    }, tag.toUpperCase());
     tagsDiv.append(tagElement);
+  });
+  container.append(tagsDiv);
+}
+
+function addTagsOnLargeCards(container, tags, lastSegmentOfURL) {
+  const tagsDiv = createTag('div', { class: 'card-tags' });
+  tags.forEach(async (tag) => {
+    if (tag.trim() === lastSegmentOfURL.trim().toUpperCase().replace(/-/g, ' ')) {
+      const tagObject = await getTag(tag.trim());
+      const tagElement = createTag('a', {
+        class: 'card-tag-link',
+        href: `/whatson/${tagObject.name}`,
+      }, tag.toUpperCase());
+      tagsDiv.append(tagElement);
+    }
   });
   container.append(tagsDiv);
 }
@@ -285,14 +335,18 @@ function addAuthorAndDate(container, authorName, publishDate) {
 }
 
 // Creating card content
-export async function addCardContent(container, {
+export async function addCardContent(container, lastSegmentOfURL, {
   tags, title, description, author, date,
 }) {
   const cardContent = createTag('div', { class: 'card-content' });
   container.append(cardContent);
 
   if (tags) {
-    addTags(cardContent, tags);
+    if (typeof lastSegmentOfURL !== 'undefined' && lastSegmentOfURL != null) {
+      addTagsOnLargeCards(cardContent, tags, lastSegmentOfURL);
+    } else {
+      addTags(cardContent, tags);
+    }
   }
   if (title) {
     addTitle(cardContent, title);
@@ -318,6 +372,50 @@ export async function addCardImage(row, style, eagerImage = false) {
   return null;
 }
 
+/**
+ * utility to create a tag with link to author page
+ * @param {*} authName - author name mentioned in the page metadata
+ * @returns a element
+ */
+export function buildAuthorLink(authName) {
+  const authLink = createTag('a', {
+    href: `${window.location.origin}/whatson/author/${authName.trim().toLowerCase().replace(' ', '-')}`,
+  });
+  return authLink;
+}
+
+export async function createBlogByAuthorCard(item) {
+  const cardContainer = createTag('div', { class: 'card-container' });
+  // image container
+  const imageContainer = createTag('div', { class: 'image-container' });
+  const imageLink = createTag('a', { class: 'image-link' });
+  imageLink.href = item.path;
+  const image = await addCardImage(item);
+  imageLink.append(image);
+  imageContainer.append(imageLink);
+
+  // article text container
+  const textContainer = createTag('div', { class: 'text-container' });
+  const titleContainer = createTag('div', { class: 'title-container' });
+  const titleLink = createTag('a', { class: 'title-link' });
+  titleLink.href = item.path;
+  titleLink.innerHTML = `<span class="blog-title">${item.title}</span>`;
+  textContainer.append(titleLink);
+  const descContainer = createTag('div', { class: 'description-container' });
+  descContainer.innerText = item.description;
+  const dateContainer = createTag('div', { class: 'date-container' });
+  const authContainer = createTag('div', { class: 'auth-container' });
+  authContainer.innerHTML = `<span class="author-name">${item.author}</span>`;
+  const publicationDate = createTag('div', { class: 'publication-date' });
+  const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
+  const pubDate = convertExcelDate(item.date);
+  const formattedDate = pubDate.toLocaleDateString('en-US', dateOptions);
+  publicationDate.innerHTML = `<span class="author-name">${formattedDate}</span>`;
+  dateContainer.append(authContainer, publicationDate);
+  textContainer.append(titleContainer, descContainer, dateContainer);
+  cardContainer.append(imageContainer, textContainer);
+  return cardContainer;
+}
 /**
  * Gets placeholders object.
  * @param {string} [prefix] Location of placeholders
