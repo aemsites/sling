@@ -13,6 +13,7 @@ const decorateLinkItems = (footer) => {
     li.querySelectorAll('a').forEach((a) => {
       a.classList.add('nav-link');
       a.setAttribute('target', '_blank');
+      a.setAttribute('aria-label', `Visit us on ${a.href}`);
       if (!a.querySelector('span.icon')) {
         const lnkTxt = createTag('span', { class: 'nav-link-text' });
         lnkTxt.innerText = a.innerText;

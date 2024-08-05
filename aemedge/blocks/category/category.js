@@ -30,7 +30,7 @@ export async function addCardImageLarge(row, style, eagerImage = true) {
       row.mobileImagePath,
       row.title,
       eagerImage,
-      [{ width: '770' }],
+      [{ width: '600' }],
     ));
   }
   function handleImageUpdate() {

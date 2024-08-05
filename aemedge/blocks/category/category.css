@@ -42,14 +42,10 @@ main .section.category-container {
   align-items: center;
 }
 
-.category .card-large .card-link .card-image picture {
-  aspect-ratio: 432 / 317;
-}
-
 .category .card-large .card-link .card-image img {
   border-radius: 4px;
   max-height: 550px;
-  max-width: 100%;
+  width: 100%;
   border: 0;
   aspect-ratio: 432 / 317;
   object-fit: cover;
@@ -57,6 +53,7 @@ main .section.category-container {
 
 .category .card-image {
   line-height: 0;
+  width: 100%
 }
 
 .category .card-link .card-image picture {
@@ -64,7 +61,7 @@ main .section.category-container {
 }
 
 .category .card-link .card-image picture::before {
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0, rgba(0, 0, 0, 0.65) 100%);
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.15) 20%, rgba(0, 0, 0, 0.75) 100%);
   position: absolute;
   border-radius: 4px;
   content: '';
@@ -170,10 +167,7 @@ main .section.category-container {
 .category .card-medium .card-link .card-image,
 .category .card-small .card-link .card-image {
   position: relative;
-  display: flex;
-  justify-content: center;
   overflow: hidden;
-  align-items: center;
   transition: box-shadow 0.3s ease;
   margin: 10px;
   aspect-ratio: 16 / 9;
@@ -191,6 +185,8 @@ main .section.category-container {
   overflow: hidden;
   border: 0;
   aspect-ratio: 16 / 9;
+  object-fit: cover;
+  width: 100%;
 }
 
 .category .card-medium .card-content .card-tags,
