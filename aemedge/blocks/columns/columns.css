@@ -89,3 +89,14 @@
     padding-bottom: 24px;
   }
 }
+
+@media (width >=1200px) {
+  .tabs.columns {
+    width: 88%;
+    margin: 0 auto;
+  }
+
+  .tabs-panel .columns > div {
+    flex-direction: row;
+  }
+}

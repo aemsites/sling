@@ -1,0 +1,231 @@
+.blog-author main > div:first-of-type {
+    width: 80%;
+    margin: 0 auto 48px;
+    max-width: 560px;
+}
+
+.cards-container picture {
+    display: block;
+    line-height: 0;
+    aspect-ratio: 16 / 9;
+    min-height: 200px;
+    object-fit: cover;
+    width: 100%;
+}
+
+.card-container .card-image img {
+    border-radius: 4px;
+    max-height: 206px;
+    max-width: 367px;
+}
+
+.blog-author main > div:first-of-type > div:first-of-type picture:first-of-type {
+    display: flex;
+    height: 168px;
+    margin: 16px auto;
+    width: 168px;
+}
+
+.blog-author main > div:first-of-type > div:first-of-type picture:first-of-type img {
+    border-radius: 100%;
+    height: 100%;
+}
+
+.blog-author main h1 {
+    text-align: center;
+    line-height: 1.25;
+    margin: 16px auto;
+    font-size: 2.027em;
+}
+
+.blog-author main p {
+    line-height: 1.5;
+}
+
+.blog-author .blog-breadcrumb {
+    margin: 48px auto;
+    min-height: 34px;
+    width: 100%;
+    font-size: 18px;
+    text-align: center;
+}
+
+.pagination-container {
+    display: block;
+    margin-bottom: 130px;
+    margin-top: 48px;
+    height: 60px;
+}
+
+.pagination-container button.paginate-btn{
+    height: 50px;
+    font-size: 16px;
+    line-height: 52px;
+    width: 168px;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.pagination-info-text {
+    font-size: 16px;
+    position: absolute;
+    margin-top: -50px;
+    margin-left: -180px /* width of prev btn */;
+    width: 100%;
+    text-align: center;
+}
+
+.pagination-container .paginate-btn.inactive {
+    background: white;
+    border: 1px solid #0098d1;
+    color: #0078ad;
+    cursor: default;
+}
+
+.pagination-container .paginate-btn.active {
+    background: #0098d1;
+    color: white;
+    cursor: pointer;
+}
+
+.pagination-container .previous-button.paginate-btn {
+    float: left;
+}
+
+.pagination-container .next-button.paginate-btn {
+    float: right;
+}
+
+.cards-container {
+    margin: 16px 12px 0;
+}
+
+.card-container {
+    margin: 16px auto;
+    width: 370px;
+}
+
+.image-container {
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.card-container .image-container .image-link {
+    cursor: pointer;
+    height: 100%;
+    max-width: 367px;
+}
+
+.text-container {
+    margin:16px 0;
+    min-height: 99px;
+}
+
+a.title-link{
+    color: #000;
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 27px;
+    margin: 0 auto;
+    text-align: center;
+    word-wrap: break-word;
+}
+
+a.title-link:hover {
+    color: var(--link-hover-color);
+    cursor: pointer;
+    transition: color .3s ease;
+}
+
+.description-container {
+    display: none;
+}
+
+.date-container {
+    display: inline-flex;
+    margin-top: 12px;
+    max-height: 21px;
+    max-width: 368px;
+    font-size: var(--body-font-size-xs);
+}
+
+.author-container {
+    font-size: 14px;
+    line-height: 21px;
+    color: #171725;
+}
+
+.publication-date {
+    margin-left: 10px;
+}
+
+hr.card-separator {
+    border: 0;
+    border-top: 1px solid #454550;
+    max-width: 1166px;
+    margin: 0;
+}
+
+@media (width >=768px) {
+    .blog-author main > div:first-of-type {
+        width: 50%;
+    }
+
+    .pagination-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1166px;
+        height: unset;
+        margin: 0 auto 130px;
+    }
+
+    .cards-container {
+        margin: 0 auto;
+        max-width: 1166px;
+    }
+
+    .card-container {
+        display: flex;
+        margin: 32px 0;
+        width: 100%;
+        min-height: 207px; /* need this to keep the card-container from collapsing */
+    }
+
+    .text-container {
+        display: inline-block;
+        margin: 0 16px 0 0;
+    }
+
+    a.title-link {
+        color: #000;
+        font-size: 22px;
+        font-weight: 700;
+        line-height: 27px;
+        margin-bottom: 8px;
+    }
+
+    .description-container {
+        line-height: 1.5;
+        max-width: 621px;
+        display: block;
+    }
+
+    .pagination-info-text {
+        margin-top: unset;
+        margin-left: unset;
+        position: unset;
+    }
+
+    .pagination-container .previous-button.paginate-btn,
+    .pagination-container .left-button.paginate-btn {
+        float: none;
+        clear: both;
+    }
+
+    .card-container .image-container {
+        margin-right: 48px;
+    }
+}

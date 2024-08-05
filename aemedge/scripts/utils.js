@@ -184,6 +184,7 @@ export function getPageType() {
   const template = getMetadata('template');
   if (template === 'blog-article') return 'blog';
   if (template === 'blog-category') return 'category';
+  if (template === 'blog-author') return 'author';
   return '';
 }
 
@@ -230,7 +231,7 @@ export async function getBlogs(categories, num) {
     window.allBlogs = await fetchData('/whatson/query-index.json');
   }
   const blogArticles = window.allBlogs.filter(
-    (e) => (e.template !== 'blog-category' && e.image !== '' && !e.image.startsWith('//aemedge/default-meta-image.png')),
+    (e) => (e.template === 'blog-article' && e.image !== '' && !e.image.startsWith('//aemedge/default-meta-image.png')),
   );
 
   if (categories && categories.length > 0) {
@@ -260,20 +261,6 @@ export async function getBlogsByPaths(paths) {
   let filterArticles = [];
   if (paths && paths.length > 0) {
     filterArticles = blogArticles.filter((b) => (paths.includes(b.path)));
-  }
-  return filterArticles;
-}
-
-export async function getBlogsByAuthor(author) {
-  if (!window.allBlogs) {
-    window.allBlogs = await fetchData('/whatson/query-index.json');
-  }
-  const blogArticles = window.allBlogs.filter(
-    (e) => (e.template !== 'blog-category' && e.image !== '' && !e.image.startsWith('//aemedge/default-meta-image.png')),
-  );
-  let filterArticles = [];
-  if (author) {
-    filterArticles = blogArticles.filter((b) => (b.author.includes(author) && !b.path.includes('/author')));
   }
   return filterArticles;
 }
@@ -383,38 +370,6 @@ export function buildAuthorLink(authName) {
   return authLink;
 }
 
-export async function createBlogByAuthorCard(item) {
-  const cardContainer = createTag('div', { class: 'card-container' });
-  // image container
-  const imageContainer = createTag('div', { class: 'image-container' });
-  const imageLink = createTag('a', { class: 'image-link' });
-  imageLink.href = item.path;
-  const image = await addCardImage(item);
-  imageLink.append(image);
-  imageContainer.append(imageLink);
-
-  // article text container
-  const textContainer = createTag('div', { class: 'text-container' });
-  const titleContainer = createTag('div', { class: 'title-container' });
-  const titleLink = createTag('a', { class: 'title-link' });
-  titleLink.href = item.path;
-  titleLink.innerHTML = `<span class="blog-title">${item.title}</span>`;
-  textContainer.append(titleLink);
-  const descContainer = createTag('div', { class: 'description-container' });
-  descContainer.innerText = item.description;
-  const dateContainer = createTag('div', { class: 'date-container' });
-  const authContainer = createTag('div', { class: 'auth-container' });
-  authContainer.innerHTML = `<span class="author-name">${item.author}</span>`;
-  const publicationDate = createTag('div', { class: 'publication-date' });
-  const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
-  const pubDate = convertExcelDate(item.date);
-  const formattedDate = pubDate.toLocaleDateString('en-US', dateOptions);
-  publicationDate.innerHTML = `<span class="author-name">${formattedDate}</span>`;
-  dateContainer.append(authContainer, publicationDate);
-  textContainer.append(titleContainer, descContainer, dateContainer);
-  cardContainer.append(imageContainer, textContainer);
-  return cardContainer;
-}
 /**
  * Gets placeholders object.
  * @param {string} [prefix] Location of placeholders

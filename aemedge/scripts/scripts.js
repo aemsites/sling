@@ -295,7 +295,7 @@ export function toClassName(name) {
 async function loadTemplate(main) {
   try {
     const template = getMetadata(TEMPLATE_META) ? toClassName(getMetadata(TEMPLATE_META)) : null;
-    if (template && TEMPLATES.includes(template) && getPageType() === 'blog') {
+    if ((template && TEMPLATES.includes(template) && (getPageType() === 'blog')) || (getPageType() === 'author')) {
       const templateJS = await import(`../templates/${template}/${template}.js`);
       // invoke the default export from template js
       if (templateJS.default) {
@@ -404,7 +404,7 @@ async function loadHeader(header) {
   const template = getMetadata('template');
   if (template
     && (template === 'blog-article'
-      || template === 'blog-category')) {
+      || template === 'blog-category' || template === 'blog-author')) {
     block = 'whatson-header';
   }
   const headerBlock = buildBlock(`${block}`, '');
