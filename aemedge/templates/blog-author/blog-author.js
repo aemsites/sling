@@ -106,17 +106,9 @@ function goToNextPage(blogs, block) {
   }
 }
 
-export default async function decorate(main) {
-  const bcWrapper = createTag('div', { class: 'blog-breadcrumb' });
-  const defaultContent = document.querySelector('main > div');
-  const authName = getMetadata('author');
-  if (main) {
-    const embedHTML = `<a class="blog-breadcrumb-link" href="/whatson">BLOG</a>
-<span class="icon icon-fw-arrow"></span><span class="blog-breadcrumb-active-article">${authName}</span>`;
-    bcWrapper.innerHTML = embedHTML;
-    defaultContent.append(bcWrapper);
-  }
+export async function decorateCards() {
   const path = window.location.pathname;
+  const main = document.querySelector('main');
   const author = path.split('/').pop();
   if (author) {
     const blogs = await getBlogsByAuthor(titleCase(author.replace('-', ' ')));
@@ -145,9 +137,21 @@ export default async function decorate(main) {
         displayItems(blogs, currentPage, main);
       }
     } else {
-      console.log('no blogs found');
       main.append(btnContainer);
       btnContainer.innerHTML = '<h4 style="width: 100%; text-align: center;">No blog articles found for this author.</h4>';
     }
   }
 }
+
+export default async function decorate(main) {
+  const bcWrapper = createTag('div', { class: 'blog-breadcrumb' });
+  const defaultContent = document.querySelector('main > div');
+  const authName = getMetadata('author');
+  if (main) {
+    const embedHTML = `<a class="blog-breadcrumb-link" href="/whatson">BLOG</a>
+<span class="icon icon-fw-arrow"></span><span class="blog-breadcrumb-active-article">${authName}</span>`;
+    bcWrapper.innerHTML = embedHTML;
+    defaultContent.append(bcWrapper);
+  }
+}
+decorateCards();
