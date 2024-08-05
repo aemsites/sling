@@ -102,8 +102,7 @@ export default async function decorate(block) {
   }
 
   let blogsbypaths;
-  if (paths.length > 1) blogsbypaths = await getBlogsByPaths(paths);
-
+  if (paths.length >= 1) blogsbypaths = await getBlogsByPaths(paths);
   let blogs;
   let mergedBlogs;
   if (blogsbypaths && (blogsbypaths.length > 0 && blogsbypaths.length < 8)) {
