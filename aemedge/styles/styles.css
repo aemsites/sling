@@ -12,7 +12,7 @@
 
 :root {
   /* colors */
-  --link-color: #0078aa; /* Do not change this */
+  --link-color: #128db5; /* don't change unless it is passing accessibility */
   --link-hover-color: #3abfed;
   --background-color: #f5f5f6;
   --header-background-color: #0f101f;
@@ -186,10 +186,6 @@ a:any-link {
 a:hover {
   text-decoration: none;
   color: var(--link-hover-color);
-}
-
-h2 > a:any-link {
-    color: #007fcf;
 }
 
 /* buttons */
