@@ -110,7 +110,7 @@ export function buildBlogBreadcrumb() {
         class: 'blog-breadcrumb-link',
         href,
       });
-      breadCrumbLink.innerHTML = breadCrumb;
+      breadCrumbLink.innerHTML = breadCrumb === 'ANIMATION' ? 'ADULT ANIMATION' : breadCrumb;
       const arrowSpan = createTag('span', { class: 'icon icon-fw-arrow' });
       return bcWrapper.append(breadCrumbLink, arrowSpan);
     });
