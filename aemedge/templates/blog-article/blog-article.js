@@ -109,7 +109,6 @@ export async function buildAuthorBlock() {
       {
         class: `fa fa-${social}`,
         title: `Share this article on ${social}`,
-        'aria-label': `Share this article on ${social}`,
       },
     );
     span.append(link);

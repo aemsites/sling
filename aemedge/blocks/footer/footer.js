@@ -5,6 +5,7 @@ import { loadFragment } from '../fragment/fragment.js';
 const decorateLinkItems = (footer) => {
   // add wrapper cs class to all ul elements
   footer.querySelectorAll('ul').forEach((ul) => {
+  //  createTag('li', { class: 'nav-items-wrapper' });
     ul.classList.add('nav-items-wrapper');
   });
   // add css classes for li items, a tags
