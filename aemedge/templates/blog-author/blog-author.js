@@ -97,11 +97,24 @@ function goToPreviousPage(blogs, block) {
     currentPage -= 1;
     displayItems(blogs, currentPage, block);
   }
+  if (currentPage < numberOfPages) {
+    block.querySelector('.next-button').classList.replace('inactive', 'active');
+  }
+
+  if (currentPage === 1) {
+    block.querySelector('.previous-button').classList.replace('active', 'inactive');
+  }
 }
 
 function goToNextPage(blogs, block) {
   if (currentPage < Math.ceil(blogs.length / itemsPerPage)) {
     currentPage += 1;
+    if (currentPage > 1) {
+      block.querySelector('.previous-button').classList.replace('inactive', 'active');
+    }
+    if (currentPage === numberOfPages) {
+      block.querySelector('.next-button').classList.replace('active', 'inactive');
+    }
     displayItems(blogs, currentPage, block);
   }
 }
