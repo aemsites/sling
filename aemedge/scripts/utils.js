@@ -351,7 +351,7 @@ export async function addCardImage(row, style, eagerImage = false) {
       row.image,
       row.title,
       eagerImage,
-      [{ width: '800' }], // because 795 is the max card width
+      [{ width: '600' }], // good enough because 795 is the max card width
     ));
     return cardImageDiv;
   }

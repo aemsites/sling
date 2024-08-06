@@ -12,7 +12,7 @@
 
 :root {
   /* colors */
-  --link-color: #0078ad;
+  --link-color: #128db5; /* don't change unless it is passing accessibility */
   --link-hover-color: #3abfed;
   --background-color: #f5f5f6;
   --header-background-color: #0f101f;
