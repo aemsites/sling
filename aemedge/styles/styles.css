@@ -184,8 +184,12 @@ a:any-link {
 }
 
 a:hover {
-  text-decoration: underline;
+  text-decoration: none;
   color: var(--link-hover-color);
+}
+
+h2 > a:any-link {
+    color: #007fcf;
 }
 
 /* buttons */
