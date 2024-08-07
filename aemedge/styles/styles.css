@@ -12,7 +12,7 @@
 
 :root {
   /* colors */
-  --link-color: #128db5; /* don't change unless it is passing accessibility */
+  --link-color: #298ef7; /* #0569d1 4.88;  #126bca; 4.84  006cdf don't change unless it is passing accessibility everywhere */
   --link-hover-color: #3abfed;
   --background-color: #f5f5f6;
   --header-background-color: #0f101f;
@@ -29,7 +29,7 @@
   --dark-background-color: rgb(23 23 37);
   --clr-white: #fff;
   --clr-black: #000;
-  --dark-grey-color: #707070;
+  --dark-grey-color: #706f6f;
 
     /* fonts */
   ;
@@ -318,7 +318,7 @@ button.text:hover {
 
 .block.blog-breadcrumb {
   background: 0;
-  color: var(--text-color);
+  color: var(--clr-black);
   font-size: 18px;
   margin: 0 auto;
   padding: 8px 10% 14px;
