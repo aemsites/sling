@@ -30,6 +30,11 @@
     line-height: 1.5em;
 }
 
+.blog-article p a,
+.blog-article .auth-name a{
+    color: #006cdf;
+}
+
 .blog-article .icon.award {
     width: 20%;
     height: auto;

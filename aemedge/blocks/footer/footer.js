@@ -44,8 +44,8 @@ export default async function decorate(block) {
   });
   // in the primary move the social links to into its div
 
-  const primarylinks = createTag('ul', { class: 'footer-primary-links' });
-  const socialLinks = createTag('ul', { class: 'footer-social-links' });
+  const primarylinks = createTag('div', { class: 'footer-primary-links' });
+  const socialLinks = createTag('div', { class: 'footer-social-links nav-items-wrapper' });
   const uls = footer.querySelectorAll('.footer-primary ul');
   uls.forEach((ul, c) => {
     if (c === uls.length - 1) {
@@ -73,8 +73,8 @@ export default async function decorate(block) {
   const secSection = footer.querySelector('.section.footer-secondary');
 
   if (secSection) {
-    const copyright = createTag('div', { class: 'copy-right' });
-    const secFooterLinks = createTag('div', { class: 'sec-footer-links' });
+    const copyright = createTag('ul', { class: 'copy-right' });
+    const secFooterLinks = createTag('ul', { class: 'sec-footer-links' });
     secSection.querySelectorAll('ul > li').forEach((li, idx) => {
       if (idx === 0) {
         li.classList.add('copyright-item');
