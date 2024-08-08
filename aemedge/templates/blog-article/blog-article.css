@@ -270,7 +270,7 @@ a.button.primary:hover
         box-shadow:none;
         opacity: 1;
         transform: none;
-        cursor: none;
+        cursor: pointer;
      }
 
      a.button.primary:hover, 
@@ -296,13 +296,8 @@ p.button-container:has(a[class='button primary']) .button {
     cursor: pointer;
     position: relative;
     box-sizing: border-box;
-    font-size: 1rem;
-    padding: 0.875rem 1rem;
-    font-weight: 700;
     text-align: center;
     letter-spacing: 0;
-    border: 2px solid var(--primary-button-color);
-    ;
     opacity: 1;
     min-width: 11.25rem;
 }
