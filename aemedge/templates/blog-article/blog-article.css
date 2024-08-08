@@ -268,9 +268,8 @@ a.button.primary:hover
     {
         outline: none;
         box-shadow:none;
-        opacity: 1;
         transform: none;
-        cursor: pointer;
+        cursor: unset;
      }
 
      a.button.primary:hover, 
