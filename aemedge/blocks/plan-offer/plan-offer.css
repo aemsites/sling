@@ -296,16 +296,27 @@
     padding-top: 2em;
 }
 
-.modal.block .modal-content .comparison-table-content .header-row,
-.modal.block .modal-content .comparison-table-content .channel-div {
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1fr;
+.modal.block .modal-content .comparison-table-content .header-row.sticky{
+    display: flex;
+    justify-content: space-between;
     align-items: center;
+    position: sticky;
+    z-index: 1000;
+}
+
+.modal.block .modal-content .comparison-table-content .channel-div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    z-index: 1;
 }
 
 .modal.block .modal-content .comparison-table-content .channel-div .channel-details {
     display: flex;
     align-items: center;
+    max-width: 40%;
+    min-width: 40%;
 }
 
 .modal.block .modal-content .shared-channels .channel img,
