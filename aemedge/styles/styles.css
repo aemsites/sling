@@ -23,7 +23,7 @@
   --light-grey-color: rgb(235 235 235);
   --dark-color: #ccc;
   --text-color: #333;
-  --primary-button-color: #ce4c00;
+  --primary-button-color: linear-gradient(108.93deg, #0072ec 37.23%, #00b9ff 112.13%);
   --invalid-red: #e90000;
   --input-background-color: #eaeaec;
   --dark-background-color: rgb(23 23 37);
@@ -195,14 +195,12 @@ button {
   display: inline-block;
   box-sizing: border-box;
   text-decoration: none;
-  border: 2px solid transparent;
+  border: none;
   text-align: center;
-  text-transform: uppercase;
   font-style: normal;
   font-weight: 600;
   cursor: pointer;
   color: var(--background-color);
-  background-color: var(--primary-button-color);
   margin-bottom: 8px;
   margin-top: 8px;
   overflow: hidden;
@@ -221,7 +219,7 @@ a.button.primary,
 button.primary,
 a.button.secondary,
 button.secondary {
-  border-radius: 0.125rem;
+  border-radius: 1600px;
   opacity: 1;
   min-width: 11.25rem;
   font-size: 1rem;
@@ -231,7 +229,7 @@ button.secondary {
 a.button.primary,
 button.primary {
   color: var(--background-color);
-  background-color: var(--primary-button-color);
+  background: var(--primary-button-color);
   border: 2px solid var(--primary-button-color);
 }
 
