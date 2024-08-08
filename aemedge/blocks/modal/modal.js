@@ -7,22 +7,68 @@ import {
 // a */modals/* path  are automatically transformed into a modal. Other blocks can also use
 // the createModal() and openModal() functions.
 
+function createObserver() {
+  console.log('observer called');
+  const nav = document.querySelector('.zipcode-wrapper');
+  const header = document.querySelector('.comparison-table-content .header-row');
+  const orangenav = document.querySelector('.orange-header');
+  const bluenav = document.querySelector('.blue-header');
+  const commonnav = document.querySelector('.combo-header');
+
+  const options = {
+    root: document.querySelector('.modal-content'),
+    rootMargin: '',
+    threshold: 0,
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) {
+        console.log('if');
+        header.classList.add('sticky');
+        orangenav.classList.add('sticky');
+        bluenav.classList.add('sticky');
+        commonnav.classList.add('sticky');
+      } else {
+        console.log('else');
+        header.classList.remove('sticky');
+        orangenav.classList.remove('sticky');
+        bluenav.classList.remove('sticky');
+        commonnav.classList.remove('sticky');
+      }
+    });
+  }, options);
+
+  if (nav) {
+    observer.observe(nav);
+  }
+}
+
+/**
+ * decorates the header, mainly the nav
+ * @param {Element} block The header block element
+ */
+export default async function decorate() {
+  setTimeout(createObserver, 100);
+}
+
 export async function createModal(contentNodes) {
   await loadCSS(`${window.hlx.codeBasePath}/blocks/modal/modal.css`);
   const dialog = document.createElement('dialog');
   const dialogContent = document.createElement('div');
   dialogContent.classList.add('modal-content');
   dialogContent.append(...contentNodes);
-  dialog.append(dialogContent);
-
+  const buttondiv = document.createElement('div');
+  buttondiv.classList.add('close-button-div');
   const closeButton = document.createElement('button');
   closeButton.classList.add('close-button');
   closeButton.setAttribute('aria-label', 'Close');
   closeButton.type = 'button';
   closeButton.innerHTML = '<span class="icon icon-close"></span>';
   closeButton.addEventListener('click', () => dialog.close());
-  dialog.append(closeButton);
-
+  buttondiv.append(closeButton);
+  dialog.append(buttondiv);
+  dialog.append(dialogContent);
   // close dialog on clicks outside the dialog. https://stackoverflow.com/a/70593278/79461
   dialog.addEventListener('click', (event) => {
     const dialogDimensions = dialog.getBoundingClientRect();
