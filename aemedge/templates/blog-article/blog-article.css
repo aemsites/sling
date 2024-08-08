@@ -255,6 +255,13 @@ a.button.primary:hover
 
     a.button.primary {
         background: var(--primary-button-color);
+        padding:0.938rem 1.2rem;
+        font-size: 18px;
+        font-weight: 800;
+        text-align: center;
+        height: 60px;
+        vertical-align: center;
+        line-height: 30px;
     }
 
     p.button-container:has(a[class='button primary']):hover
@@ -266,7 +273,8 @@ a.button.primary:hover
         cursor: none;
      }
 
-     a.button.primary:hover
+     a.button.primary:hover, 
+     a.button.primary:focus
     {
         outline: none;
         box-shadow: rgb(7 7 11 / 40%) 0 24px 57px 0;
