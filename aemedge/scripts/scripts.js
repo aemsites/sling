@@ -239,6 +239,7 @@ export function decorateButtons(element) {
               !twoup.previousElementSibling?.innerHTML.startsWith('<strong><a href="')
               && !twoup.nextElementSibling?.innerHTML.startsWith('<strong><a href="'))) {
             a.className = 'button primary';
+            if (a.href.includes('/cart/')) a.target = '_blank';
             twoup.classList.add('button-container');
           }
         } else if (

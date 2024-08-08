@@ -216,12 +216,71 @@ p.button-container:has(a[class='button primary']),
     left: 0;
     width: 100%;
     z-index: 100;
-    background-color: var(--primary-button-color);
+    background: var(--primary-button-color);
 }
+
 
 p.button-container:has(a[class='button primary']) {
     margin: 0;
     line-height: 1em;
+}
+
+p.button-container:has(a[class='button primary']):hover
+{
+    outline: none;
+    box-shadow: rgb(7 7 11 / 40%) 0 24px 57px 0;
+    opacity: 1;
+    transform: scale(1.05);
+    cursor: pointer;
+}
+
+a.button.primary {
+    background: none;
+}
+
+a.button.primary:hover
+{
+    outline: none;
+    box-shadow: none;
+    opacity: none;
+    transform: none;
+    cursor: none;
+}
+
+@media (width >=1024px) { 
+    p.button-container:has(a[class='button primary']),
+    .fragment-wrapper .button-container { 
+        background: none;
+    }
+
+    a.button.primary {
+        background: var(--primary-button-color);
+        padding:0.938rem 1.2rem;
+        font-size: 18px;
+        font-weight: 800;
+        text-align: center;
+        height: 60px;
+        vertical-align: center;
+        line-height: 30px;
+    }
+
+    p.button-container:has(a[class='button primary']):hover
+    {
+        outline: none;
+        box-shadow:none;
+        transform: none;
+        cursor: unset;
+     }
+
+     a.button.primary:hover, 
+     a.button.primary:focus
+    {
+        outline: none;
+        box-shadow: rgb(7 7 11 / 40%) 0 24px 57px 0;
+        opacity: 1;
+        transform: scale(1.05);
+        cursor: pointer;
+    }
 }
 
 .content-details-wrapper .fragment-wrapper .button-container + p {
@@ -236,13 +295,8 @@ p.button-container:has(a[class='button primary']) .button {
     cursor: pointer;
     position: relative;
     box-sizing: border-box;
-    font-size: 1rem;
-    padding: 0.875rem 1rem;
-    font-weight: 700;
     text-align: center;
     letter-spacing: 0;
-    border: 2px solid var(--primary-button-color);
-    ;
     opacity: 1;
     min-width: 11.25rem;
 }
