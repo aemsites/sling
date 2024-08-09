@@ -57,9 +57,11 @@ export default {
       meta['Publication Date'] = new Date(publishDate).toISOString().split('T')[0];
     }
     meta.Tags = Array.from(tags).map((tag) => tag.textContent).join(', ') || '';
+
     // meta.Image = ogImage.replace('https://www.sling.com', '') || '';
     const img = document.createElement('img');
     img.src = ogImage.replace('https://www.sling.comhttps://dish.scene7.com', 'https://dish.scene7.com') || '';
+
     meta.Image = img;
     if (robots && robots !== 'index') meta.robots = robots;
     const videoIframes = document.querySelectorAll('iframe[src*="youtube"], iframe[src*="platform.twitter.com"]');
@@ -100,26 +102,30 @@ export default {
     if (tableElement) {
       hasTable = 'true';
       tables.forEach((table) => {
-        let blockName = 'Table';
-        // handling table variants
-        const style = document.querySelector('table > tbody > tr > td[style]')?.getAttribute('style');
-        if (style) {
-          if (style.indexOf('rgb(0,30,120)') > -1) {
-            blockName = 'Table(schedule)';
-          } else if (style.indexOf('rgb(84,172,210)') > -1) {
-            blockName = 'Table(playoffs)';
+        if (table.children.length > 0) {
+          let blockName = 'Table';
+          // handling table variants
+          const style = document.querySelector('table > tbody > tr > td[style]')?.getAttribute('style');
+          if (style) {
+            if (style.indexOf('rgb(0,30,120)') > -1) {
+              blockName = 'Table(schedule)';
+            } else if (style.indexOf('rgb(84,172,210)') > -1) {
+              // blockName = 'Table(playoffs)';
+              blockName = 'Table(schedule)';
+            }
           }
+          const cells = [[blockName]];
+          const trs = document.querySelectorAll('table > tbody > tr');
+          const newTable = WebImporter.DOMUtils.createTable(cells, document);
+          const colspan = [...trs][0]?.children.length;
+          trs.forEach((row) => newTable.append(row));
+          const firstTH = newTable.querySelector('tr>th');
+          if (firstTH && colspan) firstTH.setAttribute('colspan', colspan || 0);
+          table.parentElement.replaceChild(newTable, table);
         }
-        const cells = [[blockName]];
-        const trs = document.querySelectorAll('table > tbody > tr');
-        const newTable = WebImporter.DOMUtils.createTable(cells, document);
-        const colspan = [...trs][0]?.children.length;
-        trs.forEach((row) => newTable.append(row));
-        const firstTH = newTable.querySelector('tr>th');
-        firstTH.setAttribute('colspan', colspan);
-        table.parentElement.replaceChild(newTable, table);
       });
     }
+
     // Handle Gamefinder block
     const gameFinders = document.querySelectorAll('div.gamefinder');
     gameFinders.forEach((gameFinder) => {
@@ -247,7 +253,6 @@ export default {
 
     // // append the block to the main element
     main.append(block);
-
     const newPathUrl = new URL(params.originalURL).pathname;
     const newPath = decodeURIComponent(newPathUrl)
       .toLowerCase()
