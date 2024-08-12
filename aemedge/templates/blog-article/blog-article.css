@@ -254,11 +254,6 @@ a.button.primary:hover
     margin-top: 20px;
 }
 
-.blog-article .default-content-wrapper li {
-    text-wrap: initial;
-    margin-top: 10px;
-}
-
 .blog-article .default-content-wrapper p:first-of-type {
     margin-top: 30px;
 }
