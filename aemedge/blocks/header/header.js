@@ -155,7 +155,7 @@ export default async function decorate(block) {
   const brandLink = navBrand.querySelector('a');
   if (brandLink) {
     const brandLogo = document.createElement('img');
-    brandLogo.src = '/icons/sling-blue-logo.svg';
+    brandLogo.src = '/aemedge/icons/sling-blue-logo.svg';
     brandLogo.alt = 'Sling TV Logo';
     brandLogo.classList.add('nav-brand-logo');
     brandLink.innerHTML = '';
