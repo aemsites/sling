@@ -89,9 +89,11 @@ export default {
       } else {
         ctaFragment.href = ctaUrl;
         ctaFragment.textContent = ctaText;
+        const strikethrough = document.createElement('del');
         const strong = document.createElement('strong');
         strong.append(ctaFragment);
-        cta.parentElement.replaceChild(strong, cta);
+        strikethrough.append(strong);
+        cta.parentElement.replaceChild(strikethrough, cta);
       }
     });
 
