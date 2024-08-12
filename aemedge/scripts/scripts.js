@@ -212,6 +212,7 @@ export function decorateButtons(element) {
       const hasIcon = a.querySelector('.icon');
       const up = a.parentElement;
       const twoup = a.parentElement.parentElement;
+      const threeup = a.parentElement.parentElement.parentElement;
       if (hasIcon) return;
       if (!a.querySelector('img')) {
         // let default button be text-only, no decoration
@@ -228,23 +229,30 @@ export function decorateButtons(element) {
           a.append(linkTextEl);
         }
         // primary buttons in whatson pages
-        if (window.location?.pathname?.includes('/whatson/')) {
+        if (getPageType() === 'blog') {
           if (
             up.childNodes.length === 1
-            && up.tagName === 'STRONG'
+            && up.tagName === 'DEL'
             && twoup.childNodes.length === 1
-            && (twoup.tagName === 'P' || twoup.tagName === 'DIV')
-            // http://localhost:3000/whatson/freestream/tate-mcrae-vevo-extended-play
-            && (
-              !twoup.previousElementSibling?.innerHTML.startsWith('<strong><a href="')
-              && !twoup.nextElementSibling?.innerHTML.startsWith('<strong><a href="'))) {
+            && (twoup.tagName === 'P' || twoup.tagName === 'DIV')) {
             a.className = 'button primary';
             if (a.href.includes('/cart/')) a.target = '_blank';
             twoup.classList.add('button-container');
           }
+          // secondary button
+          if (
+            up.childNodes.length === 1
+              && up.tagName === 'EM'
+              && threeup.childNodes.length === 1
+              && (twoup && twoup.tagName === 'DEL')
+              && (threeup.tagName === 'P' || threeup.tagName === 'DIV')) {
+            a.className = 'button secondary';
+            if (a.href.includes('/cart/')) a.target = '_blank';
+            threeup.classList.add('button-container');
+          }
         } else if (
           up.childNodes.length === 1
-          && up.tagName === 'STRONG'
+          && up.tagName === 'DEL'
           && twoup.childNodes.length === 1
           && (twoup.tagName === 'P' || twoup.tagName === 'DIV')) {
           a.className = 'button primary';
@@ -254,11 +262,11 @@ export function decorateButtons(element) {
         if (
           up.childNodes.length === 1
           && up.tagName === 'EM'
-          && twoup.childNodes.length === 1
-          && (twoup.tagName === 'P' || twoup.tagName === 'DIV')
-        ) {
+          && threeup.childNodes.length === 1
+          && (twoup && twoup.tagName === 'DEL')
+          && (threeup.tagName === 'P' || threeup.tagName === 'DIV')) {
           a.className = 'button secondary';
-          twoup.classList.add('button-container');
+          threeup.classList.add('button-container');
         }
       }
     }

@@ -31,7 +31,7 @@
 }
 
 .blog-article p a,
-.blog-article .auth-name a{
+.blog-article .auth-name a {
     color: #006cdf;
 }
 
@@ -165,6 +165,11 @@ main .hero-container + .section {
     padding: 0 4px
 }
 
+.blog-article p a:hover,
+.blog-article .auth-name a:hover {
+    color: var(--link-hover-color);
+}
+
 .social-share .social-share-icon a:hover {
     color: #3abfed;
     cursor: pointer;
@@ -207,7 +212,20 @@ main .hero-container + .section {
 }
 
 p.button-container:has(a[class='button primary']),
-.fragment-wrapper .button-container {
+p.button-container:has(a[class='button secondary']) {
+    display: flex;
+    justify-content: center;
+}
+
+a.button.primary:hover {
+    color: var(--background-color);
+}
+
+a.button.secondary:hover {
+    color: var(--text-color);
+}
+
+.fragment-wrapper p.button-container:has(a[class='button primary']) {
     display: flex;
     justify-content: center;
     position: fixed;
@@ -217,42 +235,27 @@ p.button-container:has(a[class='button primary']),
     width: 100%;
     z-index: 100;
     background: var(--primary-button-color);
+    height: 55px;
 }
 
-
-p.button-container:has(a[class='button primary']) {
-    margin: 0;
-    line-height: 1em;
-}
-
-p.button-container:has(a[class='button primary']):hover
-{
-    outline: none;
+.fragment-wrapper p.button-container:has(a[class='button primary']):hover {
     box-shadow: rgb(7 7 11 / 40%) 0 24px 57px 0;
     opacity: 1;
     transform: scale(1.05);
     cursor: pointer;
 }
 
-a.button.primary {
-    background: none;
+.fragment-wrapper p.button-container a.button.primary {
+    background: transparent;
+    font-size: 18px;
 }
 
-a.button.primary:hover
-{
-    outline: none;
+.fragment-wrapper p.button-container a.button.primary:hover {
+    background: transparent;
     box-shadow: none;
-    opacity: none;
-    transform: none;
-    cursor: none;
 }
 
-@media (width >=1024px) { 
-    p.button-container:has(a[class='button primary']),
-    .fragment-wrapper .button-container { 
-        background: none;
-    }
-
+@media (width >=1024px) {
     a.button.primary {
         background: var(--primary-button-color);
         padding:0.938rem 1.2rem;
@@ -272,7 +275,7 @@ a.button.primary:hover
         cursor: unset;
      }
 
-     a.button.primary:hover, 
+     a.button.primary:hover,
      a.button.primary:focus
     {
         outline: none;
@@ -444,7 +447,8 @@ body.blog-article.modal-open .modal-content .section:first-of-type > div {
         place-content: center;
     }
 
-    .fragment-wrapper .button-container {
+    .fragment-wrapper .button-container,
+    .fragment-wrapper p.button-container:has(a[class='button primary']) {
         position: unset;
         width: unset;
         background-color: unset
@@ -458,6 +462,11 @@ body.blog-article.modal-open .modal-content .section:first-of-type > div {
         line-height: 1.875em;
     }
 
+    .blog-article .fragment-wrapper,
+    .blog-article .fragment-wrapper p {
+        line-height: 1em;
+    }
+
     main .hero-container + .section p {
         line-height: unset;
     }
@@ -467,9 +476,7 @@ body.blog-article.modal-open .modal-content .section:first-of-type > div {
         justify-content: center;
     }
 
-    p.button-container:has(a[class='button primary']),
-    .fragment-wrapper .button-container {
+    .fragment-wrapper .buttons-container .button-container {
         position: unset;
-        background-color: var(--background-color);
     }
 }
