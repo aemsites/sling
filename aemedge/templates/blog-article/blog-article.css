@@ -255,20 +255,6 @@ a.button.secondary:hover {
     box-shadow: none;
 }
 
-
-.blog-article .default-content-wrapper p,
-.blog-article .default-content-wrapper ul,
-.blog-article .default-content-wrapper li {
-    text-wrap: initial;
-    margin-top: 20px;
-}
-
-.blog-article .default-content-wrapper p:first-of-type {
-    margin-top: 30px;
-}
-
-
-
 @media (width >=1024px) {
     a.button.primary {
         background: var(--primary-button-color);
@@ -380,6 +366,7 @@ body.blog-article.modal-open .modal-content .section:first-of-type > div {
 
     .blog-article main .content-details-wrapper > .default-content-wrapper > *:first-child {
         margin-top: 0;
+        margin-bottom: 30px;
     }
 
     .blog-article main > .section {
@@ -426,12 +413,6 @@ body.blog-article.modal-open .modal-content .section:first-of-type > div {
 
     .text-container .social-share {
         flex-direction: column;
-    }
-}
-
-@media (width >=1400px) {
-    .blog-article > main .section.section.blog-hero-container {
-        padding-top: 45px;
     }
 }
 
