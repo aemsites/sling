@@ -10,10 +10,10 @@ export default {
     const ORANGE_CTA_LINK = '/cart/magento/account?classification=us&plan=one-month&plan_offer=one-month-stair-step-10&sb=domestic';
     const COMBO_CTA_LINK = '/cart/magento/account?classification=us&plan=one-month&plan_offer=one-month-stair-step-10&sb=sling-combo';
     const COMBO_SPORTS_LINK = '/cart/magento/account?classification=us&plan=one-month&plan_offer=extra-stair-step-2&sb=sling-combo&ats=sports-extra';
-    const CTA_BLUE_FRAGMENT_URL = 'https://main--sling--aemsites.aem.page/fragments/try-sling-blue';
-    const CTA_ORANGE_FRAGMENT_URL = 'https://main--sling--aemsites.aem.page/fragments/try-sling-orange';
-    const CTA_COMBO_FRAGMENT_URL = 'https://main--sling--aemsites.aem.page/fragments/try-sling-combo';
-    const CTA_COMBO_SPORTS_FRAGMENT_URL = 'https://main--sling--aemsites.aem.page/fragments/try-sling-cpmbo-sports';
+    const CTA_BLUE_FRAGMENT_URL = 'https://main--sling--aemsites.aem.page/aemedge/fragments/try-sling-blue';
+    const CTA_ORANGE_FRAGMENT_URL = 'https://main--sling--aemsites.aem.page/aemedge/fragments/try-sling-orange';
+    const CTA_COMBO_FRAGMENT_URL = 'https://main--sling--aemsites.aem.page/aemedge/fragments/try-sling-combo';
+    const CTA_COMBO_SPORTS_FRAGMENT_URL = 'https://main--sling--aemsites.aem.page/aemedge/fragments/try-sling-cpmbo-sports';
     const CTA_MAP = new Map();
     CTA_MAP.set(BLUE_CTA_LINK, CTA_BLUE_FRAGMENT_URL);
     CTA_MAP.set(ORANGE_CTA_LINK, CTA_ORANGE_FRAGMENT_URL);
@@ -90,9 +90,7 @@ export default {
         ctaFragment.href = ctaUrl;
         ctaFragment.textContent = ctaText;
         const strikethrough = document.createElement('del');
-        const strong = document.createElement('strong');
-        strong.append(ctaFragment);
-        strikethrough.append(strong);
+        strikethrough.append(ctaFragment);
         cta.parentElement.replaceChild(strikethrough, cta);
       }
     });
