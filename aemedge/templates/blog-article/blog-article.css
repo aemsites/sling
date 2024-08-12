@@ -247,19 +247,6 @@ a.button.primary:hover
     cursor: none;
 }
 
-.blog-article .default-content-wrapper p,
-.blog-article .default-content-wrapper ul,
-.blog-article .default-content-wrapper li {
-    text-wrap: initial;
-    margin-top: 20px;
-}
-
-.blog-article .default-content-wrapper p:first-of-type {
-    margin-top: 30px;
-}
-
-
-
 @media (width >=1024px) { 
     p.button-container:has(a[class='button primary']),
     .fragment-wrapper .button-container { 
@@ -376,6 +363,7 @@ body.blog-article.modal-open .modal-content .section:first-of-type > div {
 
     .blog-article main .content-details-wrapper > .default-content-wrapper > *:first-child {
         margin-top: 0;
+        margin-bottom: 30px;
     }
 
     .blog-article main > .section {
