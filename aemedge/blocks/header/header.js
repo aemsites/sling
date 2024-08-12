@@ -126,7 +126,7 @@ function moveTopNav(e, topNavSection, navSections) {
 export default async function decorate(block) {
   // load nav as fragment
   const navMeta = getMetadata('nav');
-  const navPath = navMeta ? new URL(navMeta).pathname : '/nav';
+  const navPath = navMeta ? new URL(navMeta).pathname : '/aemedge/nav';
   const fragment = await loadFragment(navPath);
   let topnavSection;
   if (fragment.childElementCount === 4) {
@@ -155,7 +155,7 @@ export default async function decorate(block) {
   const brandLink = navBrand.querySelector('a');
   if (brandLink) {
     const brandLogo = document.createElement('img');
-    brandLogo.src = '/icons/sling-blue-logo.svg';
+    brandLogo.src = '/aemedge/icons/sling-blue-logo.svg';
     brandLogo.alt = 'Sling TV Logo';
     brandLogo.classList.add('nav-brand-logo');
     brandLink.innerHTML = '';

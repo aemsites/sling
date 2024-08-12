@@ -32,7 +32,7 @@ export default async function decorate(block) {
   block.textContent = '';
 
   // load footer fragment
-  const footerPath = footerMeta.footer || '/footer';
+  const footerPath = footerMeta.footer || '/aemedge/footer';
   const fragment = await loadFragment(footerPath);
   // decorate footer DOM
   const footer = document.createElement('div');
