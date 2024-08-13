@@ -255,37 +255,6 @@ a.button.secondary:hover {
     box-shadow: none;
 }
 
-@media (width >=1024px) {
-    a.button.primary {
-        background: var(--primary-button-color);
-        padding:0.938rem 1.2rem;
-        font-size: 18px;
-        font-weight: 800;
-        text-align: center;
-        height: 60px;
-        vertical-align: center;
-        line-height: 30px;
-    }
-
-    p.button-container:has(a[class='button primary']):hover
-    {
-        outline: none;
-        box-shadow:none;
-        transform: none;
-        cursor: unset;
-     }
-
-     a.button.primary:hover,
-     a.button.primary:focus
-    {
-        outline: none;
-        box-shadow: rgb(7 7 11 / 40%) 0 24px 57px 0;
-        opacity: 1;
-        transform: scale(1.05);
-        cursor: pointer;
-    }
-}
-
 .content-details-wrapper .fragment-wrapper .button-container + p {
     display: none;
 }
@@ -293,14 +262,6 @@ a.button.secondary:hover {
 .fragment-wrapper .button-container .button,
 p.button-container:has(a[class='button primary']) .button {
     margin: 0;
-    border-width: 1px 0;
-    border-radius: 0;
-    cursor: pointer;
-    position: relative;
-    box-sizing: border-box;
-    text-align: center;
-    letter-spacing: 0;
-    opacity: 1;
     min-width: 11.25rem;
 }
 
@@ -309,6 +270,7 @@ p.button-container:has(a[class='button primary']) .button {
     font-size: 14px;
     -webkit-font-smoothing: antialiased;
     font-style: italic;
+    margin-top: 1rem;
 }
 
 .fragment-wrapper .button-container a[href*='modals'].button:hover {
@@ -417,6 +379,52 @@ body.blog-article.modal-open .modal-content .section:first-of-type > div {
 }
 
 @media (width >=1024px) {
+    a.button.primary {
+        background: var(--primary-button-color);
+        padding:0.938rem 1.2rem;
+        font-size: 18px;
+        font-weight: 800;
+        text-align: center;
+        height: 60px;
+        vertical-align: center;
+        line-height: 30px;
+    }
+
+    p.button-container:has(a[class='button primary']):hover
+    {
+        outline: none;
+        box-shadow:none;
+        transform: none;
+        cursor: unset;
+    }
+
+    a.button.primary:hover,
+    a.button.primary:focus
+    {
+        outline: none;
+        box-shadow: rgb(7 7 11 / 40%) 0 24px 57px 0;
+        opacity: 1;
+        transform: scale(1.05);
+        cursor: pointer;
+    }
+
+    .fragment-wrapper p.button-container:has(a[class='button primary']),
+    .fragment-wrapper p.button-container:has(a[class='button primary']):hover {
+        background: transparent;
+        border-radius: 1600px;
+        position: unset;
+        width: unset;
+    }
+
+    .fragment-wrapper p.button-container a.button.primary {
+        background: var(--primary-button-color);
+    }
+
+    .fragment-wrapper p.button-container a.button.primary:hover {
+        background: var(--primary-button-color);
+        box-shadow: none;
+    }
+
     .blog-article code.spacer2 {
         line-height: 3.75em;
     }
@@ -445,13 +453,6 @@ body.blog-article.modal-open .modal-content .section:first-of-type > div {
 
     .text-container .social-share .share-list {
         place-content: center;
-    }
-
-    .fragment-wrapper .button-container,
-    .fragment-wrapper p.button-container:has(a[class='button primary']) {
-        position: unset;
-        width: unset;
-        background-color: unset
     }
 
     .fragment-wrapper .button-container .button {
