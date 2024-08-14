@@ -9,6 +9,7 @@
 .game-finder.block #app {
     z-index: 0;
     position: relative;
+    margin-bottom: 2.5rem;
 }
 
 .game-finder.block #app svg {
