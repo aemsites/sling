@@ -10,16 +10,20 @@ export default {
     const ORANGE_CTA_LINK = '/cart/magento/account?classification=us&plan=one-month&plan_offer=one-month-stair-step-10&sb=domestic';
     const COMBO_CTA_LINK = '/cart/magento/account?classification=us&plan=one-month&plan_offer=one-month-stair-step-10&sb=sling-combo';
     const COMBO_SPORTS_LINK = '/cart/magento/account?classification=us&plan=one-month&plan_offer=extra-stair-step-2&sb=sling-combo&ats=sports-extra';
+    const SINGUP_SPORTS_COMBO_LINK = 'http://localhost:3001/signup?locale=en&classification=us&flow=alacartetv&step=0&plan=anniversary-stair-step&offer_id=a&bv=on&sb=sling-combo&ats=sports-extra-2,sports-extra-mss-2,sports-extra-combo-2,rs-dvr-3000&sp=blog&hd=1&host=https%253A%252F%252Fwww.sling.com';
+    const WATCH_FREESTREAM = 'https://watch.sling.com/';
     const CTA_BLUE_FRAGMENT_URL = 'https://main--sling--aemsites.aem.page/aemedge/fragments/try-sling-blue';
     const CTA_ORANGE_FRAGMENT_URL = 'https://main--sling--aemsites.aem.page/aemedge/fragments/try-sling-orange';
     const CTA_COMBO_FRAGMENT_URL = 'https://main--sling--aemsites.aem.page/aemedge/fragments/try-sling-combo';
     const CTA_COMBO_SPORTS_FRAGMENT_URL = 'https://main--sling--aemsites.aem.page/aemedge/fragments/try-sling-cpmbo-sports';
+    const WATCH_FREESTREAM_FRAGMENT_URL = 'https://main--sling--aemsites.aem.page/aemedge/fragments/watch-sling-freestream';
     const CTA_MAP = new Map();
     CTA_MAP.set(BLUE_CTA_LINK, CTA_BLUE_FRAGMENT_URL);
     CTA_MAP.set(ORANGE_CTA_LINK, CTA_ORANGE_FRAGMENT_URL);
     CTA_MAP.set(COMBO_CTA_LINK, CTA_COMBO_FRAGMENT_URL);
     CTA_MAP.set(COMBO_SPORTS_LINK, CTA_COMBO_SPORTS_FRAGMENT_URL);
-
+    CTA_MAP.set(SINGUP_SPORTS_COMBO_LINK, CTA_COMBO_SPORTS_FRAGMENT_URL);
+    CTA_MAP.set(WATCH_FREESTREAM, WATCH_FREESTREAM_FRAGMENT_URL);
     const REMOVED_AUTHORS_LIST = [
       'Alex Castle',
       'Ben Macaluso',
@@ -57,14 +61,13 @@ export default {
       meta['Publication Date'] = new Date(publishDate).toISOString().split('T')[0];
     }
     meta.Tags = Array.from(tags).map((tag) => tag.textContent).join(', ') || '';
-
     // meta.Image = ogImage.replace('https://www.sling.com', '') || '';
     const img = document.createElement('img');
     img.src = ogImage.replace('https://www.sling.comhttps://dish.scene7.com', 'https://dish.scene7.com') || '';
 
     meta.Image = img;
     if (robots && robots !== 'index') meta.robots = robots;
-    const videoIframes = document.querySelectorAll('iframe[src*="youtube"], iframe[src*="platform.twitter.com"]');
+    const videoIframes = document.querySelectorAll('iframe[src*="youtube"], iframe[src*="platform.twitter.com"],iframe[src*="watch.sling.com"],iframe[src*="facebook.com"]');
     // Handle embed youtube or twitter videos
     videoIframes.forEach((iframe) => {
       // replace the iframe with the video URL
@@ -92,6 +95,33 @@ export default {
         const strikethrough = document.createElement('del');
         strikethrough.append(ctaFragment);
         cta.parentElement.replaceChild(strikethrough, cta);
+      }
+    });
+
+    // handle primary buttons ( nba)
+
+    const primarybtns = document.querySelectorAll('a[data-analytics-ui-name="Orange + Blue w sports"]');
+    primarybtns.forEach((btn) => {
+      const ctaFragment = document.createElement('a');
+      ctaFragment.href = CTA_COMBO_SPORTS_FRAGMENT_URL;
+      const btnText = btn.innerText.replace('\n', '').replace('caret', '');
+      ctaFragment.textContent = btnText;
+      const strikethrough = document.createElement('del');
+      strikethrough.append(ctaFragment);
+      btn.parentElement.replaceChild(strikethrough, btn);
+    });
+
+    // handle buttons with Try Sling
+
+    const tryslingBtns = document.querySelectorAll('button.sc-jlyJG');
+    tryslingBtns.forEach((btn) => {
+      if (btn.innerText === 'Try Sling Tv Today!') {
+        const ctaFragment = document.createElement('a');
+        ctaFragment.href = CTA_COMBO_FRAGMENT_URL;
+        ctaFragment.textContent = btn.innerText;
+        const strikethrough = document.createElement('del');
+        strikethrough.append(ctaFragment);
+        btn.parentElement.replaceChild(strikethrough, btn);
       }
     });
 
@@ -123,6 +153,27 @@ export default {
           if (firstTH && colspan) firstTH.setAttribute('colspan', colspan || 0);
           table.parentElement.replaceChild(newTable, table);
         }
+      });
+    }
+
+    // handle accoridions
+    const accordions = document.querySelectorAll('.js-react-faq');
+    if (accordions && accordions.length > 0) {
+      accordions.forEach((accordion) => {
+        const rows = [];
+        const cells = [['Accordion']];
+        const props = JSON.parse(accordion.getAttribute('data-sling-faq-faqs-list'));
+        const { accordionConfig } = props[0];
+        accordionConfig.forEach((config) => {
+          const row = [];
+          row.push(config.title);
+          row.push(config.content);
+          rows.push(row);
+        });
+        const accordionDIV = accordion.querySelector('.accordion');
+        cells.push(...rows);
+        const accordionBlock = WebImporter.DOMUtils.createTable(cells, document);
+        accordionDIV.replaceWith(accordionBlock);
       });
     }
 
@@ -214,6 +265,7 @@ export default {
       '.js-react-spacer',
       '.email-capture--container',
       '.blog-homepage--outer',
+      '.chat',
     ]);
 
     WebImporter.rules.transformBackgroundImages(main, document);
