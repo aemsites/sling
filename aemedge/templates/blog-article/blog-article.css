@@ -211,11 +211,13 @@ main .hero-container + .section {
     flex-direction: column;
 }
 
-p.button-container:has(a[class='button primary']),
+
 p.button-container:has(a[class='button secondary']) {
     display: flex;
     justify-content: center;
 }
+
+
 
 a.button.primary:hover {
     color: var(--background-color);
@@ -255,12 +257,21 @@ a.button.secondary:hover {
     box-shadow: none;
 }
 
+.game-finder-wrapper + .default-content-wrapper  p.button-container a.button.primary {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    margin-bottom: 0;
+    z-index: 100;
+    border-radius: 0;
+}
+
 .content-details-wrapper .fragment-wrapper .button-container + p {
     display: none;
 }
 
-.fragment-wrapper .button-container .button,
-p.button-container:has(a[class='button primary']) .button {
+.fragment-wrapper .button-container .button {
     margin: 0;
     min-width: 11.25rem;
 }
@@ -379,7 +390,7 @@ body.blog-article.modal-open .modal-content .section:first-of-type > div {
 }
 
 @media (width >=1024px) {
-    a.button.primary {
+    p.button-container a.button.primary {
         background: var(--primary-button-color);
         padding:0.938rem 1.2rem;
         font-size: 18px;
@@ -388,6 +399,20 @@ body.blog-article.modal-open .modal-content .section:first-of-type > div {
         height: 60px;
         vertical-align: center;
         line-height: 30px;
+        position: relative;
+        width: auto;
+        margin-top: 20px;
+        border-radius: 1600px;
+    }
+
+    p.button-container a.button.primary:hover,
+    p.button-container a.button.primary:focus
+    {
+        outline: none;
+        box-shadow: rgb(7 7 11 / 40%) 0 24px 57px 0;
+        opacity: 1;
+        transform: scale(1.05);
+        cursor: pointer;
     }
 
     p.button-container:has(a[class='button primary']):hover
@@ -398,15 +423,6 @@ body.blog-article.modal-open .modal-content .section:first-of-type > div {
         cursor: unset;
     }
 
-    a.button.primary:hover,
-    a.button.primary:focus
-    {
-        outline: none;
-        box-shadow: rgb(7 7 11 / 40%) 0 24px 57px 0;
-        opacity: 1;
-        transform: scale(1.05);
-        cursor: pointer;
-    }
 
     .fragment-wrapper p.button-container:has(a[class='button primary']),
     .fragment-wrapper p.button-container:has(a[class='button primary']):hover {
@@ -423,6 +439,21 @@ body.blog-article.modal-open .modal-content .section:first-of-type > div {
     .fragment-wrapper p.button-container a.button.primary:hover {
         background: var(--primary-button-color);
         box-shadow: none;
+    }
+
+    .game-finder-wrapper + .default-content-wrapper  p.button-container a.button.primary {
+        background: var(--primary-button-color);
+        padding:0.938rem 1.2rem;
+        font-size: 18px;
+        font-weight: 800;
+        text-align: center;
+        height: 60px;
+        vertical-align: center;
+        line-height: 30px;
+        position: relative;
+        width: auto;
+        margin-top: 20px;
+        border-radius: 1600px;
     }
 
     .blog-article code.spacer2 {
