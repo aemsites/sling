@@ -135,10 +135,6 @@ blockquote {
   table-layout: fixed;
 }
 
-div.section.table-container .default-content-wrapper p {
-  text-align: center;
-}
-
 div.section.table-container .default-content-wrapper .button-container {
   text-align: left;
   background-color: var(--background-color);
@@ -164,12 +160,7 @@ div.section.table-container .default-content-wrapper .button-container ~ p {
 
   .playoffs.table, .schedule.table{
     margin-left: 8px;
-  }
-
-  .playoffs.table table,
-  .schedule.table table {
-    width: 66%;
-    margin: 0 auto 0 17%;
+    margin-bottom: 48px;
   }
 }
 
