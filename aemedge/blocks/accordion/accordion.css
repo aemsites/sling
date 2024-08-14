@@ -110,9 +110,7 @@
   }
 
   .accordion-wrapper {
-    margin: 0 auto 4rem;
-    width: 66%;
-    padding-left: 4rem;
+    margin: 1.25rem auto 4rem;
   }
 
   .tabs-panel .accordion-wrapper {
