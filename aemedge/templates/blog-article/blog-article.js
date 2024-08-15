@@ -3,6 +3,7 @@ import {
   buildVideoBlocks,
   buildFragmentBlocks,
   buildAuthorLink,
+  centerHeadlines,
 } from '../../scripts/utils.js';
 
 import {
@@ -162,4 +163,5 @@ export default async function buildBlogDetails(main) {
   buildFragmentBlocks(main);
   buildVideoBlocks(main);
   decorateAwardIcons(main);
+  centerHeadlines();
 }
