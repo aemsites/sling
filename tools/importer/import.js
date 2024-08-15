@@ -66,6 +66,7 @@ export default {
     img.src = ogImage.replace('https://www.sling.comhttps://dish.scene7.com', 'https://dish.scene7.com') || '';
 
     meta.Image = img;
+
     if (robots && robots !== 'index') meta.robots = robots;
     const videoIframes = document.querySelectorAll('iframe[src*="youtube"], iframe[src*="platform.twitter.com"],iframe[src*="watch.sling.com"],iframe[src*="facebook.com"]');
     // Handle embed youtube or twitter videos
@@ -99,7 +100,6 @@ export default {
     });
 
     // handle primary buttons ( nba)
-
     const primarybtns = document.querySelectorAll('a[data-analytics-ui-name="Orange + Blue w sports"]');
     primarybtns.forEach((btn) => {
       const ctaFragment = document.createElement('a');
@@ -112,7 +112,6 @@ export default {
     });
 
     // handle buttons with Try Sling
-
     const tryslingBtns = document.querySelectorAll('button.sc-jlyJG');
     tryslingBtns.forEach((btn) => {
       if (btn.innerText === 'Try Sling Tv Today!') {
@@ -154,6 +153,39 @@ export default {
           table.parentElement.replaceChild(newTable, table);
         }
       });
+    }
+
+    // handle image-slider
+    const carousels = document.querySelectorAll('.js-image-carousel');
+    carousels.forEach((carousel) => {
+      const innerContainer = carousel.querySelector('.carousel-inner');
+      if (innerContainer && innerContainer.children.length > 1) {
+        // create the image slider block
+        const cells = [['image-slider']];
+        const items = innerContainer.querySelectorAll('.item');
+        items.forEach((item) => {
+          const image = item.querySelector('.image-carousel--image');
+          cells.push(new Array(image));
+        });
+        const sliderBlock = WebImporter.DOMUtils.createTable(cells, document);
+        const indicators = carousel.querySelector('ol');
+        if (indicators)indicators.remove();
+        innerContainer.replaceWith(sliderBlock);
+      }
+    });
+
+    // handle chat bubble
+    const chat = document.querySelector('.js-react-chat');
+    if (chat) {
+      const props = JSON.parse(chat.getAttribute('data-sling-props'));
+      const cells = [['chat']];
+      const appId = ['appId', props.appId];
+      const chatId = ['chatId', props.chatId];
+      cells.push(appId, chatId);
+      const seperator = document.createElement('hr');
+      const chatBlock = WebImporter.DOMUtils.createTable(cells, document);
+      chatBlock.prepend(seperator);
+      chat.replaceWith(chatBlock);
     }
 
     // handle accoridions
@@ -227,6 +259,7 @@ export default {
         relatedcontent.parentElement.innerHTML = '';
       }
     }
+
     // Handle category pages
     const isCategoryPage = document.querySelector('.homepage-wrapper .blog-homepage--outer');
     let category = false;
@@ -244,10 +277,10 @@ export default {
     }
 
     // Remove subscribe form at the bottom of the articles
-    const subscribeForm = document.querySelector('.email-capture-new')?.parentElement;
-    if (subscribeForm) {
-      subscribeForm.remove();
-    }
+    // const subscribeForm = document.querySelector('.email-capture-new')?.parentElement;
+    // if (subscribeForm) {
+    //  subscribeForm.remove();
+    // }
 
     // attempt to remove non-content elements
     WebImporter.DOMUtils.remove(main, [
@@ -265,14 +298,12 @@ export default {
       '.js-react-spacer',
       '.email-capture--container',
       '.blog-homepage--outer',
-      '.chat',
+      '.email-capture-new',
     ]);
 
     WebImporter.rules.transformBackgroundImages(main, document);
     WebImporter.rules.adjustImageUrls(main, url, params.originalURL);
     WebImporter.rules.convertIcons(main, document);
-    // // Add metadata block to the document
-    const block = WebImporter.Blocks.getMetadataBlock(document, meta);
 
     // Handle anchor links or odd links
     // commenting due to the issue - https://github.com/aemsites/sling/issues/122
@@ -304,6 +335,8 @@ export default {
     }
 
     // // append the block to the main element
+    // // Add metadata block to the document
+    const block = WebImporter.Blocks.getMetadataBlock(document, meta);
     main.append(block);
     const newPathUrl = new URL(params.originalURL).pathname;
     const newPath = decodeURIComponent(newPathUrl)
