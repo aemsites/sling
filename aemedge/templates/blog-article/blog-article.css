@@ -15,17 +15,6 @@
     margin: 10px auto;
 }
 
-.blog-article h2 strong,
-.blog-article strong h2,
-.blog-article h3 strong,
-.blog-article strong h3,
-.blog-article h4 strong,
-.blog-article strong h4 {
-    text-align: center;
-    display: inline-block;
-    width: 100%;
-}
-
 .blog-article p {
     line-height: 1.5em;
 }

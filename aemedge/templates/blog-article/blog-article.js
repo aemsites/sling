@@ -3,6 +3,7 @@ import {
   buildVideoBlocks,
   buildFragmentBlocks,
   buildAuthorLink,
+  centerHeadlines,
 } from '../../scripts/utils.js';
 
 import {
@@ -27,7 +28,7 @@ export function decorateAwardIcons() {
 const getAuthorPhoto = (aName) => {
   const aPhotosLoc = `${window.location.origin}/whatson/authors/photos`;
   if (aName !== 'Sling Staff') {
-    return `${aPhotosLoc}/${aName.trim().toLowerCase().replace(' ', '-')}-author.jpeg`;
+    return `${aPhotosLoc}/${aName.trim().toLowerCase().replaceAll(' ', '-')}-author.jpeg`;
   }
   return `${aPhotosLoc}/sling-default-author.jpg`;
 };
@@ -162,4 +163,5 @@ export default async function buildBlogDetails(main) {
   buildFragmentBlocks(main);
   buildVideoBlocks(main);
   decorateAwardIcons(main);
+  centerHeadlines();
 }

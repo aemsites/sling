@@ -160,8 +160,12 @@ pre {
   overflow: scroll;
 }
 
+
 del {
   text-decoration: unset;
+
+.center {
+  text-align: center;
 }
 
 main pre {
