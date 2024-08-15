@@ -188,6 +188,13 @@ export function getPageType() {
   return '';
 }
 
+export function centerHeadlines() {
+  const headlines = document.querySelectorAll('h2 > strong, h3 > strong, h4 > strong');
+  headlines.forEach((headline) => {
+    headline.parentElement.classList.add('center');
+  });
+}
+
 /**
  * Fetches and transforms data from a JSON file
  * @param {string} path - The path to the JSON file

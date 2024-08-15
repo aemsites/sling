@@ -160,6 +160,10 @@ pre {
   overflow: scroll;
 }
 
+.center {
+  text-align: center;
+}
+
 main pre {
   background-color: var(--light-color);
   padding: 1em;
