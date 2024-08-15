@@ -272,6 +272,15 @@ export function decorateButtons(element) {
     }
   });
 }
+// On blog pages, make the last primary button sticky in mobile
+export function makeLastButtonSticky() {
+  if (getPageType() === 'blog') {
+    const buttons = document.querySelectorAll('a.button.primary');
+    if (buttons.length > 0) {
+      buttons[buttons.length - 1].classList.add('sticky');
+    }
+  }
+}
 
 /**
    * load fonts.css and set a session storage flag
@@ -458,6 +467,6 @@ async function loadPage() {
   await loadEager(document);
   await loadLazy(document);
   loadDelayed();
+  makeLastButtonSticky();
 }
-
 loadPage();

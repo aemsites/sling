@@ -160,6 +160,10 @@ pre {
   overflow: scroll;
 }
 
+del {
+  text-decoration: unset;
+}
+
 main pre {
   background-color: var(--light-color);
   padding: 1em;
@@ -223,6 +227,8 @@ button.secondary {
   min-width: 11.25rem;
   font-size: 1rem;
   padding: 0.875rem 1rem;
+  min-height: 60px;
+  align-content: center;
 }
 
 a.button.primary,
