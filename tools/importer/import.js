@@ -6,23 +6,26 @@ export default {
     url,
     params,
   }) => {
-    const BLUE_CTA_LINK = '/cart/magento/account?classification=us&plan=one-month&plan_offer=one-month-stair-step-10&sb=sling-mss';
-    const ORANGE_CTA_LINK = '/cart/magento/account?classification=us&plan=one-month&plan_offer=one-month-stair-step-10&sb=domestic';
-    const COMBO_CTA_LINK = '/cart/magento/account?classification=us&plan=one-month&plan_offer=one-month-stair-step-10&sb=sling-combo';
-    const COMBO_SPORTS_LINK = '/cart/magento/account?classification=us&plan=one-month&plan_offer=extra-stair-step-2&sb=sling-combo&ats=sports-extra';
-    const SINGUP_SPORTS_COMBO_LINK = 'http://localhost:3001/signup?locale=en&classification=us&flow=alacartetv&step=0&plan=anniversary-stair-step&offer_id=a&bv=on&sb=sling-combo&ats=sports-extra-2,sports-extra-mss-2,sports-extra-combo-2,rs-dvr-3000&sp=blog&hd=1&host=https%253A%252F%252Fwww.sling.com';
+    const CART_LINK = '/cart/magento/account';
+    const SIGNUP_LINK = '/cart/magento/account';
+    const BLUE_CTA_PARAM = '&sb=sling-mss';
+    const ORANGE_CTA_PARAM = '&sb=domestic';
+    const COMBO_CTA_PARAM = '&sb=sling-combo';
+    const COMBO_SPORTS_PARAM = '&sb=sling-combo&ats=sports-extra';
+    const SINGUP_SPORTS_COMBO_PARAM = '&sb=sling-combo&ats=sports-extra';
     const WATCH_FREESTREAM = 'https://watch.sling.com/';
     const CTA_BLUE_FRAGMENT_URL = 'https://main--sling--aemsites.aem.page/aemedge/fragments/try-sling-blue';
     const CTA_ORANGE_FRAGMENT_URL = 'https://main--sling--aemsites.aem.page/aemedge/fragments/try-sling-orange';
     const CTA_COMBO_FRAGMENT_URL = 'https://main--sling--aemsites.aem.page/aemedge/fragments/try-sling-combo';
     const CTA_COMBO_SPORTS_FRAGMENT_URL = 'https://main--sling--aemsites.aem.page/aemedge/fragments/try-sling-cpmbo-sports';
+    const SIGNUP_BLUE_FRAGMENT_URL = 'https://main--sling--aemsites.aem.page/aemedge/fragments/try-sling-blue-signup';
     const WATCH_FREESTREAM_FRAGMENT_URL = 'https://main--sling--aemsites.aem.page/aemedge/fragments/watch-sling-freestream';
     const CTA_MAP = new Map();
-    CTA_MAP.set(BLUE_CTA_LINK, CTA_BLUE_FRAGMENT_URL);
-    CTA_MAP.set(ORANGE_CTA_LINK, CTA_ORANGE_FRAGMENT_URL);
-    CTA_MAP.set(COMBO_CTA_LINK, CTA_COMBO_FRAGMENT_URL);
-    CTA_MAP.set(COMBO_SPORTS_LINK, CTA_COMBO_SPORTS_FRAGMENT_URL);
-    CTA_MAP.set(SINGUP_SPORTS_COMBO_LINK, CTA_COMBO_SPORTS_FRAGMENT_URL);
+    CTA_MAP.set(BLUE_CTA_PARAM, CTA_BLUE_FRAGMENT_URL);
+    CTA_MAP.set(ORANGE_CTA_PARAM, CTA_ORANGE_FRAGMENT_URL);
+    CTA_MAP.set(COMBO_CTA_PARAM, CTA_COMBO_FRAGMENT_URL);
+    CTA_MAP.set(COMBO_SPORTS_PARAM, CTA_COMBO_SPORTS_FRAGMENT_URL);
+    CTA_MAP.set(SINGUP_SPORTS_COMBO_PARAM, SIGNUP_BLUE_FRAGMENT_URL);
     CTA_MAP.set(WATCH_FREESTREAM, WATCH_FREESTREAM_FRAGMENT_URL);
     const REMOVED_AUTHORS_LIST = [
       'Alex Castle',
@@ -86,16 +89,34 @@ export default {
       const { ctaUrl } = slingProps;
       const { ctaText } = slingProps;
       const ctaFragment = document.createElement('a');
-      if (CTA_MAP.has(ctaUrl)) {
-        ctaFragment.href = CTA_MAP.get(ctaUrl);
-        ctaFragment.textContent = CTA_MAP.get(ctaUrl);
-        cta.parentElement.replaceChild(ctaFragment, cta);
-      } else {
-        ctaFragment.href = ctaUrl;
-        ctaFragment.textContent = ctaText;
-        const strikethrough = document.createElement('del');
-        strikethrough.append(ctaFragment);
-        cta.parentElement.replaceChild(strikethrough, cta);
+      if (ctaUrl) {
+        if (ctaUrl.startsWith(CART_LINK)) {
+          if (ctaUrl.includes(BLUE_CTA_PARAM)) ctaFragment.href = CTA_MAP.get(BLUE_CTA_PARAM);
+          if (ctaUrl.includes(ORANGE_CTA_PARAM)) ctaFragment.href = CTA_MAP.get(ORANGE_CTA_PARAM);
+          if (ctaUrl.includes(COMBO_CTA_PARAM)) ctaFragment.href = CTA_MAP.get(COMBO_CTA_PARAM);
+          if (ctaUrl.includes(COMBO_SPORTS_PARAM)) {
+            ctaFragment.href = CTA_MAP.get(COMBO_SPORTS_PARAM);
+          }
+          if (ctaUrl.includes(SINGUP_SPORTS_COMBO_PARAM)) {
+            ctaFragment.href = CTA_MAP.get(SINGUP_SPORTS_COMBO_PARAM);
+          }
+          ctaFragment.textContent = ctaFragment.href;
+          cta.parentElement.replaceChild(ctaFragment, cta);
+        } else if (ctaUrl.startsWith(SIGNUP_LINK)) {
+          ctaFragment.href = CTA_MAP.get(SINGUP_SPORTS_COMBO_PARAM);
+          ctaFragment.textContent = ctaFragment.href;
+          cta.parentElement.replaceChild(ctaFragment, cta);
+        } else if (ctaUrl.startsWith(WATCH_FREESTREAM)) {
+          ctaFragment.href = CTA_MAP.get(WATCH_FREESTREAM);
+          ctaFragment.textContent = ctaFragment.href;
+          cta.parentElement.replaceChild(ctaFragment, cta);
+        } else {
+          ctaFragment.href = ctaUrl;
+          ctaFragment.textContent = ctaText;
+          const strikethrough = document.createElement('del');
+          strikethrough.append(ctaFragment);
+          cta.parentElement.replaceChild(strikethrough, cta);
+        }
       }
     });
 
@@ -104,23 +125,18 @@ export default {
     primarybtns.forEach((btn) => {
       const ctaFragment = document.createElement('a');
       ctaFragment.href = CTA_COMBO_SPORTS_FRAGMENT_URL;
-      const btnText = btn.innerText.replace('\n', '').replace('caret', '');
-      ctaFragment.textContent = btnText;
-      const strikethrough = document.createElement('del');
-      strikethrough.append(ctaFragment);
-      btn.parentElement.replaceChild(strikethrough, btn);
+      ctaFragment.textContent = ctaFragment.href;
+      btn.parentElement.replaceChild(ctaFragment, btn);
     });
 
     // handle buttons with Try Sling
-    const tryslingBtns = document.querySelectorAll('button.sc-jlyJG');
+    const tryslingBtns = document.querySelectorAll('button');
     tryslingBtns.forEach((btn) => {
-      if (btn.innerText === 'Try Sling Tv Today!') {
+      if (btn.innerText.includes('Try Sling Tv Today!')) {
         const ctaFragment = document.createElement('a');
-        ctaFragment.href = CTA_COMBO_FRAGMENT_URL;
-        ctaFragment.textContent = btn.innerText;
-        const strikethrough = document.createElement('del');
-        strikethrough.append(ctaFragment);
-        btn.parentElement.replaceChild(strikethrough, btn);
+        ctaFragment.href = BLUE_CTA_PARAM;
+        ctaFragment.textContent = ctaFragment.href;
+        btn.parentElement.replaceChild(ctaFragment, btn);
       }
     });
 
