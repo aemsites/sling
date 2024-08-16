@@ -237,7 +237,6 @@ a.button.primary.sticky {
     font-size: 18px;
 }
 
-/* .fragment-wrapper .button-container .button, */
 p.button-container:has(a[class='button primary']) .button {
     margin: 0;
     min-width: 11.25rem;
@@ -304,7 +303,7 @@ body.blog-article.modal-open .modal-content .section:first-of-type > div {
         margin: 0;
     }
 
-    .blog-article main .content-details-wrapper > .default-content-wrapper > *:first-child {
+    .blog-article main .content-details-wrapper > .default-content-wrapper > *:first-child:not(.button-container) {
         margin-top: 0;
         margin-bottom: 30px;
     }
@@ -367,6 +366,11 @@ body.blog-article.modal-open .modal-content .section:first-of-type > div {
         line-height: 30px;
     }
 
+    p.button-container:has(a[class='button primary sticky']) .button {
+        margin: 0;
+        min-width: 11.25rem;
+    }
+
     p.button-container:has(a[class='button primary']):hover
     {
         outline: none;
@@ -386,22 +390,22 @@ body.blog-article.modal-open .modal-content .section:first-of-type > div {
     }
 
     a.button.primary.sticky {
-        background: var(--primary-button-color);
+        display: inline-block;
+        margin-bottom: 10px;
     }
 
     a.button.primary.sticky,
     a.button.primary.sticky:hover {
-        background: transparent;
+        background: var(--primary-button-color);
         border-radius: 1600px;
         position: unset;
         width: unset;
-        display: unset;
-        margin-bottom: 10px;
-    }
-
-    a.button.primary.sticky:hover {
-        background: var(--primary-button-color);
-        box-shadow: none;
+        padding: 0.938rem 1.2rem;
+        font-size: 18px;
+        font-weight: 800;
+        text-align: center;
+        vertical-align: center;
+        line-height: 30px;
     }
 
     .blog-article code.spacer2 {
@@ -440,10 +444,6 @@ body.blog-article.modal-open .modal-content .section:first-of-type > div {
 
     main .hero-container + .section p {
         line-height: unset;
-    }
-
-    .fragment-wrapper .buttons-container .button-container {
-        position: unset;
     }
 
     .content-details-wrapper .fragment-wrapper .button-container + p {
