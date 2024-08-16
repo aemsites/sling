@@ -331,10 +331,12 @@ body.blog-article.modal-open .modal-content .section:first-of-type > div {
         max-width: 896px;
         width: 100%;
         border-radius: 0.5rem;
+        margin:0 auto;
         margin-top: 100px;
         position: relative;
         z-index: 99;
         box-sizing: border-box;
+        
     }
 
     .blog-details-wrapper {
