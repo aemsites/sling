@@ -200,12 +200,6 @@ main .hero-container + .section {
     flex-direction: column;
 }
 
-p.button-container:has(a[class='button primary']),
-p.button-container:has(a[class='button secondary']) {
-    display: flex;
-    justify-content: center;
-}
-
 a.button.primary:hover {
     color: var(--background-color);
 }
@@ -214,7 +208,7 @@ a.button.secondary:hover {
     color: var(--text-color);
 }
 
-.fragment-wrapper p.button-container:has(a[class='button primary']) {
+a.button.primary.sticky {
     display: flex;
     justify-content: center;
     position: fixed;
@@ -225,30 +219,24 @@ a.button.secondary:hover {
     z-index: 100;
     background: var(--primary-button-color);
     height: 55px;
-}
-
-.fragment-wrapper p.button-container:has(a[class='button primary']):hover {
-    box-shadow: rgb(7 7 11 / 40%) 0 24px 57px 0;
-    opacity: 1;
-    transform: scale(1.05);
-    cursor: pointer;
-}
-
-.fragment-wrapper p.button-container a.button.primary {
-    background: transparent;
-    font-size: 18px;
-}
-
-.fragment-wrapper p.button-container a.button.primary:hover {
-    background: transparent;
-    box-shadow: none;
+    border-radius: 0;
+    margin: 0;
+    align-items: center;
 }
 
 .content-details-wrapper .fragment-wrapper .button-container + p {
     display: none;
 }
 
-.fragment-wrapper .button-container .button,
+.blog-article > main .button-container .section.offer-details {
+    width: unset;
+    padding-left: 0;
+}
+
+.button.primary.sticky {
+    font-size: 18px;
+}
+
 p.button-container:has(a[class='button primary']) .button {
     margin: 0;
     min-width: 11.25rem;
@@ -315,7 +303,7 @@ body.blog-article.modal-open .modal-content .section:first-of-type > div {
         margin: 0;
     }
 
-    .blog-article main .content-details-wrapper > .default-content-wrapper > *:first-child {
+    .blog-article main .content-details-wrapper > .default-content-wrapper > *:first-child:not(.button-container) {
         margin-top: 0;
         margin-bottom: 30px;
     }
@@ -374,9 +362,13 @@ body.blog-article.modal-open .modal-content .section:first-of-type > div {
         font-size: 18px;
         font-weight: 800;
         text-align: center;
-        height: 60px;
         vertical-align: center;
         line-height: 30px;
+    }
+
+    p.button-container:has(a[class='button primary sticky']) .button {
+        margin: 0;
+        min-width: 11.25rem;
     }
 
     p.button-container:has(a[class='button primary']):hover
@@ -397,21 +389,23 @@ body.blog-article.modal-open .modal-content .section:first-of-type > div {
         cursor: pointer;
     }
 
-    .fragment-wrapper p.button-container:has(a[class='button primary']),
-    .fragment-wrapper p.button-container:has(a[class='button primary']):hover {
-        background: transparent;
+    a.button.primary.sticky {
+        display: inline-block;
+        margin-bottom: 10px;
+    }
+
+    a.button.primary.sticky,
+    a.button.primary.sticky:hover {
+        background: var(--primary-button-color);
         border-radius: 1600px;
         position: unset;
         width: unset;
-    }
-
-    .fragment-wrapper p.button-container a.button.primary {
-        background: var(--primary-button-color);
-    }
-
-    .fragment-wrapper p.button-container a.button.primary:hover {
-        background: var(--primary-button-color);
-        box-shadow: none;
+        padding: 0.938rem 1.2rem;
+        font-size: 18px;
+        font-weight: 800;
+        text-align: center;
+        vertical-align: center;
+        line-height: 30px;
     }
 
     .blog-article code.spacer2 {
@@ -444,17 +438,8 @@ body.blog-article.modal-open .modal-content .section:first-of-type > div {
         place-content: center;
     }
 
-    .fragment-wrapper .button-container .button {
-        margin: 0 8px;
-    }
-
     .blog-article .default-content-wrapper p {
         line-height: 1.875em;
-    }
-
-    .blog-article .fragment-wrapper,
-    .blog-article .fragment-wrapper p {
-        line-height: 1em;
     }
 
     main .hero-container + .section p {
@@ -462,11 +447,6 @@ body.blog-article.modal-open .modal-content .section:first-of-type > div {
     }
 
     .content-details-wrapper .fragment-wrapper .button-container + p {
-        display: flex;
-        justify-content: center;
-    }
-
-    .fragment-wrapper .buttons-container .button-container {
-        position: unset;
+        display: unset;
     }
 }

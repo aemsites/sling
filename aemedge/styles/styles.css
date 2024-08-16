@@ -160,6 +160,11 @@ pre {
   overflow: scroll;
 }
 
+
+del {
+  text-decoration: unset;
+}
+
 .center {
   text-align: center;
 }
@@ -227,6 +232,8 @@ button.secondary {
   min-width: 11.25rem;
   font-size: 1rem;
   padding: 0.875rem 1rem;
+  min-height: 60px;
+  align-content: center;
 }
 
 a.button.primary,
