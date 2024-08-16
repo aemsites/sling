@@ -17,7 +17,7 @@ export default {
     const CTA_BLUE_FRAGMENT_URL = 'https://main--sling--aemsites.aem.page/aemedge/fragments/try-sling-blue';
     const CTA_ORANGE_FRAGMENT_URL = 'https://main--sling--aemsites.aem.page/aemedge/fragments/try-sling-orange';
     const CTA_COMBO_FRAGMENT_URL = 'https://main--sling--aemsites.aem.page/aemedge/fragments/try-sling-combo';
-    const CTA_COMBO_SPORTS_FRAGMENT_URL = 'https://main--sling--aemsites.aem.page/aemedge/fragments/try-sling-cpmbo-sports';
+    const CTA_COMBO_SPORTS_FRAGMENT_URL = 'https://main--sling--aemsites.aem.page/aemedge/fragments/try-sling-combo-sports';
     const SIGNUP_BLUE_FRAGMENT_URL = 'https://main--sling--aemsites.aem.page/aemedge/fragments/try-sling-blue-signup';
     const WATCH_FREESTREAM_FRAGMENT_URL = 'https://main--sling--aemsites.aem.page/aemedge/fragments/watch-sling-freestream';
     const CTA_MAP = new Map();
@@ -139,6 +139,57 @@ export default {
         btn.parentElement.replaceChild(ctaFragment, btn);
       }
     });
+
+    // handle buttons with Try Sling
+    const actionlinks = document.querySelectorAll('a.btn-primary');
+    actionlinks.forEach((link) => {
+      const newlink = document.createElement('a');
+      newlink.href = link.href;
+      const strikethrough = document.createElement('del');
+      if (link.innerText.includes('caret')) {
+        newlink.textContent = link.innerText.replace('caret', '').toUpperCase();
+      } else {
+        newlink.textContent = link.innerText.toUpperCase();
+      }
+      strikethrough.append(newlink);
+      link.parentElement.replaceChild(strikethrough, link);
+    });
+
+    // handle buttons with Try Sling
+    const watchnowLinks = document.querySelectorAll('a.maxbutton-watch-now-entertainment');
+    watchnowLinks.forEach((link) => {
+      const newlink = document.createElement('a');
+      newlink.href = link.href;
+      const strikethrough = document.createElement('del');
+      if (link.innerText.includes('caret')) {
+        newlink.textContent = link.innerText.replace('caret', '').toUpperCase();
+      } else {
+        newlink.textContent = link.innerText.toUpperCase();
+      }
+      strikethrough.append(newlink);
+      link.parentElement.replaceChild(strikethrough, link);
+    });
+
+    /// / handle buttons with Try Sling
+    // const watchFreeLinks = document.querySelectorAll('a[href]');
+    // watchFreeLinks.forEach((link) => {
+    //  if (link.href.startsWith('https://watch.sling.com/')) {
+    //    const newlink = document.createElement('a');
+    //    newlink.href = link.href;
+    //    const strikethrough = document.createElement('del');
+    //    newlink.textContent = link.innerText.toUpperCase();
+    //    strikethrough.append(newlink);
+    //    const ptag = document.createElement('p');
+    //    if (link.parentElement && (link.parentElement.tagName === 'H3'
+    //      || link.parentElement.tagName === 'B'
+    //    )) {
+    //      ptag.append(strikethrough);
+    //      link.parentElement.replaceWith(ptag);
+    //    } else {
+    //      link.parentElement.replaceChild(strikethrough, link);
+    //    }
+    //  }
+    // });
 
     // Handle tables
     const tableElement = document.querySelector('table');
