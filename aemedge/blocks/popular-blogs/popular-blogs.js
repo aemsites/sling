@@ -106,7 +106,7 @@ function toTag(cat) {
   let modified = cat;
   if (cat.includes('-and-')) {
     modified = cat.replace('-and-', ' & ');
-  } else if (cat.includes('-')) {
+  } else if (cat.includes('-') && cat !== 'sci-fi') {
     modified = cat.replace('-', ' ');
   }
   return modified;
