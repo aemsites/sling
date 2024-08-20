@@ -17,6 +17,33 @@ header nav[aria-expanded="false"] .zipcode-wrapper {
     box-sizing: border-box;
 }
 
+
+ .zipcodemodal{
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(234 234 236);
+    outline: none;
+}
+
+.zipcodemodal label{
+    left: calc(2px + 0.75rem);
+    top: 0.75rem;
+    padding-left: 0.75rem;
+    font-size: 0.75rem;
+    padding-top: 10px;
+}
+
+.zipcodemodal input{
+    background-color: rgb(234 234 236);
+    border: none;
+    width: 20%;
+    outline: none;
+    font-weight: 600;
+    font-size: 1.125rem;
+    padding-left: 0.75rem;
+}
+
 .white-arrow-background {
     width: 20px;
     height: 20px;

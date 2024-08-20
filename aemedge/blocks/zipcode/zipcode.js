@@ -59,27 +59,41 @@ const toggleGeoSelector = (e, zipCode, block) => {
 
 export default async function decorate(block) {
   const zipCode = await getZipcode();
-  document.addEventListener('zipupdate', () => {
-    decorate(block);
-  });
-  block.innerHTML = `
-  <div class="geo-container">
-        <div class="geo-pin">
-            <img src ="/aemedge/icons/geo-pin.svg" alt="Current Zipcode" /> 
+  setTimeout(() => {
+    const zipcodewrapper = document.querySelectorAll('.zipcode-wrapper');
+    if (!zipcodewrapper[1]) {
+      block.innerHTML = `
+      <div class="geo-container">
+            <div class="geo-pin">
+                <img src ="/aemedge/icons/geo-pin.svg" alt="Current Zipcode" /> 
+            </div>
+            <div class="geo-text">
+                <span>${zipCode}</span> 
+            </div>
+            <div class="geo-selector">
+                <img src ="/aemedge/icons/geo-down-arrow.svg" alt="Change Zipcode"/>
+            </div>
         </div>
-        <div class="geo-text">
-            <span>${zipCode}</span> 
-        </div>
-        <div class="geo-selector">
-            <img src ="/aemedge/icons/geo-down-arrow.svg" alt="Change Zipcode"/>
-        </div>
-    </div>
- `;
-
-  const container = block.querySelector(':scope .geo-container');
-  if (container) {
-    for (let i = 0; i < container.children.length; i += 1) {
-      container.children[i].addEventListener('click', (e) => toggleGeoSelector(e, zipCode, block));
+     `;
+      document.addEventListener('zipupdate', () => {
+        decorate(block);
+      });
+      const container = block.querySelector(':scope .geo-container');
+      if (container) {
+        for (let i = 0; i < container.children.length; i += 1) {
+          container.children[i].addEventListener('click', (e) => toggleGeoSelector(e, zipCode, block));
+        }
+      }
+    } else {
+      block.innerHTML = `
+      <div class="zipcodemodal">
+        <label> ZIP Code </label>
+        <input 
+            type="text" 
+            id="zipcodeinput"
+        </>
+      </div>
+     `;
     }
-  }
+  }, 100);
 }
