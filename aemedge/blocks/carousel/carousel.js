@@ -101,7 +101,6 @@ function bindEvents(block) {
   showSlide(block, initialSlideIndex);
 }
 
-
 function createSlide(row, slideIndex, carouselId) {
   const slide = document.createElement('li');
   slide.dataset.slideIndex = slideIndex;
