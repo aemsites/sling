@@ -1,5 +1,5 @@
 import {
-  getMetadata, buildBlock, decorateBlock, createOptimizedPicture, toCamelCase, loadScript,
+  getMetadata, buildBlock, decorateBlock, createOptimizedPicture, toCamelCase,
 } from './aem.js';
 
 import { getTag } from './tags.js';
@@ -538,21 +538,21 @@ export async function fetchGQL(query, variables, operationName) {
   return gqlResponse;
 }
 
-// async function loadScript(src, attrs) {
-//  return new Promise((resolve, reject) => {
-//    const script = document.createElement('script');
-//    script.src = src;
-//    if (attrs) {
-//      // eslint-disable-next-line no-restricted-syntax, guard-for-in
-//      for (const attr in attrs) {
-//        script.setAttribute(attr, attrs[attr]);
-//      }
-//    }
-//    script.onload = resolve;
-//    script.onerror = reject;
-//    document.querySelector('main').append(script);
-//  });
-// }
+async function loadScript(src, attrs) {
+  return new Promise((resolve, reject) => {
+    const script = document.createElement('script');
+    script.src = src;
+    if (attrs) {
+      // eslint-disable-next-line no-restricted-syntax, guard-for-in
+      for (const attr in attrs) {
+        script.setAttribute(attr, attrs[attr]);
+      }
+    }
+    script.onload = resolve;
+    script.onerror = reject;
+    document.querySelector('body').append(script);
+  });
+}
 
 export async function loadGameFinderApp() {
   loadScript('/aemedge/scripts/sling-react/gamefinder-build.js');
