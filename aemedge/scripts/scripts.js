@@ -20,6 +20,7 @@ import {
   getPageType,
   buildFragmentBlocks,
   createTag,
+  loadGameFinderApp,
 } from './utils.js';
 
 const LCP_BLOCKS = ['category']; // add your LCP blocks to the list
@@ -399,6 +400,11 @@ async function loadEager(doc) {
     decorateMain(main);
     await loadTemplate(main);
     document.body.classList.add('appear');
+    const gameFinders = doc.querySelectorAll('.game-finder.block');
+    if (gameFinders && gameFinders.length > 0) {
+      await loadGameFinderApp();
+    }
+
     await waitForLCP(LCP_BLOCKS);
   }
 
