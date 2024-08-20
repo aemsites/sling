@@ -1,16 +1,28 @@
 import { fetchPlaceholders } from '../../scripts/aem.js';
 
-function updateActiveSlide(slide) {
-  const block = slide.closest('.carousel');
-  const slideIndex = parseInt(slide.dataset.slideIndex, 10);
-  block.dataset.activeSlide = slideIndex;
-
+function showSlide(block, slideIndex = 0) {
   const slides = block.querySelectorAll('.carousel-slide');
+  const totalSlides = slides.length;
 
+  // Ensure the slide index wraps correctly
+  const realSlideIndex = (slideIndex + totalSlides) % totalSlides;
+
+  // Update block's active slide index
+  block.dataset.activeSlide = realSlideIndex;
+
+  // Scroll to the active slide
+  const activeSlide = slides[realSlideIndex];
+  block.querySelector('.carousel-slides').scrollTo({
+    top: 0,
+    left: activeSlide.offsetLeft,
+    behavior: 'smooth',
+  });
+
+  // Update the aria-hidden and tabindex attributes
   slides.forEach((aSlide, idx) => {
-    aSlide.setAttribute('aria-hidden', idx !== slideIndex);
+    aSlide.setAttribute('aria-hidden', idx !== realSlideIndex);
     aSlide.querySelectorAll('a').forEach((link) => {
-      if (idx !== slideIndex) {
+      if (idx !== realSlideIndex) {
         link.setAttribute('tabindex', '-1');
       } else {
         link.removeAttribute('tabindex');
@@ -18,56 +30,46 @@ function updateActiveSlide(slide) {
     });
   });
 
+  // Update slide indicators
   const indicators = block.querySelectorAll('.carousel-slide-indicator');
   indicators.forEach((indicator, idx) => {
-    if (idx !== slideIndex) {
-      indicator.querySelector('button').removeAttribute('disabled');
+    const button = indicator.querySelector('button');
+    if (idx !== realSlideIndex) {
+      button.removeAttribute('disabled');
     } else {
-      indicator.querySelector('button').setAttribute('disabled', 'true');
+      button.setAttribute('disabled', 'true');
     }
   });
 }
 
-function showSlide(block, slideIndex = 0) {
-  const slides = block.querySelectorAll('.carousel-slide');
-  let realSlideIndex = slideIndex < 0 ? slides.length - 1 : slideIndex;
-  if (slideIndex >= slides.length) realSlideIndex = 0;
-  const activeSlide = slides[realSlideIndex];
-
-  activeSlide.querySelectorAll('a').forEach((link) => link.removeAttribute('tabindex'));
-  block.querySelector('.carousel-slides').scrollTo({
-    top: 0,
-    left: activeSlide.offsetLeft,
-    behavior: 'smooth',
-  });
-}
-
 function bindEvents(block) {
+  const prevButton = block.querySelector('.slide-prev');
+  const nextButton = block.querySelector('.slide-next');
+
+  prevButton.addEventListener('click', () => {
+    const currentSlide = parseInt(block.dataset.activeSlide, 10);
+    showSlide(block, currentSlide - 1);
+  });
+
+  nextButton.addEventListener('click', () => {
+    const currentSlide = parseInt(block.dataset.activeSlide, 10);
+    showSlide(block, currentSlide + 1);
+  });
+
   const slideIndicators = block.querySelector('.carousel-slide-indicators');
-  if (!slideIndicators) return;
-
-  slideIndicators.querySelectorAll('button').forEach((button) => {
-    button.addEventListener('click', (e) => {
-      const slideIndicator = e.currentTarget.parentElement;
-      showSlide(block, parseInt(slideIndicator.dataset.targetSlide, 10));
+  if (slideIndicators) {
+    slideIndicators.querySelectorAll('button').forEach((button) => {
+      button.addEventListener('click', (e) => {
+        const slideIndicator = e.currentTarget.parentElement;
+        showSlide(block, parseInt(slideIndicator.dataset.targetSlide, 10));
+      });
     });
-  });
+  }
 
-  block.querySelector('.slide-prev').addEventListener('click', () => {
-    showSlide(block, parseInt(block.dataset.activeSlide, 10) - 1);
-  });
-  block.querySelector('.slide-next').addEventListener('click', () => {
-    showSlide(block, parseInt(block.dataset.activeSlide, 10) + 1);
-  });
-
-  const slideObserver = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) updateActiveSlide(entry.target);
-    });
-  }, { threshold: 0.5 });
-  block.querySelectorAll('.carousel-slide').forEach((slide) => {
-    slideObserver.observe(slide);
-  });
+  // Remove IntersectionObserver as it's causing issues with the initial navigation
+  // Instead, directly call showSlide on the active slide during setup.
+  const initialSlideIndex = parseInt(block.dataset.activeSlide, 10) || 0;
+  showSlide(block, initialSlideIndex);
 }
 
 function createSlide(row, slideIndex, carouselId) {
@@ -106,7 +108,7 @@ export default async function decorate(block) {
 
   const slidesWrapper = document.createElement('ul');
   slidesWrapper.classList.add('carousel-slides');
-  block.prepend(slidesWrapper);
+  container.append(slidesWrapper);
 
   let slideIndicators;
   if (!isSingleSlide) {
@@ -141,7 +143,6 @@ export default async function decorate(block) {
     row.remove();
   });
 
-  container.append(slidesWrapper);
   block.prepend(container);
 
   if (!isSingleSlide) {
