@@ -141,6 +141,11 @@ body.modal-open {
       margin-left: 30px;
     }
 
+    .modal-content .comparison-table .comparison-table-content .header-row div .price {
+      display: flex;
+      flex-direction: row;
+    }
+
     .modal-content .comparison-table .comparison-table-content .orange-rows .orange-header.sticky, 
     .modal-content .comparison-table .comparison-table-content .blue-rows .blue-header.sticky, .modal-content .comparison-table .comparison-table-content .common-rows .combo-header.sticky{
       top: 2em;
