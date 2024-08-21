@@ -63,7 +63,7 @@ body.modal-open {
     min-height: 3rem;
   }
 
-  .price{
+  .modal-content .comparison-table .comparison-table-content .header-row div .price {
     display: flex;
     flex-direction: column;
   }
