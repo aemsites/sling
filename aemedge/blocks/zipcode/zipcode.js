@@ -134,5 +134,5 @@ export default async function decorate(block) {
         }
       });
     }
-  }, 100);
+  }, 500);
 }
