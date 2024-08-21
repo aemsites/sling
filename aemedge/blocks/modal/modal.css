@@ -19,7 +19,7 @@ body.modal-open {
 
   .modal-content .comparison-table .comparison-table-content .orange-rows .orange-header{
     background-color: rgb(255 152 0);
-    padding: 0 70px;
+    padding: 0 10px;
     display: flex;
     align-items: center;
     min-height: 3rem;
@@ -32,7 +32,6 @@ body.modal-open {
   .modal-content .comparison-table .comparison-table-content .header-row{
     background-color: white;
     min-height: 3rem;
-    padding: 0 70px;
   }
 
   .modal-content .comparison-table .comparison-table-content .header-row div{
@@ -41,9 +40,6 @@ body.modal-open {
     justify-content: center;
   }
 
-  .modal-content .comparison-table .comparison-table-content .header-row div .price .offer-price{
-    margin-left: 30px;
-  }
 
   .modal-content .comparison-table .comparison-table-content .header-row div .price .base-price{
     opacity: 0.5;
@@ -52,7 +48,7 @@ body.modal-open {
   .modal-content .comparison-table .comparison-table-content .blue-rows .blue-header{
     background-color:  rgb(0 50 175);
     color: white;
-    padding: 0 70px;
+    padding: 0 10px;
     display: flex;
     align-items: center;
     min-height: 3rem;
@@ -62,24 +58,29 @@ body.modal-open {
     background-color: black;
     color: white;
     display: flex;
-    padding: 0 70px;
+    padding: 0 10px;
     align-items: center;
     min-height: 3rem;
   }
 
+  .price{
+    display: flex;
+    flex-direction: column;
+  }
+
   .channel-div {
-    padding: 0 70px;
+    padding: 0 10px;
     border-bottom:  1px solid rgba(69 69 80 / 20%);
   }
 
   .channel-div span {
     width: 20%;
+    height: 15px;
     text-align: center;
   }
 
   .modal-content h2 {
     text-align: center;
-    margin-top: 3.75rem;
   }
 
   .modal-content p {
@@ -105,7 +106,7 @@ body.modal-open {
   .modal-content .comparison-table .comparison-table-content .orange-rows .orange-header.sticky, 
   .modal-content .comparison-table .comparison-table-content .blue-rows .blue-header.sticky, .modal-content .comparison-table .comparison-table-content .common-rows .combo-header.sticky{
     position: sticky;
-    top: 2em;
+    top: 3.5em;
     z-index: 999;
   }
 
@@ -121,6 +122,32 @@ body.modal-open {
       max-width: calc(-200px + 100vw);
       margin-top: 100px;
       max-height: 80%;
+    }
+
+    .channel-div {
+      padding: 0 70px;
+      border-bottom:  1px solid rgba(69 69 80 / 20%);
+    }
+
+    .channel-div span {
+      width: 20%;
+    }
+
+    .modal-content .comparison-table .comparison-table-content .orange-rows .orange-header, .modal-content .comparison-table .comparison-table-content .common-rows .combo-header, .modal-content .comparison-table .comparison-table-content .blue-rows .blue-header{
+      padding: 0 70px;
+    }
+
+    .modal-content .comparison-table .comparison-table-content .header-row div .price .offer-price{
+      margin-left: 30px;
+    }
+
+    .modal-content .comparison-table .comparison-table-content .orange-rows .orange-header.sticky, 
+    .modal-content .comparison-table .comparison-table-content .blue-rows .blue-header.sticky, .modal-content .comparison-table .comparison-table-content .common-rows .combo-header.sticky{
+      top: 2em;
+    }
+    
+    .modal-content .comparison-table .comparison-table-content .header-row{
+      padding: 0 70px;
     }
 
     .modal dialog .modal-content {
