@@ -87,13 +87,52 @@ export default async function decorate(block) {
     } else {
       block.innerHTML = `
       <div class="zipcodemodal">
-        <label> ZIP Code </label>
+        <label for="zipcodeinput">ZIP Code</label>
         <input 
-            type="text" 
-            id="zipcodeinput"
-        </>
+          type="text" 
+          required="required"
+          id="zipcodeinput"
+          maxlength="10"
+        />
       </div>
-     `;
+       <div class="error-message">Required</div>
+    `;
+      const navbarZip = document.querySelector('.geo-container .geo-text span');
+      const zipCodeInput = document.getElementById('zipcodeinput');
+      zipCodeInput.value = navbarZip.innerHTML;
+      const zipcodeModal = document.querySelector('.zipcodemodal');
+      const errorMessage = document.querySelector('.error-message');
+
+      zipCodeInput.addEventListener('input', () => {
+        zipCodeInput.value = zipCodeInput.value.replace(/[^0-9]/g, '');
+        if (zipCodeInput.value.length === 5) {
+          navbarZip.innerHTML = zipCodeInput.value;
+          errorMessage.style.display = 'none';
+          zipcodeModal.classList.remove('empty');
+        } else if (zipCodeInput.value.length === 0) {
+          errorMessage.style.display = 'block';
+          zipcodeModal.classList.add('empty');
+        } else if ((zipCodeInput.value.length > 5)) {
+          const zipcodeValue = zipCodeInput.value;
+          let zipcode = zipcodeValue.replace(/-/g, '');
+          zipcode = zipcode.slice(0, 5).concat('-', zipcode.slice(5));
+          zipCodeInput.value = zipcode;
+        } else {
+          errorMessage.style.display = 'none';
+          zipcodeModal.classList.remove('empty');
+        }
+      });
+      zipCodeInput.addEventListener('focusout', () => {
+        if (zipCodeInput.value.length === 0) {
+          errorMessage.innerHTML = 'Required';
+          errorMessage.style.display = 'block';
+          zipcodeModal.classList.add('empty');
+        } else if (zipCodeInput.value.length !== 5) {
+          errorMessage.innerHTML = 'Invalid ZIP Code';
+          errorMessage.style.display = 'block';
+          zipcodeModal.classList.add('empty');
+        }
+      });
     }
   }, 100);
 }
