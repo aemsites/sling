@@ -554,14 +554,22 @@ async function loadScript(src, attrs, gmBlock) {
   });
 }
 
-export async function loadGameFinderApp(gmBlock) {
-  await loadScript('/aemedge/scripts/sling-react/gamefinder-build.js', {}, gmBlock);
+const options = {
+  threshold: 0,
+};
+// eslint-disable-next-line no-use-before-define
+const observer = new IntersectionObserver(loadGameFinderApp, options);
+
+function loadGameFinderApp(entries) {
+  if (entries.some(async (entry) => {
+    if (entry.isIntersecting) {
+      await loadScript('/aemedge/scripts/sling-react/gamefinder-build.js', {}, entry.target);
+      observer.unobserve(entry.target);
+    }
+  }));
 }
 
-export async function loadGameFinders(doc) {
-  const gameFinderBlock = doc.querySelector('.game-finder.block');
-  await loadGameFinderApp(gameFinderBlock);
-  // gameFinderBlocks.forEach(async (gmBlock) => {
-  //  await loadGameFinderApp(gmBlock);
-  // });
+export async function loadGameFinders() {
+  const gameFinderBlock = document.querySelector('.game-finder.block');
+  observer.observe(gameFinderBlock);
 }
