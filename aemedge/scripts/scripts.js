@@ -440,6 +440,10 @@ async function loadLazy(doc) {
   autolinkModals(doc);
   const main = doc.querySelector('main');
   await loadBlocks(main);
+  const gameFinders = doc.querySelectorAll('.game-finder.block');
+  if (gameFinders && gameFinders.length > 0) {
+    await loadGameFinders(doc);
+  }
   buildMultipleButtons(main);
   const { hash } = window.location;
   const element = hash ? doc.getElementById(hash.substring(1)) : false;
@@ -449,10 +453,6 @@ async function loadLazy(doc) {
   buildGlobalBanner(main);
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
   loadFonts();
-  const gameFinders = doc.querySelectorAll('.game-finder.block');
-  if (gameFinders && gameFinders.length > 0) {
-    await loadGameFinders(doc);
-  }
   sampleRUM('lazy');
   sampleRUM.observe(main.querySelectorAll('div[data-block-name]'));
   sampleRUM.observe(main.querySelectorAll('picture > img'));
