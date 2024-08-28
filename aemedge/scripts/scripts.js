@@ -20,6 +20,7 @@ import {
   getPageType,
   buildFragmentBlocks,
   createTag,
+  loadGameFinders,
 } from './utils.js';
 
 const LCP_BLOCKS = ['category']; // add your LCP blocks to the list
@@ -448,6 +449,10 @@ async function loadLazy(doc) {
   buildGlobalBanner(main);
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
   loadFonts();
+  const gameFinders = doc.querySelectorAll('.game-finder.block');
+  if (gameFinders && gameFinders.length > 0) {
+    await loadGameFinders(doc);
+  }
   sampleRUM('lazy');
   sampleRUM.observe(main.querySelectorAll('div[data-block-name]'));
   sampleRUM.observe(main.querySelectorAll('picture > img'));

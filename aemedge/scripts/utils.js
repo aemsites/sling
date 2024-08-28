@@ -537,3 +537,31 @@ export async function fetchGQL(query, variables, operationName) {
   const gqlResponse = await res.json();
   return gqlResponse;
 }
+
+async function loadScript(src, attrs, gmBlock) {
+  return new Promise((resolve, reject) => {
+    const script = document.createElement('script');
+    script.src = src;
+    if (attrs) {
+      // eslint-disable-next-line no-restricted-syntax, guard-for-in
+      for (const attr in attrs) {
+        script.setAttribute(attr, attrs[attr]);
+      }
+    }
+    script.onload = resolve;
+    script.onerror = reject;
+    gmBlock.append(script);
+  });
+}
+
+export async function loadGameFinderApp(gmBlock) {
+  await loadScript('/aemedge/scripts/sling-react/gamefinder-build.js', {}, gmBlock);
+}
+
+export async function loadGameFinders(doc) {
+  const gameFinderBlock = doc.querySelector('.game-finder.block');
+  await loadGameFinderApp(gameFinderBlock);
+  // gameFinderBlocks.forEach(async (gmBlock) => {
+  //  await loadGameFinderApp(gmBlock);
+  // });
+}

@@ -135,6 +135,7 @@ export async function buildAuthorBlock() {
   section.append(buildBlock('author-card', { elems: [authImgContainer, authTxtContainer] }));
   return section;
 }
+
 /**
  * The default export that will be invoked when this remplate
  * loaded from scripts.js. search for loadTemplate(main) in scripts.js

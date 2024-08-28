@@ -1,25 +1,5 @@
 import { createTag } from '../../scripts/utils.js';
 
-async function loadScript(src, attrs) {
-  return new Promise((resolve, reject) => {
-    if (!document.querySelector(`main > script[src="${src}"]`)) {
-      const script = document.createElement('script');
-      script.src = src;
-      if (attrs) {
-        // eslint-disable-next-line no-restricted-syntax, guard-for-in
-        for (const attr in attrs) {
-          script.setAttribute(attr, attrs[attr]);
-        }
-      }
-      script.onload = resolve;
-      script.onerror = reject;
-      document.querySelector('main').append(script);
-    } else {
-      resolve();
-    }
-  });
-}
-
 function toPropName(name) {
   return typeof name === 'string'
     ? name
@@ -68,33 +48,22 @@ async function readBlockConfig(block) {
 }
 
 export default async function decorate(block) {
-  const observer = new IntersectionObserver(async (entries) => {
-    if (entries.some(async (entry) => {
-      if (entry.isIntersecting) {
-        const defultProps = {
-          showFilter: false,
-          filterOnlyFirstTwoPosition: false,
-          showDetailsModal: false,
-          agentView: false,
-          packageFilterDefault: 'All Games',
-          matchupImgFormat: 'png',
-        };
-        const config = await readBlockConfig(block);
-        if (config.leagueList) {
-          config.leagueList = config.leagueList.split(',');
-        }
-        if (config.numberOfDays) {
-          config.numberOfDays = parseInt(config.numberOfDays, 10);
-        }
-        const slingProps = { ...config, ...defultProps };
-        const container = createTag('div', { id: 'app', 'data-sling-props': JSON.stringify(slingProps) });
-        block.append(container);
-        loadScript('../../../aemedge/scripts/sling-react/gamefinder-build.js');
-        entries.forEach((gm) => {
-          observer.unobserve(gm);
-        });
-      }
-    }));
-  }, { threshold: 0 });
-  observer.observe(block);
+  const defultProps = {
+    showFilter: false,
+    filterOnlyFirstTwoPosition: false,
+    showDetailsModal: false,
+    agentView: false,
+    packageFilterDefault: 'All Games',
+    matchupImgFormat: 'png',
+  };
+  const config = await readBlockConfig(block);
+  if (config.leagueList) {
+    config.leagueList = config.leagueList.split(',');
+  }
+  if (config.numberOfDays) {
+    config.numberOfDays = parseInt(config.numberOfDays, 10);
+  }
+  const slingProps = { ...config, ...defultProps };
+  const container = createTag('div', { id: 'app', 'data-sling-props': JSON.stringify(slingProps) });
+  block.append(container);
 }
