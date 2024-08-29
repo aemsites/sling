@@ -5,6 +5,7 @@ import { loadFragment } from '../fragment/fragment.js';
 const decorateLinkItems = (footer) => {
   // add wrapper cs class to all ul elements
   footer.querySelectorAll('ul').forEach((ul) => {
+  //  createTag('li', { class: 'nav-items-wrapper' });
     ul.classList.add('nav-items-wrapper');
   });
   // add css classes for li items, a tags
@@ -13,6 +14,7 @@ const decorateLinkItems = (footer) => {
     li.querySelectorAll('a').forEach((a) => {
       a.classList.add('nav-link');
       a.setAttribute('target', '_blank');
+      a.setAttribute('aria-label', `Visit us on ${a.href}`);
       if (!a.querySelector('span.icon')) {
         const lnkTxt = createTag('span', { class: 'nav-link-text' });
         lnkTxt.innerText = a.innerText;
@@ -30,7 +32,7 @@ export default async function decorate(block) {
   block.textContent = '';
 
   // load footer fragment
-  const footerPath = footerMeta.footer || '/footer';
+  const footerPath = footerMeta.footer || '/aemedge/footer';
   const fragment = await loadFragment(footerPath);
   // decorate footer DOM
   const footer = document.createElement('div');
@@ -42,8 +44,8 @@ export default async function decorate(block) {
   });
   // in the primary move the social links to into its div
 
-  const primarylinks = createTag('ul', { class: 'footer-primary-links' });
-  const socialLinks = createTag('ul', { class: 'footer-social-links' });
+  const primarylinks = createTag('div', { class: 'footer-primary-links' });
+  const socialLinks = createTag('div', { class: 'footer-social-links nav-items-wrapper' });
   const uls = footer.querySelectorAll('.footer-primary ul');
   uls.forEach((ul, c) => {
     if (c === uls.length - 1) {
@@ -71,8 +73,8 @@ export default async function decorate(block) {
   const secSection = footer.querySelector('.section.footer-secondary');
 
   if (secSection) {
-    const copyright = createTag('div', { class: 'copy-right' });
-    const secFooterLinks = createTag('div', { class: 'sec-footer-links' });
+    const copyright = createTag('ul', { class: 'copy-right' });
+    const secFooterLinks = createTag('ul', { class: 'sec-footer-links' });
     secSection.querySelectorAll('ul > li').forEach((li, idx) => {
       if (idx === 0) {
         li.classList.add('copyright-item');

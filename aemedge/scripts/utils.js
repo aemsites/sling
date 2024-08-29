@@ -188,6 +188,13 @@ export function getPageType() {
   return '';
 }
 
+export function centerHeadlines() {
+  const headlines = document.querySelectorAll('h2 > strong, h3 > strong, h4 > strong');
+  headlines.forEach((headline) => {
+    headline.parentElement.classList.add('center');
+  });
+}
+
 /**
  * Fetches and transforms data from a JSON file
  * @param {string} path - The path to the JSON file
@@ -351,7 +358,7 @@ export async function addCardImage(row, style, eagerImage = false) {
       row.image,
       row.title,
       eagerImage,
-      [{ width: '800' }], // because 795 is the max card width
+      [{ width: '600' }], // good enough because 795 is the max card width
     ));
     return cardImageDiv;
   }
@@ -529,4 +536,41 @@ export async function fetchGQL(query, variables, operationName) {
   const res = await fetch(`${GRAPHQL_ENDPOINT}?${params}`);
   const gqlResponse = await res.json();
   return gqlResponse;
+}
+
+async function loadScript(src, attrs, gmBlock) {
+  return new Promise((resolve, reject) => {
+    const script = document.createElement('script');
+    script.src = src;
+    if (attrs) {
+      // eslint-disable-next-line no-restricted-syntax, guard-for-in
+      for (const attr in attrs) {
+        script.setAttribute(attr, attrs[attr]);
+      }
+    }
+    script.onload = resolve;
+    script.onerror = reject;
+    gmBlock.append(script);
+  });
+}
+
+const options = {
+  rootMargin: '0px 0px 500px 0px',
+  threshold: 0,
+};
+// eslint-disable-next-line no-use-before-define
+const observer = new IntersectionObserver(loadGameFinderApp, options);
+
+function loadGameFinderApp(entries) {
+  if (entries.some(async (entry) => {
+    if (entry.isIntersecting) {
+      await loadScript('/aemedge/scripts/sling-react/gamefinder-build.js', {}, entry.target);
+      observer.unobserve(entry.target);
+    }
+  }));
+}
+
+export async function loadGameFinders() {
+  const gameFinderBlock = document.querySelector('.game-finder.block');
+  observer.observe(gameFinderBlock);
 }

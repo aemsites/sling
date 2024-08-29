@@ -101,10 +101,6 @@
   text-align: center;
 }
 
-.playoffs.table table tbody tr td:nth-child(4) {
-  background-color: white;
-}
-
 .playoffs.table table .single-column-row.lightgrey td, .schedule.table table .single-column-row.lightgrey td {
   background-color: var(--dark-color);
   text-align: left;
@@ -125,7 +121,7 @@ blockquote {
 .blog-article > main div.section.table-container {
   width: 80%;
   margin: 0 auto;
-  padding: 0 16px;
+  padding: 0;
 }
 
 .playoffs.table,
@@ -137,10 +133,6 @@ blockquote {
 .schedule.table table {
   font-size: 16px;
   table-layout: fixed;
-}
-
-div.section.table-container .default-content-wrapper p {
-  text-align: center;
 }
 
 div.section.table-container .default-content-wrapper .button-container {
@@ -168,12 +160,7 @@ div.section.table-container .default-content-wrapper .button-container ~ p {
 
   .playoffs.table, .schedule.table{
     margin-left: 8px;
-  }
-
-  .playoffs.table table,
-  .schedule.table table {
-    width: 66%;
-    margin: 0 auto 0 17%;
+    margin-bottom: 48px;
   }
 }
 

@@ -1,4 +1,4 @@
-const tagsEndpoint = '/tags.json';
+const tagsEndpoint = '/aemedge/tags.json';
 let tagsPromise;
 const tagToPath = (
   (name) => {

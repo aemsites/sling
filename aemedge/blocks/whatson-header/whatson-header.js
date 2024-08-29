@@ -157,7 +157,7 @@ function toggleMenu(nav, navSections, forceExpanded = null) {
   if (isDesktop.matches) {
     navDrops.forEach((drop) => {
       if (!drop.hasAttribute('tabindex')) {
-        drop.setAttribute('role', 'button');
+      //  drop.setAttribute('role', 'button');
         drop.setAttribute('tabindex', 0);
         drop.addEventListener('focus', focusNavSection);
       }
@@ -210,7 +210,7 @@ export default async function decorate(block) {
   const brandLink = navBrand.querySelector('a');
   if (brandLink) {
     const brandLogo = document.createElement('img');
-    brandLogo.src = '/icons/whats-on.png';
+    brandLogo.src = '/aemedge/icons/whats-on.png';
     brandLogo.alt = 'What\'s On Sling';
     brandLogo.classList.add('nav-brand-logo');
     brandLink.innerHTML = '';

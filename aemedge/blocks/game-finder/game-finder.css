@@ -9,6 +9,7 @@
 .game-finder.block #app {
     z-index: 0;
     position: relative;
+    margin-bottom: 2.5rem;
 }
 
 .game-finder.block #app svg {
@@ -20,4 +21,13 @@
     min-width: unset;
     margin-top: unset;
     margin-bottom: unset;
+}
+
+/* stylelint-disable-next-line selector-class-pattern */
+.game-finder.block #app .ykLwg {
+position: initial
+}
+
+.game-finder.block #app .iqyiwh { 
+    height: auto;
 }

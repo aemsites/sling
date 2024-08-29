@@ -42,14 +42,10 @@ main .section.category-container {
   align-items: center;
 }
 
-.category .card-large .card-link .card-image picture {
-  aspect-ratio: 432 / 317;
-}
-
 .category .card-large .card-link .card-image img {
   border-radius: 4px;
   max-height: 550px;
-  max-width: 100%;
+  width: 100%;
   border: 0;
   aspect-ratio: 432 / 317;
   object-fit: cover;
@@ -57,6 +53,7 @@ main .section.category-container {
 
 .category .card-image {
   line-height: 0;
+  width: 100%
 }
 
 .category .card-link .card-image picture {
@@ -64,7 +61,7 @@ main .section.category-container {
 }
 
 .category .card-link .card-image picture::before {
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0, rgba(0, 0, 0, 0.65) 100%);
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.15) 20%, rgba(0, 0, 0, 0.75) 100%);
   position: absolute;
   border-radius: 4px;
   content: '';
@@ -122,24 +119,24 @@ main .section.category-container {
   color: white;
   font-size: var(--body-font-size-xs);
   line-height: 21px;
-}
 
-.category .card-large .card-link .card-content .card-author-date .card-author a {
-  color: white;
-  text-decoration: underline;
+  a {
+    color: white;
+  }
 }
-
 
 .category .card-medium .card-link .card-content .card-author-date .card-author,
 .category .card-small .card-link .card-content .card-author-date .card-author {
-  color: var(--link-color);
   font-size: var(--body-font-size-xs);
   line-height: 21px;
-}
 
-.category .card-medium .card-link .card-content .card-author-date .card-author:hover,
-.category .card-small .card-link .card-content .card-author-date .card-author:hover {
-  color: var(--link-hover-color);
+  a {
+    color: #0078aa;
+ }
+
+  a:hover {
+    color: var(--link-hover-color);
+  }
 }
 
 .category .card-large .card-link .card-content .card-author-date .card-date {
@@ -170,10 +167,7 @@ main .section.category-container {
 .category .card-medium .card-link .card-image,
 .category .card-small .card-link .card-image {
   position: relative;
-  display: flex;
-  justify-content: center;
   overflow: hidden;
-  align-items: center;
   transition: box-shadow 0.3s ease;
   margin: 10px;
   aspect-ratio: 16 / 9;
@@ -191,6 +185,8 @@ main .section.category-container {
   overflow: hidden;
   border: 0;
   aspect-ratio: 16 / 9;
+  object-fit: cover;
+  width: 100%;
 }
 
 .category .card-medium .card-content .card-tags,
@@ -201,33 +197,31 @@ main .section.category-container {
   align-content: flex-end;
   margin-top: -175px;
   flex-wrap: wrap;
-}
 
-.category .card-medium .card-content .card-tags a,
-.category .card-small .card-content .card-tags a {
-  border: 1px solid #fff;
-  color: #fff;
-  cursor: pointer;
-  display: inline-block;
-  font-size: 11px;
-  font-weight: bold;
-  line-height: 16px;
-  margin: 5px 5px 0 0;
-  max-height: 25px;
-  padding: 5px 17px 2px;
-  pointer-events: auto;
-  white-space: nowrap;
-  z-index: 1;
-  animation: ease-in-out 3s;
-}
+  a {
+    border: 1px solid #fff;
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 11px;
+    font-weight: bold;
+    line-height: 16px;
+    margin: 5px 5px 0 0;
+    max-height: 25px;
+    padding: 5px 17px 2px;
+    pointer-events: auto;
+    white-space: nowrap;
+    z-index: 1;
+    animation: ease-in-out 3s;
+  }
 
-.category .card-medium .card-content .card-tags a:hover,
-.category .card-small .card-content .card-tags a:hover {
-  border-color: var(--link-color);
-  color: var(--link-color);
-  text-decoration: underline;
-  cursor: pointer;
-  transition: color .3s ease;
+  a:hover {
+    border-color: var(--link-color);
+    color: var(--link-color);
+    text-decoration: underline;
+    cursor: pointer;
+    transition: color .3s ease;
+  }
 }
 
 .category .card-medium .card-content .card-title,
@@ -427,17 +421,15 @@ main .section.category-container {
 
   .category .card-medium .card-link .card-content .card-author-date .card-author {
     color: white;
-  }
 
-  .category .card-medium .card-link .card-content .card-author-date .card-author a {
-    color: white;
-    text-decoration: underline;
-  }
+    a {
+        color: white;
+    }
 
-  .category .card-medium .card-link .card-content .card-author-date .card-author:hover {
-    color: white;
+    a:hover {
+      color: white;
+    }
   }
-
 }
 
 @media screen and (width >=1024px) {

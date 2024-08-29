@@ -3,6 +3,7 @@ import {
   buildVideoBlocks,
   buildFragmentBlocks,
   buildAuthorLink,
+  centerHeadlines,
 } from '../../scripts/utils.js';
 
 import {
@@ -27,7 +28,7 @@ export function decorateAwardIcons() {
 const getAuthorPhoto = (aName) => {
   const aPhotosLoc = `${window.location.origin}/whatson/authors/photos`;
   if (aName !== 'Sling Staff') {
-    return `${aPhotosLoc}/${aName.trim().toLowerCase().replace(' ', '-')}-author.jpeg`;
+    return `${aPhotosLoc}/${aName.trim().toLowerCase().replaceAll(' ', '-')}-author.jpeg`;
   }
   return `${aPhotosLoc}/sling-default-author.jpg`;
 };
@@ -109,7 +110,6 @@ export async function buildAuthorBlock() {
       {
         class: `fa fa-${social}`,
         title: `Share this article on ${social}`,
-        'aria-label': `Share this article on ${social}`,
       },
     );
     span.append(link);
@@ -135,6 +135,7 @@ export async function buildAuthorBlock() {
   section.append(buildBlock('author-card', { elems: [authImgContainer, authTxtContainer] }));
   return section;
 }
+
 /**
  * The default export that will be invoked when this remplate
  * loaded from scripts.js. search for loadTemplate(main) in scripts.js
@@ -163,4 +164,5 @@ export default async function buildBlogDetails(main) {
   buildFragmentBlocks(main);
   buildVideoBlocks(main);
   decorateAwardIcons(main);
+  centerHeadlines();
 }
