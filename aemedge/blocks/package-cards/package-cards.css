@@ -1,0 +1,12 @@
+.package-cards.block {
+    background: initial;
+}
+
+.package-cards.block > div:not([id]) p {
+    display: none;
+}
+
+.package-cards.block #app {
+    z-index: 300;
+    position: relative;
+}
