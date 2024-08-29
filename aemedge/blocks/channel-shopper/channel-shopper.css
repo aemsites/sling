@@ -1,0 +1,23 @@
+.channel-shopper.block {
+    background: initial;
+}
+
+.channel-shopper.block > div:not([id]) p {
+    display: none;
+}
+
+.channel-shopper.block #app {
+    z-index: 300;
+    position: relative;
+}
+
+.channel-shopper.block #app svg {
+    width: 15px;
+    height: 20px;
+}
+
+.channel-shopper.block #app button {
+    min-width: unset;
+    margin-top: unset;
+    margin-bottom: unset;
+}
