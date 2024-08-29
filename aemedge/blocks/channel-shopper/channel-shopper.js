@@ -1,6 +1,6 @@
 import { createTag } from '../../scripts/utils.js';
 
-async function loadScript(src, attrs) {
+async function loadScript(src, attrs, container) {
   return new Promise((resolve, reject) => {
     const script = document.createElement('script');
     script.src = src;
@@ -12,7 +12,7 @@ async function loadScript(src, attrs) {
     }
     script.onload = resolve;
     script.onerror = reject;
-    document.querySelector('.channel-shopper.block').append(script);
+    container.append(script);
   });
 }
 
@@ -62,35 +62,44 @@ async function readBlockConfig(block) {
   });
   return config;
 }
-
-export default async function decorate(block) {
-  const observer = new IntersectionObserver(async (entries) => {
-    if (entries.some((entry) => entry.isIntersecting)) {
-      const config = await readBlockConfig(block);
-      const slingProps = {
-        classification: 'us',
-        planIdentifier: `${config.planIdentifier}` || 'one-month',
-        planOfferIdentifier: null,
-        buttonText: `${config.buttonText}` || 'SHOP BY CHANNEL',
-        modalHeaderText: `${config.modalHeaderText}` || 'Choose the channels you like to watch & we’ll recommend the best plan for you!',
-        searchChannelPlaceholder: `${config.searchChannelPlaceholder}` || 'Search channels...',
-        noResultFoundText: `${config.noResultFoundText}` || 'We couldn’t find this channel, but we found other channels you might like.',
-        recommendationText: `${config.modalHeaderText}` || 'Choose a channel to view a recommendation',
-        localBadgeText: `${config.localBadgeText}` || 'LOCAL',
-        checkoutButtonText: `${config.checkoutButtonText}` || 'CHECKOUT',
-        channelIconUrl: '/aemedge/icons/channels',
-        ctaUrl: `${config.ctaUrl}` || '/cart/magento/account',
-        maxChannelsSelected: 5,
-        limitHitErrorText: `${config.limitHitErrorText}` || 'Unselect a channel to add another. To view all channels '
-                              + 'in your recommended plan, click the \'more\' button(s).',
-        errorMsgDuration: 5000,
-        promoTruncateCharLimit: 13,
-      };
-
-      const container = createTag('div', { id: 'app', 'data-sling-props': JSON.stringify(slingProps) });
-      block.append(container);
-      loadScript('../../../aemedge/scripts/sling-react/channel-shopper-build.js');
+const options = {
+  rootMargin: '0px 0px 500px 0px',
+  threshold: 0,
+};
+// eslint-disable-next-line no-use-before-define
+const observer = new IntersectionObserver(loadReactLib, options);
+async function loadReactLib(entries) {
+  if (entries.some(async (entry) => {
+    if (entry.isIntersecting) {
+      await loadScript('../../../aemedge/scripts/sling-react/channel-shopper-build.js', {}, entry.target);
+      observer.unobserve(entry.target);
     }
-  }, { threshold: 0 });
+  }));
+}
+export default async function decorate(block) {
+  const config = await readBlockConfig(block);
+  const slingProps = {
+    classification: 'us',
+    planIdentifier: `${config.planIdentifier}` || 'one-month',
+    planOfferIdentifier: null,
+    buttonText: `${config.buttonText}` || 'SHOP BY CHANNEL',
+    modalHeaderText: `${config.modalHeaderText}` || 'Choose the channels you like to watch & we’ll recommend the best plan for you!',
+    searchChannelPlaceholder: `${config.searchChannelPlaceholder}` || 'Search channels...',
+    noResultFoundText: `${config.noResultFoundText}` || 'We couldn’t find this channel, but we found other channels you might like.',
+    recommendationText: `${config.modalHeaderText}` || 'Choose a channel to view a recommendation',
+    localBadgeText: `${config.localBadgeText}` || 'LOCAL',
+    checkoutButtonText: `${config.checkoutButtonText}` || 'CHECKOUT',
+    channelIconUrl: '/aemedge/icons/channels',
+    ctaUrl: `${config.ctaUrl}` || '/cart/magento/account',
+    maxChannelsSelected: 5,
+    limitHitErrorText: `${config.limitHitErrorText}` || 'Unselect a channel to add another. To view all channels '
+                          + 'in your recommended plan, click the \'more\' button(s).',
+    errorMsgDuration: 5000,
+    promoTruncateCharLimit: 13,
+  };
+
+  const container = createTag('div', { id: 'app', 'data-sling-props': JSON.stringify(slingProps) });
+  block.append(container);
+
   observer.observe(block);
 }
