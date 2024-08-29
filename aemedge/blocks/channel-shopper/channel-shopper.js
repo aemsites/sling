@@ -63,7 +63,6 @@ async function readBlockConfig(block) {
   return config;
 }
 const options = {
-  rootMargin: '0px 0px 700px 0px',
   threshold: 0,
 };
 // eslint-disable-next-line no-use-before-define
