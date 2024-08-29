@@ -77,6 +77,7 @@ async function loadReactLib(entries) {
 }
 export default async function decorate(block) {
   const config = await readBlockConfig(block);
+  console.log(config);
   const slingProps = {
     optionalSectionTitleText: 'Sling TV Services',
     optionalSectionSubtitleText: 'No annual contracts. Customize with extras.',
