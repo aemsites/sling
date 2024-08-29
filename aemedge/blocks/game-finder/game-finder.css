@@ -22,3 +22,12 @@
     margin-top: unset;
     margin-bottom: unset;
 }
+
+/* stylelint-disable-next-line selector-class-pattern */
+.game-finder.block #app .ykLwg {
+position: initial
+}
+
+.game-finder.block #app .iqyiwh { 
+    height: auto;
+}

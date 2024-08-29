@@ -537,3 +537,40 @@ export async function fetchGQL(query, variables, operationName) {
   const gqlResponse = await res.json();
   return gqlResponse;
 }
+
+async function loadScript(src, attrs, gmBlock) {
+  return new Promise((resolve, reject) => {
+    const script = document.createElement('script');
+    script.src = src;
+    if (attrs) {
+      // eslint-disable-next-line no-restricted-syntax, guard-for-in
+      for (const attr in attrs) {
+        script.setAttribute(attr, attrs[attr]);
+      }
+    }
+    script.onload = resolve;
+    script.onerror = reject;
+    gmBlock.append(script);
+  });
+}
+
+const options = {
+  rootMargin: '0px 0px 500px 0px',
+  threshold: 0,
+};
+// eslint-disable-next-line no-use-before-define
+const observer = new IntersectionObserver(loadGameFinderApp, options);
+
+function loadGameFinderApp(entries) {
+  if (entries.some(async (entry) => {
+    if (entry.isIntersecting) {
+      await loadScript('/aemedge/scripts/sling-react/gamefinder-build.js', {}, entry.target);
+      observer.unobserve(entry.target);
+    }
+  }));
+}
+
+export async function loadGameFinders() {
+  const gameFinderBlock = document.querySelector('.game-finder.block');
+  observer.observe(gameFinderBlock);
+}
