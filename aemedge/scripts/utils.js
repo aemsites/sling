@@ -555,6 +555,7 @@ async function loadScript(src, attrs, gmBlock) {
 }
 
 const options = {
+  rootMargin: '0px 0px 500px 0px',
   threshold: 0,
 };
 // eslint-disable-next-line no-use-before-define
