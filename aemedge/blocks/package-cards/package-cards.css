@@ -10,3 +10,14 @@
     z-index: 300;
     position: relative;
 }
+
+/* stylelint-disable-next-line selector-class-pattern */
+.package-cards.block #app button.sc-cHGsZl {
+   padding: unset;
+   margin: unset;
+   min-width: 0;
+}
+
+.package-cards.block #app a {
+color: var(--clr-white);
+}
