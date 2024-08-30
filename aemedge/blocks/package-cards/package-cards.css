@@ -8,11 +8,13 @@
 .package-cards.block #app button.back-arrow-blue,
 .package-cards.block #app button.next-arrow-blue,
 .package-cards.block #app button.back-arrow-orange,
-.package-cards.block #app button.next-arrow-orange
+.package-cards.block #app button.next-arrow-orange,
+.package-cards.block #app button.sc-kgAjT
  {
    padding: unset;
    margin: unset;
    min-width: 0;
+   border-radius: 0;
 }
 
 .package-cards.block #app a:any-link {
