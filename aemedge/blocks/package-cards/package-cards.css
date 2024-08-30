@@ -22,6 +22,12 @@
    min-width: 0;
 }
 
-.package-cards.block #app a {
-color: var(--clr-white);
+
+
+@media (width >= 768px) {
+/* stylelint-disable-next-line selector-class-pattern */
+.package-cards.block #app .fIvgai {
+    right: 12px;
+    top: 28px;
+}
 }
