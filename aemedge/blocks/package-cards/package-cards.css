@@ -22,7 +22,26 @@
    min-width: 0;
 }
 
+.package-cards.block #app a:any-link {
+    color:initial;
+    border-radius: 1600px;
+}
 
+.package-cards.block #app a.blue-homepage-base-card-cart-link {
+    color: var(--clr-white);
+}
+
+.package-cards.block #app a.blue-homepage-base-card-cart-link:hover {
+    color: var(--clr-white);
+}
+
+.package-cards.block #app a:hover {
+    color:initial;
+}
+
+.package-cards.block #app button{
+    border-radius: 1600px;
+}
 
 @media (width >= 768px) {
 /* stylelint-disable-next-line selector-class-pattern */
