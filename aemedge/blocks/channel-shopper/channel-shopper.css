@@ -6,9 +6,9 @@
     display: none;
 }
 
-.channel-shopper.block #app {
-    z-index: 300;
-    position: relative;
+.channel-shopper.block #app,
+.channel-shopper.block #app > * {
+    z-index: 0;
 }
 
 .channel-shopper.block #app svg {

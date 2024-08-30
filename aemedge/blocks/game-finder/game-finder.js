@@ -3,6 +3,8 @@ import { createTag, readBlockConfig } from '../../scripts/utils.js';
 export default async function decorate(block) {
   const defultProps = {
     showFilter: false,
+    channelsLogoPath: '/aemedge/icons/channels/AllLOBLogos/color',
+    modalChannelsLogoPath: '/aemedge/icons/channels/AllLOBLogos/color',
     filterOnlyFirstTwoPosition: false,
     showDetailsModal: false,
     agentView: false,
