@@ -1,9 +1,10 @@
+/* stylelint-disable selector-class-pattern */
 
 .package-cards.block > div:not([id]) p {
     display: none;
 }
 
-/* stylelint-disable-next-line selector-class-pattern */
+
 .package-cards.block #app button.back-arrow-blue,
 .package-cards.block #app button.next-arrow-blue,
 .package-cards.block #app button.back-arrow-orange,
@@ -35,13 +36,17 @@
     border-radius: 1600px;
 }
 
-/* stylelint-disable-next-line selector-class-pattern */
+.package-cards.block #app > * {
+    z-index: 0;
+}
+
 .package-cards.block #app div.eMQgdL > *{
     height: 479px;
 }
 
+
+
 @media (width >= 768px) {
-/* stylelint-disable-next-line selector-class-pattern */
 .package-cards.block #app .fIvgai {
     right: 12px;
     top: 28px;
