@@ -4,7 +4,7 @@ export default async function decorate(block) {
   const defultProps = {
     showFilter: false,
     channelsLogoPath: '/aemedge/icons/channels/AllLOBLogos/color',
-    modalChannelsLogoPath: '/aemedge/icons/channels/AllLOBLogos/color',
+    modalChannelsLogoPath: '/aemedge/icons/application-assets/shared/web/logos/black',
     filterOnlyFirstTwoPosition: false,
     showDetailsModal: false,
     agentView: false,
