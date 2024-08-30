@@ -27,7 +27,7 @@ export default async function decorate(block) {
     recommendationText: `${config.modalHeaderText}` || 'Choose a channel to view a recommendation',
     localBadgeText: `${config.localBadgeText}` || 'LOCAL',
     checkoutButtonText: `${config.checkoutButtonText}` || 'CHECKOUT',
-    channelIconUrl: '/aemedge/icons/channels',
+    channelIconUrl: '/aemedge/icons/channels/AllLOBLogos/color',
     ctaUrl: `${config.ctaUrl}` || '/cart/magento/account',
     maxChannelsSelected: 5,
     limitHitErrorText: `${config.limitHitErrorText}` || 'Unselect a channel to add another. To view all channels '
