@@ -35,6 +35,11 @@
     border-radius: 1600px;
 }
 
+/* stylelint-disable-next-line selector-class-pattern */
+.package-cards.block #app div.eMQgdL > *{
+    height: 479px;
+}
+
 @media (width >= 768px) {
 /* stylelint-disable-next-line selector-class-pattern */
 .package-cards.block #app .fIvgai {
