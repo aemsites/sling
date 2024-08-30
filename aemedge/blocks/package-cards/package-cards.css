@@ -9,7 +9,8 @@
 .package-cards.block #app button.next-arrow-blue,
 .package-cards.block #app button.back-arrow-orange,
 .package-cards.block #app button.next-arrow-orange,
-.package-cards.block #app button.sc-kgAjT
+.package-cards.block #app button.sc-kgAjT,
+.package-cards.block #app button[aria-label="close"]
  {
    padding: unset;
    margin: unset;
@@ -20,6 +21,11 @@
 .package-cards.block #app a:any-link {
     color:initial;
     border-radius: 1600px;
+}
+
+.package-cards.block #app div.VhpVA { 
+    inset: 50px 0;
+    height: 100vh;
 }
 
 .package-cards.block #app a.blue-homepage-base-card-cart-link {
