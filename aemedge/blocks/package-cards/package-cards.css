@@ -12,7 +12,11 @@
 }
 
 /* stylelint-disable-next-line selector-class-pattern */
-.package-cards.block #app button.sc-cHGsZl {
+.package-cards.block #app button.back-arrow-blue,
+.package-cards.block #app button.next-arrow-blue,
+.package-cards.block #app button.back-arrow-orange,
+.package-cards.block #app button.next-arrow-orange
+ {
    padding: unset;
    margin: unset;
    min-width: 0;
