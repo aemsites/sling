@@ -4,20 +4,31 @@ import { createTag } from '../../scripts/utils.js';
 function getVideoUrl(videoLinks) {
   const screenWidth = window.innerWidth;
 
+  if (videoLinks.length === 0) {
+    return null;
+  }
+  if (videoLinks.length === 1) {
+    return videoLinks[0].getAttribute('href');
+  }
+  if (videoLinks.length === 2) {
+    // First link for desktop and tablet, second link for mobile
+    if (screenWidth >= 1024) {
+      return videoLinks[0].getAttribute('href'); // Desktop
+    }
+    if (screenWidth >= 768 && screenWidth < 1024) {
+      return videoLinks[0].getAttribute('href'); // Tablet
+    }
+    return videoLinks[1].getAttribute('href'); // Mobile
+  }
+
+  // If there are 3 or more links
   if (screenWidth >= 1024) {
-    // Desktop view (1024px and above)
-    return videoLinks.find((link) => link.getAttribute('href').includes('desktop'))?.getAttribute('href');
+    return videoLinks[0].getAttribute('href'); // Desktop
   }
   if (screenWidth >= 768 && screenWidth < 1024) {
-    // Tablet view (768px to 1023px)
-    return videoLinks.find((link) => link.getAttribute('href').includes('tablet'))?.getAttribute('href');
+    return videoLinks[1].getAttribute('href'); // Tablet
   }
-  if (screenWidth < 768) {
-    // Mobile view (below 768px)
-    return videoLinks.find((link) => link.getAttribute('href').includes('mobile'))?.getAttribute('href');
-  }
-  // return a default video
-  return videoLinks.find((link) => link.getAttribute('href').includes('mobile'))?.getAttribute('href');
+  return videoLinks[2].getAttribute('href'); // Mobile
 }
 
 export default function decorate(block) {
