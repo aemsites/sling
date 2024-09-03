@@ -1,6 +1,36 @@
 // import { createOptimizedPicture } from '../../scripts/aem.js';
 import { createTag } from '../../scripts/utils.js';
 
+function getVideoUrl(videoLinks) {
+  const screenWidth = window.innerWidth;
+
+  if (videoLinks.length === 0) {
+    return null;
+  }
+  if (videoLinks.length === 1) {
+    return videoLinks[0].getAttribute('href');
+  }
+  if (videoLinks.length === 2) {
+    // First link for desktop and tablet, second link for mobile
+    if (screenWidth >= 1024) {
+      return videoLinks[0].getAttribute('href'); // Desktop
+    }
+    if (screenWidth >= 768 && screenWidth < 1024) {
+      return videoLinks[0].getAttribute('href'); // Tablet
+    }
+    return videoLinks[1].getAttribute('href'); // Mobile
+  }
+
+  // If there are 3 or more links
+  if (screenWidth >= 1024) {
+    return videoLinks[0].getAttribute('href'); // Desktop
+  }
+  if (screenWidth >= 768 && screenWidth < 1024) {
+    return videoLinks[1].getAttribute('href'); // Tablet
+  }
+  return videoLinks[2].getAttribute('href'); // Mobile
+}
+
 export default function decorate(block) {
   const h1Parent = block.querySelector('h1').parentElement;
   h1Parent.classList.add('hero-content');
@@ -24,11 +54,18 @@ export default function decorate(block) {
     });
   }
 
-  // Handle video
-  const videoLink = block.querySelector('a[href*=".mp4"]');
-  if (videoLink) {
-    const videoUrl = videoLink.href;
-    // const videoWrapper = createTag('div', { class: 'hero-video' });
+  const videoLinks = Array.from(block.querySelectorAll('a[href*=".mp4"]'));
+  let currentVideoUrl = getVideoUrl(videoLinks);
+  // Remove video links from DOM to prevent them from showing up as text
+  videoLinks.forEach((link) => link.parentElement.remove());
+  function setupVideo(url) {
+    if (!url) return;
+
+    const existingVideo = block.querySelector('video');
+    if (existingVideo) {
+      existingVideo.remove();
+    }
+
     const video = createTag('video', {
       autoplay: 'true',
       playsinline: 'true',
@@ -36,18 +73,26 @@ export default function decorate(block) {
       loop: 'true',
       oncanplay: 'this.muted=true',
     });
+
     video.oncanplaythrough = () => {
       video.muted = true;
       video.play();
     };
-    const videoSource = createTag('source', { src: videoUrl });
+    const videoSource = createTag('source', { src: url, type: 'video/mp4' });
     video.append(videoSource);
-    // If video is wrapped in a button container, replace the container with the video wrapper
-    if (videoLink.parentElement.tagName === 'P' && videoLink.parentElement.classList.contains('button-container')) {
-      videoLink.parentElement.remove();
-    } else {
-      videoLink.remove();
-    }
+
     block.prepend(video);
   }
+  setupVideo(currentVideoUrl);
+
+  // Resize event listener to update video based on screen size changes
+  window.addEventListener('resize', () => {
+    const newVideoUrl = getVideoUrl(videoLinks);
+
+    // Update video only if the URL changes
+    if (newVideoUrl !== currentVideoUrl) {
+      currentVideoUrl = newVideoUrl;
+      setupVideo(currentVideoUrl);
+    }
+  });
 }
