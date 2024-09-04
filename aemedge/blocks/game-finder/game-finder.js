@@ -1,55 +1,10 @@
-import { createTag } from '../../scripts/utils.js';
-
-function toPropName(name) {
-  return typeof name === 'string'
-    ? name
-      .replace(/[^0-9a-z]/gi, '-')
-      .replace(/-+/g, '-')
-      .replace(/^-|-$/g, '')
-    : '';
-}
-
-async function readBlockConfig(block) {
-  const config = {};
-  block.querySelectorAll(':scope > div:not([id])').forEach((row) => {
-    if (row.children) {
-      const cols = [...row.children];
-      if (cols[1]) {
-        const col = cols[1];
-        const name = toPropName(cols[0].textContent);
-        let value = '';
-        if (col.querySelector('a')) {
-          const as = [...col.querySelectorAll('a')];
-          if (as.length === 1) {
-            value = as[0].href;
-          } else {
-            value = as.map((a) => a.href);
-          }
-        } else if (col.querySelector('img')) {
-          const imgs = [...col.querySelectorAll('img')];
-          if (imgs.length === 1) {
-            value = imgs[0].src;
-          } else {
-            value = imgs.map((img) => img.src);
-          }
-        } else if (col.querySelector('p')) {
-          const ps = [...col.querySelectorAll('p')];
-          if (ps.length === 1) {
-            value = ps[0].textContent;
-          } else {
-            value = ps.map((p) => p.textContent);
-          }
-        } else value = row.children[1].textContent;
-        config[name] = value;
-      }
-    }
-  });
-  return config;
-}
+import { createTag, readBlockConfig } from '../../scripts/utils.js';
 
 export default async function decorate(block) {
   const defultProps = {
     showFilter: false,
+    channelsLogoPath: '/aemedge/icons/channels/AllLOBLogos/color',
+    modalChannelsLogoPath: '/aemedge/icons/application-assets/shared/web/logos/black',
     filterOnlyFirstTwoPosition: false,
     showDetailsModal: false,
     agentView: false,
