@@ -13,91 +13,68 @@ async function loadReactLib(entries) {
   }));
 }
 
+function createLogoObject(logo) {
+  const logoStr = logo.split('=');
+  const logoObject = {};
+  logoObject.channelSign = logoStr[0].trim();
+  logoObject.alText = logoStr[1].trim();
+  return logoObject;
+}
 export default async function decorate(block) {
   const config = await readBlockConfig(block);
-  const slingProps = {
-    optionalSectionTitleText: config['Optional-Section-Title-Text'] || 'Sling TV Services',
-    optionalSectionSubtitleText: config['Optional-Section-Subtitle-Text'] || 'No annual contracts. Customize with extras.',
-    blueServiceDeviceStreamsText: config['Blue-Service-Device-Stream-Text'] || 'Stream on 3 devices at a time',
-    orangeServiceDeviceStreamsText: config['Orange-Service-Device-Stream-Text'] || 'Stream on 1 device at a time',
-    comboServiceDeviceStreamsText: config['Combo-Service-Device-Stream-Text'] || '3 + 1 device streams',
-    blueServiceDVRText: config['Blue-Service-DVR-Text'] || '50 Hours DVR Storage Included',
-    orangeServiceDVRText: config['Orange-Service-DVR-Text'] || '50 Hours DVR Storage Included',
-    comboServiceDVRText: config['Combo-Service-DVR-Text'] || '50 Hours DVR Storage Included',
-    orangeExclusiveChannelsGenres: 'Sports and Family',
-    blueExclusiveChannelsGenres: 'News and Entertainment',
-    showOrangeHighlightBanner: false,
-    showBlueHighlightBanner: false,
-    showComboHighlightBanner: false,
-    blueServiceGoodForOne: config['Blue-Service-First-Good-For-Text'] || 'Families',
-    orangeServiceGoodForOne: config['Orange-Service-First-Good-For-Text'] || 'Lifestyle',
-    comboServiceGoodForOne: config['Combo-Service-First-Good-For-Text'] || 'Sports',
-    blueServiceGoodForTwo: config['Blue-Service-Second-Good-For-Text'] || 'NFL Fans',
-    orangeServiceGoodForTwo: config['Orange-Service-Second-Good-For-Text'] || 'Sports Lovers',
-    comboServiceGoodForTwo: config['Combo-Service-Second-Good-For-Text'] || 'Entertainment',
-    showLocalsBanners: config['Show-locals-banner-on-blue-and-combo-card'] || true,
-    classification: 'us',
-    iconURLBase: '/aemedge/icons/channels/AllLOBLogos/color',
-    grayIconURLBase: '/aemedge/icons/channels/AllLOBLogos/gray',
-    ctaStyle: 'primary',
-    ctaTheme: 'light',
-    ctaSubText: 'Offer Details',
-    ctaSubTextColor: 'marshmallow',
-    ctaSubTextDesktopAlignment: 'left',
-    ctaSubTextMobileAlignment: 'left',
-    planIdentifier: config['Plan-Identifier'] || 'one-month',
-    planOfferIdentifier: config['Plan-Offer-Identifier'] || 'extra-stair-step-2',
-    comparisonComponentProps: {
-      analyticsModalName: 'package-compare-v2',
-      usePageScroll: false,
-      modalWidth: '1000px',
-      modalHeight: '80%',
-      headerText: 'Sling Channels',
-      subheaderText: 'Don’t see a channel you like? More channels are available in add-ons.',
-      slingComboAuthoredName: 'Get Both',
-      monthText: ' ',
-      compareIconURLBase: '/aemedge/icons/channels/AllLOBLogos/color',
-      hideFooterCTA: true,
-      footerCtaLink: '/cart/magento/account?classification=us&plan=one-month&plan_offer=extra-stair-step-2',
-      footerCtaText: 'Try Us Today',
-      targetWindow: '_self',
-      mobileStickyCTATextColor: 'White',
-      orangeServiceCTALink: '/cart/magento/account?classification=us&plan=one-month&plan_offer=extra-stair-step-2&sb=domestic',
-      blueServiceCTALink: '/cart/magento/account?classification=us&plan=one-month&plan_offer=extra-stair-step-2&sb=sling-mss',
-      comboServiceCTALink: '/cart/magento/account?classification=us&plan=one-month&plan_offer=extra-stair-step-2&sb=sling-combo',
-      orangeServiceCTAText: config['Orange-Service-CTA-Text'] || 'Add Orange',
-      blueServiceCTAText: config['Blue-Service-CTA-Text'] || 'Add Blue',
-      comboServiceCTAText: config['Combo-Service-CTA-Text'] || 'Add Both',
-      orangeServiceTitleText: config['Orange-Service-Title-Text'] || 'Orange',
-      blueServiceTitleText: config['Blue-Service-Title-Text'] || 'Blue',
-      comboServiceTitleText: config['Combo-Service-Title-Text'] || 'Orange & Blue',
-      servicesCompareToolBlueCtaText: config['Blue-CTA-Text'] || 'Select',
-      servicesCompareToolOrangeCtaText: config['Orange-CTA-Text'] || 'Select',
-      servicesCompareToolComboCtaText: config['Combo-CTA-Text'] || 'Select',
-      domesticSegmentSectionText: 'Only on Sling Orange: {channelCount} channels',
-      domesticSegmentSectionTextColor: '#171725',
-      domesticSegmentSectionTextBackgroundColor: 'rgb(255,152,0)',
-      slingMssSegmentSectionText: 'Only on Sling Blue: {channelCount} channels',
-      slingMssSegmentSectionTextColor: '#E9E9EA',
-      slingMssSegmentSectionTextBackgroundColor: 'rgb(0,50,175)',
-      slingMssLocalsSegmentSectionText: 'Live Local Channels in {zipCode}',
-      slingMssLocalsSegmentSectionTextColor: '#171725',
-      slingMssLocalsSegmentSectionTextBackgroundColor: '#C3C3C3',
-      slingMssOtherChannelsSegmentSectionText: 'More Channels on Sling Blue',
-      slingMssOtherChannelsSegmentSectionTextColor: '#171725',
-      slingMssOtherChannelsSegmentSectionTextBackgroundColor: '#C3C3C3',
-      slingComboSegmentSectionText: 'Available in All Base Services: {channelCount} channels',
-      slingComboSegmentSectionTextColor: '#E9E9EA',
-      domesticSegmentSectionTextBackground: 'linear-gradient(90deg, rgba(255,152,0,1) 0%, rgba(255,208,60,1) 100%);',
-      slingMssSegmentSectionTextBackground: 'linear-gradient(90deg, rgba(0,50,175,1) 0%, rgba(0,91,255,1) 100%)',
-      slingComboSegmentSectionTextBackground: 'linear-gradient(90deg, rgba(23,23,37,1) 0%, rgba(0,50,175,1) 100%)',
-      invalidZipText: 'Invalid ZIP Code',
-      zipLabel: 'ZIP Code',
-    },
-    useV2ComparisonModal: true,
-  };
 
-  const container = createTag('div', { id: 'app', 'data-sling-props': JSON.stringify(slingProps) });
+  const c1logos = [];
+  config['C1-Logos']?.forEach((logo) => {
+    c1logos.push(createLogoObject(logo));
+  });
+
+  const c2logos = [];
+  config['C2-Logos']?.forEach((logo) => {
+    c2logos.push(createLogoObject(logo));
+  });
+
+  const cardone = {
+    packId: config['C1-Pack-Id'] || null,
+    title: config['C1-Title'] || null,
+    priceText: config['C1-Price-Text'] || '/mo.',
+    showPromotionalPrice: (config['C1-Show-Promotional-Price']?.toLowerCase?.() === 'true') || false,
+    promotionalText: config['C1-Promotional-Text'] || '<p><b>As low as <span class:\'strike-through\'>$40</span>&nbsp;$20 for your first month</b></p>\r\n',
+    channelNumber: config['C1-Channel-Number'] || null,
+    singleChannelText: config['C1-Single-Channel-Text'] || null,
+    multipleChannelText: config['C1-Multiple-Channel-Text'] || null,
+    linkText: config['C1-Link-Text'] || 'View all channels',
+    overrideLogos: (config['C1-Override-Logos']?.toLowerCase?.() === 'true') || false,
+    logos: c1logos.length > 0 ? c1logos : null,
+  };
+  const cardtwo = {
+    packId: config['C2-Pack-Id'] || null,
+    title: config['C2-Title'] || null,
+    priceText: config['C2-Price-Text'] || '/mo',
+    showPromotionalPrice: (config['C2-Show-Promotional-Price']?.toLowerCase?.() === 'true') || false,
+    promotionalText: config['C2-Promotional-Text'] || null,
+    channelNumber: config['C2-Channel-Number'] || null,
+    singleChannelText: config['C2-Single-Channel-Text'] || null,
+    multipleChannelText: config['C2-Multiple-Channel-Text'] || null,
+    linkText: config['C2-Link-Text'] || 'View all Channels',
+    overrideLogos: (config['C2-Override-Logos']?.toLowerCase?.() === 'true') || false,
+    logos: c2logos.length > 0 ? c2logos : null,
+  };
+  const container = createTag(
+    'div',
+    {
+      id: 'package-cards-app',
+      'data-sling-package-cards-plan-id': config['Plan-Id'] || 'monthly',
+      'data-sling-package-cards-plan-identifier-a-c': config['Plan-Identifier'] || 'one-month',
+      'data-sling-package-cards-plan-offer-identifier': config['Plan-Offer-Identifier'] || 'extra-stair-step-2',
+      'data-sling-package-cards-classification': config.Classification || 'us',
+      'data-sling-package-cards-classification-a-c': config['Classification-A-C'] || 'us',
+      'data-sling-package-cards-card-one-config': JSON.stringify(cardone),
+      'data-sling-package-cards-card-two-config': JSON.stringify(cardtwo),
+      'data-sling-package-cards-card-two-type': config['Card-Two-Type'] || 'extra',
+      'data-sling-package-cards-logo-base-path': '/aemedge/icons/application-assets/shared/web/logos/black',
+      'data-sling-package-cards-analytics-modal-name': config['Analytics-Modal-Name'] || 'analytics-modal-name',
+    },
+  );
   block.append(container);
-  observer.observe(block);
+  // observer.observe(block);
 }
