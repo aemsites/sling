@@ -80,13 +80,13 @@
   margin-bottom: 30px;
 }
 
-.columns.block div .columns-img-col img{
+.international .columns.block div .columns-img-col img{
   width: 50vw;
   height: auto;
   cursor: pointer;
 }
 
-.columns.block .columns-img-col{
+.international .columns.block .columns-img-col{
   display: flex;
   justify-content: center;
 }
@@ -101,36 +101,36 @@
     flex-direction: column;
   }
 
-  .columns.columns-1-cols div .columns-img-col img{
+  .international .columns.columns-1-cols div .columns-img-col img{
     width: 16.66vw;
     max-width: 194.7px;
     height: auto;
   }
 
-  .columns.columns-1-cols div{
+  .international .columns.columns-1-cols div{
     display: flex;
     justify-content: center;
   }
 
-  .columns.columns-3-cols div .columns-img-col img{
+  .international .columns.columns-3-cols div .columns-img-col img{
     width: 16.5vw;
     max-width: 192.7px;
     height: auto;
   }
 
-  .columns.columns-3-cols div {
+  .international .columns.columns-3-cols div {
     display: flex;
     flex-direction: row;
     justify-content: center;
     margin-bottom: 50px;
   }
 
-  .columns.columns-4-cols div{
+  .international .columns.columns-4-cols div{
     display: flex;
     justify-content: center;
   }
 
-  .columns.columns-4-cols div .columns-img-col img{
+  .international .columns.columns-4-cols div .columns-img-col img{
     width: 16.5vw;
     max-width: 194.7px;
     height: auto;
@@ -140,7 +140,7 @@
 }
 
 @media (width >=1024px) {
-  .columns.icons span.icon img {
+  .international .columns.icons span.icon img {
     width: 96px;
     height: 36px;
     padding-bottom: 24px;
