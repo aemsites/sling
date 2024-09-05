@@ -83,6 +83,7 @@
 .columns.block div .columns-img-col img{
   width: 50vw;
   height: auto;
+  cursor: pointer;
 }
 
 .columns.block .columns-img-col{
