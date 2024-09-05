@@ -14,7 +14,7 @@
 }
 
 /* stylelint-disable-next-line selector-class-pattern */
-.chat.block > #app > div.fKlBEx {
+.chat.block > #chat-app > div.fKlBEx {
     background: url("../../../aemedge/icons/sling-chat-icon.svg") 24px center / 25px no-repeat, linear-gradient(rgb(41 40 40), rgb(0 0 0));
     border-style: solid;
     border-color: rgb(0 114 236);

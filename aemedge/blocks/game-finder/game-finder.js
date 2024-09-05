@@ -19,6 +19,6 @@ export default async function decorate(block) {
     config.numberOfDays = parseInt(config.numberOfDays, 10);
   }
   const slingProps = { ...config, ...defultProps };
-  const container = createTag('div', { id: 'app', 'data-sling-props': JSON.stringify(slingProps) });
+  const container = createTag('div', { id: 'gmfinder-app', 'data-sling-props': JSON.stringify(slingProps) });
   block.append(container);
 }

@@ -6,28 +6,28 @@
     display: none;
 }
 
-.game-finder.block #app {
+.game-finder.block #gmfinder-app {
     z-index: 0;
     position: relative;
     margin-bottom: 2.5rem;
 }
 
-.game-finder.block #app svg {
+.game-finder.block #gmfinder-app svg {
     width: 15px;
     height: 20px;
 }
 
-.game-finder.block #app button {
+.game-finder.block #gmfinder-app button {
     min-width: unset;
     margin-top: unset;
     margin-bottom: unset;
 }
 
 /* stylelint-disable-next-line selector-class-pattern */
-.game-finder.block #app .ykLwg {
+.game-finder.block #gmfinder-app .ykLwg {
 position: initial
 }
 
-.game-finder.block #app .iqyiwh { 
+.game-finder.block #gmfinder-app .iqyiwh { 
     height: auto;
 }
