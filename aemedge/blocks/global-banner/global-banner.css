@@ -42,6 +42,13 @@ main .block.global-banner[data-block-status="loaded"] {
   width: 100%;
 }
 
+main .block.global-banner[data-block-status="loaded"].cyan-black { 
+  color: var(--clr-black);
+  background: linear-gradient(270deg, #00b9ff 0%, #0ff 50%, #00b9ff 100%);
+  padding: 16px 0;
+  box-sizing: border-box;
+}
+
 .global-banner p {
   margin: 0 20px;
 }
@@ -53,12 +60,16 @@ main .block.global-banner[data-block-status="loaded"] {
   font-size: 1em;
 }
 
+main .block.global-banner[data-block-status="loaded"].cyan-black a{ 
+  color: var(--clr-black);
+} 
+
 .global-banner span.close {
   cursor: pointer;
-  font-size: 38px;
+  font-size: 48px;
   line-height: normal;
   position: relative;
-  padding: 5px 20px 0 0;
+  padding: 5px 50px 0 0;
   z-index: 11;
 }
 
