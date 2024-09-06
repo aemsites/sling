@@ -45,7 +45,7 @@ main .block.global-banner[data-block-status="loaded"] {
 main .block.global-banner[data-block-status="loaded"].cyan-black { 
   color: var(--clr-black);
   background: linear-gradient(270deg, #00b9ff 0%, #0ff 50%, #00b9ff 100%);
-  padding: 16px 0;
+  padding: 11px 0;
   box-sizing: border-box;
 }
 
