@@ -313,6 +313,7 @@ button.text:hover {
 
 .offer-details a.button.text {
   color: white;
+  text-align: center;
 }
 
 .offer-details a.button.text:hover {
