@@ -6,17 +6,17 @@
     display: none;
 }
 
-.channel-shopper.block #app,
-.channel-shopper.block #app > * {
+.channel-shopper.block #channel-shopper-app,
+.channel-shopper.block #channel-shopper-app > * {
     z-index: 0;
 }
 
-.channel-shopper.block #app svg {
+.channel-shopper.block #channel-shopper-app svg {
     width: 15px;
     height: 20px;
 }
 
-.channel-shopper.block #app button {
+.channel-shopper.block #channel-shopper-app button {
     min-width: unset;
     margin-top: unset;
     margin-bottom: unset;

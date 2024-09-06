@@ -5,12 +5,12 @@
 }
 
 
-.package-cards.block #app button.back-arrow-blue,
-.package-cards.block #app button.next-arrow-blue,
-.package-cards.block #app button.back-arrow-orange,
-.package-cards.block #app button.next-arrow-orange,
-.package-cards.block #app button.sc-kgAjT,
-.package-cards.block #app button[aria-label="close"]
+.package-cards.block #package-cards-app button.back-arrow-blue,
+.package-cards.block #package-cards-app button.next-arrow-blue,
+.package-cards.block #package-cards-app button.back-arrow-orange,
+.package-cards.block #package-cards-app button.next-arrow-orange,
+.package-cards.block #package-cards-app button.sc-kgAjT,
+.package-cards.block #package-cards-app button[aria-label="close"]
  {
    padding: unset;
    margin: unset;
@@ -18,44 +18,47 @@
    border-radius: 0;
 }
 
-.package-cards.block #app a:any-link {
+.package-cards.block #package-cards-app a:any-link {
     color:initial;
     border-radius: 1600px;
 }
 
-.package-cards.block #app div.VhpVA { 
+.package-cards.block #package-cards-app div.VhpVA { 
     inset: 50px 0;
     height: 100vh;
 }
 
-.package-cards.block #app a.blue-homepage-base-card-cart-link {
+.package-cards.block #package-cards-app a.blue-homepage-base-card-cart-link {
     color: var(--clr-white);
 }
 
-.package-cards.block #app a.blue-homepage-base-card-cart-link:hover {
+.package-cards.block #package-cards-app a.blue-homepage-base-card-cart-link:hover {
     color: var(--clr-white);
 }
 
-.package-cards.block #app a:hover {
+.package-cards.block #package-cards-app a:hover {
     color:initial;
 }
 
-.package-cards.block #app button{
+.package-cards.block #package-cards-app button{
     border-radius: 1600px;
 }
 
-.package-cards.block #app > * {
+.package-cards.block #package-cards-app > * {
     z-index: 0;
 }
 
-.package-cards.block #app div.eMQgdL > *{
+.package-cards.block #package-cards-app div.eMQgdL > *{
     height: 479px;
 }
 
-
+.package-cards.block #package-cards-app img {
+    width: auto;
+    height: auto;
+}
 
 @media (width >= 768px) {
-.package-cards.block #app .fIvgai {
+.package-cards.block #package-cards-app .fIvgai {
     right: 12px;
     top: 28px;
 }

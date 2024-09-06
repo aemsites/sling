@@ -1,0 +1,62 @@
+/* stylelint-disable selector-class-pattern */
+
+.base-cards.block > div:not([id]) p {
+    display: none;
+}
+
+
+.base-cards.block #base-cards-app button.back-arrow-blue,
+.base-cards.block #base-cards-app button.next-arrow-blue,
+.base-cards.block #base-cards-app button.back-arrow-orange,
+.base-cards.block #base-cards-app button.next-arrow-orange,
+.base-cards.block #base-cards-app button.sc-kgAjT,
+.base-cards.block #base-cards-app button[aria-label="close"]
+ {
+   padding: unset;
+   margin: unset;
+   min-width: 0;
+   border-radius: 0;
+}
+
+.base-cards.block #base-cards-app a:any-link {
+    color:initial;
+    border-radius: 1600px;
+}
+
+.base-cards.block #base-cards-app div.VhpVA { 
+    inset: 50px 0;
+    height: 100vh;
+}
+
+.base-cards.block #base-cards-app a.blue-homepage-base-card-cart-link {
+    color: var(--clr-white);
+}
+
+.base-cards.block #base-cards-app a.blue-homepage-base-card-cart-link:hover {
+    color: var(--clr-white);
+}
+
+.base-cards.block #base-cards-app a:hover {
+    color:initial;
+}
+
+.base-cards.block #base-cards-app button{
+    border-radius: 1600px;
+}
+
+.base-cards.block #base-cards-app > * {
+    z-index: 0;
+}
+
+.base-cards.block #base-cards-app div.eMQgdL > *{
+    height: 479px;
+}
+
+
+
+@media (width >= 768px) {
+.base-cards.block #base-cards-app .fIvgai {
+    right: 12px;
+    top: 28px;
+}
+}

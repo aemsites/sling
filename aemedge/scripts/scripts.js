@@ -21,6 +21,7 @@ import {
   buildFragmentBlocks,
   createTag,
   loadGameFinders,
+  loadPackageCards,
 } from './utils.js';
 
 const LCP_BLOCKS = ['category']; // add your LCP blocks to the list
@@ -443,6 +444,10 @@ async function loadLazy(doc) {
   const gameFinders = doc.querySelectorAll('.game-finder.block');
   if (gameFinders && gameFinders.length > 0) {
     await loadGameFinders(doc);
+  }
+  const packageCards = doc.querySelectorAll('.package-cards.block');
+  if (packageCards && packageCards.length > 0) {
+    await loadPackageCards(doc);
   }
   buildMultipleButtons(main);
   const { hash } = window.location;

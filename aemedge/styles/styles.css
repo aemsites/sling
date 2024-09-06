@@ -447,6 +447,13 @@ main .section {
   object-position: center center;
 }
 
+/* pakage cards sectio */
+
+.section.package-cards-container
+{
+    background-color: white;
+}
+
 /* Section with Dark or Centered content */
 .section.dark {
   background-color: var(--dark-background-color);
@@ -519,6 +526,16 @@ main .section {
   .section.channel-shopper-container  .fragment-wrapper {
     flex-direction: row;
   }
+
+   /* package cards desktop styles */
+   .section.package-cards-container
+   {
+       margin: 100px;
+   }
+ 
+   .section.package-cards-container .offer-details a.button.text {
+     color: unset;
+   }
 
 }
 

@@ -36,7 +36,7 @@ export default async function decorate(block) {
     promoTruncateCharLimit: 13,
   };
 
-  const container = createTag('div', { id: 'app', 'data-sling-props': JSON.stringify(slingProps) });
+  const container = createTag('div', { id: 'channel-shopper-app', 'data-sling-props': JSON.stringify(slingProps) });
   block.append(container);
 
   observer.observe(block);

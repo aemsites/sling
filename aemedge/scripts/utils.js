@@ -554,25 +554,45 @@ export async function loadScript(src, attrs, container) {
   });
 }
 
-const options = {
+const gmoptions = {
   rootMargin: '0px 0px 500px 0px',
   threshold: 0,
 };
 // eslint-disable-next-line no-use-before-define
-const observer = new IntersectionObserver(loadGameFinderApp, options);
+const gmobserver = new IntersectionObserver(loadGameFinderApp, gmoptions);
 
 function loadGameFinderApp(entries) {
   if (entries.some(async (entry) => {
     if (entry.isIntersecting) {
-      await loadScript('/aemedge/scripts/sling-react/gamefinder-build.js', {}, entry.target);
-      observer.unobserve(entry.target);
+      await loadScript('/aemedge/scripts/sling-react/game-finder-build.js', {}, entry.target);
+      gmobserver.unobserve(entry.target);
     }
   }));
 }
 
 export async function loadGameFinders() {
   const gameFinderBlock = document.querySelector('.game-finder.block');
-  observer.observe(gameFinderBlock);
+  gmobserver.observe(gameFinderBlock);
+}
+
+const pcoptions = {
+  threshold: 0,
+};
+// eslint-disable-next-line no-use-before-define
+const pcobserver = new IntersectionObserver(loadPackageCard, pcoptions);
+
+function loadPackageCard(entries) {
+  if (entries.some(async (entry) => {
+    if (entry.isIntersecting) {
+      await loadScript('/aemedge/scripts/sling-react/package-cards-build.js', {}, entry.target);
+      pcobserver.unobserve(entry.target);
+    }
+  }));
+}
+
+export async function loadPackageCards() {
+  const pcBlock = document.querySelector('.package-cards.block');
+  pcobserver.observe(pcBlock);
 }
 
 function toPropName(name) {
@@ -610,7 +630,7 @@ export async function readBlockConfig(block) {
         } else if (col.querySelector('p')) {
           const ps = [...col.querySelectorAll('p')];
           if (ps.length === 1) {
-            value = ps[0].textContent;
+            value = ps[0].innerHTML;
           } else {
             value = ps.map((p) => p.textContent);
           }
