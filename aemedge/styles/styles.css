@@ -741,6 +741,9 @@ width: 80%;
 margin:0 auto;
 }
 
+.section.section.package-cards-container {
+  margin:0;
+}
 }
 
 @media (width >=1024px) {
