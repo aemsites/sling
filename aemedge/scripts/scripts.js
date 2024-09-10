@@ -369,6 +369,19 @@ function buildAutoBlocks(main) {
   }
 }
 
+function decorateLinkedImages() {
+  const pictures = document.querySelectorAll('.section.columns-container picture');
+  pictures.forEach((picture) => {
+    const pictureParent = picture.parentElement;
+    const nextSibling = pictureParent.nextElementSibling;
+    if (nextSibling && nextSibling.tagName === 'P' && nextSibling.querySelector('a')) {
+      const anchor = nextSibling.querySelector('a');
+      anchor.innerHTML = '';
+      anchor.appendChild(picture);
+    }
+  });
+}
+
 /**
    * Decorates the main element.
    * @param {Element} main The main element
@@ -383,6 +396,7 @@ export function decorateMain(main) {
   decorateBlocks(main);
   buildCtaBanners(main);
   buildSpacer(main);
+  decorateLinkedImages();
 }
 
 /**

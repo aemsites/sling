@@ -42,32 +42,4 @@ export default async function decorate(block) {
     const main = document.querySelector('main');
     await loadBlocks(main);
   }
-  const links = [
-    'https://main--sling--aemsites.aem.live/international/desi-tv/hindi',
-    'https://main--sling--aemsites.aem.live/international/desi-tv/dakshin',
-    'https://main--sling--aemsites.aem.live/international/desi-tv/hindi',
-    'https://main--sling--aemsites.aem.live/international/desi-tv/hindi',
-    'https://main--sling--aemsites.aem.live/international/desi-tv/hindi',
-    'https://main--sling--aemsites.aem.live/international/desi-tv/hindi',
-    'https://main--sling--aemsites.aem.live/international/desi-tv/hindi',
-    'https://main--sling--aemsites.aem.live/international/desi-tv/hindi',
-    'https://main--sling--aemsites.aem.live/international/desi-tv/dakshin',
-    'https://main--sling--aemsites.aem.live/programming/sports/soccer',
-    'https://main--sling--aemsites.aem.live/international/arabic',
-    'https://main--sling--aemsites.aem.live/international/eu/french',
-    'https://main--sling--aemsites.aem.live/international/eu/greek',
-    'https://main--sling--aemsites.aem.live/international/eu/italian',
-    'https://main--sling--aemsites.aem.live/international/eu/polish',
-    'https://main--sling--aemsites.aem.live/international/brazilian',
-    'https://main--sling--aemsites.aem.live/international/eastasian/cantonese',
-    'https://main--sling--aemsites.aem.live/international/eastasian/mandarin',
-    'https://main--sling--aemsites.aem.live/international/eastasian/taiwanese',
-  ];
-  const images = document.querySelectorAll('.columns div .columns-img-col img');
-  images.forEach((img, index) => {
-    const link = document.createElement('a');
-    link.href = links[index] || '#';
-    img.parentNode.insertBefore(link, img);
-    link.appendChild(img);
-  });
 }
