@@ -9,13 +9,18 @@ main .hero-container {
   margin: 0;
 }
 
-.hero-container h1 {
-  text-align: left;
+.international .hero-container h1 {
+  font-size: 30px;
+  line-height: 1.2;
+  font-weight: 800;
+  letter-spacing: -1px;
+  margin: 0 0 1rem;
+  max-width: 700px;
 }
 
 .hero {
-  position: relative;
-  min-height: 670px;
+  position: relative;  
+  height: 193px;
   border: none;
   overflow: hidden;
 }
@@ -23,12 +28,10 @@ main .hero-container {
 .hero-content {
   border: none;
   padding: 64px 6%;
-  min-height: 670px;
   display: flex;
   -webkit-box-pack: justify;
   justify-content: center;
   flex-flow: column;
-  position: relative;
   inset: 0;
   background: linear-gradient(rgba(51 51 76 / 0%) 50%, 85%, rgb(23 23 37) 100%), radial-gradient(110% 100% at 75% 25%, rgba(32 32 50 / 0%) 0%, rgb(23 23 37) 100%);
   box-sizing: border-box;
@@ -82,15 +85,24 @@ main .hero-container {
   box-sizing: border-box;
 }
 
-.hero picture.foreground {
-  position: relative;
+.international .hero picture.foreground {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
   object-fit: cover;
-  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  max-width: unset;
+  box-sizing: unset;
+  height: 100%;
   width: 100%;
-  padding-top: 1.5rem;
-  padding-bottom: 1.5rem;
-  padding-left: 0;
-  text-align: center;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+}
+
+.international .hero picture.background {
+  display: none;
 }
 
 .hero video {
@@ -142,6 +154,22 @@ main .hero-container {
   font-weight: unset;
 }
 
+.international .hero {
+  height: calc(207px + (100vw - 417px) * 0.06);
+}
+
+@media (width > 420px) {
+  .international .hero {
+    height: calc(171px + (100vw - 417px) * 0.06);
+  }
+}
+
+@media (width > 767px) {
+  .international .hero {
+    height: calc(224px + (100vw - 767px) * 0.06);
+  }
+}
+
 @media (width >= 992px) {
   .hero {
     min-height: 743px;
@@ -174,6 +202,14 @@ main .hero-container {
     margin: 0 0 1rem;
   }
 
+  .international .hero-content h1 {
+    font-size: 64px;
+    line-height: 72px;
+    letter-spacing: -1.5px;
+    margin: 0 0 1rem;
+    font-weight: 700;
+  }
+
   .hero-content h2 {
     font-size: 28px;
     line-height: 34px;
@@ -193,5 +229,22 @@ main .hero-container {
     padding-top: 1.5rem;
     padding-bottom: 1.5rem;
     text-align: center;
+  }
+
+  
+}
+
+@media (width >= 1023px) {
+  .international .hero picture.foreground {
+    display: none;
+  }
+
+  .international .hero picture.background {
+  position: absolute;
+  display: block;
+  z-index: -1;
+  inset: 0;
+  object-fit: cover;
+  box-sizing: border-box;
   }
 }
