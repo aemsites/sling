@@ -270,6 +270,16 @@ export function decorateButtons(element) {
           a.className = 'button secondary';
           threeup.classList.add('button-container');
         }
+
+        // steam button
+        if (
+          up.childNodes.length === 1
+          && up.tagName === 'STRONG'
+          && twoup.childNodes.length === 1
+          && (twoup.tagName === 'P' || twoup.tagName === 'DIV')) {
+          a.className = 'button steam';
+          twoup.classList.add('button-container');
+        }
       }
     }
   });

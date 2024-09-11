@@ -30,6 +30,8 @@
   --clr-white: #fff;
   --clr-black: #000;
   --dark-grey-color: #706f6f;
+  --steam-button-color: #171725;
+  --steam-background-color: #EEEEEE;
 
     /* fonts */
   ;
@@ -226,14 +228,17 @@ a.button::-moz-focus-inner {
 a.button.primary,
 button.primary,
 a.button.secondary,
-button.secondary {
+button.secondary,
+a.button.steam,
+button.steam {
   border-radius: 1600px;
   opacity: 1;
   min-width: 11.25rem;
-  font-size: 1rem;
+  font-size: 1.125rem;
   padding: 0.875rem 1rem;
   min-height: 60px;
   align-content: center;
+  font-weight: 800;
 }
 
 a.button.primary,
@@ -250,8 +255,16 @@ button.secondary {
   border: 2px solid var(--light-color);
 }
 
+a.button.steam,
+button.steam {
+  color: var(--steam-button-color);
+  background-color: var(--steam-background-color);
+  border: 2px solid var(--steam-background-color);
+}
+
 a.button.primary:hover,
-a.button.secondary:hover {
+a.button.secondary:hover,
+a.button.steam:hover {
   outline: none;
   box-shadow: #07070b66 0 24px 57px 0;
   opacity: 1;
