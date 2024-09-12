@@ -641,3 +641,61 @@ export async function readBlockConfig(block) {
   });
   return config;
 }
+
+export function getVideoUrlByScreenWidth(videoLinks) {
+  const screenWidth = window.innerWidth;
+  if (videoLinks.length === 0) {
+    return null;
+  }
+  if (videoLinks.length === 1) {
+    return videoLinks[0].getAttribute('href');
+  }
+  if (videoLinks.length === 2) {
+    // First link for desktop and tablet, second link for mobile
+    if (screenWidth >= 1024) {
+      return videoLinks[0].getAttribute('href'); // Desktop
+    }
+    if (screenWidth >= 768 && screenWidth < 1024) {
+      return videoLinks[0].getAttribute('href'); // Tablet
+    }
+    return videoLinks[1].getAttribute('href'); // Mobile
+  }
+
+  // If there are 3 or more links
+  if (screenWidth >= 1024) {
+    return videoLinks[0].getAttribute('href'); // Desktop
+  }
+  if (screenWidth >= 768 && screenWidth < 1024) {
+    return videoLinks[1].getAttribute('href'); // Tablet
+  }
+  return videoLinks[2].getAttribute('href'); // Mobile
+}
+
+export function getPictureUrlByScreenWidth(pictures) {
+  const screenWidth = window.innerWidth;
+  if (pictures.length === 0) {
+    return null;
+  }
+  if (pictures.length === 1) {
+    return pictures[0];
+  }
+  if (pictures.length === 2) {
+    // First link for desktop and tablet, second link for mobile
+    if (screenWidth >= 1024) {
+      return pictures[0]; // Desktop
+    }
+    if (screenWidth >= 768 && screenWidth < 1024) {
+      return pictures[0].getAttribute('href'); // Tablet
+    }
+    return pictures[1].getAttribute('href'); // Mobile
+  }
+
+  // If there are 3 or more links
+  if (screenWidth >= 1024) {
+    return pictures[0]; // Desktop
+  }
+  if (screenWidth >= 768 && screenWidth < 1024) {
+    return pictures[1]; // Tablet
+  }
+  return pictures[2]; // Mobile
+}

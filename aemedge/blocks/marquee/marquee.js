@@ -1,73 +1,7 @@
-import { createTag } from '../../scripts/utils.js';
+import { createTag, getPictureUrlByScreenWidth, getVideoUrlByScreenWidth } from '../../scripts/utils.js';
+import { toClassName } from '../../scripts/aem.js';
 
-function getVideoUrl(videoLinks) {
-  const screenWidth = window.innerWidth;
-  if (videoLinks.length === 0) {
-    return null;
-  }
-  if (videoLinks.length === 1) {
-    return videoLinks[0].getAttribute('href');
-  }
-  if (videoLinks.length === 2) {
-    // First link for desktop and tablet, second link for mobile
-    if (screenWidth >= 1024) {
-      return videoLinks[0].getAttribute('href'); // Desktop
-    }
-    if (screenWidth >= 768 && screenWidth < 1024) {
-      return videoLinks[0].getAttribute('href'); // Tablet
-    }
-    return videoLinks[1].getAttribute('href'); // Mobile
-  }
-
-  // If there are 3 or more links
-  if (screenWidth >= 1024) {
-    return videoLinks[0].getAttribute('href'); // Desktop
-  }
-  if (screenWidth >= 768 && screenWidth < 1024) {
-    return videoLinks[1].getAttribute('href'); // Tablet
-  }
-  return videoLinks[2].getAttribute('href'); // Mobile
-}
-
-function getPictureUrl(pictures) {
-  const screenWidth = window.innerWidth;
-  if (pictures.length === 0) {
-    return null;
-  }
-  if (pictures.length === 1) {
-    return pictures[0];
-  }
-  if (pictures.length === 2) {
-    // First link for desktop and tablet, second link for mobile
-    if (screenWidth >= 1024) {
-      return pictures[0]; // Desktop
-    }
-    if (screenWidth >= 768 && screenWidth < 1024) {
-      return pictures[0].getAttribute('href'); // Tablet
-    }
-    return pictures[1].getAttribute('href'); // Mobile
-  }
-
-  // If there are 3 or more links
-  if (screenWidth >= 1024) {
-    return pictures[0]; // Desktop
-  }
-  if (screenWidth >= 768 && screenWidth < 1024) {
-    return pictures[1]; // Tablet
-  }
-  return pictures[2]; // Mobile
-}
-
-function toClassName(name) {
-  return typeof name === 'string'
-    ? name
-      .replace(/[^0-9a-z]/gi, '-')
-      .replace(/-+/g, '-')
-      .replace(/^-|-$/g, '')
-      .toLowerCase()
-    : '';
-}
-function setCSSClasses(block) {
+function processBlockConfig(block) {
   const marqueContent = createTag('div', { class: 'marquee-content' });
   block.querySelectorAll(':scope > div:not([id])').forEach((row) => {
     if (row.children) {
@@ -113,7 +47,7 @@ function setupVideo(url, block) {
 
 function setupBGVideos(block) {
   const videoLinks = Array.from(block.querySelectorAll('a[href*=".mp4"]'));
-  let currentVideoUrl = getVideoUrl(videoLinks);
+  let currentVideoUrl = getVideoUrlByScreenWidth(videoLinks);
   // Remove video links from DOM to prevent them from showing up as text
   videoLinks.forEach((link) => link.parentElement.remove());
 
@@ -121,7 +55,7 @@ function setupBGVideos(block) {
 
   // Resize event listener to update video based on screen size changes
   window.addEventListener('resize', () => {
-    const newVideoUrl = getVideoUrl(videoLinks);
+    const newVideoUrl = getVideoUrlByScreenWidth(videoLinks);
 
     // Update video only if the URL changes
     if (newVideoUrl !== currentVideoUrl) {
@@ -133,7 +67,7 @@ function setupBGVideos(block) {
 
 function setupBGPictures(background, block) {
   const pictures = Array.from(background.querySelectorAll('picture'));
-  let currentPicture = getPictureUrl(pictures);
+  let currentPicture = getPictureUrlByScreenWidth(pictures);
   // Remove video links from DOM to prevent them from showing up as text
   pictures.forEach((picture) => picture.parentElement.remove());
   const existingPicture = background.querySelector('picture');
@@ -146,7 +80,7 @@ function setupBGPictures(background, block) {
 
   // Resize event listener to update video based on screen size changes
   window.addEventListener('resize', () => {
-    const newPicture = getPictureUrl(pictures);
+    const newPicture = getPictureUrlByScreenWidth(pictures);
 
     // Update video only if the URL changes
     if (newPicture !== currentPicture) {
@@ -163,7 +97,7 @@ function setupBGPictures(background, block) {
 }
 
 export default function decorate(block) {
-  setCSSClasses(block);
+  processBlockConfig(block);
   const background = block.querySelector('.background');
   const bgColor = block.querySelector('.background-color');
   let bgMediaType;
@@ -184,6 +118,6 @@ export default function decorate(block) {
 
   setupBGVideos(block);
   if (bgMediaType === 'picture') setupBGPictures(background, block);
-  block.querySelectorAll('.config-property').forEach((prop) => prop.remove());
-  block.querySelectorAll('div').forEach((div) => { if (div.children.length === 0) div.remove(); });
+  block.querySelectorAll('.config-property').forEach((prop) => prop.remove()); // remove config property divs from dom
+  block.querySelectorAll('div').forEach((div) => { if (div.children.length === 0) div.remove(); }); // remove empty divs
 }
