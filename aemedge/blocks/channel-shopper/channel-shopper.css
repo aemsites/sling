@@ -1,3 +1,4 @@
+/* stylelint-disable selector-class-pattern */
 .channel-shopper.block {
     background: initial;
 }
@@ -9,6 +10,7 @@
 .channel-shopper.block #channel-shopper-app,
 .channel-shopper.block #channel-shopper-app > * {
     z-index: 0;
+    margin-top: 40px;
 }
 
 .channel-shopper.block #channel-shopper-app svg {
@@ -20,4 +22,13 @@
     min-width: unset;
     margin-top: unset;
     margin-bottom: unset;
+}
+
+.channel-shopper.block #channel-shopper-app button.kBfRPX {
+background: var(--primary-button-color);
+border-radius: 1600px;
+border: transparent;
+font-size: 18px;
+line-height: inherit;
+padding:0.938rem 1.2rem;
 }
