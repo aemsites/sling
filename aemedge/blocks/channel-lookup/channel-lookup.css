@@ -114,6 +114,23 @@
     position: relative;
 }
 
+.channel-img {
+    padding: 10px;
+    vertical-align: middle;
+    width: 100px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* stylelint-disable-next-line property-no-vendor-prefix */
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"] {
+    /* stylelint-disable-next-line property-no-vendor-prefix */
+    -moz-appearance: textfield;
+}
 
 @media (width >=1024px) {
     .zipcodeinput-wrapper {
@@ -153,9 +170,7 @@
 
     .channel-img {
         box-sizing: border-box;
-        width: 100px;
         max-width: 100px;
-        padding: 10px;
         max-height: 100px;
         height: 100px;
     }

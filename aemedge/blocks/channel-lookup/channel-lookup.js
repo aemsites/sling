@@ -1,29 +1,16 @@
-import { createTag } from '../../scripts/utils.js';
+import {
+  createTag, getZipcode, ZIPCODE_KEY, fetchPlaceholders,
+} from '../../scripts/utils.js';
 
-const ZIPCODE_ENDPOINT = 'https://p-geo.movetv.com/geo';
-const DEFAULT_ZIPCODE = '90020';
-const ZIPCODE_KEY = 'user_zip';
-let gqlResponse = '';
+const placeholders = await fetchPlaceholders('default', 'messages');
 
-export async function getZipcode() {
-  let zipcode = localStorage.getItem(ZIPCODE_KEY);
-  if (!zipcode) {
-    const response = await fetch(ZIPCODE_ENDPOINT);
-    const data = await response.json();
-    zipcode = data?.zip_code || DEFAULT_ZIPCODE;
-    localStorage.setItem(ZIPCODE_KEY, zipcode);
-  }
-  return zipcode;
-}
 function showWarningMessage() {
   return `
     <div type="warning" class="warning channel-data">
-      <img src="/aemedge/icons/warning-icon.svg" id="icon" class="warning-icon"/>
+      <img src="${placeholders.iconurlbase}/warning-icon.svg" id="icon" class="warning-icon"/>
       <h3 class="warning-heading">
       <span>
-      <p class="warning-msg">Local programming
-      is not available with Sling in your area. You can still watch the Olympics on USA on-demand.
-      </p>
+      <p class="warning-msg">${placeholders.localchannelwarning}</p>
       </span>
       </h3>
     </div>`;
@@ -34,10 +21,10 @@ function channelName(packages) {
   packages.forEach((pkg) => {
     if (channelDiv !== undefined) {
       channelDiv += `<picture><img class="channel-img"
-                      src="https://www.sling.com/content/dam/sling-tv/save-this/${pkg.name}.svg"></picture>`;
+                      src="${placeholders.channelsurlbase}/${pkg.name.toLowerCase()}.svg"></picture>`;
     } else {
       channelDiv = `<picture><img class="channel-img"
-                      src="https://www.sling.com/content/dam/sling-tv/save-this/${pkg.name}.svg"></picture>`;
+                      src="${placeholders.channelsurlbase}/${pkg.name.toLowerCase()}.svg"></picture>`;
     }
   });
   return channelDiv;
@@ -50,26 +37,26 @@ async function getChannelsByZipCode(block) {
     const res = await fetch(`${API_ENDPOINT}?zipcode=${zipCode}`);
     const formContainer = block.querySelector('.channel-form-container');
     if (res.ok) {
-      gqlResponse = await res.json();
+      const gqlResponse = await res.json();
       if (gqlResponse.packages) {
         if (block.querySelector('.channel-data')) {
-          document.querySelector('.channel-data').remove();
+          block.querySelector('.channel-data').remove();
         }
         formContainer.insertAdjacentHTML('beforeend', `
         <div class="channel-data">
         <span>
-        <p>Local programming available with Sling in your area:</p>
+        <p>${placeholders.localchannelfound}</p>
         </span>
          <div>
-         ${channelName(gqlResponse.packages)}           
-        </div>
+         ${channelName(gqlResponse.packages)}         
+        </div>        
         </div>       
         `);
       }
     } else {
       console.log('response from api call', res.status);
       if (block.querySelector('.channel-data')) {
-        document.querySelector('.channel-data').remove();
+        block.querySelector('.channel-data').remove();
       }
       formContainer.insertAdjacentHTML('beforeend', showWarningMessage());
     }
@@ -82,7 +69,9 @@ export default async function decorate(block) {
   const zipCode = await getZipcode();
   const formContainer = createTag('div', { class: 'channel-form-container' });
   const spanZipInput = createTag('span', { class: 'input-container' });
-  const inputTag = createTag('input', { class: 'zip-input', id: 'zipcode', value: `${zipCode}` });
+  const inputTag = createTag('input', {
+    type: 'number', class: 'zip-input', id: 'zipcode', value: `${zipCode}`,
+  });
   const labelTag = createTag('label', { for: 'zipcode', class: 'zipcode-input-label' });
   labelTag.innerText = 'ZIP Code';
   spanZipInput.append(inputTag);
@@ -94,6 +83,7 @@ export default async function decorate(block) {
   formContainer.append(spanZipInput, spanBtn);
   block.append(formContainer);
   const zipcode = block.querySelector('#zipcode');
+
   if (zipCode && zipcode) {
     await getChannelsByZipCode(block);
   }
