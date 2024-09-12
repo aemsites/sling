@@ -4,10 +4,10 @@
 }
 
 .marquee.block {
-    color: #fff;
+    color: var(--clr-white);
     position: relative;  
     min-height: 740px;
-    height: calc(100vw - 1400px);
+    height: calc(100vh - 450px);
     border: none;
     overflow: hidden;
 }
@@ -39,14 +39,16 @@
   }
 
   .marquee-content h2 {
-      max-width: 700px;
       color: white;
       font-size: 3rem;
       line-height: 54px;
       font-weight: 800;
       letter-spacing: -1.15px;
       margin: 0 0 1rem;
-    
+      max-width: 600px;
+      -webkit-font-smoothing: antialiased;
+      text-wrap: wrap;
+      scroll-margin: 0;
   }
 
   .marquee .background {
@@ -80,27 +82,50 @@
   }
 
 @media (width >= 768px) {
-    .marquee.block { 
-        min-height: 743px; 
-    }
+  .marquee.block { 
+      min-height: 743px; 
+  }
 
+  .marquee-content h2 {
+    font-size: 52px;
+    line-height: 58px;
+    letter-spacing: -1.25px;
+    margin: 0 0 1rem;
+  }
 
-      .marquee-content h2 {
-        font-size: 52px;
-        line-height: 58px;
-        letter-spacing: -1.25px;
-        margin: 0 0 1rem;
-      }
-    
-      .marquee-content h1 {
-        font-size: 28px;
-        line-height: 34px;
-        font-weight: 700;
-        letter-spacing: -1px;
-        margin: 1rem 0;
-      } 
+  .marquee-content h1 {
+    font-size: 28px;
+    line-height: 34px;
+    letter-spacing: -1px;
+    margin: 1rem 0;
+  } 
  }
 
-/* @media (width >= 1024px) {
+ @media (width >= 1024px) {
+  .marquee-content h1
+  {
+    font-size: 34px;
+    line-height: 40px;
+    letter-spacing: -1.25px;
+    margin: 0 0 1rem;
+    max-width: 700px;
+  }
 
- } */
+  .marquee-content h2 {
+    font-size: 52px;
+    font-weight: 800;
+    line-height: 58px;
+    letter-spacing: -1px;
+    margin: 0.5rem 0 1rem;
+  }
+
+  .marquee-content .cta a.scroll-into-header{
+    position: fixed;
+    top: 35px;
+    right: 132px;
+    z-index: 1030;
+    padding: 10.5px;
+    min-width: 180px;
+    margin: 0;
+    }
+ } 

@@ -96,10 +96,36 @@ function setupBGPictures(background, block) {
   });
 }
 
+const scrollCTAIntoHeader = (entries) => {
+  entries.forEach((entry) => {
+    const block = entry.target;
+    const cta = block.querySelector('.cta a');
+    if (entry.isIntersecting) {
+      cta.classList.remove('scroll-into-header');
+    } else {
+      cta.classList.add('scroll-into-header');
+    }
+  });
+};
+
 export default function decorate(block) {
   processBlockConfig(block);
   const background = block.querySelector('.background');
   const bgColor = block.querySelector('.background-color');
+  const scrollCTA = block.querySelector('.scroll-cta-into-header');
+  if (scrollCTA) {
+    const cta = document.querySelector('.cta a');
+    if (cta) {
+      const options = {
+        root: null,
+        threshold: 0.1,
+      };
+
+      const observer = new IntersectionObserver(scrollCTAIntoHeader, options);
+      observer.observe(block);
+    }
+    scrollCTA.remove();
+  }
   let bgMediaType;
   if (background) {
     if (background.querySelector('picture')) {
