@@ -177,6 +177,10 @@ header nav .nav-sections .nav-top > ul li:first-child {
     -webkit-font-smoothing: antialiased;
   }
 
+  header.nav-without-topnav{
+    height: 58px;
+  }
+
   header nav[aria-expanded="true"] {
     min-height: 0;
     overflow: visible;
