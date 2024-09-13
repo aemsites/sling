@@ -643,6 +643,12 @@ margin-bottom:10px;
 }
 
 
+.section.marquee-container {
+  margin:0;
+  padding:0;
+  width: 100%;
+}
+
 @media (width >=768px) {
   main .section {
   padding: 0 48px;

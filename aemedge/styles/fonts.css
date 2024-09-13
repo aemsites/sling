@@ -42,14 +42,16 @@
 
 @font-face{
   font-family:proxima-nova;
-  src:url('../fonts/proxima-nova/proximanova-lightit.otf') format("opentype");font-weight:300;
+  src:url('../fonts/proxima-nova/proximanova-lightit.otf') format("opentype");
+  font-weight:300;
   font-style:italic;
   font-display: swap;
 }
 
 @font-face{
   font-family:proxima-nova;
-  src:url('../fonts/proxima-nova/proximanova-regular.otf') format("opentype");font-weight:400;
+  src:url('../fonts/proxima-nova/proximanova-regular.otf') format("opentype");
+  font-weight:400;
   font-style:normal;
   font-display: swap;
 }
@@ -64,27 +66,31 @@
 
 @font-face{
   font-family:proxima-nova;
-  src:url('../fonts/proxima-nova/proximanova-medium.otf') format("opentype");font-weight:500;
+  src:url('../fonts/proxima-nova/proximanova-medium.otf') format("opentype");
+  font-weight:500;
   font-style:normal;
   font-display: swap;
 }
 
 @font-face{
   font-family:proxima-nova;
-  src:url('../fonts/proxima-nova/proximanova-mediumit.otf') format("opentype");font-weight:500;
+  src:url('../fonts/proxima-nova/proximanova-mediumit.otf') format("opentype");
+  font-weight:500;
   font-style:italic;
   font-display: swap;
 }
 
 @font-face{
   font-family:proxima-nova;
-  src:url('../fonts/proxima-nova/proximanova-semibold.otf') format("opentype");font-weight:600;
+  src:url('../fonts/proxima-nova/proximanova-semibold.otf') format("opentype");
+  font-weight:600;
   font-style:normal;
   font-display: swap;
 }
 
 @font-face{font-family:proxima-nova;
-  src:url('../fonts/proxima-nova/proximanova-semiboldit.otf') format("opentype");font-weight:600;
+  src:url('../fonts/proxima-nova/proximanova-semiboldit.otf') format("opentype");
+  font-weight:600;
   font-style:italic;
   font-display: swap;
 }
@@ -107,12 +113,12 @@
 
 @font-face{
   font-family:proxima-nova;
-  src:url('../fonts/proxima-nova/proximanova-extrabold.otf') format("opentype");font-weight:800;
+  src:url('../fonts/proxima-nova/proximanova-extrabold.otf') format("opentype");
+  font-weight:800;
   font-style:normal;
   font-display: swap;
 }
 
-/* 
 @font-face{
   font-family:proxima-nova;
   src:url('../fonts/proxima-nova/proximanova-extraboldit.otf') format("opentype");
@@ -131,7 +137,8 @@
 
 @font-face{
   font-family:proxima-nova;
-  src:url('../fonts/proxima-nova/proximanova-blackit.otf') format("opentype");font-weight:900;
+  src:url('../fonts/proxima-nova/proximanova-blackit.otf') format("opentype");
+  font-weight:900;
   font-style:italic;
   font-display: swap;
 }
@@ -142,7 +149,7 @@
   font-weight:800;
   font-style:normal;
   font-display: swap;
-} */
+} 
 
 @font-face {
   font-family: font-awesome;
