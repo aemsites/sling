@@ -1,23 +1,6 @@
 import { createTag, getPictureUrlByScreenWidth, getVideoUrlByScreenWidth } from '../../scripts/utils.js';
 import { toClassName } from '../../scripts/aem.js';
 
-function processBlockConfig(block) {
-  const marqueContent = createTag('div', { class: 'marquee-content' });
-  block.querySelectorAll(':scope > div:not([id])').forEach((row) => {
-    if (row.children) {
-      const cols = [...row.children];
-      if (cols[1]) {
-        const col = cols[1];
-        const name = toClassName(cols[0].textContent);
-        cols[0].classList.add('config-property');
-        col.classList.add(name);
-        marqueContent.append(col);
-      }
-    }
-  });
-  block.append(marqueContent);
-}
-
 function setupVideo(url, block) {
   if (!url) return;
 
@@ -65,7 +48,8 @@ function setupBGVideos(block) {
   });
 }
 
-function setupBGPictures(background, block) {
+function setupBGPictures(block) {
+  const background = block.querySelector('.background');
   const pictures = Array.from(background.querySelectorAll('picture'));
   let currentPicture = getPictureUrlByScreenWidth(pictures);
   // Remove video links from DOM to prevent them from showing up as text
@@ -108,11 +92,43 @@ const scrollCTAIntoHeader = (entries) => {
   });
 };
 
+// read the config and construct the DOM
+function processBlockConfig(block) {
+  const marqueContent = createTag('div', { class: 'marquee-content' });
+  const mediaDIV = createTag('div', { class: 'foreground-container' });
+  const nonMediaDIV = createTag('div', { class: 'text-cta-container' });
+  block.querySelectorAll(':scope > div:not([id])').forEach((row) => {
+    if (row.children) {
+      const cols = [...row.children];
+      if (cols[1]) {
+        const col = cols[1];
+        const name = toClassName(cols[0].textContent);
+        cols[0].classList.add('config-property');
+        col.classList.add(name);
+        if (name !== 'foreground') nonMediaDIV.append(col);
+        else mediaDIV.append(col);
+      }
+    }
+  });
+
+  if (mediaDIV.querySelector('.foreground')
+      && mediaDIV.querySelector('.foreground').children.length > 0) {
+    marqueContent.append(nonMediaDIV, mediaDIV);
+    marqueContent.classList.add('center');
+  } else {
+    marqueContent.append(nonMediaDIV);
+  }
+  block.append(marqueContent);
+  block.querySelectorAll('.config-property').forEach((prop) => prop.remove()); // remove config property divs from dom
+}
+
 export default function decorate(block) {
   processBlockConfig(block);
   const background = block.querySelector('.background');
   const bgColor = block.querySelector('.background-color');
   const scrollCTA = block.querySelector('.scroll-cta-into-header');
+
+  // if scroll configured then toggle the respective css class
   if (scrollCTA) {
     const cta = document.querySelector('.cta a');
     if (cta) {
@@ -120,7 +136,6 @@ export default function decorate(block) {
         root: null,
         threshold: 0.1,
       };
-
       const observer = new IntersectionObserver(scrollCTAIntoHeader, options);
       observer.observe(block);
     }
@@ -134,6 +149,7 @@ export default function decorate(block) {
       bgMediaType = 'video';
     }
   }
+  // set the bg color on the section
   if (bgColor) {
     const section = block.closest('.section');
     if (section) {
@@ -143,7 +159,6 @@ export default function decorate(block) {
   }
 
   setupBGVideos(block);
-  if (bgMediaType === 'picture') setupBGPictures(background, block);
-  block.querySelectorAll('.config-property').forEach((prop) => prop.remove()); // remove config property divs from dom
+  if (bgMediaType === 'picture') setupBGPictures(block);
   block.querySelectorAll('div').forEach((div) => { if (div.children.length === 0) div.remove(); }); // remove empty divs
 }
