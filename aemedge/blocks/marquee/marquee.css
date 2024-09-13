@@ -97,6 +97,11 @@
   margin:0;
  }
 
+ .marquee-content .foreground {  
+  padding-left: 1.5rem;  
+} 
+
+
 @media (width >= 768px) {
   .marquee-content {
     padding: 80px 4rem 6%;
@@ -112,6 +117,7 @@
 
   .marquee-content.center {
     justify-content: space-between;
+    align-items: center;
   }
 
   .marquee-content h1
