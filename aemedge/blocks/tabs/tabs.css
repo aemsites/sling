@@ -68,6 +68,11 @@
   display: none;
 }
 
+.rewards .tabs .tabs-panel{
+  background-color: #171725;
+  color: white;
+}
+
 @media (width >= 768px) {
   .tabs.accordion .tabs-list {
     justify-content: center;

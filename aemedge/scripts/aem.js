@@ -515,6 +515,14 @@ function decorateSections(main) {
             .filter((style) => style)
             .map((style) => toClassName(style.trim()));
           styles.forEach((style) => section.classList.add(style));
+        } else if (key === 'background') {
+          const pic = sectionMeta.querySelector('picture img');
+          if (pic) {
+            const imageSrc = pic.src;
+            section.style.backgroundImage = `url(${imageSrc})`;
+            section.style.backgroundRepeat = 'no-repeat';
+            section.style.backgroundSize = 'cover';
+          }
         } else {
           section.dataset[toCamelCase(key)] = meta[key];
         }
@@ -625,6 +633,7 @@ async function loadBlock(block) {
   if (status !== 'loading' && status !== 'loaded') {
     block.dataset.blockStatus = 'loading';
     const { blockName } = block.dataset;
+    console.log(blockName);
     try {
       const cssLoaded = loadCSS(`${window.hlx.codeBasePath}/blocks/${blockName}/${blockName}.css`);
       const decorationComplete = new Promise((resolve) => {
@@ -672,6 +681,7 @@ async function loadBlocks(main) {
  * @param {Element} block The block element
  */
 function decorateBlock(block) {
+  console.log(block);
   const shortBlockName = block.classList[0];
   if (shortBlockName) {
     block.classList.add('block');

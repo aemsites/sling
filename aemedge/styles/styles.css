@@ -322,6 +322,7 @@ button.text:hover {
 .offer-details .button-container p {
   line-height: 1em;
   margin: 0;
+  text-align: center;
 }
 
 .block.blog-breadcrumb {
@@ -334,6 +335,7 @@ button.text:hover {
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
+
 }
 
 .blog-breadcrumb .blog-breadcrumb-active-article {
@@ -548,6 +550,8 @@ main .section {
     align-items: flex-start;
   }
 }
+
+
 
 /* section metadata */
 main .section.light,
