@@ -671,31 +671,36 @@ export function getVideoUrlByScreenWidth(videoLinks) {
   return videoLinks[2].getAttribute('href'); // Mobile
 }
 
+function getEagerlyLoadedPic(picture) {
+  const img = picture.querySelector('img');
+  return createOptimizedPicture(img.src, img.alt, true);
+}
+
 export function getPictureUrlByScreenWidth(pictures) {
   const screenWidth = window.innerWidth;
   if (pictures.length === 0) {
     return null;
   }
   if (pictures.length === 1) {
-    return pictures[0];
+    return getEagerlyLoadedPic(pictures[0]);
   }
   if (pictures.length === 2) {
     // First link for desktop and tablet, second link for mobile
     if (screenWidth >= 1024) {
-      return pictures[0]; // Desktop
+      return getEagerlyLoadedPic(pictures[0]); // Desktop
     }
     if (screenWidth >= 768 && screenWidth < 1024) {
-      return pictures[0].getAttribute('href'); // Tablet
+      return getEagerlyLoadedPic(pictures[0]); // Tablet
     }
-    return pictures[1].getAttribute('href'); // Mobile
+    return getEagerlyLoadedPic(pictures[1]); // Mobile
   }
 
   // If there are 3 or more links
   if (screenWidth >= 1024) {
-    return pictures[0]; // Desktop
+    return getEagerlyLoadedPic(pictures[0]);// Desktop
   }
   if (screenWidth >= 768 && screenWidth < 1024) {
-    return pictures[1]; // Tablet
+    return getEagerlyLoadedPic(pictures[1]); // Tablet
   }
-  return pictures[2]; // Mobile
+  return getEagerlyLoadedPic(pictures[2]); // Mobile
 }

@@ -123,7 +123,7 @@ function processBlockConfig(block) {
 }
 
 export default function decorate(block) {
-  block.querySelectorAll('img').forEach((img) => { img.loading = 'lazy'; });
+  block.querySelectorAll('img').forEach((img) => { img.fetchpriority = 'high'; });
   processBlockConfig(block);
   const background = block.querySelector('.background');
   const bgColor = block.querySelector('.background-color');

@@ -34,15 +34,15 @@
   }
 
   .marquee-content h2 {
-      font-size: 3rem;
-      line-height: 54px;
-      font-weight: 800;
-      letter-spacing: -1.15px;
-      margin: 0 0 1rem;
-      max-width: 600px;
-      -webkit-font-smoothing: antialiased;
-      text-wrap: wrap;
-      scroll-margin: 0;
+    font-size: 3rem;
+    line-height: 54px;
+    font-weight: 800;
+    letter-spacing: -1.15px;
+    margin: 0 0 1rem;
+    max-width: 600px;
+    -webkit-font-smoothing: antialiased;
+    text-wrap: wrap;
+    scroll-margin: 0;
   }
 
   .marquee .background {
