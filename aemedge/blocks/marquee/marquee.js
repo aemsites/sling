@@ -1,5 +1,5 @@
 import { createTag, getPictureUrlByScreenWidth, getVideoUrlByScreenWidth } from '../../scripts/utils.js';
-import { createOptimizedPicture, toClassName } from '../../scripts/aem.js';
+import { toClassName } from '../../scripts/aem.js';
 
 function setupVideo(url, block) {
   if (!url) return;
@@ -123,7 +123,6 @@ function processBlockConfig(block) {
 }
 
 export default function decorate(block) {
-  // block.querySelectorAll('img').forEach((img) => img.closest('picture').replaceWith(createOptimizedPicture(img.src, img.alt, true)));
   processBlockConfig(block);
   const background = block.querySelector('.background');
   const bgColor = block.querySelector('.background-color');
