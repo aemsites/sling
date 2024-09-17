@@ -3,9 +3,8 @@ import {
   decorateIcons,
 } from '../../scripts/aem.js';
 import {
-  GQL_QUERIES, fetchGQL, createTag, fetchPlaceholders,
+  GQL_QUERIES, fetchGQL, createTag, fetchPlaceholders, getZipcode,
 } from '../../scripts/utils.js';
-import { getZipcode } from '../zipcode/zipcode.js';
 
 const PACKAGE_TYPES = Object.freeze({
   blue: {
