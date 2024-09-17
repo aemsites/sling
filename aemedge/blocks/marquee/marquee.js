@@ -128,6 +128,19 @@ export default function decorate(block) {
   const bgColor = block.querySelector('.background-color');
   const scrollCTA = block.querySelector('.scroll-cta-into-header');
 
+  // if scroll configured then toggle the respective css class
+  if (scrollCTA) {
+    const cta = document.querySelector('.cta a');
+    if (cta) {
+      const options = {
+        root: null,
+        threshold: 0.1,
+      };
+      const observer = new IntersectionObserver(scrollCTAIntoHeader, options);
+      observer.observe(block);
+    }
+    scrollCTA.remove();
+  }
   let bgMediaType;
   if (background) {
     if (background.querySelector('picture')) {
@@ -145,20 +158,7 @@ export default function decorate(block) {
     bgColor.remove();
   }
 
-  if (bgMediaType === 'picture') setupBGPictures(block);
   setupBGVideos(block);
-  // if scroll configured then toggle the respective css class
-  if (scrollCTA) {
-    const cta = document.querySelector('.cta a');
-    if (cta) {
-      const options = {
-        root: null,
-        threshold: 0.1,
-      };
-      const observer = new IntersectionObserver(scrollCTAIntoHeader, options);
-      observer.observe(block);
-    }
-    scrollCTA.remove();
-  }
+  if (bgMediaType === 'picture') setupBGPictures(block);
   block.querySelectorAll('div').forEach((div) => { if (div.children.length === 0) div.remove(); }); // remove empty divs
 }
