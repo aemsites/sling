@@ -123,7 +123,7 @@ function processBlockConfig(block) {
 }
 
 export default function decorate(block) {
-  block.querySelectorAll('img').forEach((img) => img.closest('picture').replaceWith(createOptimizedPicture(img.src, img.alt, true, [{ width: '1024' }])));
+  block.querySelectorAll('img').forEach((img) => img.closest('picture').replaceWith(createOptimizedPicture(img.src, img.alt, true)));
   processBlockConfig(block);
   const background = block.querySelector('.background');
   const bgColor = block.querySelector('.background-color');
