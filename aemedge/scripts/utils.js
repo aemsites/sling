@@ -673,7 +673,7 @@ export function getVideoUrlByScreenWidth(videoLinks) {
 
 function getEagerlyLoadedPic(picture) {
   const img = picture.querySelector('img');
-  const optimizedPic = createOptimizedPicture(img.src, img.alt, true);
+  const optimizedPic = createOptimizedPicture(img.src, img.alt, false);
   const optimizedImg = optimizedPic.querySelector('img');
   optimizedImg.fetchPriority = 'high';
   return optimizedPic;
