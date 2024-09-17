@@ -1,13 +1,14 @@
-
+/*
 .marquee.block {
     color: var(--clr-white);
     position: relative;  
     height: 743px;
     border: none;
     overflow: hidden;
-}
+} */
 
 .marquee-content {
+  color: var(--clr-white);
     border: none;
     padding: 48px 2rem 6%;
     display: flex;
@@ -45,15 +46,16 @@
     scroll-margin: 0;
   }
 
-  .marquee .background {
+  /* .marquee .background {
     position:absolute;
     z-index: 0;
     inset: 0;
-  }
+  } */
 
   .marquee .background video,
   .marquee .background picture img{
-    width: 100%;
+    position:absolute;
+    z-index: 0;
     object-fit: cover;
   }
 
