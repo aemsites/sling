@@ -203,6 +203,14 @@ async function buildGlobalBanner(main) {
   }
 }
 
+async function setNavType() {
+  const nav = getMetadata('nav');
+  if (nav && nav.includes('nav-without-topnav')) {
+    const header = document.querySelector('header');
+    header?.classList.add('nav-without-topnav');
+  }
+}
+
 /**
    * Decorates paragraphs containing a single link as buttons.
    * @param {Element} element container element
@@ -468,6 +476,7 @@ async function loadLazy(doc) {
   const element = hash ? doc.getElementById(hash.substring(1)) : false;
   if (hash && element) element.scrollIntoView();
   loadHeader(doc.querySelector('header'));
+  setNavType(main);
   loadFooter(doc.querySelector('footer'));
   buildGlobalBanner(main);
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);

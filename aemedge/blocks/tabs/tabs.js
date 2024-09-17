@@ -17,7 +17,6 @@ export default async function decorate(block) {
   const numColumns = [...block.children].filter((child) => child.children.length === 3);
   const isStandard = numColumns.length === block.children.length;
   const isNonStandard = numColumns.length !== block.children.length;
-
   let newBlock;
   // if tabs has 3 columns, use first col for tab category and 2nd and 3rd for tab content
   // and build the block based on the variant provided
@@ -25,13 +24,12 @@ export default async function decorate(block) {
     const subBlockToBuild = [...block.classList].filter(
       (className) => AVAILABLE_SUB_BLOCKS.includes(className),
     )[0];
-    // console.log(subBlockToBuild);
+    // build a new block with sub block in the 2nd column
     if (subBlockToBuild) {
       newBlock = document.createElement('div');
       // build content for the sub block
       const rows = [...block.children];
       block.innerHTML = '';
-      // Handle two-column rows
       if (isNonStandard) {
         let currentTabCategory;
         let oldTabCategory;
@@ -158,7 +156,7 @@ export default async function decorate(block) {
   });
 
   block.prepend(tablist);
-  if (isStandard || isNonStandard || isTwoColumns) {
+  if (isStandard || isNonStandard) {
     await loadBlocks(block);
   }
 }
