@@ -9,20 +9,21 @@
 
 .marquee-content {
   color: var(--clr-white);
-    border: none;
-    padding: 48px 2rem 6%;
-    display: flex;
-    -webkit-box-pack: justify;
-    flex-flow: column;
-    inset: 0;
-    background: linear-gradient(#33334c00 50%, 85%, #171725 100%), radial-gradient(110% 100% at 75% 25%, #20203200 0%, #171725 100%);
-    box-sizing: border-box;
-    width: 100%;
-    -webkit-box-align: start;
-    align-items: start;
-    text-align: left;
-    position: relative;
-    height: 843px;
+  border: none;
+  padding: 48px 2rem 6%;
+  display: flex;
+  -webkit-box-pack: justify;
+  flex-flow: column;
+  inset: 0;
+  background: linear-gradient(#33334c00 50%, 85%, #171725 100%), radial-gradient(110% 100% at 75% 25%, #20203200 0%, #171725 100%);
+  box-sizing: border-box;
+  width: 100%;
+  -webkit-box-align: start;
+  align-items: start;
+  text-align: left;
+  position: relative;
+
+  /* height: 843px; */
   }
 
   .marquee-content h1 {
@@ -59,7 +60,6 @@
     object-fit: cover;
     width: 100%;
     box-sizing: border-box;
-    aspect-ratio: 3.1 / 1;
   }
 
   .marquee-content .sub-headline picture img {
