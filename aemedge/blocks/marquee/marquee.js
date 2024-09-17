@@ -160,6 +160,6 @@ export default function decorate(block) {
   }
 
   setupBGVideos(block);
-  if (bgMediaType === 'picture') setupBGPictures(block);
+  if (bgMediaType === 'picture1') setupBGPictures(block);
   block.querySelectorAll('div').forEach((div) => { if (div.children.length === 0) div.remove(); }); // remove empty divs
 }
