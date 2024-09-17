@@ -23,7 +23,7 @@ function setupVideo(url, block) {
   };
   const videoSource = createTag('source', { src: url, type: 'video/mp4' });
   video.append(videoSource);
-  const container = createTag('div', { class: 'background-video' });
+  const container = createTag('div', { class: 'background' });
   container.append(video);
   block.prepend(container);
 }
@@ -58,22 +58,22 @@ function setupBGPictures(block) {
   if (existingPicture) {
     existingPicture.parentElement.remove();
   }
-  const bgDIV = createTag('div', { class: 'background-image' });
+  const bgDIV = createTag('div', { class: 'background' });
   bgDIV.append(currentPicture);
   block.prepend(bgDIV);
 
-  // Resize event listener to update picture based on screen size changes
+  // Resize event listener to update video based on screen size changes
   window.addEventListener('resize', () => {
     const newPicture = getPictureUrlByScreenWidth(pictures);
 
-    // Update picture only if the URL changes
+    // Update video only if the URL changes
     if (newPicture !== currentPicture) {
       currentPicture = newPicture;
       const oldPicture = block.querySelector('picture');
       if (oldPicture) {
         oldPicture.parentElement.remove();
       }
-      const container = createTag('div', { class: 'background-image' });
+      const container = createTag('div', { class: 'background' });
       container.append(currentPicture);
       block.prepend(container);
     }
@@ -160,6 +160,6 @@ export default function decorate(block) {
   }
 
   setupBGVideos(block);
-  if (bgMediaType === 'picture1') setupBGPictures(block);
+  if (bgMediaType === 'picture') setupBGPictures(block);
   block.querySelectorAll('div').forEach((div) => { if (div.children.length === 0) div.remove(); }); // remove empty divs
 }
