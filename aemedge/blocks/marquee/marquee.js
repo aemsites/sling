@@ -25,7 +25,7 @@ function setupVideo(url, block) {
   video.append(videoSource);
   const container = createTag('div', { class: 'background' });
   container.append(video);
-  block.prepend(container);
+  // block.prepend(container);
 }
 
 function setupBGVideos(block) {
