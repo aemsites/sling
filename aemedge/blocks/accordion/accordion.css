@@ -120,4 +120,10 @@
     margin: auto;
   }
 
+  .rewards .accordion-wrapper .accordion {
+    max-width: 780px;
+    margin: auto;
+    padding: 0 1rem;
+  }
+
 }

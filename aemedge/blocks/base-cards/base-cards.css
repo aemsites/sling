@@ -45,7 +45,7 @@
 }
 
 .base-cards.block #base-cards-app > * {
-    z-index: 0;
+    /* z-index: 0; */
 }
 
 .base-cards.block #base-cards-app div.eMQgdL > *{

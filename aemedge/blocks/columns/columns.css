@@ -127,6 +127,19 @@ main .section.background.rewards-column > picture {
   margin-top: 50px;
 }
 
+.rewards .section.columns-container .columns-wrapper .columns.carousel.block div .columns-img-col picture img {
+  pointer-events: auto;
+  min-height: calc(100% - 1.5rem);
+  height: calc(100% - 1.5rem);
+  min-width: calc(100% - 1.5rem);
+  width: calc(100% - 1.5rem);
+  margin: 0.75rem;
+  border-radius: 0.25em;
+  object-fit: cover;
+  background: rgb(239 239 241);
+  filter: drop-shadow(rgba(0 0 0 0.2) 0 4px 4px);
+}
+
 @media (width >= 768px) {
   .columns > div {
     flex-direction: unset;
