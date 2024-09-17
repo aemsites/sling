@@ -475,10 +475,10 @@ async function loadLazy(doc) {
   const { hash } = window.location;
   const element = hash ? doc.getElementById(hash.substring(1)) : false;
   if (hash && element) element.scrollIntoView();
-  // loadHeader(doc.querySelector('header'));
-  // setNavType(main);
-  // loadFooter(doc.querySelector('footer'));
-  // buildGlobalBanner(main);
+  loadHeader(doc.querySelector('header'));
+  setNavType(main);
+  loadFooter(doc.querySelector('footer'));
+  buildGlobalBanner(main);
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
   loadFonts();
   sampleRUM('lazy');
