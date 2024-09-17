@@ -25,7 +25,7 @@ function setupVideo(url, block) {
   video.append(videoSource);
   const container = createTag('div', { class: 'background' });
   container.append(video);
-  // block.prepend(container);
+  block.prepend(container);
 }
 
 function setupBGVideos(block) {
@@ -60,7 +60,7 @@ function setupBGPictures(block) {
   }
   const bgDIV = createTag('div', { class: 'background' });
   bgDIV.append(currentPicture);
-  // block.prepend(bgDIV);
+  block.prepend(bgDIV);
 
   // Resize event listener to update video based on screen size changes
   window.addEventListener('resize', () => {
@@ -75,7 +75,7 @@ function setupBGPictures(block) {
       }
       const container = createTag('div', { class: 'background' });
       container.append(currentPicture);
-      // block.prepend(container);
+      block.prepend(container);
     }
   });
 }

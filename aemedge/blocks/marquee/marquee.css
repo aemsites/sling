@@ -2,7 +2,7 @@
 .marquee.block {
     color: var(--clr-white);
     position: relative;  
-    min-height: 440px;
+    height: 743px;
     border: none;
     overflow: hidden;
 }
