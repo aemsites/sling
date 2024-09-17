@@ -27,6 +27,7 @@ export default async function decorate(block) {
     // build a new block with sub block in the 2nd column
     if (subBlockToBuild) {
       newBlock = document.createElement('div');
+      // build content for the sub block
       const rows = [...block.children];
       block.innerHTML = '';
       if (isNonStandard) {
