@@ -7,6 +7,7 @@ import { getTag } from './tags.js';
 export const PRODUCTION_DOMAINS = ['sling.com'];
 
 const domainCheckCache = {};
+export const ZIPCODE_KEY = 'user_zip';
 /**
  * Checks a url to determine if it is a known domain.
  * @param {string | URL} url the url to check
@@ -388,7 +389,7 @@ export async function fetchPlaceholders(prefix = 'default', sheet = '') {
   window.placeholders = window.placeholders || {};
   if (!window.placeholders[`${prefix}-${sheet}`]) {
     window.placeholders[`${prefix}-${sheet}`] = new Promise((resolve) => {
-      fetch(`${prefix === 'default' ? '' : prefix}/placeholders.json`)
+      fetch(`${prefix === 'default' ? '' : prefix}/placeholders.json${sheet === '' ? '' : `?sheet=${sheet}`}`)
         .then((resp) => {
           if (resp.ok) {
             return resp.json();
@@ -397,17 +398,20 @@ export async function fetchPlaceholders(prefix = 'default', sheet = '') {
         })
         .then((json) => {
           const placeholders = {};
-          let jsonData;
-          if (sheet) {
-            jsonData = json[sheet].data;
+          if (sheet !== '') {
+            const jsonData = json.data;
+            jsonData
+              .filter((placeholder) => placeholder.Key)
+              .forEach((placeholder) => {
+                placeholders[toCamelCase(placeholder.Key)] = placeholder.Text;
+              });
           } else {
-            jsonData = json.data;
-          }
-          jsonData
-            .filter((placeholder) => placeholder.Key)
-            .forEach((placeholder) => {
-              placeholders[toCamelCase(placeholder.Key)] = placeholder.Text;
+            json[':names'].forEach((sheetname) => {
+              json[sheetname].data.forEach((item) => {
+                placeholders[toCamelCase(item.Key)] = item.Text;
+              });
             });
+          }
           window.placeholders[prefix] = placeholders;
           resolve(window.placeholders[prefix]);
         })
@@ -698,4 +702,16 @@ export function getPictureUrlByScreenWidth(pictures) {
     return pictures[1]; // Tablet
   }
   return pictures[2]; // Mobile
+}
+export async function getZipcode() {
+  const ZIPCODE_ENDPOINT = 'https://p-geo.movetv.com/geo';
+  const DEFAULT_ZIPCODE = '90020';
+  let zipcode = localStorage.getItem(ZIPCODE_KEY);
+  if (!zipcode) {
+    const response = await fetch(ZIPCODE_ENDPOINT);
+    const data = await response.json();
+    zipcode = data?.zip_code || DEFAULT_ZIPCODE;
+    localStorage.setItem(ZIPCODE_KEY, zipcode);
+  }
+  return zipcode;
 }
