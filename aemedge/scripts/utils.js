@@ -671,40 +671,31 @@ export function getVideoUrlByScreenWidth(videoLinks) {
   return videoLinks[2].getAttribute('href'); // Mobile
 }
 
-function getEagerlyLoadedPic(picture) {
-  // const img = picture.querySelector('img');
-  // const optimizedPic = createOptimizedPicture(img.src, img.alt, false);
-  // const optimizedImg = optimizedPic.querySelector('img');
-  // optimizedImg.fetchPriority = 'high';
-  // return optimizedPic;
-  return picture;
-}
-
 export function getPictureUrlByScreenWidth(pictures) {
   const screenWidth = window.innerWidth;
   if (pictures.length === 0) {
     return null;
   }
   if (pictures.length === 1) {
-    return getEagerlyLoadedPic(pictures[0]);
+    return pictures[0];
   }
   if (pictures.length === 2) {
     // First link for desktop and tablet, second link for mobile
     if (screenWidth >= 1024) {
-      return getEagerlyLoadedPic(pictures[0]); // Desktop
+      return pictures[0]; // Desktop
     }
     if (screenWidth >= 768 && screenWidth < 1024) {
-      return getEagerlyLoadedPic(pictures[0]); // Tablet
+      return pictures[0]; // Tablet
     }
-    return getEagerlyLoadedPic(pictures[1]); // Mobile
+    return pictures[1]; // Mobile
   }
 
   // If there are 3 or more links
   if (screenWidth >= 1024) {
-    return getEagerlyLoadedPic(pictures[0]);// Desktop
+    return pictures[0];// Desktop
   }
   if (screenWidth >= 768 && screenWidth < 1024) {
-    return getEagerlyLoadedPic(pictures[1]); // Tablet
+    return pictures[1]; // Tablet
   }
-  return getEagerlyLoadedPic(pictures[2]); // Mobile
+  return pictures[2]; // Mobile
 }

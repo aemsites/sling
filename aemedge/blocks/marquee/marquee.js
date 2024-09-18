@@ -114,7 +114,6 @@ function processBlockConfig(block) {
   if (mediaDIV.querySelector('.foreground')
       && mediaDIV.querySelector('.foreground').children.length > 0) {
     marqueContent.append(nonMediaDIV, mediaDIV);
-    // marqueContent.classList.add('center');
   } else {
     marqueContent.append(nonMediaDIV);
   }
