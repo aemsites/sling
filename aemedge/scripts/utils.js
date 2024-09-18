@@ -389,7 +389,7 @@ export async function fetchPlaceholders(prefix = 'default', sheet = '') {
   window.placeholders = window.placeholders || {};
   if (!window.placeholders[`${prefix}-${sheet}`]) {
     window.placeholders[`${prefix}-${sheet}`] = new Promise((resolve) => {
-      fetch(`${prefix === 'default' ? '' : prefix}/placeholders.json${sheet === '' ? '' : `?sheet=${sheet}`}`)
+      fetch(`/${prefix === 'default' ? '' : prefix}/placeholders.json${sheet === '' ? '' : `?sheet=${sheet}`}`)
         .then((resp) => {
           if (resp.ok) {
             return resp.json();
