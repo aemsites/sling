@@ -672,11 +672,12 @@ export function getVideoUrlByScreenWidth(videoLinks) {
 }
 
 function getEagerlyLoadedPic(picture) {
-  const img = picture.querySelector('img');
-  const optimizedPic = createOptimizedPicture(img.src, img.alt, false);
-  const optimizedImg = optimizedPic.querySelector('img');
-  optimizedImg.fetchPriority = 'high';
-  return optimizedPic;
+  // const img = picture.querySelector('img');
+  // const optimizedPic = createOptimizedPicture(img.src, img.alt, false);
+  // const optimizedImg = optimizedPic.querySelector('img');
+  // optimizedImg.fetchPriority = 'high';
+  // return optimizedPic;
+  return picture;
 }
 
 export function getPictureUrlByScreenWidth(pictures) {
