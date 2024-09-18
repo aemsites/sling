@@ -4,7 +4,7 @@
     position: relative;  
     border: none;
     overflow: hidden;
-    height: 943px;
+    height: 743px;
 }
 
 .marquee-content {
@@ -18,11 +18,12 @@
   background: linear-gradient(#33334c00 50%, 85%, #171725 100%), radial-gradient(110% 100% at 75% 25%, #20203200 0%, #171725 100%);
   box-sizing: border-box;
   width: 100%;
-  -webkit-box-align: center;
-  align-items: center;
+  -webkit-box-align: start;
+  align-items: start;
   text-align: left;
   position: relative;
   height: 100%;
+  
   }
 
   .marquee-content h1 {
@@ -71,6 +72,8 @@
     aspect-ratio: 15 / 1;
   }
 
+
+
   .marquee-content .text-cta-container .button-container
   {
     display: flex;
@@ -93,13 +96,19 @@
   margin: 1rem auto;
 } 
 
+
+
 @media (width >= 768px) {
+  .marquee-content .text-cta-container {
+    margin-right:20px;
+  }
+  
   .marquee-content {
     padding: 80px 4rem 6%;
   }
 
   .marquee.block { 
-    height: 743px;
+    height: 943px;
   }
  }
 
