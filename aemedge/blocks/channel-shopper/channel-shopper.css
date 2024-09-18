@@ -25,10 +25,14 @@
 }
 
 .channel-shopper.block #channel-shopper-app button.kBfRPX {
-background: var(--primary-button-color);
-border-radius: 1600px;
-border: transparent;
-font-size: 18px;
-line-height: inherit;
-padding:0.938rem 1.2rem;
+    background: var(--primary-button-color);
+    border-radius: 1600px;
+    border: transparent;
+    font-size: 18px;
+    line-height: inherit;
+    padding:0.938rem 1.2rem;
+}
+
+#channel-shopper-app img {
+    width: 60px;
 }
