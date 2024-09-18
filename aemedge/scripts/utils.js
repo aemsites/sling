@@ -689,14 +689,14 @@ export function getPictureUrlByScreenWidth(pictures) {
       return pictures[0]; // Desktop
     }
     if (screenWidth >= 768 && screenWidth < 1024) {
-      return pictures[0].getAttribute('href'); // Tablet
+      return pictures[0]; // Tablet
     }
-    return pictures[1].getAttribute('href'); // Mobile
+    return pictures[1]; // Mobile
   }
 
   // If there are 3 or more links
   if (screenWidth >= 1024) {
-    return pictures[0]; // Desktop
+    return pictures[0];// Desktop
   }
   if (screenWidth >= 768 && screenWidth < 1024) {
     return pictures[1]; // Tablet
