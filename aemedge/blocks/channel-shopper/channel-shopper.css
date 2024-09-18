@@ -1,4 +1,13 @@
 /* stylelint-disable selector-class-pattern */
+.channel-shopper-container .columns.block .columns-img-col img {
+    max-width: max-content;
+    width: auto;
+}
+
+.channel-shopper-container p {
+    margin: 0;
+}
+
 .channel-shopper.block {
     background: initial;
 }
