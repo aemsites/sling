@@ -2,7 +2,7 @@ import {
   createTag, getZipcode, ZIPCODE_KEY, fetchPlaceholders,
 } from '../../scripts/utils.js';
 
-const placeholders = await fetchPlaceholders('default', 'messages');
+const placeholders = await fetchPlaceholders('aemedge', 'messages');
 
 function showWarningMessage() {
   return `
