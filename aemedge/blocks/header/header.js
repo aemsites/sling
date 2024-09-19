@@ -130,11 +130,6 @@ export default async function decorate(block) {
   const headerType = getMetadata('headertype');
   if (headerType === 'design1') {
     navPath = '/aemedge/navdesign1';
-    /* const headerWrapper = document.querySelector('.header-wrapper');
-    // Remove the 'height' property from the element's inline styles
-    if (headerWrapper) {
-      headerWrapper.style.removeProperty('height');
-    } */
   } else if (headerType === 'design2') {
     navPath = '/aemedge/navdesign2';
   } else {
