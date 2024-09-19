@@ -127,14 +127,18 @@ export default async function decorate(block) {
   // load nav as fragment
   const navMeta = getMetadata('nav');
   let navPath = '/aemedge/nav';
-  const headerType = getMetadata('headertype');
-  if (headerType === 'design1') {
+  const navMetaPath = navMeta ? new URL(navMeta).pathname : '';
+
+  if (navMetaPath.includes('programming') || navMetaPath.includes('watch') || navMetaPath.includes('deals')) {
     navPath = '/aemedge/navdesign1';
-  } else if (headerType === 'design2') {
+  } else if (navMetaPath.includes('international')) {
     navPath = '/aemedge/navdesign2';
+  } else if (navMetaPath.includes('latino')) {
+    navPath = '/aemedge/navdesign3';
   } else {
-    navPath = navMeta ? new URL(navMeta).pathname : '/aemedge/nav';
+    navPath = '/aemedge/nav';
   }
+
   const fragment = await loadFragment(navPath);
   let topnavSection;
   if (fragment.childElementCount === 4) {
