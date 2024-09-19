@@ -128,19 +128,18 @@ export default async function decorate(block) {
   const navMeta = getMetadata('nav');
   let navPath = '/aemedge/nav';
   const headerType = getMetadata('headertype');
-  if (headerType === 'header1') {
-    navPath = '/drafts/ritwik/header1';
-    /*const headerWrapper = document.querySelector('.header-wrapper');
+  if (headerType === 'design1') {
+    navPath = '/aemedge/navdesign1';
+    /* const headerWrapper = document.querySelector('.header-wrapper');
     // Remove the 'height' property from the element's inline styles
     if (headerWrapper) {
       headerWrapper.style.removeProperty('height');
-    }*/
-  } else if ( headerType === 'header2' ) {
-    navPath = '/drafts/ritwik/header2';
+    } */
+  } else if (headerType === 'design2') {
+    navPath = '/aemedge/navdesign2';
+  } else {
+    navPath = navMeta ? new URL(navMeta).pathname : '/aemedge/nav';
   }
-  else {
-        navPath = navMeta ? new URL(navMeta).pathname : '/aemedge/nav';
-    }
   const fragment = await loadFragment(navPath);
   let topnavSection;
   if (fragment.childElementCount === 4) {
