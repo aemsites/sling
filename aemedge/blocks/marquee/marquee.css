@@ -60,6 +60,10 @@
     z-index: 0;
     inset: 0;
     height: 100%;
+
+      picture {
+          display: unset;
+      }
   }
 
   .marquee .background video,
@@ -76,12 +80,6 @@
   .marquee-content .sub-headline picture img {
     width: auto;
     height: auto;
-
-   /* testing how CLS does
-   max-width: 600px;
-    aspect-ratio: 15 / 1;
-    */
-
   }
 
   .marquee-content .text-cta-container .button-container
@@ -94,14 +92,14 @@
     max-width: unset;
   }
 
-  .marquee-content .text-cta-container .button-container p
- {
+  .marquee-content .text-cta-container .button-container p {
   margin:0;
  }
 
 
 .marquee-content .foreground-container {
   margin: 1rem auto;
+    text-align: center;
 }
 
 
@@ -124,6 +122,8 @@
   .marquee-content {
     flex-direction: row;
     padding: 80px 128px 6%;
+    align-items: center;
+    justify-content: space-between;
   }
 
 
@@ -144,10 +144,21 @@
     margin: 0.5rem 0 1rem;
   }
 
-  .marquee-content .text-cta-container .button-container {
-    display: block;
-    margin:0;
+  .marquee-content .text-cta-container {
+      width: 50%;
+      max-width: 600px;
+      padding-right: 1.5rem;
+
+      .button-container {
+          display: block;
+          margin: 0;
+      }
   }
+
+     .marquee-content .foreground-container {
+         padding-left: 1.5rem;
+         width: 50%;
+     }
 
    .marquee-content .cta a.scroll-into-header{
     position: fixed;
