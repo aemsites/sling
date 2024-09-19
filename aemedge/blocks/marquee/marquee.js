@@ -114,7 +114,6 @@ function processBlockConfig(block) {
   if (mediaDIV.querySelector('.foreground')
       && mediaDIV.querySelector('.foreground').children.length > 0) {
     marqueContent.append(nonMediaDIV, mediaDIV);
-    marqueContent.classList.add('center');
   } else {
     marqueContent.append(nonMediaDIV);
   }
@@ -160,5 +159,6 @@ export default function decorate(block) {
 
   setupBGVideos(block);
   if (bgMediaType === 'picture') setupBGPictures(block);
+  background.remove();
   block.querySelectorAll('div').forEach((div) => { if (div.children.length === 0) div.remove(); }); // remove empty divs
 }

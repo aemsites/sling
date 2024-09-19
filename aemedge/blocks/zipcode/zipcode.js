@@ -1,19 +1,4 @@
-import { createTag } from '../../scripts/utils.js';
-
-const ZIPCODE_ENDPOINT = 'https://p-geo.movetv.com/geo';
-const DEFAULT_ZIPCODE = '90020';
-const ZIPCODE_KEY = 'user_zip';
-
-export async function getZipcode() {
-  let zipcode = localStorage.getItem(ZIPCODE_KEY);
-  if (!zipcode) {
-    const response = await fetch(ZIPCODE_ENDPOINT);
-    const data = await response.json();
-    zipcode = data?.zip_code || DEFAULT_ZIPCODE;
-    localStorage.setItem(ZIPCODE_KEY, zipcode);
-  }
-  return zipcode;
-}
+import { createTag, getZipcode, ZIPCODE_KEY } from '../../scripts/utils.js';
 
 const closeForm = (e, block) => {
   e.preventDefault();
