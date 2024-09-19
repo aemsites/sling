@@ -1,10 +1,10 @@
 
 .marquee.block {
     color: var(--clr-white);
-    position: relative;  
+    position: relative;
     border: none;
     overflow: hidden;
-    height: 743px;
+    min-height: 700px;
 }
 
 .marquee-content {
@@ -23,8 +23,17 @@
   text-align: left;
   position: relative;
   height: 100%;
-  
+    min-height: 700px;
   }
+
+.marquee-content .text-cta-container {
+    margin: 1rem 0;
+}
+
+.marquee-content .headline p {
+    font-size: var(--heading-font-size-l);
+    line-height: 30px;
+}
 
   .marquee-content h1 {
     font-size: 30px;
@@ -36,9 +45,8 @@
   }
 
   .marquee-content h2 {
-    font-size: 3rem;
+    font-size: var(--heading-font-size-3xl);
     line-height: 54px;
-    font-weight: 800;
     letter-spacing: -1.15px;
     margin: 0 0 1rem;
     max-width: 600px;
@@ -52,6 +60,10 @@
     z-index: 0;
     inset: 0;
     height: 100%;
+
+      picture {
+          display: unset;
+      }
   }
 
   .marquee .background video,
@@ -68,11 +80,7 @@
   .marquee-content .sub-headline picture img {
     width: auto;
     height: auto;
-    max-width: 600px;
-    aspect-ratio: 15 / 1;
   }
-
-
 
   .marquee-content .text-cta-container .button-container
   {
@@ -80,21 +88,19 @@
     flex-direction: column;
     -webkit-box-align: center;
     align-items: center;
-    margin: 0 auto;
-    letter-spacing: -0.25px;
     width: fit-content;
     max-width: unset;
   }
 
-  .marquee-content .text-cta-container .button-container p
- {
+  .marquee-content .text-cta-container .button-container p {
   margin:0;
  }
 
 
 .marquee-content .foreground-container {
   margin: 1rem auto;
-} 
+    text-align: center;
+}
 
 
 
@@ -102,13 +108,9 @@
   .marquee-content .text-cta-container {
     margin-right:20px;
   }
-  
+
   .marquee-content {
     padding: 80px 4rem 6%;
-  }
-
-  .marquee.block { 
-    height: 943px;
   }
  }
 
@@ -116,6 +118,8 @@
   .marquee-content {
     flex-direction: row;
     padding: 80px 128px 6%;
+    align-items: center;
+    justify-content: space-between;
   }
 
 
@@ -136,10 +140,22 @@
     margin: 0.5rem 0 1rem;
   }
 
-  .marquee-content .text-cta-container .button-container {
-    display: block;
-    margin:0;
+  .marquee-content .text-cta-container {
+      width: 50%;
+      max-width: 600px;
+      padding-right: 1.5rem;
+
+      .button-container {
+          display: block;
+          margin: 0;
+      }
   }
+
+     .marquee-content .foreground-container {
+         padding-left: 1.5rem;
+         width: 50%;
+         margin: 0;
+     }
 
    .marquee-content .cta a.scroll-into-header{
     position: fixed;
@@ -150,6 +166,6 @@
     min-width: 180px;
     margin: 0;
     min-height: 50px;
-    } 
+    }
 
- } 
+ }
