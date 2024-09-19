@@ -131,7 +131,6 @@ export default async function decorate(block) {
     if (!hasWrapper(tabpanel.lastElementChild)) {
       tabpanel.lastElementChild.innerHTML = `<p>${tabpanel.lastElementChild.innerHTML}</p>`;
     }
-
     // build tab button
     const button = document.createElement('button');
     button.className = 'tabs-tab';

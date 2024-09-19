@@ -123,8 +123,71 @@ main .section.background.rewards-column > picture {
   text-align: center;
 }
 
-.rewards .section.background.rewards-column.columns-container .columns-wrapper{
-  margin-top: 50px;
+.rewards .section.columns-container.rewards-column{
+  width: 100%;
+}
+
+
+.rewards .section.columns-container{
+  width: 66.6667%;
+  margin-left: 16.6667%;
+}
+
+.rewards .section.columns-container .columns-wrapper{
+    position: relative;
+    display: flex;
+    overflow: visible;
+    margin-bottom: 50px;
+}
+
+.rewards .section.columns-container .columns-wrapper .columns.carousel.block{
+  display: flex;
+    overflow: hidden visible;
+    position: relative;
+    margin: auto;
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    padding: 0 1rem;
+    backface-visibility: hidden;
+    box-sizing: border-box;
+    mask-image: linear-gradient(to right, transparent 0, transparent 5px, black 30px, black calc(100% - 30px), transparent calc(100% - 5px), transparent 100%);
+}
+
+.rewards .section.columns-container .columns-wrapper .columns.carousel.block div{
+  display: flex;
+  flex-direction: row;
+  -webkit-box-pack: unset;
+  justify-content: unset;
+  backface-visibility: hidden;
+  will-change: transform;
+  overflow: visible;
+  margin: auto;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.rewards .section.columns-container .columns-wrapper .columns.carousel.block div .columns-img-col{
+  display: flex;
+  min-width: 50%;
+  width: 50%;
+  aspect-ratio: 2 / 3;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+  pointer-events: none;
+  position: relative;
+  text-align: center;
+  color: white;
+}
+
+.rewards .section.columns-container .columns-wrapper .columns.carousel.block div .columns-img-col picture{
+  pointer-events: none;
+  min-width: 100%;
+  width: 100%;
+  min-height: 100%;
+  height: 100%;
 }
 
 .rewards .section.columns-container .columns-wrapper .columns.carousel.block div .columns-img-col picture img {
@@ -149,8 +212,6 @@ main .section.background.rewards-column > picture {
   .rewards .columns-3-cols img {
     width: 27.5vw;
   }
-
-  
 
   .rewards .columns div {
     display: flex;
@@ -186,18 +247,23 @@ main .section.background.rewards-column > picture {
     width: 100%;
   }
 
-  .rewards .carousel div .columns-img-col picture img{
+  .rewards .section.columns-container .columns-wrapper .columns.carousel.block div .columns-img-col picture img{
     pointer-events: auto;
-      min-height: calc(100% - 1.5rem);
-      height: calc(100% - 1.5rem);
-      min-width: calc(100% - 1.5rem);
-      width: calc(100% - 1.5rem);
-      margin: 0.75rem;
-      border-radius: 0.25em;
-      object-fit: cover;
-      background: rgb(239 239 241);
-      filter: drop-shadow(rgba(0 0 0 0.2) 0 4px 4px);
-    }
+    min-height: calc(100% - 1.5rem);
+    height: calc(100% - 1.5rem);
+    min-width: calc(100% - 1.5rem);
+    width: calc(100% - 1.5rem);
+    margin: 0.75rem;
+    border-radius: 0.25em;
+    object-fit: cover;
+    background: rgb(239 239 241);
+    filter: drop-shadow(rgba(0 0 0 0.2) 0 4px 4px);
+  }
+
+  .rewards .section.columns-container .columns-wrapper .columns.carousel.block div .columns-img-col{
+    min-width: 25%;
+    width: 25%;
+  }
 
   .international .columns.icons span.icon img {
     width: 96px;
@@ -288,6 +354,11 @@ main .section.background.rewards-column > picture {
 }
 
 @media (width >= 1024){
+  .rewards .section.columns-container .columns-wrapper .columns.carousel.block div .columns-img-col{
+    min-width: 16.6667%;
+    width: 16.6667%;
+  }
+
   .rewards .carousel div .columns-img-col picture img{
     pointer-events: auto;
     min-height: calc(100% - 1.5rem);

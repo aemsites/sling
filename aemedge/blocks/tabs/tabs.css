@@ -78,11 +78,11 @@
   margin: 0;
 }
 
-.rewards .tabs-container .tabs .tabs-panel p:first-of-type{
+.rewards .tabs-container .tabs #tabpanel-upcoming-giveaways p:first-of-type{
   display: none;
 }
 
-.rewards .tabs-container .tabs .tabs-panel p:last-of-type{
+.rewards .tabs-container .tabs #tabpanel-upcoming-giveaways p:last-of-type{
   display: flex;
   justify-content: center;
   width: 100%;
@@ -118,17 +118,21 @@
   font-size: 1.802em;
 }
 
+.rewards h5{
+  color: #faa21b;
+}
+
 
 @media (width >= 768px) {
   .tabs.accordion .tabs-list {
     justify-content: center;
   }
 
-  .rewards .tabs-container .tabs .tabs-panel p:last-of-type{
+  .rewards .tabs-container .tabs #tabpanel-upcoming-giveaways p:last-of-type{
     display: none;
   }
   
-  .rewards .tabs-container .tabs .tabs-panel p:first-of-type{
+  .rewards .tabs-container .tabs #tabpanel-upcoming-giveaways p:first-of-type{
     display: flex;
     justify-content: center;
     width: 100%;
