@@ -4,7 +4,7 @@
     position: relative;
     border: none;
     overflow: hidden;
-    min-height: 743px;
+    min-height: 700px;
 }
 
 .marquee-content {
@@ -23,7 +23,7 @@
   text-align: left;
   position: relative;
   height: 100%;
-    min-height: 743px;
+    min-height: 700px;
   }
 
 .marquee-content .text-cta-container {
@@ -112,10 +112,6 @@
   .marquee-content {
     padding: 80px 4rem 6%;
   }
-
-  .marquee.block {
-    height: 943px;
-  }
  }
 
  @media (width >= 1024px) {
@@ -158,6 +154,7 @@
      .marquee-content .foreground-container {
          padding-left: 1.5rem;
          width: 50%;
+         margin: 0;
      }
 
    .marquee-content .cta a.scroll-into-header{
