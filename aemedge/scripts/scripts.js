@@ -163,9 +163,9 @@ export function buildMultipleButtons(main) {
 /* we shouldn't need this anymore
 export function buildCtaBanners(main) {
   // cta banner
-  const sections = main.querySelectorAll('.section.banner2');
-  sections.forEach((section) => {
-    const pictures = section.querySelectorAll('p picture');
+  const columns = main.querySelectorAll('.section.cta-banner div.columns-wrapper');
+  columns.forEach((column) => {
+    const pictures = column.parentElement.querySelectorAll('p picture');
     if (pictures) {
       const images = [];
       pictures.forEach((picture, idx) => {
@@ -178,9 +178,9 @@ export function buildCtaBanners(main) {
         images.push(image);
         pTag.remove();
       });
-      const banner = buildBlock('banner', { elems: images });
-      section.append(banner);
-      decorateBlock(banner);
+      const blogHero = buildBlock('blog-hero', { elems: images });
+      column.parentElement.prepend(blogHero);
+      decorateBlock(blogHero);
     }
   });
 }
