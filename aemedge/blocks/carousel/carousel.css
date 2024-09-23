@@ -25,11 +25,6 @@
   display: none;
 }
 
-.carousel.medium .carousel-slides {
-  min-width: 16.66% !important;
-}
-
-
 .carousel .carousel-slide {
   scroll-snap-align: start;
   display: flex;
@@ -185,10 +180,6 @@
     min-width: 33.334%;
   }
 
-  .carousel.medium .carousel-slide {
-    min-width: 25%;
-  }
-
   .carousel .carousel-slide .carousel-slide-content {
     --slide-content-width: 50%;
 
@@ -197,11 +188,5 @@
 
   .carousel .carousel-slide .carousel-slide-content[data-align="justify"] {
     --slide-content-width: auto;
-  }
-}
-
-@media (width >= 1024px) {
-  .carousel.medium .carousel-slide {
-    min-width: 16.66%;
   }
 }

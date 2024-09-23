@@ -5,7 +5,12 @@ function showSlide(block, slideIndex = 0) {
   const totalSlides = slides.length;
 
   // Ensure the slide index wraps correctly
-  const realSlideIndex = (slideIndex + totalSlides) % totalSlides;
+  let realSlideIndex = (slideIndex + totalSlides) % totalSlides;
+
+  // If the slide index is negative, wrap it to the end
+  if (realSlideIndex < 0) {
+    realSlideIndex = totalSlides + realSlideIndex;
+  }
 
   // Update block's active slide index
   block.dataset.activeSlide = realSlideIndex;
@@ -93,10 +98,30 @@ function createSlide(row, slideIndex, carouselId) {
 
 let carouselId = 0;
 export default async function decorate(block) {
+  let desktop;
+  let tablet;
+  let mobile;
+  let displayCustom = false;
   carouselId += 1;
   block.setAttribute('id', `carousel-${carouselId}`);
   const rows = block.querySelectorAll(':scope > div');
   const isSingleSlide = rows.length < 2;
+  rows.forEach((row) => {
+    if (row.childElementCount === 2) {
+      // Read the value and split it into an array
+      const values = row.innerText.split(',').map(Number);
+
+      if (values.length === 3) {
+        [desktop, tablet, mobile] = values;
+      } else if (values.length === 2) {
+        [desktop, tablet] = [values[0], values[0]];
+        [mobile] = [values[1]];
+      } else if (values.length === 1) {
+        [desktop, tablet, mobile] = [values[0], values[0], values[0]];
+      }
+      displayCustom = true;
+    }
+  });
 
   const placeholders = await fetchPlaceholders();
 
@@ -130,8 +155,10 @@ export default async function decorate(block) {
   }
 
   rows.forEach((row, idx) => {
-    const slide = createSlide(row, idx, carouselId);
-    slidesWrapper.append(slide);
+    if (row.childElementCount !== 2) {
+      const slide = createSlide(row, idx, carouselId);
+      slidesWrapper.append(slide);
+    }
 
     if (slideIndicators) {
       const indicator = document.createElement('li');
@@ -142,7 +169,27 @@ export default async function decorate(block) {
     }
     row.remove();
   });
+  if (displayCustom) {
+    const style = document.createElement('style');
+    style.innerHTML = `
+     .carousel .carousel-slide {
+        min-width: calc(100% / ${mobile}) !important; /* Mobile view */
+      }
 
+      @media screen and (min-width: 768px) {
+       .carousel .carousel-slide {
+         min-width: calc(100% / ${tablet}) !important; /* Tablet view */
+       }
+      }
+
+      @media screen and (min-width: 1024px) {
+        .carousel .carousel-slide {
+         min-width: calc(100% / ${desktop}) !important; /* Desktop view */
+       }
+      }
+    `;
+    document.head.appendChild(style);
+  }
   block.prepend(container);
 
   if (!isSingleSlide) {
