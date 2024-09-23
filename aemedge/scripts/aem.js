@@ -482,6 +482,35 @@ function decorateIcons(element, prefix = '') {
   });
 }
 
+export function getPictureUrlByScreenWidth(pictures) {
+  const screenWidth = window.innerWidth;
+  if (pictures.length === 0) {
+    return null;
+  }
+  if (pictures.length === 1) {
+    return pictures[0];
+  }
+  if (pictures.length === 2) {
+    // First link for desktop and tablet, second link for mobile
+    if (screenWidth >= 1024) {
+      return pictures[0]; // Desktop
+    }
+    if (screenWidth >= 768 && screenWidth < 1024) {
+      return pictures[0]; // Tablet
+    }
+    return pictures[1]; // Mobile
+  }
+
+  // If there are 3 or more links
+  if (screenWidth >= 1024) {
+    return pictures[0];// Desktop
+  }
+  if (screenWidth >= 768 && screenWidth < 1024) {
+    return pictures[1]; // Tablet
+  }
+  return pictures[2]; // Mobile
+}
+
 /**
  * Decorates all sections in a container element.
  * @param {Element} main The container element
@@ -515,6 +544,19 @@ function decorateSections(main) {
             .filter((style) => style)
             .map((style) => toClassName(style.trim()));
           styles.forEach((style) => section.classList.add(style));
+        } else if (key === 'background') {
+          const pics = sectionMeta.querySelectorAll('picture img');
+          const updateBackground = () => {
+            const pic = getPictureUrlByScreenWidth(pics);
+            if (pic) {
+              const imageSrc = pic.src;
+              section.style.backgroundImage = `url(${imageSrc})`;
+              section.style.backgroundRepeat = 'no-repeat';
+              section.style.backgroundSize = 'cover';
+            }
+          };
+          updateBackground();
+          window.addEventListener('resize', updateBackground);
         } else {
           section.dataset[toCamelCase(key)] = meta[key];
         }
