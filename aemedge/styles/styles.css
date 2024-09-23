@@ -1,3 +1,5 @@
+/* stylelint-disable no-descending-specificity */
+
 /*
  * Copyright 2020 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
@@ -472,7 +474,6 @@ main .section {
     padding-top: 10px;
 }
 
-/* stylelint-disable-next-line no-descending-specificity */
 .section.game-finder-container > .default-content-wrapper > h2,
 .section.game-finder-container > .default-content-wrapper > p
  {
@@ -480,7 +481,7 @@ main .section {
   margin-bottom: 10px;
 }
 
-/* stylelint-disable-next-line no-descending-specificity */
+
 .section.game-finder-container > .default-content-wrapper > h2 {
   font-size: 40px;
 }
@@ -503,7 +504,7 @@ main .section {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* stylelint-disable-next-line no-descending-specificity */
+
 .section.dark-grey > .default-content-wrapper h2:first-of-type {
   margin-top:0;
   text-align: center;
@@ -550,31 +551,12 @@ margin-bottom:10px;
 
 .section.channel-shopper-container {
   color: var(--clr-white);
-  margin: 0 auto;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-.section.channel-shopper-container .columns-wrapper
-{
-  width: 90%;
-  margin: 0 auto;
+  padding: 0;
+  max-width: 100%;
+  margin:0 auto;
   text-align: center;
-}
-/* stylelint-disable-next-line no-descending-specificity */
-.section.channel-shopper-container .columns.block > div {
-  flex-direction: column;
-}
-
-.section.channel-shopper-container  .fragment-wrapper .section.channel-shopper-container {
-  background: none;
- }
-
- .section.channel-shopper-container  .fragment-wrapper {
-  display: flex;
-  justify-content: space-evenly;
-  flex-direction: column;
-  width: 100%;
 }
 
 .section.tabs-container .tabs-wrapper {
@@ -598,7 +580,7 @@ margin-bottom:10px;
 
 }
 
-/* stylelint-disable-next-line no-descending-specificity */
+
 .section.package-cards-container .columns.block > div
 {
   border-radius: 4px;
@@ -652,15 +634,19 @@ margin-bottom:10px;
   }
 
   .section.wide-columns .columns-wrapper {
-    max-width: unset;
+    max-width: 100%;
+  }
+
+  .section.wide-columns .columns > div>div:nth-of-type(1) {
+    width: 50%;
+  }
+
+  .section.wide-columns .columns > div>div:nth-of-type(2) {
+    width: 50%;
   }
 
   .section.dark {
     padding: 64px 32px;
-  }
-
-  .section.channel-shopper-container  .fragment-wrapper {
-    flex-direction: row;
   }
 
    /* package cards desktop styles */
@@ -674,12 +660,11 @@ margin-bottom:10px;
      color: unset;
    }
 
-    /* stylelint-disable-next-line no-descending-specificity */
+
   .section.wide-columns .columns.block  div {
     margin-bottom: 20px;
   }
 
-  /* stylelint-disable-next-line no-descending-specificity */
   .section.wide-columns .columns.block > div {
     flex-direction: row;
   }
@@ -691,29 +676,16 @@ margin-bottom:10px;
   .section.wide-columns .columns.block p {
     font-size: 1.125em;
     line-height: 1.5em;
-    text-align: justify;
+    text-align: center;
   }
 
   .section.dark-grey .columns.block div {
     margin-bottom: 0;
   }
 
-
-  .section.channel-shopper-container .columns-wrapper {
-    width: 100%;
-    margin: unset;
-    text-align: center;
-}
-
-.section.channel-shopper-container .columns-wrapper .fragment-wrapper
-{
-  text-align: justify;
-}
-
 .section.package-cards-container .columns.block > div {
   flex-direction: column;
 }
-
 
 .section.dark-grey.columns-container .columns.block  {
 width: 80%;
@@ -731,6 +703,25 @@ margin:0 auto;
     align-items: unset;
 }
 
+/* channel-shopper columns block styling */
+
+.section.channel-shopper-container {
+  text-align: justify;
+ }
+
+ 
+.section.channel-shopper-container .columns > div {
+  justify-content: space-around;
+ }
+ 
+ .section.channel-shopper-container .columns > div > div.fragment-wrapper { 
+   width:33.3%
+ }
+ 
+ .section.channel-shopper-container .columns > div > div.columns-img-col {
+   width:33.3%;
+ }
+ 
 }
 
 @media (width >=1024px) {
@@ -740,7 +731,6 @@ margin:0 auto;
       text-align: left;
     }
   }
-
 
   section > .default-content-wrapper > p.fragment-wrapper {
     .section.banner {
@@ -757,10 +747,7 @@ margin:0 auto;
   width: 60%;
   margin:0 auto;
   }
-/* stylelint-disable-next-line no-descending-specificity */
-.section.channel-shopper-container .columns.block > div {
-  flex-direction: row;
-}
+
 
 }
 
