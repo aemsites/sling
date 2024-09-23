@@ -37,13 +37,11 @@
 
   > div {
     position: relative;
-    width: 100%;
-    padding: 3rem 0;
     align-items: center;
+  }
 
-    > div {
-      margin-top: 1rem;
-    }
+  &:first-child {
+    padding: 3rem 1.5rem;
   }
 }
 
@@ -52,19 +50,19 @@
     justify-content: left;
   }
 
-    > div {
-        padding: 1rem;
-
       > div {
         margin-top: 0;
       }
+
+  &:first-child {
+    padding: 1.5rem;
+  }
     }
 
   .section {
     padding: 0;
     margin: 0;
   }
-}
 
   .columns span.icon img {
     width: 100%;
@@ -207,10 +205,9 @@
     .banner .columns > div {
       flex-direction: unset;
       gap: 8%;
-      padding: 0;
+      padding: 1rem 0 2rem 3.5rem;
 
       > div:first-child {
-        padding: 5rem 4rem;
         flex: 2 1 0;
       }
 
@@ -223,9 +220,7 @@
     }
 
     .banner.small .columns > div { /* stylelint-disable-line */
-        > div:first-child {
-            padding: 1rem 0 2rem;
-        }
+      padding: 1rem 2rem 2rem 2.5rem;
     }
   }
 
