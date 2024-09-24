@@ -613,6 +613,21 @@ margin-bottom:10px;
   width: 100%;
 }
 
+ /* promotion columsn with reverse on mobile */
+ .section.promo-reverse .columns > div  {
+  margin-bottom: 0;
+  place-items: center;
+ }
+
+ .section.promo-reverse .columns > div > div {
+  margin-bottom: 50px;
+  place-items: center;
+ }
+
+.section.promo-reverse .columns > div > .columns-img-col {
+  order: 1;
+}
+
 @media (width >=768px) {
   main .section {
   padding: 0 48px;
@@ -721,7 +736,7 @@ margin:0 auto;
  .section.channel-shopper-container .columns > div > div.columns-img-col {
    width:33.3%;
  }
- 
+
 }
 
 @media (width >=1024px) {
@@ -748,6 +763,9 @@ margin:0 auto;
   margin:0 auto;
   }
 
+  .section.promo-reverse .columns > div > .columns-img-col {
+    order: 0;
+  }
 
 }
 
