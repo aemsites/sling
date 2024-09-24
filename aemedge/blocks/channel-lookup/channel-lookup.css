@@ -1,4 +1,4 @@
-.zip-update-btn {
+.channel-lookup.block .zip-update-btn {
     margin-bottom: 20px;
     width: 100%;
     height: 40px;
@@ -10,7 +10,7 @@
     box-sizing: border-box;
 }
 
-.zip-input {
+.channel-lookup.block .zip-input {
     height: 3.25rem;
     border-style: solid;
     border-image: initial;
@@ -30,7 +30,7 @@
     padding-top: 0.5rem;
 }
 
-.submit-button {
+.channel-lookup.block .submit-button {
     position: relative;
     box-sizing: border-box;
     font-size: 18px;
@@ -47,46 +47,48 @@
     width: 75%;
 }
 
-.channel-form-container {
+.channel-lookup.block .channel-form-container {
     text-align: center;
 }
 
-.warning {
+.channel-lookup.block .warning {
     margin: 10px auto;
     width: 75%;
 }
 
-.warning-msg {
+.channel-lookup.block .warning-msg {
     line-height: 1.11;
     color: rgb(208 120 0);
     padding: 0 1.5rem 0 0.75rem;
 }
 
-.warning-heading {
+.channel-lookup.block .warning-heading {
     display: inline;
     font-size: 1rem;
     font-weight: 400;
     text-align: center;
 }
 
-.local-channel-info {
+.channel-lookup.block .local-channel-info {
     font-size: 1.25rem;
     line-height: 1.5rem;
     font-weight: 700;
 }
 
-.section .default-content-wrapper  h4 {
+.channel-lookup-container .default-content-wrapper p {
     text-align: center;
-    max-width: 864px;
-    margin: 10px auto;
+    line-height: 1.125em;
+    font-weight: bold;
+    font-size: 1.25rem;
+    padding-bottom: 10px;
 }
 
-.warning-icon {
+.channel-lookup.block .warning-icon {
     float: left;
     padding: 30px 10px 0 0;
 }
 
-.zipcode-input-label {
+.channel-lookup.block .zipcode-input-label {
     position: absolute;
     color: rgb(23 23 37);
     opacity: 1;
@@ -107,34 +109,42 @@
     width: 204px;
 }
 
-.input-container {
+.channel-lookup.block .input-container {
     position: relative;
 }
 
-.channel-img {
+.channel-lookup.block .channel-img {
     padding: 10px;
     vertical-align: middle;
-    width: 100px;
+    width: 82px;
 }
 
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
+.channel-lookup.block .channel-form-container .input-container input::-webkit-outer-spin-button,
+.channel-lookup.block .channel-form-container .input-container input::-webkit-inner-spin-button {
     /* stylelint-disable-next-line property-no-vendor-prefix */
     -webkit-appearance: none;
     margin: 0;
 }
 
-input[type="number"] {
+.channel-lookup.block .channel-form-container .input-container input[type="number"] {
     /* stylelint-disable-next-line property-no-vendor-prefix */
     -moz-appearance: textfield;
 }
 
-picture {
+.channel-lookup.block picture {
     display: inline!important;
 }
 
 @media (width >=1024px) {
-    .zipcodeinput-wrapper {
+     .channel-lookup-container .default-content-wrapper p {
+        line-height: 1.5em;
+        font-weight: bold;
+        max-width: 1090px;
+        font-size: 1.25rem;
+        padding-left: 405px;
+    }
+
+    .channel-lookup.block .zipcodeinput-wrapper {
         display: block;
         width: 100%;
         background-color: transparent;
@@ -142,19 +152,19 @@ picture {
         min-height: 70px !important;
     }
 
-    .channel-data {
+    .channel-lookup.block .channel-data {
         font-size: 1rem;
         font-weight: 400;
         margin-top: -15px;
     }
 
-    .zip-input {
+    .channel-lookup.block .zip-input {
         height: 4rem;
         margin-right: 1.5rem;
         width: 200px;
     }
 
-    .warning {
+    .channel-lookup.block .warning {
         max-width: 968px;
         display: flex;
         padding-left: 20px;
@@ -165,22 +175,23 @@ picture {
         margin-top: 0!important;
     }
 
-    #zipcodebtn:hover {
+    .channel-lookup.block #zipcodebtn:hover {
         transform: scale(1.1);
     }
 
-    .channel-img {
+    .channel-lookup.block .channel-img {
         box-sizing: border-box;
         max-width: 100px;
         max-height: 100px;
         height: 100px;
+        width: 100px;
     }
 
-    .submit-button {
+    .channel-lookup.block .submit-button {
         width: unset;
     }
 
-    .warning-icon {
+    .channel-lookup.block .warning-icon {
         padding: 0;
     }
 }
