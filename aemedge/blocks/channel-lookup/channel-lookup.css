@@ -75,13 +75,10 @@
     font-weight: 700;
 }
 
-.section .default-content-wrapper {
-    max-width: 920px;
-    margin: 0 auto;
-}
-
-.section .default-content-wrapper  p {
+.section .default-content-wrapper  h4 {
     text-align: center;
+    max-width: 864px;
+    margin: 10px auto;
 }
 
 .warning-icon {
@@ -130,6 +127,10 @@ input::-webkit-inner-spin-button {
 input[type="number"] {
     /* stylelint-disable-next-line property-no-vendor-prefix */
     -moz-appearance: textfield;
+}
+
+picture {
+    display: inline!important;
 }
 
 @media (width >=1024px) {
