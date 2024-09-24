@@ -134,6 +134,11 @@
       flex-direction: unset;
       gap: 8%;
     }
+    
+    .columns > div > div {
+      flex: 1;
+      order: unset;
+    }
 
     .banner .columns > div {
       display: flex;
