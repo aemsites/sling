@@ -53,13 +53,14 @@
 
 .channel-lookup.block .warning {
     margin: 10px auto;
-    width: 75%;
+    width: 73%;
+    background: linear-gradient(to bottom, #f6f1e8 0%,#f6f1e8 100%);
 }
 
 .channel-lookup.block .warning-msg {
     line-height: 1.11;
     color: rgb(208 120 0);
-    padding: 0 1.5rem 0 0.75rem;
+    padding: 1rem 1.5rem 1.5rem 0.75rem;
 }
 
 .channel-lookup.block .warning-heading {
@@ -69,7 +70,7 @@
     text-align: center;
 }
 
-.channel-lookup.block .local-channel-info {
+.channel-lookup-container.local-channel-info {
     font-size: 1.25rem;
     line-height: 1.5rem;
     font-weight: 700;
@@ -81,11 +82,12 @@
     font-weight: bold;
     font-size: 1.25rem;
     padding-bottom: 10px;
+    margin: 0 auto;
 }
 
 .channel-lookup.block .warning-icon {
     float: left;
-    padding: 30px 10px 0 0;
+    padding: 51px 26px 10px 17px;
 }
 
 .channel-lookup.block .zipcode-input-label {
@@ -132,16 +134,17 @@
 }
 
 .channel-lookup.block picture {
-    display: inline!important;
+    display: inline;
 }
 
 @media (width >=1024px) {
-     .channel-lookup-container .default-content-wrapper p {
+    .channel-lookup.block .warning-msg {
+        padding: 0 1.5rem 0 0.75rem!important;
+    }
+
+    .channel-lookup-container .default-content-wrapper p {
         line-height: 1.5em;
-        font-weight: bold;
-        max-width: 1090px;
-        font-size: 1.25rem;
-        padding-left: 405px;
+        max-width: 920px;
     }
 
     .channel-lookup.block .zipcodeinput-wrapper {
@@ -149,7 +152,7 @@
         width: 100%;
         background-color: transparent;
         text-align: center;
-        min-height: 70px !important;
+        min-height: 70px;
     }
 
     .channel-lookup.block .channel-data {
@@ -172,7 +175,7 @@
         align-items: center;
         border-radius: 2px;
         background: linear-gradient(to bottom, #f6f1e8 0%,#f6f1e8 100%);
-        margin-top: 0!important;
+        margin-top: 0;
     }
 
     .channel-lookup.block #zipcodebtn:hover {
