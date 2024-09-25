@@ -21,6 +21,7 @@ async function authenticate() {
 }
 
 export default async function decorate(block) {
+  await authenticate();
   const formContainer = createTag('div', { class: 'signin-form-container' });
   const form = createTag('form', { type: 'submit', class: 'signin-frm' });
   const userName = createTag('input', {
@@ -41,5 +42,4 @@ export default async function decorate(block) {
   form.append(userName, usernameLabel, password, signinBtn);
   formContainer.append(form);
   block.append(formContainer);
-  await authenticate();
 }
