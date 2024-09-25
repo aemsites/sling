@@ -3,7 +3,7 @@ import { createTag } from '../../scripts/utils.js';
 async function authenticate() {
   let authURL = 'https://multipass.q.sling.com/as/authorization.oauth2';
   const params = {
-    redirect_uri: 'https://329-signin--sling--aemsites.aem.pag/sling-api/oauth-helper/alpha/auth-callback',
+    redirect_uri: 'https://ms.q.sling.com/sling-api/oauth-helper/alpha/auth-callback',
     client_id: 'aem_agentless_idp_client',
     response_type: 'code',
   };
