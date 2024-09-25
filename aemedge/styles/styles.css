@@ -1,3 +1,5 @@
+/* stylelint-disable no-descending-specificity */
+
 /*
  * Copyright 2020 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
@@ -372,6 +374,11 @@ main .section {
   margin: 64px 0;
 }
 
+.section > .default-content-wrapper > p.fragment-wrapper {
+  margin: 0;
+}
+
+
 /* FAQ Section */
 .section.tabs-container.accordion-container .default-content-wrapper {
   text-align: center;
@@ -385,50 +392,27 @@ main .section {
 }
 
 /* CTA Banner Section */
-.section.cta-banner {
+.section.banner {
   position: relative;
-  text-align: center;
   color: #fff;
   margin: 0;
-  height: fit-content;
-}
-
-.section.cta-banner .section {
   padding: 0;
+  background-position: center;
+
+
+
+  .buttons-container {
+    text-align: center;
+  }
 }
 
-.section.cta-banner .columns > div {
-  width: unset;
-}
-
-.section.cta-banner .columns-wrapper {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  flex: 2 1 0%;
-  padding: 1.25rem;
-  justify-content: flex-start;
-  align-items: center;
-  box-sizing: border-box;
-  width: 100%;
-  color: #f5f5f6;
-  height: 350px;
-  overflow: hidden;
-}
-
-.section.cta-banner .columns.block {
-  width: 100%;
-  height: fit-content;
-}
-
-.section.cta-banner .blog-hero picture {
+.section.banner .blog-hero picture {
   width: 100%;
   height: 350px;
   overflow: hidden;
 }
 
-.section.cta-banner .blog-hero img {
+.section.banner .blog-hero img {
   box-sizing: border-box;
   height: 100%;
   width: 100%;
@@ -474,7 +458,6 @@ main .section {
     padding-top: 10px;
 }
 
-/* stylelint-disable-next-line no-descending-specificity */
 .section.game-finder-container > .default-content-wrapper > h2,
 .section.game-finder-container > .default-content-wrapper > p
  {
@@ -482,7 +465,7 @@ main .section {
   margin-bottom: 10px;
 }
 
-/* stylelint-disable-next-line no-descending-specificity */
+
 .section.game-finder-container > .default-content-wrapper > h2 {
   font-size: 40px;
 }
@@ -505,7 +488,7 @@ main .section {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* stylelint-disable-next-line no-descending-specificity */
+
 .section.dark-grey > .default-content-wrapper h2:first-of-type {
   margin-top:0;
   text-align: center;
@@ -552,34 +535,12 @@ margin-bottom:10px;
 
 .section.channel-shopper-container {
   color: var(--clr-white);
-  background-image: url("/programming/media_1c6b2bbf60d3d28de0e2928d95253c9eafee63673.jpeg?dpr=off");
-  background-size: cover;
-  background-repeat: no-repeat;
-  margin: 0 auto;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-.section.channel-shopper-container .columns-wrapper
-{
-  width: 90%;
-  margin: 0 auto;
+  padding: 0;
+  max-width: 100%;
+  margin:0 auto;
   text-align: center;
-}
-/* stylelint-disable-next-line no-descending-specificity */
-.section.channel-shopper-container .columns.block > div {
-  flex-direction: column-reverse;
-}
-
-.section.channel-shopper-container  .fragment-wrapper .section.channel-shopper-container {
-  background: none;
- }
-
- .section.channel-shopper-container  .fragment-wrapper {
-  display: flex;
-  justify-content: space-evenly;
-  flex-direction: column;
-  width: 100%;
 }
 
 .section.tabs-container .tabs-wrapper {
@@ -603,7 +564,7 @@ margin-bottom:10px;
 
 }
 
-/* stylelint-disable-next-line no-descending-specificity */
+
 .section.package-cards-container .columns.block > div
 {
   border-radius: 4px;
@@ -636,6 +597,21 @@ margin-bottom:10px;
   width: 100%;
 }
 
+ /* promotion columsn with reverse on mobile */
+ .section.promo-reverse .columns > div  {
+  margin-bottom: 0;
+  place-items: center;
+ }
+
+ .section.promo-reverse .columns > div > div {
+  margin-bottom: 50px;
+  place-items: center;
+ }
+
+.section.promo-reverse .columns > div > .columns-img-col {
+  order: 1;
+}
+
 @media (width >=768px) {
   main .section {
   padding: 0 48px;
@@ -657,15 +633,19 @@ margin-bottom:10px;
   }
 
   .section.wide-columns .columns-wrapper {
-    max-width: unset;
+    max-width: 100%;
+  }
+
+  .section.wide-columns .columns > div>div:nth-of-type(1) {
+    width: 50%;
+  }
+
+  .section.wide-columns .columns > div>div:nth-of-type(2) {
+    width: 50%;
   }
 
   .section.dark {
     padding: 64px 32px;
-  }
-
-  .section.channel-shopper-container  .fragment-wrapper {
-    flex-direction: row;
   }
 
    /* package cards desktop styles */
@@ -679,12 +659,11 @@ margin-bottom:10px;
      color: unset;
    }
 
-    /* stylelint-disable-next-line no-descending-specificity */
+
   .section.wide-columns .columns.block  div {
     margin-bottom: 20px;
   }
 
-  /* stylelint-disable-next-line no-descending-specificity */
   .section.wide-columns .columns.block > div {
     flex-direction: row;
   }
@@ -696,32 +675,16 @@ margin-bottom:10px;
   .section.wide-columns .columns.block p {
     font-size: 1.125em;
     line-height: 1.5em;
-    text-align: justify;
+    text-align: center;
   }
 
   .section.dark-grey .columns.block div {
     margin-bottom: 0;
   }
 
-  .section.channel-shopper-container .columns.block > div {
-    flex-direction: row;
-}
-
-  .section.channel-shopper-container .columns-wrapper {
-    width: 100%;
-    margin: unset;
-    text-align: center;
-}
-
-.section.channel-shopper-container .columns-wrapper .fragment-wrapper
-{
-  text-align: justify;
-}
-
 .section.package-cards-container .columns.block > div {
   flex-direction: column;
 }
-
 
 .section.dark-grey.columns-container .columns.block  {
 width: 80%;
@@ -739,15 +702,39 @@ margin:0 auto;
     align-items: unset;
 }
 
+/* channel-shopper columns block styling */
+
+.section.channel-shopper-container {
+  text-align: justify;
+ }
+
+ 
+.section.channel-shopper-container .columns > div {
+  justify-content: space-around;
+ }
+ 
+ .section.channel-shopper-container .columns > div > div.fragment-wrapper { 
+   width:33.3%
+ }
+ 
+ .section.channel-shopper-container .columns > div > div.columns-img-col {
+   width:33.3%;
+ }
+
 }
 
 @media (width >=1024px) {
   /* CTA Banner Section */
-  .section.cta-banner .columns-wrapper {
-    padding: 5rem 6.25rem;
-    -webkit-box-pack: center;
-    justify-content: center;
-    align-items: flex-start;
+  .section.banner {
+    .buttons-container {
+      text-align: left;
+    }
+  }
+
+  section > .default-content-wrapper > p.fragment-wrapper {
+    .section.banner {
+      padding: 0 36px 0 0;
+    }
   }
 
   .section.package-cards-container .columns.block > div {
@@ -760,6 +747,9 @@ margin:0 auto;
   margin:0 auto;
   }
 
+  .section.promo-reverse .columns > div > .columns-img-col {
+    order: 0;
+  }
 
 }
 

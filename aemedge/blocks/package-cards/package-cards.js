@@ -22,16 +22,31 @@ function createLogoObject(logo) {
 }
 export default async function decorate(block) {
   const config = await readBlockConfig(block);
-
   const c1logos = [];
-  config['C1-Logos']?.forEach((logo) => {
-    c1logos.push(createLogoObject(logo));
-  });
-
   const c2logos = [];
-  config['C2-Logos']?.forEach((logo) => {
-    c2logos.push(createLogoObject(logo));
-  });
+  if (config['C1-Override-Logos'].length > 0 && config['C1-Override-Logos'] === 'true') {
+    if (typeof config['C1-Logos'] === 'string') {
+      if (config['C1-Logos'] !== '') {
+        c1logos.push(createLogoObject(config['C1-Logos']));
+      }
+    } else {
+      config['C1-Logos']?.forEach((logo) => {
+        c1logos.push(createLogoObject(logo));
+      });
+    }
+  }
+
+  if (config['C2-Override-Logos'].length > 0 && config['C2-Override-Logos'] === 'true') {
+    if (typeof config['C2-Logos'] === 'string') {
+      if (config['C2-Logos'] !== '') {
+        c2logos.push(createLogoObject(config['C2-Logos']));
+      }
+    } else {
+      config['C2-Logos']?.forEach((logo) => {
+        c2logos.push(createLogoObject(logo));
+      });
+    }
+  }
 
   const cardone = {
     packId: config['C1-Pack-Id'] || null,

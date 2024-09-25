@@ -160,6 +160,7 @@ export function buildMultipleButtons(main) {
   });
 }
 
+/* we shouldn't need this anymore
 export function buildCtaBanners(main) {
   // cta banner
   const columns = main.querySelectorAll('.section.cta-banner div.columns-wrapper');
@@ -181,6 +182,84 @@ export function buildCtaBanners(main) {
       column.parentElement.prepend(blogHero);
       decorateBlock(blogHero);
     }
+  });
+}
+
+ */
+
+/**
+ * Sets an optimized background image for a given section element.
+ * This function takes into account the device's viewport width and device pixel ratio
+ * to choose the most appropriate image from the provided breakpoints.
+ *
+ * @param {HTMLElement} section - The section element to which the background image will be applied.
+ * @param {string} bgImage - The base URL of the background image.
+ * @param {Array<{width: string, media?: string}>} [breakpoints=[
+ *  { width: '450' },
+ *   { media: '(min-width: 450px)', width: '750' },
+ *   { media: '(min-width: 768px)', width: '1024' },
+ *   { media: '(min-width: 1024px)', width: '1600' },
+ *   { media: '(min-width: 1600px)', width: '2200' },
+ * ]] - An array of breakpoint objects. Each object contains a `width` which is the width of the
+ * image to request, and an optional `media` which is a media query string indicating when this
+ * breakpoint should be used.
+ */
+
+const resizeListeners = new WeakMap();
+function getBackgroundImage(section) {
+  // look for "background" values in the section metadata
+  const bgImages = section.dataset.background.split(',');
+  if (bgImages.length === 1) {
+    return bgImages[0].trim();
+  } // if there are 2 images, first is for desktop and second is for mobile
+  return (window.innerWidth > 1024 && bgImages.length === 2)
+    ? bgImages[0].trim() : bgImages[1].trim();
+}
+
+function createOptimizedBackgroundImage(section, breakpoints = [
+  { width: '450' },
+  { media: '(min-width: 450px)', width: '768' },
+  { media: '(min-width: 768px)', width: '1024' },
+  { media: '(min-width: 1024px)', width: '1600' },
+  { media: '(min-width: 1600px)', width: '2000' },
+]) {
+  const updateBackground = () => {
+    const bgImage = getBackgroundImage(section);
+    const url = new URL(bgImage, window.location.href);
+    const pathname = encodeURI(url.pathname);
+
+    const matchedBreakpoints = breakpoints.filter(
+      (br) => !br.media || window.matchMedia(br.media).matches,
+    );
+    // If there are any matching breakpoints, pick the one with the highest resolution
+    const matchedBreakpoint = matchedBreakpoints.reduce(
+      (acc, curr) => (parseInt(curr.width, 10) > parseInt(acc.width, 10) ? curr : acc),
+      breakpoints[0],
+    );
+
+    const adjustedWidth = matchedBreakpoint.width * window.devicePixelRatio;
+    section.style.backgroundImage = `url(${pathname}?width=${adjustedWidth}&format=webply&optimize=highest)`;
+    section.style.backgroundSize = 'cover';
+  };
+
+  if (resizeListeners.has(section)) {
+    window.removeEventListener('resize', resizeListeners.get(section));
+  }
+
+  resizeListeners.set(section, updateBackground);
+  window.addEventListener('resize', updateBackground);
+  updateBackground();
+}
+
+/**
+ * Finds all sections in the main element of the document
+ * that require adding a background image
+ * @param {Element} main
+ */
+
+function decorateStyledSections(main) {
+  Array.from(main.querySelectorAll('.section[data-background]')).forEach((section) => {
+    createOptimizedBackgroundImage(section);
   });
 }
 
@@ -403,7 +482,8 @@ export function decorateMain(main) {
   buildAutoBlocks(main);
   decorateSections(main);
   decorateBlocks(main);
-  buildCtaBanners(main);
+  // buildCtaBanners(main);
+  decorateStyledSections(main);
   buildSpacer(main);
   decorateLinkedImages();
 }
