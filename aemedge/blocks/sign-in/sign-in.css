@@ -1,0 +1,52 @@
+.sign-in .signin-frm {
+    color: var(--bacground-color);
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 10px;
+    margin:0 auto;
+    max-width:450px;
+    width: 90%;
+    padding: 1rem;
+}
+
+.sign-in .signin-frm .input {
+    height: 3.25rem;
+    border-style: solid;
+    border-width: 12px;
+    border-radius: 12px;
+    box-sizing: border-box;
+    outline: none;
+    width: 100%;
+    padding-left: 0.75rem;
+    padding-top: 1.5rem;
+    font-size: 1.125rem;
+    line-height: 1.222;
+    font-weight: 600;
+    cursor: text;
+    border-color: var(--input-background-color) ;
+    background-color:var(--input-background-color) ;
+    color: var(--clr-light-black);
+}
+
+.sign-in .signin-frm button.primary {
+   min-height: unset;
+   height: auto;
+}
+
+.sign-in .signin-frm .btn-text {
+    font-size: 18px;
+    font-weight: 800;
+}
+
+.sign-in .signin-frm .username-label
+{
+    font-size: 0.75rem;
+    color: var(--clr-light-black);
+    text-align: justify;
+}
+
+@media (width >=1024px) { 
+    .sign-in .signin-frm .input {
+        height: 4rem;
+    }
+}
