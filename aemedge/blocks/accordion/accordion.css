@@ -85,6 +85,10 @@
   padding: 0.5rem 0;
 }
 
+.rewards .accordion-container .default-content-wrapper h2{
+  text-align: center;
+}
+
 /* width greater than 768px */
 @media (width >= 768px) {
   .accordion .details .accordion-item-body ul li {
