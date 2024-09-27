@@ -136,6 +136,9 @@
 
 .rewards .section.rewards-column.columns-container h2{
   padding-top: 50px;
+  font-size: 2.25rem;
+  line-height: 2.688rem;
+  font-weight: 700;
 }
 
 .rewards .tabs-container .tabs-wrapper .tabs #tabpanel-winners-wall  > div:nth-child(1) {
@@ -172,7 +175,7 @@
 }
 
 .rewards .section.rewards-column.columns-container{
-  margin-top: -25px;
+  margin-top: -50px;
 }
 
 @media (width >= 768px) {
@@ -242,5 +245,7 @@
 @media (width >= 1440px) {
   .rewards .tabs .tabs-list {
     justify-content: center;
+    padding: 0;
   }
+
 }
