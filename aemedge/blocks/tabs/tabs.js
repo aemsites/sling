@@ -118,6 +118,17 @@ export default async function decorate(block) {
 
   // decorate tabs and tabpanels
   const tabs = [...block.children].map((child) => child.firstElementChild);
+  const className = block.classList.value;
+  let defaultTabIndex = 1;
+  if (block.classList.value.includes('default')) {
+    const splitClassName = className.split(' ');
+    splitClassName.forEach((name) => {
+      if (name.includes('default-')) {
+        defaultTabIndex = parseInt(name.split('-')[1], 10);
+      }
+    });
+  }
+
   tabs.forEach((tab, i) => {
     const id = toClassName(tab.textContent);
 
@@ -153,6 +164,7 @@ export default async function decorate(block) {
     tablist.append(button);
     tab.remove();
   });
+  tablist.children[defaultTabIndex].click();
 
   block.prepend(tablist);
   if (isStandard || isNonStandard) {
