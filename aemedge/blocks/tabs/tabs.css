@@ -134,6 +134,10 @@
   display: flex;
 }
 
+.rewards .section.rewards-column.columns-container h2{
+  padding-top: 50px;
+}
+
 .rewards .tabs-container .tabs-wrapper .tabs #tabpanel-winners-wall  > div:nth-child(1) {
   margin-left: 8.3333%;
   width: 83.3333%;
@@ -167,17 +171,13 @@
   text-align: center;
 }
 
+.rewards .section.rewards-column.columns-container{
+  margin-top: -25px;
+}
+
 @media (width >= 768px) {
   .tabs.accordion .tabs-list {
     justify-content: center;
-  }
-
-  .rewards .section.rewards-column.columns-container{
-    margin-top: -25px;
-  }
-
-  .rewards .section.rewards-column.columns-container h2{
-    padding-top: 50px;
   }
 
   .rewards .tabs-container .tabs #tabpanel-upcoming-giveaways p:last-of-type{

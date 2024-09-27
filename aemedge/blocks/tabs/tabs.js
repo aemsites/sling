@@ -14,8 +14,6 @@ function hasWrapper(el) {
 export default async function decorate(block) {
   // nonStandard = mix of 2 and 3 column rows for sub blocks under tabs
   // standard = all 3 column rows for sub blocks under tabs
-  console.log(block.children[1].querySelectorAll('div'));
-
   const numColumns = [...block.children].filter((child) => child.children.length === 3);
   const isStandard = numColumns.length === block.children.length;
   const isNonStandard = numColumns.length !== block.children.length;

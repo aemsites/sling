@@ -101,6 +101,9 @@
     text-align: center;
 }
 
+.rewards .section.marquee-container .marquee .marquee-content .text-cta-container .sub-headline h2 a{
+  color: rgb(0 185 255);
+}
 
 
 @media (width >= 768px) {
