@@ -101,7 +101,19 @@
     text-align: center;
 }
 
+.rewards .section.marquee-container .marquee .marquee-content .text-cta-container .sub-headline h2 a{
+  color: rgb(0 185 255);
+}
 
+.rewards .section.marquee-container .marquee-wrapper .marquee.block .marquee-content .text-cta-container .headline p picture img{
+  width: 30%;
+}
+
+.rewards .section.marquee-container .marquee-wrapper .marquee.block .marquee-content .text-cta-container .button-container p a{
+  margin-top: 10px;
+  margin-left: 0;
+
+}
 
 @media (width >= 768px) {
   .marquee-content .text-cta-container {
