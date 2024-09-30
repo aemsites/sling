@@ -12,12 +12,19 @@ async function authenticate() {
     if (index === 0) { authURL = authURL.concat(`?${param}=${params[param]}`); } else authURL = authURL.concat(`&${param}=${params[param]}`);
   });
 
-  fetch(authURL, {
+  const config = {
     method: 'GET',
-  })
-    .then((response) => response.json())
-    .then((data) => console.log(data))
-    .catch((err) => console.error(err));
+  };
+
+  const response = await fetch(authURL, config);
+  const data = await response.json();
+  console.log(data);
+  if (response.ok && data) {
+    if (data.redirect_uri.includes('watch')) {
+      window.location = data.redirect_uri;
+    }
+    console.log(data);
+  }
 }
 
 export default async function decorate(block) {
@@ -42,4 +49,5 @@ export default async function decorate(block) {
   formContainer.append(form);
   block.append(formContainer);
   await authenticate();
+  // await initiateAuthCallBack();
 }
