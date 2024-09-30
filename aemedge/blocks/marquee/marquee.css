@@ -101,6 +101,13 @@
     text-align: center;
 }
 
+.rewards .section.marquee-container .marquee-wrapper .marquee.block .marquee-content .text-cta-container .headline p picture img{
+  width: 30%;
+}
+
+.rewards .section.marquee-container .marquee-wrapper .marquee.block .marquee-content .text-cta-container .headline{
+  padding-right: 1.5rem;
+}
 
 
 @media (width >= 768px) {
