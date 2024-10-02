@@ -412,6 +412,17 @@ main .section {
   overflow: hidden;
 }
 
+main .icon-still-have-questions img {
+  max-width: fit-content;
+  height: 80px;
+  width: 30px;
+  vertical-align: middle;
+}
+
+.section.still-have-question-section {
+  text-align: center;
+}
+
 .section.banner .blog-hero img {
   box-sizing: border-box;
   height: 100%;
@@ -708,15 +719,15 @@ margin:0 auto;
   text-align: justify;
  }
 
- 
+
 .section.channel-shopper-container .columns > div {
   justify-content: space-around;
  }
- 
- .section.channel-shopper-container .columns > div > div.fragment-wrapper { 
+
+ .section.channel-shopper-container .columns > div > div.fragment-wrapper {
    width:33.3%
  }
- 
+
  .section.channel-shopper-container .columns > div > div.columns-img-col {
    width:33.3%;
  }
@@ -750,6 +761,15 @@ margin:0 auto;
   .section.promo-reverse .columns > div > .columns-img-col {
     order: 0;
   }
+
+main h2#still-have-questions {
+  margin: 35px 0 0 ;
+}
+
+main .icon-still-have-questions img {
+  width: 64px!important;
+
+}
 
 }
 
