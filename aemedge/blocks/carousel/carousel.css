@@ -107,6 +107,10 @@
   filter: drop-shadow(0 4px 4px rgb(0 0 0 / 20%));
 }
 
+.carousel.medium .carousel-slide .carousel-slide-image picture > img {
+  min-width: 100%;
+}
+
 .rewards .carousel .carousel-slide .carousel-slide-image picture > img{
   pointer-events: auto;
   min-height: calc(100% - 1.5rem);
@@ -160,6 +164,9 @@
   z-index: 1;
 }
 
+.carousel.medium .carousel-navigation-buttons {
+  top: 45%;
+}
 /* stylelint-disable-next-line no-descending-specificity */
 .carousel .carousel-navigation-buttons button {
   backface-visibility: hidden;
