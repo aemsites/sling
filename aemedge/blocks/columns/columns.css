@@ -129,6 +129,53 @@
     justify-content: center;
   }
 
+  .rewards .rewards-column{
+    color: #f5f5f6;;
+  }
+
+  .rewards .section.rewards-column.columns-container .default-content-wrapper{
+    text-align: center;
+  }
+
+  /* .rewards .section.rewards-column.columns-container .columns .columns-img-col p picture{
+    margin:0
+  }
+
+  .rewards .section.rewards-column.columns-container .columns .columns-img-col p{
+    margin-left: 8.3333%;
+    width: 83.3333%;
+  } */
+
+  .rewards .section.rewards-column.columns-container .columns div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .rewards .section.rewards-column.columns-container .columns-wrapper{
+    width: 80%;
+    margin: 0 auto;
+    padding-bottom: 100px;
+  }
+
+  .rewards .section.rewards-column.columns-container .columns div div{
+    width: 83.3333%;
+    margin-left: 8.3333%;
+  }
+
+  .rewards .section.rewards-column.columns-container .columns div h3{
+    margin-left: 8.3333%;
+    width: 83.3333%;
+    font-size: 1.125em;
+    line-height: 1.125em;
+    font-weight: 400;
+  }
+
+  .rewards .section.rewards-column.columns-container .columns div picture img{
+    width: 100%;
+  }
+
+
   @media (width >= 768px) {
     .columns > div {
       flex-direction: unset;
@@ -192,7 +239,41 @@
       height: auto;
     }
 
+    .rewards .section.rewards-column.columns-container .columns div{
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      overflow: hidden;
+      gap: 0.5%;
+    }
 
+    .rewards .section.rewards-column.columns-container .columns div div{
+      display: flex;
+      flex-direction: column;
+      gap: 0.5%;
+      width: 100%;
+      margin: 0;
+    }
+
+    .rewards .section.rewards-column.columns-container .columns div div p{
+      width: 83.3333%;
+      margin-left: 8.3333;
+    }
+
+    .rewards .section.rewards-column.columns-container .columns-wrapper{
+      width: 100%;
+    }
+
+
+
+  }
+
+  @media (width >=992px) {
+    .rewards .section.rewards-column.columns-container .columns-wrapper .columns{
+      line-height: 30px;
+      max-width: 1168px;
+      margin: 0 auto;
+    }
   }
 
   @media (width >=1024px) {
@@ -239,4 +320,3 @@
       flex-direction: row;
     }
   }
-

@@ -12,23 +12,7 @@
  * governing permissions and limitations under the License.
  */
 
- @font-face {
-  font-family: proxima-nova-fallback;
-  src: local('Arial');
-  size-adjust: 99%;
-  ascent-override: 80%;
-  descent-override: 20%;
-  line-gap-override: 0%;
-}
-
-@font-face {
-  font-family: roboto-fallback;
-  size-adjust: 100.06%;
-  ascent-override: 95%;
-  src: local('Arial');
-}
-
-:root {
+ :root {
   /* colors */
   --link-color: #298ef7; /* #0569d1 4.88;  #126bca; 4.84  006cdf don't change unless it is passing accessibility everywhere */
   --link-hover-color: #3abfed;
