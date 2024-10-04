@@ -208,6 +208,10 @@
       height: auto;
     }
 
+    .international .columns div > div{
+      flex: 0;
+    }
+
     .international .columns.columns-1-cols div{
       display: flex;
       justify-content: center;
@@ -231,6 +235,7 @@
       justify-content: center;
       gap: 4%;
       margin: auto;
+      max-width: 1168px;
     }
 
     .international .columns.columns-4-cols div .columns-img-col img{
