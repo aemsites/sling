@@ -21,8 +21,8 @@ class LiteVimeo extends (globalThis.HTMLElement ?? class {}) {
   connectedCallback() {
 
     this.videoId = this.getAttribute('videoid');
-    const fullUrl = // Oembed requires Learninga-z's private account key appended to the URL
-        new URL( `https://player.vimeo.com/video/${this.videoId}?h=4dd8d22e5b`);
+    const fullUrl = // Oembed requires the unlisted account number appended to the URL too
+        new URL( `https://player.vimeo.com/video/${this.videoId}`);
     /**
      * Lo, the vimeo placeholder image!  (aka the thumbnail, poster image, etc)
      * We have to use the Vimeo API.
@@ -33,7 +33,6 @@ class LiteVimeo extends (globalThis.HTMLElement ?? class {}) {
     width = Math.round(width * devicePixelRatio);
     height = Math.round(height * devicePixelRatio);
 
-     // fetch(`https://vimeo.com/api/v2/video/${this.videoId}.json`) // doesn't work with private videos
     fetch(`https://vimeo.com/api/oembed.json?url=${fullUrl}`)
       .then(response => response.json())
       .then(data => {
@@ -61,8 +60,6 @@ class LiteVimeo extends (globalThis.HTMLElement ?? class {}) {
     });
 
     // Once the user clicks, add the real iframe and drop our play button
-    // TODO: In the future we could be like amp-youtube and silently swap in the iframe during idle time
-    //   We'd want to only do this for in-viewport or near-viewport ones: https://github.com/ampproject/amphtml/pull/5003
     this.addEventListener('click', this.addIframe);
   }
 

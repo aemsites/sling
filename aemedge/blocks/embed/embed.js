@@ -1,24 +1,4 @@
 import { loadScript } from '../../scripts/aem.js';
-//const VIMEO_PRIVATE_CODE = 'h=##########'; // Replace ########## with your private code
-
-
-/*
- * Embed twitter, facebook
- * https://www.hlx.live/developer/block-collection/embed
-
-
-const loadScript = (url, callback, type) => {
-  const head = document.querySelector('head');
-  const script = document.createElement('script');
-  script.src = url;
-  if (type) {
-    script.setAttribute('type', type);
-  }
-  script.onload = callback;
-  head.append(script);
-  return script;
-};
-*/
 
 const getDefaultEmbed = (url) => `<div style="left: 0; width: 100%; height: 0; position: relative; padding-bottom: 56.25%;">
     <iframe src="${url.href}" style="border: 0; top: 0; left: 0; width: 100%; height: 100%; position: absolute;" allowfullscreen=""
@@ -70,7 +50,7 @@ const embedInstagram = (url) => {
       <div style=" width: 0; height: 0; border-top: 2px solid transparent; border-left: 6px solid #f4f4f4; border-bottom: 2px solid transparent; transform: translateX(16px) translateY(-4px) rotate(30deg)"></div>
     </div>
     <div style="margin-left: auto;">
-      <div style=" width: 0px; border-top: 8px solid #F4F4F4; border-right: 8px solid transparent; transform: translateY(16px);"></div>
+      <div style=" width: 0; border-top: 8px solid #F4F4F4; border-right: 8px solid transparent; transform: translateY(16px);"></div>
       <div style=" background-color: #F4F4F4; flex-grow: 0; height: 12px; width: 16px; transform: translateY(-4px);"></div>
       <div style=" width: 0; height: 0; border-top: 8px solid #F4F4F4; border-left: 8px solid transparent; transform: translateY(-4px) translateX(8px);"></div>
     </div>
@@ -158,14 +138,6 @@ const embedVimeo = async (url) => {
   wrapper.append(litePlayer);
   return wrapper.outerHTML;
 };
-
-/*
-const loadEmbed = (block, link) => {
-  if (block.classList.contains('embed-is-loaded')) {
-    return;
-  }
-
- */
 
 const EMBEDS_CONFIG = {
   vimeo: embedVimeo,
