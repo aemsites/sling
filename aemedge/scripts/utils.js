@@ -128,25 +128,19 @@ export function buildBlogBreadcrumb() {
 }
 
 /**
- * Builds video blocks when encounter video links.
+ * Builds video and social media blocks when those links are encountered
  * @param {Element} main The container element
- */
+  */
+
 export function buildVideoBlocks(main) {
-  const template = getMetadata('template');
-  if (template === 'blog-article') {
-    main.querySelectorAll('a[href]').forEach((a) => {
-      if (a.href.includes('youtube') && linkTextIncludesHref(a)) {
-        const videoBlock = buildBlock('video', a.cloneNode(true));
-        a.replaceWith(videoBlock);
-        decorateBlock(videoBlock);
-      }
-      if ((a.href.includes('twitter.com') || a.href.includes('facebook.com') || a.href.includes('instagram.com') || a.href.includes('watch.sling.com')) && linkTextIncludesHref(a)) {
-        const embedBlock = buildBlock('embed', a.cloneNode(true));
-        a.replaceWith(embedBlock);
-        decorateBlock(embedBlock);
-      }
-    });
-  }
+  const videoPlatforms = /youtu|vimeo|twitter\.com|facebook\.com|instagram\.com|watch\.sling\.com/;
+  main.querySelectorAll('a[href]').forEach((a) => {
+    if (videoPlatforms.test(a.href) && linkTextIncludesHref(a)) {
+      const embedBlock = buildBlock('embed', a.cloneNode(true));
+      a.replaceWith(embedBlock);
+      decorateBlock(embedBlock);
+    }
+  });
 }
 
 /**
