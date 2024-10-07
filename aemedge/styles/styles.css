@@ -32,6 +32,7 @@
   --clr-white: #fff;
   --clr-black: #000;
   --dark-grey-color: #706f6f;
+  --sling-gradient: linear-gradient(90deg, rgb(0 188 252 / 100%) 0%, rgb(143 235 210 / 100%) 56%, rgb(255 157 3 / 100%) 76%, rgb(254 213 66 / 100%) 100%, rgb(254 239 196 / 100%) 100%);
 
     /* fonts */
   ;

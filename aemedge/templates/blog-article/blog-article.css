@@ -20,6 +20,7 @@
 }
 
 .blog-article p a,
+.blog-article li a,
 .blog-article .auth-name a {
     color: #006cdf;
 }
@@ -336,7 +337,7 @@ body.blog-article.modal-open .modal-content .section:first-of-type > div {
         position: relative;
         z-index: 99;
         box-sizing: border-box;
-        
+
     }
 
     .blog-details-wrapper {
