@@ -72,6 +72,8 @@ export async function buildAuthorBlock() {
     class: 'author-image',
     alt: authName,
     src: authPhoto,
+    height: '60px',
+    width: '60px',
   });
   authImgLink.append(authImg);
   authImgContainer.append(authImgLink);
