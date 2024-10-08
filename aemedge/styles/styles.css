@@ -629,6 +629,10 @@ margin-bottom:10px;
   padding: 0 48px;
   }
 
+  .international main .icons .icon img{
+    max-width: none;
+  }
+
   /* CTA Banner Section */
   .section.cta-banner .columns-wrapper {
     flex-direction: row;
