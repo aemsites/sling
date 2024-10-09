@@ -2,7 +2,7 @@
 .carousel-slides {
   display: flex;
   gap: 8px;
-  padding: unset;
+  padding: 16px;
   list-style: none;
   overflow-x: scroll;
   scroll-snap-type: x mandatory;
