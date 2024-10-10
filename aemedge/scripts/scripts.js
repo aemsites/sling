@@ -160,33 +160,6 @@ export function buildMultipleButtons(main) {
   });
 }
 
-/* we shouldn't need this anymore
-export function buildCtaBanners(main) {
-  // cta banner
-  const columns = main.querySelectorAll('.section.cta-banner div.columns-wrapper');
-  columns.forEach((column) => {
-    const pictures = column.parentElement.querySelectorAll('p picture');
-    if (pictures) {
-      const images = [];
-      pictures.forEach((picture, idx) => {
-        const pTag = picture.parentElement;
-        const image = createTag('div', { class: 'background-image' });
-        if (idx === 0) picture.classList.add('desktop');
-        if (idx === 1) picture.classList.add('mobile');
-        if (pictures.length === 1) picture.classList.add('mobile');
-        image.append(picture);
-        images.push(image);
-        pTag.remove();
-      });
-      const blogHero = buildBlock('blog-hero', { elems: images });
-      column.parentElement.prepend(blogHero);
-      decorateBlock(blogHero);
-    }
-  });
-}
-
- */
-
 /**
  * Sets an optimized background image for a given section element.
  * This function takes into account the device's viewport width and device pixel ratio
@@ -482,7 +455,6 @@ export function decorateMain(main) {
   buildAutoBlocks(main);
   decorateSections(main);
   decorateBlocks(main);
-  // buildCtaBanners(main);
   decorateStyledSections(main);
   buildSpacer(main);
   decorateLinkedImages();

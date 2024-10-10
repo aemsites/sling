@@ -213,6 +213,8 @@ export default async function decorate(block) {
     brandLogo.src = '/aemedge/icons/whats-on.png';
     brandLogo.alt = 'What\'s On Sling';
     brandLogo.classList.add('nav-brand-logo');
+    brandLogo.setAttribute('height', '40px');
+    brandLogo.setAttribute('width', '119px');
     brandLink.innerHTML = '';
     brandLink.append(brandLogo);
     if ((brandLink.parentElement.tagName === 'P') && brandLink.parentElement.classList.contains('button-container')) {

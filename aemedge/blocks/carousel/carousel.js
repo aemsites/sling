@@ -5,7 +5,7 @@ function showSlide(block, slideIndex = 0) {
   const totalSlides = slides.length;
 
   // Ensure the slide index wraps correctly
-  const realSlideIndex = (slideIndex + totalSlides) % totalSlides;
+  const realSlideIndex = ((slideIndex % totalSlides) + totalSlides) % totalSlides;
 
   // Update block's active slide index
   block.dataset.activeSlide = realSlideIndex;
@@ -93,6 +93,7 @@ function createSlide(row, slideIndex, carouselId) {
 
 let carouselId = 0;
 export default async function decorate(block) {
+  const variant = block.classList.value;
   carouselId += 1;
   block.setAttribute('id', `carousel-${carouselId}`);
   const rows = block.querySelectorAll(':scope > div');
@@ -147,5 +148,21 @@ export default async function decorate(block) {
 
   if (!isSingleSlide) {
     bindEvents(block);
+  }
+  // Auto-scrolling functionality
+  let slideIndex = 0;
+  const slides = block.querySelectorAll('.carousel-slide');
+
+  function autoScroll() {
+    slideIndex += 1;
+    if (slideIndex >= slides.length) {
+      slideIndex = 0;
+    }
+    showSlide(block, slideIndex);
+  }
+
+  // Call autoScroll every 3 seconds
+  if (variant.includes('medium')) {
+    setInterval(autoScroll, 3000);
   }
 }
