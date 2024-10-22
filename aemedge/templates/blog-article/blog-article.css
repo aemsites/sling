@@ -19,10 +19,10 @@
     line-height: 1.5em;
 }
 
-.blog-article p a,
-.blog-article li a,
-.blog-article .auth-name a {
-    color: #006cdf;
+.blog-article {
+    h1 a, h2 a, h3 a, h4 a, h5 a, p a, li a, .auth-name a {
+        color: #0076ab;
+    }
 }
 
 .blog-article .icon.award {
