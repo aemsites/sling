@@ -10,6 +10,14 @@ main .section.category-container {
   width: 83%;
   margin: 0 auto;
   text-align: center;
+
+  h1 a, h2 a, h3 a, h4 a, p a {
+    color: #0076ab;
+
+    &:hover {
+      color: var(--link-hover-color);
+    }
+  }
 }
 
 .category-container .default-content-wrapper h3 {
@@ -131,7 +139,7 @@ main .section.category-container {
   line-height: 21px;
 
   a {
-    color: #0078aa;
+    color: #0076ab;
  }
 
   a:hover {
@@ -270,7 +278,7 @@ main .section.category-container {
 
 @media screen and (width >=768px) {
   .category-container .default-content-wrapper {
-    width: 33%;
+    width: 50%;
   }
 
   .section > div.category-wrapper {
