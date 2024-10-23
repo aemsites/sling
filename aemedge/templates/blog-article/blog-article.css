@@ -281,6 +281,10 @@ body.blog-article .section.chat-container .chat-wrapper .chat{
     float: right;
 }
 
+.section.game-finder-container .game-finder-wrapper{
+    width: 100%;
+}
+
 @media (width >=768px) {
     .blog-article h1 {
         margin: 10px auto 32px;
