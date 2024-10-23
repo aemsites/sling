@@ -10,14 +10,6 @@ main .section.category-container {
   width: 83%;
   margin: 0 auto;
   text-align: center;
-
-  h1 a, h2 a, h3 a, h4 a, p a {
-    color: #0076ab;
-
-    &:hover {
-      color: var(--link-hover-color);
-    }
-  }
 }
 
 .category-container .default-content-wrapper h3 {
