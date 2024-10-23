@@ -277,6 +277,10 @@ body.blog-article.modal-open .modal-content .section:first-of-type > div {
     margin-top: 24px;
 }
 
+body.blog-article .section.chat-container .chat-wrapper .chat{
+    float: right;
+}
+
 @media (width >=768px) {
     .blog-article h1 {
         margin: 10px auto 32px;
