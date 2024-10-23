@@ -356,6 +356,10 @@ body.blog-article.modal-open .modal-content .section:first-of-type > div {
     .text-container .social-share {
         flex-direction: column;
     }
+
+    body.blog-article .blog-details-wrapper .content-details-wrapper .default-content-wrapper ul li{
+        margin: 0 0 0 3em;
+    }
 }
 
 @media (width >=1024px) {
@@ -451,5 +455,10 @@ body.blog-article.modal-open .modal-content .section:first-of-type > div {
 
     .content-details-wrapper .fragment-wrapper .button-container + p {
         display: unset;
+    }
+
+    .content-details-wrapper .button-container.fragment-wrapper .buttons-container p {
+        display: flex;
+        justify-content: center;
     }
 }
