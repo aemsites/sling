@@ -465,7 +465,7 @@ body.blog-article .section.chat-container .chat-wrapper .chat{
         display: unset;
     }
 
-    .content-details-wrapper .button-container.fragment-wrapper .buttons-container p {
+    .content-details-wrapper .fragment-wrapper .buttons-container p {
         display: flex;
         justify-content: center;
     }
