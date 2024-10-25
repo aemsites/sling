@@ -9,7 +9,7 @@ import {
   pathToTag,
 } from '../../scripts/utils.js';
 
-const QUERY_INDEX_LIMIT = '100';
+const LIMIT_100 = '100';
 
 // Create cardLarge images for 2 breakpoints
 export async function addCardImageLarge(row, style, eagerImage = true) {
@@ -103,19 +103,20 @@ export default async function decorate(block) {
     lastSegmentOfURL = currentCategory;
   }
 
+  let limit = '';
+  // check if whatson homepage and add limit what we pull from query index for better performance
+  if (window.location.pathname === '/whatson' || window.location.pathname === '/whatson/') {
+    limit = LIMIT_100;
+  }
   let blogsbypaths;
-  if (paths.length >= 1) blogsbypaths = await getBlogsByPaths(paths, QUERY_INDEX_LIMIT);
+  if (paths.length >= 1) blogsbypaths = await getBlogsByPaths(paths, limit);
   let blogs;
   let mergedBlogs;
   if (blogsbypaths && (blogsbypaths.length > 0 && blogsbypaths.length < 8)) {
     numberofblogs -= blogsbypaths.length;
     // Get blogs
     if (numberofblogs > 0) {
-      blogs = await getBlogs(
-        categories.map((cat) => pathToTag(cat)),
-        numberofblogs,
-        QUERY_INDEX_LIMIT,
-      );
+      blogs = await getBlogs(categories.map((cat) => pathToTag(cat)), numberofblogs, limit);
       mergedBlogs = [...blogs, ...blogsbypaths];
     }
   } else {
