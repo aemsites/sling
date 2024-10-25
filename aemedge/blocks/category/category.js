@@ -9,6 +9,8 @@ import {
   pathToTag,
 } from '../../scripts/utils.js';
 
+const LATEST_50 = '50';
+
 // Create cardLarge images for 2 breakpoints
 export async function addCardImageLarge(row, style, eagerImage = true) {
   const cardImageDiv = createTag('div', { class: 'card-image' });
@@ -102,14 +104,14 @@ export default async function decorate(block) {
   }
 
   let blogsbypaths;
-  if (paths.length >= 1) blogsbypaths = await getBlogsByPaths(paths);
+  if (paths.length >= 1) blogsbypaths = await getBlogsByPaths(paths, LATEST_50);
   let blogs;
   let mergedBlogs;
   if (blogsbypaths && (blogsbypaths.length > 0 && blogsbypaths.length < 8)) {
     numberofblogs -= blogsbypaths.length;
     // Get blogs
     if (numberofblogs > 0) {
-      blogs = await getBlogs(categories.map((cat) => pathToTag(cat)), numberofblogs);
+      blogs = await getBlogs(categories.map((cat) => pathToTag(cat)), numberofblogs, LATEST_50);
       mergedBlogs = [...blogs, ...blogsbypaths];
     }
   } else {

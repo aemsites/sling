@@ -227,11 +227,12 @@ function compareArrays(arr, arr2) {
  * Retrieves blogs matching specific tags
  * @param {Array} categories - An array of categories to filter by
  * @param {number} num - The number of blogs to retrieve
+ * @param {string} limit - The limit of blogs to retrieve from the query-index
  * @returns {Promise<Array>} - A promise resolving to the filtered blogs array
  */
-export async function getBlogs(categories, num) {
+export async function getBlogs(categories, num, limit = '') {
   if (!window.allBlogs) {
-    window.allBlogs = await fetchData('/whatson/query-index.json?limit=50');
+    window.allBlogs = await fetchData(`/whatson/query-index.json${limit ? `?limit=${limit}` : ''}`);
   }
   const blogArticles = window.allBlogs.filter(
     (e) => (e.template === 'blog-article' && e.image !== '' && !e.image.startsWith('//aemedge/default-meta-image.png')),
@@ -254,9 +255,9 @@ export async function getBlogs(categories, num) {
   return blogArticles;
 }
 
-export async function getBlogsByPaths(paths) {
+export async function getBlogsByPaths(paths, limit = '') {
   if (!window.allBlogs) {
-    window.allBlogs = await fetchData('/whatson/query-index.json');
+    window.allBlogs = await fetchData(`/whatson/query-index.json${limit ? `?limit=${limit}` : ''}`);
   }
   const blogArticles = window.allBlogs.filter(
     (e) => (e.template !== 'blog-category' && e.image !== '' && !e.image.startsWith('//aemedge/default-meta-image.png')),
