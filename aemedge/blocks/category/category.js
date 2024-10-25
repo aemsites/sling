@@ -9,7 +9,7 @@ import {
   pathToTag,
 } from '../../scripts/utils.js';
 
-const LATEST_50 = '50';
+const QUERY_INDEX_LIMIT = '100';
 
 // Create cardLarge images for 2 breakpoints
 export async function addCardImageLarge(row, style, eagerImage = true) {
@@ -104,14 +104,18 @@ export default async function decorate(block) {
   }
 
   let blogsbypaths;
-  if (paths.length >= 1) blogsbypaths = await getBlogsByPaths(paths, LATEST_50);
+  if (paths.length >= 1) blogsbypaths = await getBlogsByPaths(paths, QUERY_INDEX_LIMIT);
   let blogs;
   let mergedBlogs;
   if (blogsbypaths && (blogsbypaths.length > 0 && blogsbypaths.length < 8)) {
     numberofblogs -= blogsbypaths.length;
     // Get blogs
     if (numberofblogs > 0) {
-      blogs = await getBlogs(categories.map((cat) => pathToTag(cat)), numberofblogs, LATEST_50);
+      blogs = await getBlogs(
+        categories.map((cat) => pathToTag(cat)),
+        numberofblogs,
+        QUERY_INDEX_LIMIT,
+      );
       mergedBlogs = [...blogs, ...blogsbypaths];
     }
   } else {
