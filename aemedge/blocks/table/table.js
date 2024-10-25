@@ -45,19 +45,21 @@ export default async function decorate(block) {
     tableRows = playoffstableRows;
   }
   let trcount = 0;
-  tableRows.forEach((row) => {
-    const cells = row.querySelectorAll('td');
-    if (cells.length === 1) {
-      trcount = 0;
-      row.classList.add('single-column-row');
-      for (let i = 0; i < tableRows[1].childElementCount - 1; i += 1) {
-        const newCell = document.createElement('td');
-        row.appendChild(newCell);
+  if (tableRows) {
+    tableRows.forEach((row) => {
+      const cells = row.querySelectorAll('td');
+      if (cells.length === 1) {
+        trcount = 0;
+        row.classList.add('single-column-row');
+        for (let i = 0; i < tableRows[1].childElementCount - 1; i += 1) {
+          const newCell = document.createElement('td');
+          row.appendChild(newCell);
+        }
       }
-    }
-    if (trcount % 2 === 0) {
-      row.classList.add('lightgrey');
-    }
-    trcount += 1;
-  });
+      if (trcount % 2 === 0) {
+        row.classList.add('lightgrey');
+      }
+      trcount += 1;
+    });
+  }
 }
