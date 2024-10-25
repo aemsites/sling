@@ -231,7 +231,7 @@ function compareArrays(arr, arr2) {
  */
 export async function getBlogs(categories, num) {
   if (!window.allBlogs) {
-    window.allBlogs = await fetchData('/whatson/query-index.json');
+    window.allBlogs = await fetchData('/whatson/query-index.json?limit=50');
   }
   const blogArticles = window.allBlogs.filter(
     (e) => (e.template === 'blog-article' && e.image !== '' && !e.image.startsWith('//aemedge/default-meta-image.png')),
