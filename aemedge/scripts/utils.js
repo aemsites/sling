@@ -237,11 +237,15 @@ export async function getBlogs(categories, num, limit = '') {
   const blogArticles = window.allBlogs.filter(
     (e) => (e.template === 'blog-article' && e.image !== '' && !e.image.startsWith('//aemedge/default-meta-image.png')),
   );
-
-  if (categories && categories.length > 0) {
+  // If page is the home page, omit international and announcements tagged articles
+  const homeBlogPage = window.location.pathname === '/whatson';
+  if (homeBlogPage || (categories && categories.length > 0)) {
     const filteredList = blogArticles.filter((e) => {
       const rawTags = JSON.parse(e.tags);
       const tags = rawTags.map((tag) => tag.trim().toLowerCase());
+      if (homeBlogPage) {
+        return !tags.includes('international') && !tags.includes('announcements');
+      }
       return compareArrays(categories, tags);
     });
     if (num) {
