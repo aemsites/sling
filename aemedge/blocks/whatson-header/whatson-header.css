@@ -485,11 +485,8 @@ header nav .nav-search {
         color: rgb(69 69 80);
         font-size: 16px;
         font-weight: 500;
-        border: none;
         line-height: 22px;
-        border-top: 3px solid #0098d1;
-        border-left: 3px solid #0098d1;
-        border-right: 3px solid #0098d1;
+        border: 3px 3px 0 3px solid #0098d1;
     }
 
     /* Search Results */
