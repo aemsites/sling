@@ -507,7 +507,9 @@ header nav .nav-search {
     header nav .nav-search .search-results-container .search-results {
         overflow: hidden auto;
         padding: 2.5rem 0 0 4rem;
-        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 
     header nav .nav-search .search-results-container .search-results .search-placeholder {
@@ -525,7 +527,6 @@ header nav .nav-search {
         overflow: wrap;
         white-space: nowrap;
         text-overflow: ellipsis;
-        padding-left: 50px;
         margin: 3.7px 20px 20px;
         font-size: 1.25rem;
     }
