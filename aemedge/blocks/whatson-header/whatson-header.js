@@ -311,9 +311,12 @@ export default async function decorate(block) {
     const searchInputContainer = createTag('div', { class: 'search-input-container' });
     const searchResultsContainer = createTag('div', { class: 'search-results-container' });
     const searchResults = createTag('div', { class: 'search-results' });
+    const searchPlaceholder = createTag('div', { class: 'search-placeholder' });
+    searchPlaceholder.innerHTML = 'Popular Searches';
     searchInputContainer.append(searchIcon);
     searchInputContainer.append(searchInput);
     searchInputContainer.append(closeIcon);
+    searchResults.append(searchPlaceholder);
     searchResultsContainer.append(searchResults);
     searchDiv.append(searchInputContainer);
     searchDiv.append(searchResultsContainer);
