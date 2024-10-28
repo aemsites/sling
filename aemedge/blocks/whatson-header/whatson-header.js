@@ -305,6 +305,7 @@ export default async function decorate(block) {
       class: 'nav-search-input',
       'aria-label': 'Search',
       type: 'search',
+      placeholder: 'Search For Channels, Shows, Sports...',
     });
     const searchIcon = createTag('span', { class: 'icon icon-search' });
     const closeIcon = createTag('span', { class: 'icon icon-close-blue' });
