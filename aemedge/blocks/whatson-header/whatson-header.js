@@ -305,15 +305,19 @@ export default async function decorate(block) {
       class: 'nav-search-input',
       'aria-label': 'Search',
       type: 'search',
+      placeholder: 'Search For Channels, Shows, Sports...',
     });
     const searchIcon = createTag('span', { class: 'icon icon-search' });
     const closeIcon = createTag('span', { class: 'icon icon-close-blue' });
     const searchInputContainer = createTag('div', { class: 'search-input-container' });
     const searchResultsContainer = createTag('div', { class: 'search-results-container' });
     const searchResults = createTag('div', { class: 'search-results' });
+    const searchPlaceholder = createTag('div', { class: 'search-placeholder' });
+    searchPlaceholder.innerHTML = 'Popular Searches';
     searchInputContainer.append(searchIcon);
     searchInputContainer.append(searchInput);
     searchInputContainer.append(closeIcon);
+    searchResults.append(searchPlaceholder);
     searchResultsContainer.append(searchResults);
     searchDiv.append(searchInputContainer);
     searchDiv.append(searchResultsContainer);
