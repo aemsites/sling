@@ -541,8 +541,4 @@ header nav .nav-search {
     header nav .nav-search .nav-search-input::-webkit-search-cancel-button {
         display: none;
     }
-
-    img[data-icon-name="close-blue"] {
-        transform: scale(1.05);
-      }
 }
