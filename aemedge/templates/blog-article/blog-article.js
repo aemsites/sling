@@ -87,7 +87,9 @@ export async function buildAuthorBlock() {
   // publication date
   if (pubDate) {
     const pubDateDiv = createTag('div', { class: 'pub-date' });
-    pubDateDiv.innerText = new Date(pubDate).toLocaleDateString('en-us', {
+    const pDate = new Date();
+    pDate.setDate(new Date(pubDate).getDate() + 1);
+    pubDateDiv.innerText = pDate.toLocaleDateString('en-us', {
       year: 'numeric', month: 'short', day: 'numeric',
     });
     authTxtContainer.append(pubDateDiv);
