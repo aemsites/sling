@@ -73,9 +73,10 @@ main .section.category-container {
 
 .category .card-large .card-link .card-content {
   position: absolute;
-  padding: 0 20px;
+
+  /* padding: 0 20px;
   bottom: unset;
-  pointer-events: none;
+  pointer-events: none; */
   text-align: center;
 }
 
