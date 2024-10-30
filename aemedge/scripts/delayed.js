@@ -24,7 +24,7 @@ sampleRUM('cwv');
 if (window.location.host.startsWith('localhost')) {
   loadScript('https://assets.adobedtm.com/f4211b096882/26f71ad376c4/launch-b69ac51c7dcd-development.min.js');
 } else if (window.location.host.startsWith('www.sling.com') || window.location.host.endsWith('.live')) {
-  // loadScript('https://assets.adobedtm.com/f4211b096882/26f71ad376c4/launch-c846c0e0cbc6.min.js');
+  loadScript('https://assets.adobedtm.com/f4211b096882/26f71ad376c4/launch-c846c0e0cbc6.min.js');
 } else if (window.location.host.endsWith('.page')) {
   loadScript('https://assets.adobedtm.com/f4211b096882/26f71ad376c4/launch-6367a8aeb307-staging.min.js');
 }
