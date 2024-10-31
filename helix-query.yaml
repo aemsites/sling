@@ -51,12 +51,13 @@ indices:
         select: none
         value: |
           parseTimestamp(headers["last-modified"], "ddd, DD MMM YYYY hh:mm:ss GMT")
+      hideFromHome:
+        select: head > meta[name="hide-from-home"]
+        value: |
+          attribute(el, 'content') 
       robots:
         select: head > meta[name="robots"]
         value: |
           attribute(el, 'content')
-      hideFromHome:
-        select: head > meta[name="hide-from-home"]
-        value: |
-          attribute(el, 'content')
+      
     
