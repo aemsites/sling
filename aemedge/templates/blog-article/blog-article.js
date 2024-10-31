@@ -110,7 +110,7 @@ export async function buildAuthorBlock() {
     const socialListItm = createTag('li', { class: 'share-list-item social' });
     const span = createTag('span', { class: `social-${social} social-share-icon ` });
     const link = createTag(
-      'a',
+      'span',
       {
         class: `fa fa-${social}`,
         title: `Share this article on ${social}`,
@@ -120,8 +120,8 @@ export async function buildAuthorBlock() {
     socialListItm.append(span);
     socialList.append(socialListItm);
   });
-  const fashareLink = socialList.querySelector('a.fa-facebook');
-  const twitterShareLink = socialList.querySelector('a.fa-twitter');
+  const fashareLink = socialList.querySelector('span.fa-facebook');
+  const twitterShareLink = socialList.querySelector('span.fa-twitter');
   const blogUrl = window.location.href;
   const top = window.screen.height / 2 - 260;
   const left = window.screen.width / 2 - 175;
