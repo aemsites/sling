@@ -244,7 +244,7 @@ export async function getBlogs(categories, num, limit = '') {
       const rawTags = JSON.parse(e.tags);
       const tags = rawTags.map((tag) => tag.trim().toLowerCase());
       if (homeBlogPage) {
-        return !tags.includes('international') && !tags.includes('announcements');
+        return !tags.includes('international');
       }
       return compareArrays(categories, tags);
     });
