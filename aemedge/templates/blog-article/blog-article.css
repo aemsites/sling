@@ -149,7 +149,7 @@ main .hero-container + .section {
     padding-right: 4px;
 }
 
-.social-share .social-share-icon a {
+.social-share .social-share-icon span {
     text-decoration: none;
     color: #0078ad;
     padding: 0 4px
@@ -160,7 +160,7 @@ main .hero-container + .section {
     color: var(--link-hover-color);
 }
 
-.social-share .social-share-icon a:hover {
+.social-share .social-share-icon span:hover {
     color: #3abfed;
     cursor: pointer;
 }
