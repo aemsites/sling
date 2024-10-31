@@ -237,10 +237,13 @@ export async function getBlogs(categories, num, limit = '') {
   const blogArticles = window.allBlogs.filter(
     (e) => (e.template === 'blog-article' && e.image !== '' && !e.image.startsWith('//aemedge/default-meta-image.png')),
   );
-  // If page is the home page, omit international and announcements tagged articles
+  const homeBlogArticles = window.allBlogs.filter(
+    (e) => (e.template === 'blog-article' && e.image !== '' && !e.image.startsWith('//aemedge/default-meta-image.png') && !e.hideFromHome),
+  );
+  // If page is the home page, omit international and page has hide-from-home=yes/true
   const homeBlogPage = window.location.pathname === '/whatson';
   if (homeBlogPage || (categories && categories.length > 0)) {
-    const filteredList = blogArticles.filter((e) => {
+    const filteredList = homeBlogArticles.filter((e) => {
       const rawTags = JSON.parse(e.tags);
       const tags = rawTags.map((tag) => tag.trim().toLowerCase());
       if (homeBlogPage) {
