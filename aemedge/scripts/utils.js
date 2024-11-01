@@ -237,15 +237,10 @@ export async function getBlogs(categories, num, limit = '') {
   const blogArticles = window.allBlogs.filter(
     (e) => (e.template === 'blog-article' && e.image !== '' && !e.image.startsWith('//aemedge/default-meta-image.png')),
   );
-
-  // If page is the home page, omit international tagged pages and
-  // page has hide-from-home meta property
-  const homeBlogArticles = window.allBlogs.filter(
-    (e) => (e.template === 'blog-article' && e.image !== '' && !e.image.startsWith('//aemedge/default-meta-image.png') && !e.hideFromHome),
-  );
+  // If page is the home page, omit international tagged pages
   const homeBlogPage = window.location.pathname === '/whatson';
   if (homeBlogPage || (categories && categories.length > 0)) {
-    const filteredList = homeBlogArticles.filter((e) => {
+    const filteredList = blogArticles.filter((e) => {
       const rawTags = JSON.parse(e.tags);
       const tags = rawTags.map((tag) => tag.trim().toLowerCase());
       if (homeBlogPage) {
