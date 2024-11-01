@@ -22,6 +22,7 @@ import {
   createTag,
   loadGameFinders,
   loadPackageCards,
+  linkTextIncludesHref,
 } from './utils.js';
 
 const LCP_BLOCKS = ['category']; // add your LCP blocks to the list
@@ -416,6 +417,27 @@ function buildSpacer(main) {
   });
 }
 
+export function decorateExtImage() {
+  // specific to dynamic media but we can add a local path too
+  // but for non-svg images, we will need to tell DM what size image we need
+  const extImageUrl = /dish\.scene7\.com/;
+  document.querySelectorAll('a[href]').forEach((a) => {
+    if (extImageUrl.test(a.href) && linkTextIncludesHref(a)) {
+      const extImageSrc = a.href;
+      const picture = document.createElement('picture');
+      const img = document.createElement('img');
+      img.classList.add('external');
+      // this alt is a cop out, but it's better than nothing
+      img.alt = 'Sling TV image';
+      // making assumption it is not LCP but we can add a check
+      img.loading = 'lazy';
+      img.src = extImageSrc;
+      picture.append(img);
+      a.replaceWith(picture);
+    }
+  });
+}
+
 /**
    * Builds all synthetic blocks in a container element.
    * @param {Element} main The container element
@@ -457,6 +479,7 @@ export function decorateMain(main) {
   decorateBlocks(main);
   decorateStyledSections(main);
   buildSpacer(main);
+  decorateExtImage(main);
   decorateLinkedImages();
 }
 
