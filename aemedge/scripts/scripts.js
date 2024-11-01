@@ -418,18 +418,18 @@ function buildSpacer(main) {
 }
 
 export function decorateExtImage() {
-  // specific to dynamic media but we can add a local path too
-  // but for non-svg images, we will need to tell DM what size image we need
-  const extImageUrl = /dish\.scene7\.com/;
+  // dynamic media link or images in /svg folder
+  // not for bitmap images because we're not doing renditions here
+  const extImageUrl = /dish\.scene7\.com|\/aemedge\/svgs\//;
   document.querySelectorAll('a[href]').forEach((a) => {
     if (extImageUrl.test(a.href) && linkTextIncludesHref(a)) {
       const extImageSrc = a.href;
       const picture = document.createElement('picture');
       const img = document.createElement('img');
-      img.classList.add('external');
+      img.classList.add('svg');
       // this alt is a cop out, but it's better than nothing
       img.alt = 'Sling TV image';
-      // making assumption it is not LCP but we can add a check
+      // making assumption it is not LCP
       img.loading = 'lazy';
       img.src = extImageSrc;
       picture.append(img);
