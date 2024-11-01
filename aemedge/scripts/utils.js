@@ -234,23 +234,24 @@ export async function getBlogs(categories, num, limit = '') {
   if (!window.allBlogs) {
     window.allBlogs = await fetchData(`/whatson/query-index.json${limit ? `?limit=${limit}` : ''}`);
   }
-  const blogArticles = window.allBlogs.filter(
-    (e) => (e.template === 'blog-article' && e.image !== '' && !e.image.startsWith('//aemedge/default-meta-image.png')),
-  );
+  const isBlogsHome = (window.location.pathname === '/whatson' || window.location.pathname === '/whatson/');
+  const blogArticles = isBlogsHome
+    ? window.allBlogs.filter(
+      (e) => (e.template === 'blog-article'
+        && e.image !== ''
+        && !e.image.startsWith('//aemedge/default-meta-image.png')
+        && (e.hideFromHome !== 'yes')),
+    )
+    : window.allBlogs.filter(
+      (e) => (e.template === 'blog-article'
+        && e.image !== ''
+        && !e.image.startsWith('//aemedge/default-meta-image.png')),
+    );
 
-  // If page is the home page, omit international tagged pages and
-  // page has hide-from-home meta property
-  const homeBlogArticles = window.allBlogs.filter(
-    (e) => (e.template === 'blog-article' && e.image !== '' && !e.image.startsWith('//aemedge/default-meta-image.png') && !e.hideFromHome),
-  );
-  const homeBlogPage = window.location.pathname === '/whatson';
-  if (homeBlogPage || (categories && categories.length > 0)) {
-    const filteredList = homeBlogArticles.filter((e) => {
+  if ((categories && categories.length > 0)) {
+    const filteredList = blogArticles.filter((e) => {
       const rawTags = JSON.parse(e.tags);
       const tags = rawTags.map((tag) => tag.trim().toLowerCase());
-      if (homeBlogPage) {
-        return !tags.includes('international');
-      }
       return compareArrays(categories, tags);
     });
     if (num) {
