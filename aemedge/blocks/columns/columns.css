@@ -78,8 +78,6 @@
 
   .columns span.icon {
     display: inline-block;
-    height: 24px;
-    width: 24px;
   }
 
   .columns.icons {
@@ -103,6 +101,12 @@
   .columns.icons span.icon img {
     height: 20px;
     width: 80px;
+  }
+
+  .columns span.icon.icon-freestream-light img{
+    width: 188.64px;
+    height: 55px;
+    max-width: none;
   }
 
   .international .default-content-wrapper h1{
