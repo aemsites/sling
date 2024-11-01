@@ -196,6 +196,7 @@ export function centerHeadlines() {
  * @returns {Promise<Array>} - A promise resolving to the transformed data array
  */
 export async function fetchData(path) {
+  console.log(path);
   const response = await fetch(path);
   const json = await response.json();
 

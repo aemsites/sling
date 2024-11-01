@@ -120,7 +120,7 @@ export default async function decorate(block) {
       mergedBlogs = [...blogs, ...blogsbypaths];
     }
   } else {
-    mergedBlogs = await getBlogs(categories.map((cat) => pathToTag(cat)), numberofblogs);
+    mergedBlogs = await getBlogs(categories.map((cat) => pathToTag(cat)), numberofblogs, limit);
   }
   mergedBlogs.forEach(async (blog, i) => {
     if (blog.image === '') return;
