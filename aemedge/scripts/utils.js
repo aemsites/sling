@@ -196,7 +196,6 @@ export function centerHeadlines() {
  * @returns {Promise<Array>} - A promise resolving to the transformed data array
  */
 export async function fetchData(path) {
-  console.log(path);
   const response = await fetch(path);
   const json = await response.json();
 
@@ -235,9 +234,19 @@ export async function getBlogs(categories, num, limit = '') {
   if (!window.allBlogs) {
     window.allBlogs = await fetchData(`/whatson/query-index.json${limit ? `?limit=${limit}` : ''}`);
   }
-  const blogArticles = window.allBlogs.filter(
-    (e) => (e.template === 'blog-article' && e.image !== '' && !e.image.startsWith('//aemedge/default-meta-image.png')),
-  );
+  const isBlogsHome = (window.location.pathname === '/whatson' || window.location.pathname === '/whatson/');
+  const blogArticles = isBlogsHome
+    ? window.allBlogs.filter(
+      (e) => (e.template === 'blog-article'
+        && e.image !== ''
+        && !e.image.startsWith('//aemedge/default-meta-image.png')
+        && (e.hideFromHome !== 'yes')),
+    )
+    : window.allBlogs.filter(
+      (e) => (e.template === 'blog-article'
+        && e.image !== ''
+        && !e.image.startsWith('//aemedge/default-meta-image.png')),
+    );
 
   if ((categories && categories.length > 0)) {
     const filteredList = blogArticles.filter((e) => {
