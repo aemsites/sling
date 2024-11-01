@@ -106,7 +106,7 @@
   .columns span.icon.icon-freestream-light img{
     width: 188.64px;
     height: 55px;
-    max-width: none;
+    max-width: 188.64px;
   }
 
   .international .default-content-wrapper h1{
