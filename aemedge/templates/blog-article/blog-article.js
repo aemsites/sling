@@ -88,7 +88,6 @@ export async function buildAuthorBlock() {
   if (pubDate) {
     const pubDateDiv = createTag('div', { class: 'pub-date' });
     const pDate = new Date(pubDate);
-    pDate.setUTCHours(12, 0, 0, 0);
     pubDateDiv.innerText = pDate.toDateString();
     authTxtContainer.append(pubDateDiv);
   }
