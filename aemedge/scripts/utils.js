@@ -215,6 +215,7 @@ export function convertExcelDate(excelDate) {
   const jsDate = +excelDate > 99999
     ? new Date(+excelDate * 1000)
     : new Date(Math.round((+excelDate - (1 + 25567 + 1)) * 86400 * 1000));
+  jsDate.setTime(jsDate.getTime() + 12 * 60 * 60 * 1000); // add 12 hrs
   return jsDate;
 }
 
