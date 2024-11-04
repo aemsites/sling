@@ -89,7 +89,9 @@ export async function buildAuthorBlock() {
     const pubDateDiv = createTag('div', { class: 'pub-date' });
     const pDate = new Date(pubDate);
     pDate.setUTCHours(12, 0, 0, 0);
-    pubDateDiv.innerText = pDate.toDateString();
+    pubDateDiv.innerText = pDate.toLocaleDateString('en-us', {
+      year: 'numeric', month: 'short', day: 'numeric',
+    });
     authTxtContainer.append(pubDateDiv);
   }
   // tags links
