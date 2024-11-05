@@ -170,9 +170,16 @@ main .section.category-container {
   position: relative;
   overflow: hidden;
   transition: box-shadow 0.3s ease;
-  margin: 10px;
   aspect-ratio: 16 / 9;
   min-height: 180px;
+}
+
+.category .card-medium .card-link .card-image {
+  margin: 10px;
+}
+
+.category .card-small .card-link .card-image {
+  margin-top: 10px;
 }
 
 .category .card-medium .card-link:hover .card-image,
