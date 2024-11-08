@@ -16,6 +16,20 @@
           "edit"
         ],
         "url": "/tools/sidekick/tagger/tagger.html"
+      },
+      {
+        "id": "dev",
+        "title": "Kiran",
+        "isBadge": true,
+        "environments": ["dev"]
+      },
+      {
+        "id": "foo",
+        "title": "Foo",
+        "environments": [
+          "dev"
+        ],
+        "url": "/tools/sidekick/foo.html"
       }
     ]
   }
