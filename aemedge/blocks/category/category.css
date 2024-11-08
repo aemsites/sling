@@ -152,15 +152,11 @@ main .section.category-container {
 .category .card.card-small {
   margin: 0 auto;
   max-width: none;
-  width: calc(90% + 20px);
+  width: 90%;
   position: relative;
   display: flex;
   flex-direction: column;
   padding-bottom: 30px;
-}
-
-.category .card.card-medium{
-  width: 90%;
 }
 
 .category .card-medium .card-link,
