@@ -234,7 +234,7 @@ a.button::-moz-focus-inner {
 a.button.primary,
 button.primary,
 a.button.secondary,
-button.secondary {
+button.secondary,a.button.dark {
   border-radius: 1600px;
   opacity: 1;
   min-width: 180px;
@@ -266,7 +266,8 @@ button.secondary {
 }
 
 a.button.primary:hover,
-a.button.secondary:hover {
+a.button.secondary:hover,
+a.button.dark:hover {
   outline: none;
   box-shadow: #07070b66 0 24px 57px 0;
   opacity: 1;

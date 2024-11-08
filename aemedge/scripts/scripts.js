@@ -331,6 +331,13 @@ export function decorateButtons(element) {
           a.className = 'button secondary';
           threeup.classList.add('button-container');
         }
+        if (
+          up.childNodes.length === 1
+          && up.tagName === 'STRONG'
+          && (twoup.tagName === 'P' || twoup.tagName === 'DIV')) {
+          a.className = 'button dark';
+          twoup.classList.add('button-container');
+        }
       }
     }
   });
