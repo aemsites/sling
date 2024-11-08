@@ -42,7 +42,6 @@
   --dark-color: #ccc;
   --text-color: #333;
   --primary-button-color: linear-gradient(108.93deg, #0072ec 37.23%, #00b9ff 112.13%);
-  --dark-button-color: rgb(72 72 72);
   --invalid-red: #e90000;
   --input-background-color: #eaeaec;
   --dark-background-color: rgb(23 23 37);
@@ -237,10 +236,10 @@ a.button.secondary,
 button.secondary {
   border-radius: 1600px;
   opacity: 1;
-  min-width: 180px;
+  min-width: 11.25rem;
   font-size: 1rem;
   padding: 0.875rem 1rem;
-  min-height: 50px;
+  min-height: 60px;
   align-content: center;
 }
 
@@ -249,13 +248,6 @@ button.primary {
   color: var(--background-color);
   background: var(--primary-button-color);
   border: 2px solid var(--primary-button-color);
-}
-
-a.button.dark,
-button.dark {
-  color: var(--background-color);
-  background: var(--dark-button-color);
-  border: 2px solid var(--dark-button-color);
 }
 
 a.button.secondary,
@@ -323,6 +315,7 @@ button.text:hover {
   font-weight: normal;
   font-style: italic;
   font-size: 14px;
+  margin-left: 10px;
 }
 
 .offer-details a.button.text {
