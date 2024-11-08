@@ -97,6 +97,27 @@ header {
   height: var(--nav-height);
 }
 
+.block.highlight {
+  outline: 2px solid red;
+}
+
+ span.blockname {
+  display: none;
+ }
+
+ span.blockname.show {
+ display: block;
+ position: relative;
+ top:0;
+ left:10px;
+ font-size: 24px;
+ color:mediumseagreen
+}
+
+/* div.section.highlight {
+  outline: 3px solid green;
+} */
+
 h1,
 h2,
 h3,

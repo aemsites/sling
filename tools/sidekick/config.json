@@ -18,18 +18,17 @@
         "url": "/tools/sidekick/tagger/tagger.html"
       },
       {
-        "id": "stage",
-        "title": "Staging",
+        "id": "develop",
+        "title": "Developement",
         "isBadge": true,
-        "environments": ["prev"]
+        "badgeVariant": "blue",
+        "environments": ["dev"]
       },
       {
-        "id": "foo",
-        "title": "Foo",
-        "environments": [
-          "prev"
-        ],
-        "url": "/tools/sidekick/foo.html"
+        "id": "showblocks",
+        "title": "Sections & Blocks",
+        "event": "showblocks", 
+        "environments": ["dev"]
       }
     ]
   }
