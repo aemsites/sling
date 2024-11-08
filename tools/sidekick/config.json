@@ -18,16 +18,16 @@
         "url": "/tools/sidekick/tagger/tagger.html"
       },
       {
-        "id": "dev",
-        "title": "Kiran",
+        "id": "stage",
+        "title": "Staging",
         "isBadge": true,
-        "environments": ["dev"]
+        "environments": ["prev"]
       },
       {
         "id": "foo",
         "title": "Foo",
         "environments": [
-          "dev"
+          "prev"
         ],
         "url": "/tools/sidekick/foo.html"
       }
