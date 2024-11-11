@@ -6,6 +6,10 @@
   overflow-x: auto;
   justify-content: flex-start;
 }
+.tabs.wide .tabs-list {
+  flex-direction: row;
+  justify-content: center;
+}
 
 .tabs .tabs-list button {
   display: flex;
