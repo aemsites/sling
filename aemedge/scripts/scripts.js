@@ -336,7 +336,7 @@ export function decorateButtons(element) {
           && up.tagName === 'EM'
           && twoup.tagName === 'STRONG'
           && (threeup.tagName === 'DEL')
-          && (threeup.tagName === 'P' || threeup.tagName === 'DIV')) {
+          && (threeup.parentElement.tagName === 'P' || threeup.parentElement.tagName === 'DIV')) {
           a.className = 'button dark';
           threeup.parentElement.classList.add('button-container');
         }
