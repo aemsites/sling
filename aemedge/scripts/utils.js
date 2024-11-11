@@ -721,3 +721,47 @@ export async function getZipcode() {
   }
   return zipcode;
 }
+
+export function configSideKick() {
+  const showBlocks = ({ detail: payload }) => {
+    console.log('a custom event happened', payload);
+    const blocks = document.querySelectorAll('div.block');
+
+    blocks.forEach((block) => {
+      block.classList.toggle('highlight');
+      let blockName = block.parentElement.querySelector('.blockname');
+      if (!blockName) blockName = document.createElement('span');
+      if (block.classList.contains('highlight')) {
+        blockName.classList.add('blockname');
+        // eslint-disable-next-line prefer-destructuring
+        blockName.innerText = block.className.split(' ')[0];
+        blockName.classList.toggle('show');
+        block.parentElement.prepend(blockName);
+      } else {
+        blockName.remove();
+      }
+    });
+  };
+
+  const showSections = ({ detail: payload }) => {
+    console.log('a custom event happened', payload);
+    const sections = document.querySelectorAll('div.section');
+    sections.forEach((section) => section.classList.toggle('highlight'));
+  };
+
+  const sk = document.querySelector('helix-sidekick');
+  if (sk) {
+  // sidekick already loaded
+    sk.addEventListener('custom:showblocks', showBlocks);
+    sk.addEventListener('custom:showsections', showSections);
+  } else {
+  // wait for sidekick to be loaded
+    document.addEventListener('sidekick-ready', () => {
+    // sidekick now loaded
+      document.querySelector('helix-sidekick')
+        .addEventListener('custom:showblocks', showBlocks);
+      document.querySelector('helix-sidekick')
+        .addEventListener('custom:showsections', showSections);
+    }, { once: true });
+  }
+}

@@ -98,7 +98,11 @@ header {
 }
 
 .block.highlight {
-  outline: 2px solid red;
+  outline: 2px dotted lime;
+}
+
+.section.highlight {
+  outline: 2px dotted red;
 }
 
  span.blockname {
@@ -111,7 +115,7 @@ header {
  top:0;
  left:10px;
  font-size: 24px;
- color:mediumseagreen
+ color:red
 }
 
 /* div.section.highlight {

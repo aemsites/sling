@@ -26,9 +26,15 @@
       },
       {
         "id": "showblocks",
-        "title": "Sections & Blocks",
+        "title": "Blocks",
         "event": "showblocks", 
-        "environments": ["dev"]
+        "environments": ["dev" , "preview"]
+      },      
+      {
+        "id": "showsections",
+        "title": "Sections",
+        "event": "showsections", 
+        "environments": ["dev", "preview"]
       }
     ]
   }

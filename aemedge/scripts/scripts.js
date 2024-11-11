@@ -23,6 +23,7 @@ import {
   loadGameFinders,
   loadPackageCards,
   linkTextIncludesHref,
+  configSideKick,
 } from './utils.js';
 
 const LCP_BLOCKS = ['category']; // add your LCP blocks to the list
@@ -574,6 +575,7 @@ function loadDelayed() {
 async function loadPage() {
   await loadEager(document);
   await loadLazy(document);
+  configSideKick();
   loadDelayed();
   makeLastButtonSticky();
 }
