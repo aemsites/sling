@@ -333,10 +333,12 @@ export function decorateButtons(element) {
         }
         if (
           up.childNodes.length === 1
-          && up.tagName === 'STRONG'
-          && (twoup.tagName === 'P' || twoup.tagName === 'DIV')) {
+          && up.tagName === 'EM'
+          && twoup.tagName === 'STRONG'
+          && (threeup.tagName === 'DEL')
+          && (threeup.tagName === 'P' || threeup.tagName === 'DIV')) {
           a.className = 'button dark';
-          twoup.classList.add('button-container');
+          threeup.parentElement.classList.add('button-container');
         }
       }
     }

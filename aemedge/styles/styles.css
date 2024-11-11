@@ -221,7 +221,6 @@ button {
   margin-top: 8px;
   overflow: hidden;
   text-overflow: ellipsis;
-  min-width: 180px;
   padding: 14px 16px;
 }
 
@@ -237,7 +236,6 @@ a.button.secondary,
 button.secondary,a.button.dark {
   border-radius: 1600px;
   opacity: 1;
-  min-width: 180px;
   font-size: 1rem;
   padding: 0.875rem 1rem;
   min-height: 50px;
