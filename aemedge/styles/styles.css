@@ -283,15 +283,16 @@ button:disabled:hover {
   cursor: unset;
 }
 
-/* Buttons Container */
-.buttons-container {
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: center;
-}
-
 .buttons-container a.button {
   margin: 8px;
+}
+
+.buttons-container {
+  text-align: left;
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 a.button.text,
