@@ -144,6 +144,10 @@ blockquote {
   margin: 0 0 10px;
 }
 
+.offer-details .buttons-container p{
+  margin: 0;
+}
+
 code,
 pre {
   font-family: var(--fixed-font-family);
@@ -315,7 +319,10 @@ button.text:hover {
 }
 
 .offer-details .buttons-container {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+  align-items: center;
 }
 
 .offer-details .button.text {
@@ -326,6 +333,11 @@ button.text:hover {
 
 .offer-details a.button.text {
   color: white;
+  text-align: center;
+}
+
+.offer-details a.button.text .link-button-text {
+  color: var(--link-color);
   text-align: center;
 }
 
@@ -766,6 +778,10 @@ margin:0 auto;
   .section.banner {
     .buttons-container {
       text-align: left;
+      width: fit-content;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
   }
 
