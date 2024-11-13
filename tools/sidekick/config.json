@@ -19,11 +19,11 @@
       },
       {
         "id": "assetpicker",
-        "title": "Asset Picker",
+        "title": "My Assets",
         "environments": [
           "edit"
         ],
-        "url": "/tools/sidekick/assetpicker/assetpicker.html",
+        "url": "http://localhost:4502/aem/assetpicker.html",
         "isPalette": true,
         "paletteRect": "top: 50px; bottom: 10px; right: 10px; left: auto; width:400px; height: calc(100vh - 60px)"
       },
