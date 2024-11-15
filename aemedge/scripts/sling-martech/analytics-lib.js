@@ -2843,7 +2843,6 @@ function init() {
     }
     lazy.registerReact(className, libName);
   });
-  console.log(lazy);
   window.slingUtils.lazy = lazy || {};
 }
 init();
@@ -2927,7 +2926,7 @@ function getPageData() {
   }
   return data;
 }
-window.addEventListener('load', function () {
+setTimeout(function () {
   var _document$querySelect;
   var data = getPageData();
   var skipAnalytics = !!document.querySelector('.skipAnalytics');
@@ -2943,7 +2942,7 @@ window.addEventListener('load', function () {
       }
     }
   });
-}, false);
+}, 0);
 
 /* 
     init-target.js
@@ -2971,8 +2970,6 @@ executeWithLaunch(window.alloyTargetTest);
 window.SlingAnalytics = {
   getAnalyticsInstance: getAnalyticsInstance
 };
-console.log('AnalyticsADL loaded');
-console.log(window.SlingAnalytics);
 })();
 
 /******/ 	return __webpack_exports__;
