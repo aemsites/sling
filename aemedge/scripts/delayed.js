@@ -18,7 +18,7 @@ const loadScript = async (url, attrs) => {
 // Core Web Vitals RUM collection
 sampleRUM('cwv');
 
-await loadScript('../../../aemedge/scripts/sling-martech/anlaytics-lib.js');
+await loadScript('/aemedge/scripts/sling-martech/analytics-lib.js');
 
 if (window.location.host.startsWith('localhost')) {
   await loadScript('https://assets.adobedtm.com/f4211b096882/26f71ad376c4/launch-b69ac51c7dcd-development.min.js');
