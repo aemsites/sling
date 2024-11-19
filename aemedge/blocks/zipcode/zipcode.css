@@ -23,7 +23,7 @@ header nav[aria-expanded="false"] .zipcode-wrapper {
     position: relative;
     background-color: var(--clr-white);
     top: -10px;
-    left: 20px;
+    left: 40%;
     transform: rotate(-45deg);
     margin-top: 1px;
     z-index: 2;
@@ -36,6 +36,7 @@ header nav[aria-expanded="false"] .zipcode-wrapper {
     display: flex;
     width: 100px;
     place-content: space-evenly;
+    gap:5px;
 }
 
 .geo-container .geo-pin:hover,
@@ -55,6 +56,7 @@ header nav[aria-expanded="false"] .zipcode-wrapper {
     height: 286px;
     width: 265px;
     top: 70px;
+    left:-86px;
     border-radius: 0.5rem;
     background-color: var(--clr-white);
     box-shadow: var(--clr-black);
@@ -128,7 +130,6 @@ header nav[aria-expanded="false"] .zipcode-wrapper {
 .zip-input-label {
     position: absolute;
     color: var(--clr-light-black);
-    ;
     opacity: 1;
     font-size: 0.75rem;
     font-weight: 500;
@@ -146,14 +147,21 @@ header nav[aria-expanded="false"] .zipcode-wrapper {
 
 .zip-update-btn {
     margin-bottom: 20px;
-    width: 100%;
+    width: 265px;
     height: 40px;
     font-weight: 600;
-    font-size: 16px;
-    line-height: 13px;
+    line-height: 0px;
     letter-spacing: 1px;
-    padding: 0.875rem 1rem;
+    font-size: 18px;
+    padding: 0.938rem 1.2rem;
+    position: relative;
     box-sizing: border-box;
+    background: linear-gradient(108.93deg, #0072ec 37.23%, #00b9ff 112.13%);
+    color: #f5f5f6;
+    border: none;
+    border-radius: 1600px;
+    opacity: 1;
+    min-width: unset;
 }
 
 @media (width >=1024px) {
@@ -163,12 +171,16 @@ header nav[aria-expanded="false"] .zipcode-wrapper {
         top: unset;
         left: unset;
         height: 58px;
-        padding: 0 5px;
+        padding: 0 10px;
         background: #292938;
         display: flex;
         place-content: center;
         place-items: center;
         box-sizing: border-box;
+    }
+
+    header nav[aria-expanded="true"] .zipcode-wrapper.selected{ 
+        background: #44444f;
     }
 
     .geo-form-container {
