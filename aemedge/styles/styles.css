@@ -144,7 +144,11 @@ blockquote {
   margin: 0 0 10px;
 }
 
-.offer-details .buttons-container p{
+.button-container p,del{
+  margin: 0;
+}
+
+.buttons-container .button-container{
   margin: 0;
 }
 
@@ -284,7 +288,7 @@ button:disabled:hover {
 }
 
 .buttons-container a.button {
-  margin: 8px;
+  margin: 0;
 }
 
 .buttons-container {
@@ -657,6 +661,14 @@ margin-bottom:10px;
 
 .section.promo-reverse .columns > div > .columns-img-col {
   order: 1;
+}
+
+a.white {
+  color: white;
+}
+
+a.black {
+  color: black;
 }
 
 @media (width >=768px) {

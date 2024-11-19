@@ -270,80 +270,102 @@ async function setNavType() {
    */
 export function decorateButtons(element) {
   element.querySelectorAll('a').forEach((a) => {
+    // Set the title attribute if not already set
     a.title = a.title || a.textContent;
+
+    // Proceed only if href is different from textContent
     if (a.href !== a.textContent) {
       const hasIcon = a.querySelector('.icon');
       const up = a.parentElement;
-      const twoup = a.parentElement.parentElement;
-      const threeup = a.parentElement.parentElement.parentElement;
-      if (hasIcon) return;
-      if (!a.querySelector('img')) {
-        // let default button be text-only, no decoration
-        const linkText = a.textContent;
-        const linkTextEl = document.createElement('span');
-        linkTextEl.classList.add('link-button-text');
-        linkTextEl.append(linkText);
-        a.textContent = `${linkText}`;
-        a.setAttribute('aria-label', `${linkText}`);
-        if (up.childNodes.length === 1 && (up.tagName === 'P' || up.tagName === 'DIV')) {
-          a.textContent = '';
-          a.className = 'button text'; // default
-          up.classList.add('button-container');
-          a.append(linkTextEl);
-        }
-        // primary buttons in whatson pages
-        if (getPageType() === 'blog') {
-          if (
-            up.childNodes.length === 1
-            && up.tagName === 'DEL'
-            && twoup.childNodes.length === 1
-            && (twoup.tagName === 'P' || twoup.tagName === 'DIV')) {
-            a.className = 'button primary';
-            if (a.href.includes('/cart/')) a.target = '_blank';
-            twoup.classList.add('button-container');
-          }
-          // secondary button
-          if (
-            up.childNodes.length === 1
-              && up.tagName === 'EM'
-              && threeup.childNodes.length === 1
-              && (twoup && twoup.tagName === 'DEL')
-              && (threeup.tagName === 'P' || threeup.tagName === 'DIV')) {
-            a.className = 'button secondary';
-            if (a.href.includes('/cart/')) a.target = '_blank';
-            threeup.classList.add('button-container');
-          }
-        } else if (
-          up.childNodes.length === 1
-          && up.tagName === 'DEL'
-          && twoup.childNodes.length === 1
-          && (twoup.tagName === 'P' || twoup.tagName === 'DIV')) {
-          a.className = 'button primary';
-          twoup.classList.add('button-container');
-        }
+      const twoup = up.parentElement;
+      const threeup = twoup.parentElement;
 
-        if (
-          up.childNodes.length === 1
-          && up.tagName === 'EM'
-          && threeup.childNodes.length === 1
-          && (twoup && twoup.tagName === 'DEL')
-          && (threeup.tagName === 'P' || threeup.tagName === 'DIV')) {
-          a.className = 'button secondary';
-          threeup.classList.add('button-container');
+      // Skip processing if the <a> contains an icon
+      if (hasIcon) return;
+
+      // Skip processing if the <a> contains an <img>
+      if (!a.querySelector('img')) {
+        // Detect if the <a> is inside <sub> or <sup>
+        const childTag = a.firstChild.tagName;
+        let Tagname = '';
+        if (childTag) {
+          Tagname = childTag.toLowerCase();
         }
-        if (
-          up.childNodes.length === 1
-          && up.tagName === 'EM'
-          && twoup.tagName === 'STRONG'
-          && (threeup.tagName === 'DEL')
-          && (threeup.parentElement.tagName === 'P' || threeup.parentElement.tagName === 'DIV')) {
-          a.className = 'button dark';
-          threeup.parentElement.classList.add('button-container');
+        const isSubscript = Tagname === 'sub';
+        const isSuperscript = Tagname === 'sup';
+        if (isSubscript) {
+          a.classList.add('black');
+          a.parentElement.classList.add('button-container');
+        } else if (isSuperscript) {
+          a.classList.add('white');
+          a.parentElement.classList.add('button-container');
+        } else {
+          const linkText = a.textContent;
+          const linkTextEl = document.createElement('span');
+          linkTextEl.classList.add('link-button-text');
+          linkTextEl.textContent = linkText;
+
+          // Set aria-label for accessibility
+          a.setAttribute('aria-label', linkText);
+
+          // Modify the <a> content based on its parent element
+          if (up.childNodes.length === 1 && (up.tagName === 'P' || up.tagName === 'DIV')) {
+            a.textContent = ''; // Clear existing text
+            a.className = 'button text'; // Assign default button classes
+            up.classList.add('button-container'); // Add container class to parent
+            a.append(linkTextEl); // Append the new span with link text
+          }
+
+          // Handle specific button styles based on page type and parent tags
+          if (getPageType() === 'blog') {
+            // Primary buttons in blog pages
+            if (
+              up.childNodes.length === 1 && up.tagName === 'DEL' && twoup.childNodes.length === 1 && (twoup.tagName === 'P' || twoup.tagName === 'DIV')
+            ) {
+              a.className = 'button primary';
+              if (a.href.includes('/cart/')) a.target = '_blank';
+              twoup.classList.add('button-container');
+            }
+
+            // Secondary buttons in blog pages
+            if (
+              up.childNodes.length === 1 && up.tagName === 'EM' && threeup.childNodes.length === 1 && twoup.tagName === 'DEL' && (threeup.tagName === 'P' || threeup.tagName === 'DIV')
+            ) {
+              a.className = 'button secondary';
+              if (a.href.includes('/cart/')) a.target = '_blank';
+              threeup.classList.add('button-container');
+            }
+          } else {
+            // Primary buttons in non-blog pages
+            if (
+              up.childNodes.length === 1 && up.tagName === 'DEL' && twoup.childNodes.length === 1 && (twoup.tagName === 'P' || twoup.tagName === 'DIV')
+            ) {
+              a.className = 'button primary';
+              twoup.classList.add('button-container');
+            }
+
+            // Secondary buttons in non-blog pages
+            if (
+              up.childNodes.length === 1 && up.tagName === 'EM' && threeup.childNodes.length === 1 && twoup.tagName === 'DEL' && (threeup.tagName === 'P' || threeup.tagName === 'DIV')
+            ) {
+              a.className = 'button secondary';
+              threeup.classList.add('button-container');
+            }
+
+            // Dark buttons
+            if (
+              up.childNodes.length === 1 && up.tagName === 'EM' && twoup.tagName === 'STRONG' && threeup.tagName === 'DEL' && (threeup.parentElement.tagName === 'P' || threeup.parentElement.tagName === 'DIV')
+            ) {
+              a.className = 'button dark';
+              threeup.parentElement.classList.add('button-container');
+            }
+          }
         }
       }
     }
   });
 }
+
 // On blog pages, make the last primary button sticky in mobile
 export function makeLastButtonSticky() {
   if (getPageType() === 'blog') {
