@@ -2,7 +2,7 @@ footer {
   color:var(--header-text-color);
   font-family: var(--heading-font-family);
   -webkit-font-smoothing:antialiased;
-  background-color: #202230;
+  background: linear-gradient(0deg, #292828fa 0%, #484848fa 100%);;
 }
 
 footer .footer {
