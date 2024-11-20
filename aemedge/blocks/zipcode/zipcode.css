@@ -4,7 +4,7 @@ header nav[aria-expanded="true"] .zipcode-wrapper {
 
 header nav[aria-expanded="false"] .zipcode-wrapper {
     position: absolute;
-    background: #44444f;
+    background: #292938;
     z-index: 1000;
     height: 59px;
     padding-left: 5px;
@@ -15,6 +15,12 @@ header nav[aria-expanded="false"] .zipcode-wrapper {
     place-content: center;
     place-items: center;
     box-sizing: border-box;
+    width: 127px;
+}
+
+header nav[aria-expanded="true"] .zipcode-wrapper.selected{ 
+    background: #44444f;
+    width: 127px;
 }
 
 .white-arrow-background {
@@ -36,7 +42,6 @@ header nav[aria-expanded="false"] .zipcode-wrapper {
     display: flex;
     width: 100px;
     place-content: space-evenly;
-    gap:5px;
 }
 
 .geo-container .geo-pin:hover,
@@ -47,9 +52,14 @@ header nav[aria-expanded="false"] .zipcode-wrapper {
 
 .geo-container img {
     filter: invert(1);
-    width: 16px;
-    height: 16px;
+    width: 12px;
+    height: 12px;
 }
+
+.geo-pin img {
+    width:16px;
+    height: 16px;
+ }
 
 .geo-form-container {
     position: absolute;
@@ -147,12 +157,8 @@ header nav[aria-expanded="false"] .zipcode-wrapper {
 
 .zip-update-btn {
     margin-bottom: 20px;
-    width: 265px;
+    width: 100%;
     height: 40px;
-    font-weight: 600;
-    line-height: 0px;
-    letter-spacing: 1px;
-    font-size: 18px;
     padding: 0.938rem 1.2rem;
     position: relative;
     box-sizing: border-box;
@@ -162,6 +168,12 @@ header nav[aria-expanded="false"] .zipcode-wrapper {
     border-radius: 1600px;
     opacity: 1;
     min-width: unset;
+}
+
+.zip-update-btn-txt {
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: 1px;
 }
 
 @media (width >=1024px) {
@@ -177,10 +189,7 @@ header nav[aria-expanded="false"] .zipcode-wrapper {
         place-content: center;
         place-items: center;
         box-sizing: border-box;
-    }
-
-    header nav[aria-expanded="true"] .zipcode-wrapper.selected{ 
-        background: #44444f;
+        width: 127px;
     }
 
     .geo-form-container {
@@ -190,7 +199,7 @@ header nav[aria-expanded="false"] .zipcode-wrapper {
     }
 
     .geo-form-input {
-        margin-bottom: 34px;
+        margin-bottom: 50px;
         width: 265px;
         height: 40px;
         padding-bottom: 10px;
