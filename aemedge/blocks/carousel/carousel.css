@@ -227,10 +227,6 @@
     min-width: 33.334%;
   }
 
-  .tabs.wide .carousel .carousel-slide {
-    min-width: 16.66%;
-  }
-
   .carousel.medium .carousel-slide {
     min-width: 25%;
   }
@@ -247,6 +243,10 @@
 
   .rewards .carousel .carousel-slide {
     min-width: 25%;
+  }
+
+  .tabs.wide .carousel .carousel-slide {
+    min-width: 16.66%;
   }
 }
 

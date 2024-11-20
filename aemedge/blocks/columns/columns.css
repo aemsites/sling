@@ -321,10 +321,6 @@
       margin: 0 auto;
     }
 
-    .tabs.wide .tabs-panel .columns > div {
-      flex-direction: column;
-    }
-
     .tabs.wide .columns h2 {
       display: flex;
       justify-content: center;
@@ -336,5 +332,8 @@
       flex-direction: row;
     }
 
+    .tabs.wide .tabs-panel .columns > div {
+      flex-direction: column;
+    }
 
   }
