@@ -484,6 +484,7 @@ main .icon-still-have-questions img {
     width: 80%;
     margin: 0 auto;
     padding-top: 10px;
+    max-width: 1440px;
 }
 
 .section.game-finder-container > .default-content-wrapper > h2,

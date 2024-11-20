@@ -546,6 +546,15 @@ async function loadLazy(doc) {
   if (packageCards && packageCards.length > 0) {
     await loadPackageCards(doc);
   }
+  // listen to zipcode changes and redecorate
+  document.addEventListener('zipupdate', async () => {
+    if (packageCards && packageCards.length > 0) {
+      await loadPackageCards(doc);
+    }
+    if (gameFinders && gameFinders.length > 0) {
+      await loadGameFinders(doc);
+    }
+  }, { once: true });
   buildMultipleButtons(main);
   const { hash } = window.location;
   const element = hash ? doc.getElementById(hash.substring(1)) : false;
