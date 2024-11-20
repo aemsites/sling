@@ -100,4 +100,8 @@ export default async function decorate(block) {
   const container = createTag('div', { id: 'base-cards-app', 'data-sling-props': JSON.stringify(slingProps) });
   block.append(container);
   observer.observe(block);
+  // listen to zipcode changes and redecorate
+  document.addEventListener('zipupdate', async () => {
+    await loadScript('../../../aemedge/scripts/sling-react/base-cards-build.js', {}, block);
+  }, { once: true });
 }

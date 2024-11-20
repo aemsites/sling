@@ -4,7 +4,7 @@ header nav[aria-expanded="true"] .zipcode-wrapper {
 
 header nav[aria-expanded="false"] .zipcode-wrapper {
     position: absolute;
-    background: #44444f;
+    background: #292938;
     z-index: 1000;
     height: 59px;
     padding-left: 5px;
@@ -15,6 +15,12 @@ header nav[aria-expanded="false"] .zipcode-wrapper {
     place-content: center;
     place-items: center;
     box-sizing: border-box;
+    width: 127px;
+}
+
+header nav[aria-expanded="true"] .zipcode-wrapper.selected{ 
+    background: #44444f;
+    width: 127px;
 }
 
 .white-arrow-background {
@@ -23,7 +29,7 @@ header nav[aria-expanded="false"] .zipcode-wrapper {
     position: relative;
     background-color: var(--clr-white);
     top: -10px;
-    left: 20px;
+    left: 40%;
     transform: rotate(-45deg);
     margin-top: 1px;
     z-index: 2;
@@ -46,15 +52,21 @@ header nav[aria-expanded="false"] .zipcode-wrapper {
 
 .geo-container img {
     filter: invert(1);
-    width: 16px;
-    height: 16px;
+    width: 12px;
+    height: 12px;
 }
+
+.geo-pin img {
+    width:16px;
+    height: 16px;
+ }
 
 .geo-form-container {
     position: absolute;
     height: 286px;
     width: 265px;
     top: 70px;
+    left:-86px;
     border-radius: 0.5rem;
     background-color: var(--clr-white);
     box-shadow: var(--clr-black);
@@ -128,7 +140,6 @@ header nav[aria-expanded="false"] .zipcode-wrapper {
 .zip-input-label {
     position: absolute;
     color: var(--clr-light-black);
-    ;
     opacity: 1;
     font-size: 0.75rem;
     font-weight: 500;
@@ -148,12 +159,21 @@ header nav[aria-expanded="false"] .zipcode-wrapper {
     margin-bottom: 20px;
     width: 100%;
     height: 40px;
-    font-weight: 600;
-    font-size: 16px;
-    line-height: 13px;
-    letter-spacing: 1px;
-    padding: 0.875rem 1rem;
+    padding: 0.938rem 1.2rem;
+    position: relative;
     box-sizing: border-box;
+    background: linear-gradient(108.93deg, #0072ec 37.23%, #00b9ff 112.13%);
+    color: #f5f5f6;
+    border: none;
+    border-radius: 1600px;
+    opacity: 1;
+    min-width: unset;
+}
+
+.zip-update-btn-txt {
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: 1px;
 }
 
 @media (width >=1024px) {
@@ -163,12 +183,13 @@ header nav[aria-expanded="false"] .zipcode-wrapper {
         top: unset;
         left: unset;
         height: 58px;
-        padding: 0 5px;
+        padding: 0 10px;
         background: #292938;
         display: flex;
         place-content: center;
         place-items: center;
         box-sizing: border-box;
+        width: 127px;
     }
 
     .geo-form-container {
@@ -178,7 +199,7 @@ header nav[aria-expanded="false"] .zipcode-wrapper {
     }
 
     .geo-form-input {
-        margin-bottom: 34px;
+        margin-bottom: 50px;
         width: 265px;
         height: 40px;
         padding-bottom: 10px;
