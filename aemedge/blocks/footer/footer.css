@@ -1,3 +1,5 @@
+/* changed footer color */
+
 footer {
   color:var(--header-text-color);
   font-family: var(--heading-font-family);
