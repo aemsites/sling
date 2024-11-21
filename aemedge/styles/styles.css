@@ -288,7 +288,7 @@ button:disabled:hover {
 }
 
 .buttons-container a.button {
-  margin: 0;
+  margin: 8px 0 0 ;
 }
 
 .buttons-container {
