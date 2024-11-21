@@ -324,9 +324,4 @@
     .tabs-panel .columns > div {
       flex-direction: row;
     }
-
-    .tabs.wide .tabs-panel .columns > div {
-      flex-direction: column;
-    }
-
   }
