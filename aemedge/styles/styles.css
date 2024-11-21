@@ -323,11 +323,11 @@ button.text:hover {
   box-shadow: none;
 }
 
-.offer-details .buttons-container {
+body.blog-article .offer-details .buttons-container {
   display: flex;
   flex-direction: column;
-  width: fit-content;
-  align-items: center;
+  place-content: center;
+  width: 100%;
 }
 
 .offer-details .button.text {
