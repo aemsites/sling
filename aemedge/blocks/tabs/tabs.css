@@ -29,7 +29,10 @@
 }
 
 .tabs.columns p {
+  margin-left: 10%;
+  margin-right: 10%;
   line-height: 1.5rem;
+  text-align: center;
 }
 
 .tabs.columns > div {
