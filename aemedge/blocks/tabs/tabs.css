@@ -7,10 +7,6 @@
   justify-content: flex-start;
 }
 
-.tabs.wide h1,h2,h3,h4,h5,p {
-  text-align: center;
-}
-
 .tabs.wide .tabs-list {
   flex-direction: row;
   justify-content: center;
@@ -33,13 +29,29 @@
 }
 
 .tabs.columns p {
-  margin-left: 10%;
-  margin-right: 10%;
   line-height: 1.5rem;
 }
 
 .tabs.columns > div {
   width: unset;
+}
+
+.rewards h5{
+  color: #faa21b;
+}
+
+.tabs.wide h1,
+.tabs.wide h2,
+.tabs.wide h3,
+.tabs.wide h4,
+.tabs.wide h5 {
+  text-align: center;
+}
+
+.tabs.wide p {
+  margin-left: 10%;
+  margin-right: 10%;
+  text-align: center;
 }
 
 .tabs .tabs-list button p {
@@ -140,10 +152,6 @@
   text-align: center;
 }
 
-.rewards h5{
-  color: #faa21b;
-}
-
 .rewards .tabs .tabs-list {
   padding-left: 6%;
   display: flex;
@@ -225,8 +233,6 @@
     float: left;
   }
 
-
-  
   .rewards .tabs-container .tabs .tabs-panel picture{
     width: 100%;
     margin-bottom: 50px;
