@@ -321,15 +321,6 @@
       margin: 0 auto;
     }
 
-    .tabs.wide .columns h2 {
-      display: flex;
-      margin-left: 10%;
-      margin-right: 10%;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-    }
-
     .tabs-panel .columns > div {
       flex-direction: row;
     }

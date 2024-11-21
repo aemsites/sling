@@ -7,6 +7,10 @@
   justify-content: flex-start;
 }
 
+.tabs.wide h1,h2,h3,h4,h5,p {
+  text-align: center;
+}
+
 .tabs.wide .tabs-list {
   flex-direction: row;
   justify-content: center;
@@ -32,7 +36,6 @@
   margin-left: 10%;
   margin-right: 10%;
   line-height: 1.5rem;
-  text-align: center;
 }
 
 .tabs.columns > div {
@@ -49,6 +52,10 @@
 
 .tabs.columns .tabs-tab p {
   font-size:1rem;
+}
+
+.tabs.wide .tabs-panel .columns > div {
+  flex-direction: column;
 }
 
 .tabs .tabs-list button[aria-selected="true"] p {
