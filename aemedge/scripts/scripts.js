@@ -286,7 +286,7 @@ export function decorateButtons(element) {
       // Skip processing if the <a> contains an <img>
       if (!a.querySelector('img')) {
         // Detect if the <a> is inside <sub> or <sup>
-        const childTag = a.firstChild.tagName;
+        const childTag = a?.firstChild?.tagName;
         let Tagname = '';
         if (childTag) {
           Tagname = childTag.toLowerCase();
