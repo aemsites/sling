@@ -42,6 +42,7 @@
   --dark-color: #ccc;
   --text-color: #333;
   --primary-button-color: linear-gradient(108.93deg, #0072ec 37.23%, #00b9ff 112.13%);
+  --dark-button-color: rgb(72 72 72);
   --invalid-red: #e90000;
   --input-background-color: #eaeaec;
   --dark-background-color: rgb(23 23 37);
@@ -143,6 +144,14 @@ blockquote {
   margin: 0 0 10px;
 }
 
+.button-container p,del{
+  margin: 0;
+}
+
+.buttons-container .button-container{
+  margin: 0;
+}
+
 code,
 pre {
   font-family: var(--fixed-font-family);
@@ -220,7 +229,6 @@ button {
   margin-top: 8px;
   overflow: hidden;
   text-overflow: ellipsis;
-  min-width: 180px;
   padding: 14px 16px;
 }
 
@@ -233,13 +241,12 @@ a.button::-moz-focus-inner {
 a.button.primary,
 button.primary,
 a.button.secondary,
-button.secondary {
+button.secondary,a.button.dark {
   border-radius: 1600px;
   opacity: 1;
-  min-width: 11.25rem;
-  font-size: 1rem;
+  font-size: 1.125rem;
   padding: 0.875rem 1rem;
-  min-height: 60px;
+  min-height: 50px;
   align-content: center;
 }
 
@@ -250,6 +257,13 @@ button.primary {
   border: 2px solid var(--primary-button-color);
 }
 
+a.button.dark,
+button.dark {
+  color: var(--background-color);
+  background: var(--dark-button-color);
+  border: 2px solid var(--dark-button-color);
+}
+
 a.button.secondary,
 button.secondary {
   color: var(--text-color);
@@ -258,7 +272,8 @@ button.secondary {
 }
 
 a.button.primary:hover,
-a.button.secondary:hover {
+a.button.secondary:hover,
+a.button.dark:hover {
   outline: none;
   box-shadow: #07070b66 0 24px 57px 0;
   opacity: 1;
@@ -272,15 +287,16 @@ button:disabled:hover {
   cursor: unset;
 }
 
-/* Buttons Container */
-.buttons-container {
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: center;
+.buttons-container a.button {
+  margin: 8px 0 0;
 }
 
-.buttons-container a.button {
-  margin: 8px;
+.buttons-container {
+  text-align: left;
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 a.button.text,
@@ -307,19 +323,26 @@ button.text:hover {
   box-shadow: none;
 }
 
-.offer-details .buttons-container {
-  display: block;
+body.blog-article .offer-details .buttons-container {
+  display: flex;
+  flex-direction: column;
+  place-content: center;
+  width: 100%;
 }
 
 .offer-details .button.text {
   font-weight: normal;
   font-style: italic;
   font-size: 14px;
-  margin-left: 10px;
 }
 
 .offer-details a.button.text {
   color: white;
+  text-align: center;
+}
+
+.offer-details a.button.text .link-button-text {
+  color: var(--link-color);
   text-align: center;
 }
 
@@ -484,6 +507,7 @@ main .icon-still-have-questions img {
     width: 80%;
     margin: 0 auto;
     padding-top: 10px;
+    max-width: 1440px;
 }
 
 .section.game-finder-container > .default-content-wrapper > h2,
@@ -640,6 +664,14 @@ margin-bottom:10px;
   order: 1;
 }
 
+a.white {
+  color: white;
+}
+
+a.black {
+  color: black;
+}
+
 @media (width >=768px) {
   main .section {
   padding: 0 48px;
@@ -760,6 +792,10 @@ margin:0 auto;
   .section.banner {
     .buttons-container {
       text-align: left;
+      width: fit-content;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
   }
 

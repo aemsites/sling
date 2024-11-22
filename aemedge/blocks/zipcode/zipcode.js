@@ -3,6 +3,8 @@ import { createTag, getZipcode, ZIPCODE_KEY } from '../../scripts/utils.js';
 const closeForm = (e, block) => {
   e.preventDefault();
   block.querySelector('.geo-form-container').remove();
+  const zipcodeWrapper = document.querySelector('div.zipcode-wrapper');
+  zipcodeWrapper.classList.toggle('selected');
 };
 
 const updateZip = (e, block) => {
@@ -18,6 +20,8 @@ const updateZip = (e, block) => {
 
 const toggleGeoSelector = (e, zipCode, block) => {
   let form = block.querySelector(':scope .geo-selector-form');
+  const zipcodeWrapper = document.querySelector('div.zipcode-wrapper');
+  zipcodeWrapper.classList.toggle('selected');
   const arrowimg = block.querySelector(':scope .geo-selector > img');
   if (form) {
     block.querySelector('.geo-form-container').remove();
