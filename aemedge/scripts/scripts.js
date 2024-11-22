@@ -12,7 +12,6 @@ import {
   getMetadata,
   decorateBlock,
   loadBlock,
-  loadScript,
 } from './aem.js';
 
 import {
