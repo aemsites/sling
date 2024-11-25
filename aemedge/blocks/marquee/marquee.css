@@ -222,3 +222,15 @@ h2 {
 
 
  }
+
+ @media (width >= 1440px) {
+  .marquee-content .text-cta-container {
+      margin:unset;
+  }
+
+  .marquee.block {
+    height:100%;
+    min-height: 736px
+  }
+
+ }
