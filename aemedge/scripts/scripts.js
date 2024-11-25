@@ -1,11 +1,3 @@
-/* eslint-disable max-len */
-import {
-  initMartech,
-  martechEager,
-  martechLazy,
-  martechDelayed,
-} from '@adobe/aem-martech/src/index.js';
-
 import {
   sampleRUM,
   buildBlock,
@@ -32,6 +24,15 @@ import {
   loadPackageCards,
   linkTextIncludesHref,
 } from './utils.js';
+
+import {
+  martechLoadedPromise,
+  martechEager,
+  martechLazy,
+  martechDelayed,
+} from './martech-loader.js';
+
+import { setDataLayer } from './datalayer-utils.js';
 
 const LCP_BLOCKS = ['category']; // add your LCP blocks to the list
 const TEMPLATES = ['blog-article', 'blog-category']; // add your templates here
@@ -527,40 +528,6 @@ export function decorateMain(main) {
    * @param {Element} doc The container element
    */
 async function loadEager(doc) {
-  // martech integration code begin
-  const isConsentGiven = '* hook in your consent check here to make sure you can run personalization use cases. *';
-  const martechLoadedPromise = initMartech(
-    // The WebSDK config
-    // Documentation: https://experienceleague.adobe.com/en/docs/experience-platform/web-sdk/commands/configure/overview#configure-js
-    {
-      datastreamId: '/* your datastream id here, formally edgeConfigId */',
-      orgId: '/* your ims org id here */',
-      onBeforeEventSend: (payload) => {
-        // set custom Target params
-        // see doc at https://experienceleague.adobe.com/en/docs/platform-learn/migrate-target-to-websdk/send-parameters#parameter-mapping-summary
-        // eslint-disable-next-line no-underscore-dangle
-        payload.data.__adobe.target ||= {};
-
-        // set custom Analytics params
-        // see doc at https://experienceleague.adobe.com/en/docs/analytics/implementation/aep-edge/data-var-mapping
-        // eslint-disable-next-line no-underscore-dangle
-        payload.data.__adobe.analytics ||= {};
-      },
-    },
-    // The library config
-    {
-      analytics: true, // whether to track data in Adobe Analytics (AA)
-      alloyInstanceName: 'alloy', // the name of the global WebSDK instance
-      dataLayer: true, // whether to use the Adobe Client Data Layer (ACDL)
-      dataLayerInstanceName: 'adobeDataLayer', // the name of the global ACDL instance
-      includeDataLayerState: true, // whether to include the whole data layer state on every event sent
-      launchUrls: [], // the list of Launch containers to load
-      personalization: !!getMetadata('target') && isConsentGiven,
-      // personalization: true, // whether to apply page personalization from Adobe Target (AT) or Adobe Journey Optimizer (AJO)
-      performanceOptimized: true, // whether to use the agressive performance optimized approach or more traditional
-      personalizationTimeout: 1000, // the amount of time to wait (in ms) before bailing out and continuing page rendering
-    },
-  );
   // martech integration code ends
   document.documentElement.lang = 'en';
   decorateTemplateAndTheme();
@@ -665,6 +632,8 @@ function loadDelayed() {
 }
 
 async function loadPage() {
+  window.adobeDataLayer = window.adobeDataLayer || [];
+  await setDataLayer();
   await loadEager(document);
   await loadLazy(document);
   loadDelayed();

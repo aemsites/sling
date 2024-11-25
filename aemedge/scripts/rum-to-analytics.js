@@ -1,4 +1,7 @@
-import { initRumTracking, pushEventToDataLayer } from '@adobe/aem-martech/src/index.js';
+import {
+  initRumTracking, pushEventToDataLayer,
+  // eslint-disable-next-line import/no-relative-packages, import/no-unresolved
+} from '../plugins/martech/src/index.js';
 import { sampleRUM } from './aem.js';
 
 // Define RUM tracking function
