@@ -182,6 +182,10 @@ vertical-align: middle;
   justify-content: space-between;
 }
 
+.footer .footer-primary-links .footer-section h3:hover {
+  cursor: pointer;
+}
+
 .footer .footer-section .icon-arrow-down{
     transition-property: transform;
     transition-duration: 0.3s;
