@@ -1,10 +1,8 @@
-/* changed footer color */
-
 footer {
   color:var(--header-text-color);
   font-family: var(--heading-font-family);
   -webkit-font-smoothing:antialiased;
-  background: linear-gradient(0deg, #292828fa 0%, #484848fa 100%);;
+  background-color: #202230;
 }
 
 footer .footer {
@@ -29,10 +27,10 @@ footer .footer a > span.nav-link-text {
 footer ul , footer li , footer ul li{
   list-style: none;
   margin: 0;
-  padding: 4px;
+  padding:0;
 }
 
-footer div.nav-heading {
+footer li.nav-item.nav-heading {
 font-size: var(--heading-font-size-m);
 font-weight: 700;
 margin-bottom: 12px;
@@ -59,20 +57,15 @@ footer .footer.block > div {
 footer .section.footer-primary{
   display: flex;
   flex-flow: wrap column ;
+  align-content: flex-start;
 
 }
 
 footer .footer-primary-links {
 display: flex;
 flex-flow: wrap column ;
-margin-top:40px;
-margin-bottom: 32px;
-padding: 0 16px;
-}
-
-.footer-primary-links h3{
-  font-size: 1rem;
-  font-weight: 600;
+margin-top:48px;
+margin-bottom: 20px;
 }
 
 .footer-primary-links .nav-items-wrapper {
@@ -113,6 +106,7 @@ margin-bottom:24px;
 }
 
 footer .section.footer-secondary {
+  display: flex;;
   flex-flow: wrap column;
   align-content: flex-start;
   padding-left:16px;
@@ -159,49 +153,6 @@ vertical-align: middle;
   transition: filter .3s ease;
 }
 
-.footer .footer-primary-links .footer-section .nav-items-wrapper{
-  display: none;
-}
-
-.footer .footer-primary-links .footer-section .nav-items-wrapper.visible{
-  display: block;
-}
-
-.footer .footer-primary-links{
-  display: flex;
-  flex-direction: column;
-}
-
-.footer .footer-primary-links .footer-section {
-  border-bottom: 1px solid grey;
-}
-
-.footer .footer-primary-links .footer-section h3 {
-  margin-bottom: 24px;
-  display: flex;
-  justify-content: space-between;
-}
-
-.footer .footer-primary-links .footer-section h3:hover {
-  cursor: pointer;
-}
-
-.footer .footer-section .icon-arrow-down{
-    transition-property: transform;
-    transition-duration: 0.3s;
-    transition-timing-function: ease;
-    transform: rotate(180deg);
-    vertical-align: middle;
-}
-
-.footer .footer-section .icon-arrow-down.close{
-  transition-property: transform;
-  transition-duration: 0.3s;
-  transition-timing-function: ease;
-  transform: rotate(360deg);
-  vertical-align: middle;
-}
-
 @media (width >= 768px) {
   footer .footer.block > div {
     display: flex;
@@ -227,7 +178,7 @@ vertical-align: middle;
 
   .footer-primary .nav-items-wrapper.footer-social-links {
     display: flex;
-    flex-direction: column;
+    flex-flow: wrap row;
   }
 
   footer .section.footer-secondary {
@@ -250,24 +201,13 @@ vertical-align: middle;
     max-width: 1200px;
   }
 
-  .footer .footer-primary-links{
-    display: flex;
-    flex-direction: row;
-  }
-
-  .footer .nav-items-wrapper{
-    display: block;
-  }
-
-  .footer .footer-primary-links .footer-section h3 {
-    margin-bottom: 24px;
-    border-bottom: none;
-  }
-
-.footer .section.footer-secondary, .footer .section.footer-secondary .sec-footer-links.nav-items-wrapper {
-  display: flex;
-  flex-direction: row;
+.footer .section.footer-secondary {
+  justify-content: center;
 }
+
+  .footer .footer-primary-links .nav-items-wrapper {
+    padding-right: 48px;
+  }
 
   .footer .social-links-wrapper {
     display: block;
@@ -289,33 +229,16 @@ vertical-align: middle;
     margin: 0 24px 0 0;
   }
 
-  .footer-primary .footer-social-links.nav-items-wrapper {
+  .footer-primary .nav-items-wrapper.footer-social-links {
     flex-flow: wrap column;
-    margin-top: 40px;
+    margin-top: 48px;
     margin-right: 24px;
     flex-grow: 1;
     align-content: end;
-    flex-direction: column;
-  }
-
-  .footer .footer-primary-links .footer-section .nav-items-wrapper{
-    display: block;
   }
 
   .footer-secondary .sec-footer-links {
     justify-content: flex-end;
-  }
-
-  .footer-primary .footer-section .icon-arrow-down {
-    display: none;
-  }
-
-  .social-icons-wrapper.nav-items-wrapper{
-    display: flex;
-  }
-
-  .footer .footer-primary-links .footer-section {
-    border-bottom: none;
   }
 }
 
