@@ -32,7 +32,7 @@ export default async function decorate(block) {
   block.textContent = '';
 
   // load footer fragment
-  const footerPath = footerMeta.footer || '/aemedge/footer';
+  const footerPath = footerMeta || '/aemedge/footer';
   const fragment = await loadFragment(footerPath);
   // decorate footer DOM
   const footer = document.createElement('div');
@@ -47,15 +47,31 @@ export default async function decorate(block) {
   const primarylinks = createTag('div', { class: 'footer-primary-links' });
   const socialLinks = createTag('div', { class: 'footer-social-links nav-items-wrapper' });
   const uls = footer.querySelectorAll('.footer-primary ul');
+  const headings = footer.querySelectorAll('.footer-primary h3');
   uls.forEach((ul, c) => {
     if (c === uls.length - 1) {
       ul.classList.add('social-links-wrapper');
       socialLinks.append(ul);
     } else {
-      primarylinks.append(ul);
-      ul.firstElementChild.classList.add('nav-heading');
+      const footerSection = createTag('div', { class: 'footer-section' });
+      if (headings[c]) {
+        footerSection.append(headings[c]);
+      }
+      footerSection.append(ul);
+      primarylinks.append(footerSection);
     }
   });
+
+  headings.forEach((heading) => {
+    heading.addEventListener('click', () => {
+      heading.nextSibling.classList.toggle('visible');
+      const arrow = heading.querySelector('.icon.icon-arrow-down');
+      if (arrow) {
+        arrow.classList.toggle('close');
+      }
+    });
+  });
+
   // organize the social links
   const socialIcons = createTag('ul', { class: 'social-icons-wrapper' });
   socialLinks.querySelectorAll('li').forEach((li) => {
@@ -71,7 +87,6 @@ export default async function decorate(block) {
 
   // add classes for secondary footer nav items
   const secSection = footer.querySelector('.section.footer-secondary');
-
   if (secSection) {
     const copyright = createTag('ul', { class: 'copy-right' });
     const secFooterLinks = createTag('ul', { class: 'sec-footer-links' });
