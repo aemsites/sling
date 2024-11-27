@@ -57,6 +57,10 @@
     height: auto;
 }
 
+.package-cards.block #package-cards-app .bnPtBS {
+    z-index:1;
+}
+
 @media (width >= 768px) {
 .package-cards.block #package-cards-app .fIvgai {
     right: 12px;
