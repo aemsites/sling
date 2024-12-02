@@ -44,13 +44,8 @@
 .tabs.wide h2,
 .tabs.wide h3,
 .tabs.wide h4,
-.tabs.wide h5 {
-  text-align: center;
-}
-
+.tabs.wide h5,
 .tabs.wide p {
-  margin-left: 10%;
-  margin-right: 10%;
   text-align: center;
 }
 
@@ -202,6 +197,11 @@
 }
 
 @media (width >= 768px) {
+  .tabs.wide p {
+    margin-left: 10%;
+    margin-right: 10%;
+  }
+
   .tabs.accordion .tabs-list {
     justify-content: center;
   }
