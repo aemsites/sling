@@ -147,7 +147,7 @@ h2 {
     }
   }
 
-  .foreground-container { 
+  .foreground-container {
     padding-top: 1.5rem;
   }
 }
@@ -169,6 +169,7 @@ h2 {
       width: 50%;
       max-width: 600px;
       padding-right: 1.5rem;
+      margin: unset;
 
       .buttons-container {
           display: block;
@@ -193,7 +194,7 @@ h2 {
     margin: 0;
 }
 
-.buttons-container .button-container { 
+.buttons-container .button-container {
   text-align: center;
 }
 
