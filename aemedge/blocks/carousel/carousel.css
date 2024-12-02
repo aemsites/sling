@@ -244,6 +244,10 @@
   .rewards .carousel .carousel-slide {
     min-width: 25%;
   }
+
+  .tabs.wide .carousel .carousel-slide {
+    min-width: 16.66%;
+  }
 }
 
 @media (width >= 1024px) {
