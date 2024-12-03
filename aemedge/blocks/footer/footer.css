@@ -178,7 +178,7 @@ vertical-align: middle;
 }
 
 .landing.footer .footer-primary .footer-primary-links .nav-items-wrapper .nav-item.visible{
-  display: block;
+  display: flex;
 }
 
 .landing.footer .footer-primary .footer-primary-links .icon-arrow-down{

@@ -30,9 +30,6 @@ const decorateLinkItems = (footer) => {
 export default async function decorate(block) {
   const footerMeta = getMetadata('footer');
   block.textContent = '';
-  if (!window.location.pathname.includes('whatson')) {
-    block.classList.add('landing');
-  }
   // load footer fragment
   const footerPath = footerMeta.footer || '/aemedge/footer';
   const fragment = await loadFragment(footerPath);
@@ -58,22 +55,22 @@ export default async function decorate(block) {
       const heading = ul.firstElementChild;
       heading.classList.add('nav-heading');
       if (!window.location.pathname.includes('whatson')) {
+        block.classList.add('landing');
         const img = document.createElement('img');
         img.classList.add('icon-arrow-down');
-        img.src = '/aemedge/icons/arrow-down.svg'; // Provide the path to your SVG file
-        // Append the image to the 'nav-heading' div
+        img.src = '/icons/arrow-down.svg';
         heading.appendChild(img);
-      }
-      heading.addEventListener('click', () => {
-        const navItems = heading.parentElement.querySelectorAll('.nav-items-wrapper .nav-item');
-        navItems.forEach((item) => {
-          item.classList.toggle('visible');
+        heading.addEventListener('click', () => {
+          const navItems = heading.parentElement.querySelectorAll('.nav-items-wrapper .nav-item');
+          navItems.forEach((item) => {
+            item.classList.toggle('visible');
+          });
+          const arrow = heading.querySelector('.icon-arrow-down');
+          if (arrow) {
+            arrow.classList.toggle('close');
+          }
         });
-        const arrow = heading.querySelector('.icon-arrow-down');
-        if (arrow) {
-          arrow.classList.toggle('close');
-        }
-      });
+      }
     }
   });
   // organize the social links
