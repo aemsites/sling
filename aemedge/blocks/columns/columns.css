@@ -172,9 +172,42 @@
     width: 80px;
   }
 
+  .columns.icons.block > div {
+    display: flex ;
+    align-items: center;
+    fill-opacity: 0.6;
+    margin: 0;
+    padding: 0;
+  }
+
+  .columns.icons.block > div > div {
+    display: flex ;
+    align-items: center;
+    fill-opacity: 0.6;
+    margin: 10px;
+  }
+
+  .columns.icons.block {
+    width: 100%;
+    max-width: 40rem;
+    display: flex;
+    flex-flow: wrap;
+    place-content: normal center;
+    align-items: center;
+    background-color: transparent;
+  }
+
+  .columns.icons.block span {
+    margin: 0;
+  }
+
   .international .default-content-wrapper h1{
     font-size: 2.1rem;
     margin-bottom: 30px;
+  }
+
+  .section.dark .default-content-wrapper h1{
+    font-size: 2.25rem;
   }
 
   .international .columns-container .default-content-wrapper {
@@ -232,7 +265,6 @@
   .rewards .section.rewards-column.columns-container .columns div picture img{
     width: 100%;
   }
-
 
   @media (width >= 768px) {
     .columns > div {
@@ -350,6 +382,32 @@
   }
 
   @media (width >=1024px) {
+    .columns.icons.block{
+      width: 100%;
+      max-width: 40rem;
+      display: flex;
+      flex-flow: wrap;
+      place-content: normal center;
+      align-items: center;
+      background-color: transparent;
+    }
+
+    .columns.icons.block div {
+      display: flex ;
+      -webkit-box-align: center;
+      align-items: center;
+      fill-opacity: 0.6;
+      margin: 8.75px;
+    }
+
+    .columns.icons.block span {
+      margin: 0;
+    }
+
+    .section.dark .default-content-wrapper h1{
+      font-size: 2.25rem;
+    }
+
     .columns.icons span.icon img {
       height: 36px;
       width: 96px;

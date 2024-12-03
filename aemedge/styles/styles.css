@@ -497,6 +497,10 @@ main .icon-still-have-questions img {
   padding: 64px 8%;
 }
 
+.section.dark.columns-container{
+  padding: 8%;
+}
+
 .section.game-finder-container .game-finder-wrapper
 {
     width: 80%;
