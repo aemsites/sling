@@ -201,13 +201,13 @@
     margin: 0;
   }
 
-  #watch-on-all-your-favorite-devices{
-    font-size: 2.25rem;
-  }
-
   .international .default-content-wrapper h1{
     font-size: 2.1rem;
     margin-bottom: 30px;
+  }
+
+  .section.dark .default-content-wrapper h1{
+    font-size: 2.25rem;
   }
 
   .international .columns-container .default-content-wrapper {
@@ -404,7 +404,7 @@
       margin: 0;
     }
 
-    #watch-on-all-your-favorite-devices{
+    .section.dark .default-content-wrapper h1{
       font-size: 2.25rem;
     }
 
