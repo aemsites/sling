@@ -1,6 +1,7 @@
 import {
   sampleRUM,
   buildBlock,
+  loadFooter,
   decorateIcons,
   decorateSections,
   decorateBlocks,
@@ -558,25 +559,6 @@ async function loadHeader(header) {
   header.append(headerBlock);
   decorateBlock(headerBlock);
   return loadBlock(headerBlock);
-}
-
-/**
-   * Loads a block named 'footer' into footer
-   * @param {Element} footer footer element
-   * @returns {Promise}
-   */
-async function loadFooter(footer) {
-  let block = 'footer';
-  const template = getMetadata('template');
-  if (template
-    && (template === 'landing-page'
-      || template === 'landing-page' || template === 'landing-page')) {
-    block = 'landing-footer';
-  }
-  const footerBlock = buildBlock(`${block}`, '');
-  footer.append(footerBlock);
-  decorateBlock(footerBlock);
-  return loadBlock(footerBlock);
 }
 
 /**

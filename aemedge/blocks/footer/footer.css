@@ -5,6 +5,10 @@ footer {
   background-color: #202230;
 }
 
+footer .footer.landing {
+  background: linear-gradient(0deg, #292828fa 0%, #484848fa 100%);
+}
+
 footer .footer {
   margin: auto;
   width: 100%;
@@ -61,6 +65,11 @@ footer .section.footer-primary{
 
 }
 
+footer .landing.footer .section.footer-primary{
+  display: flex;
+  align-content: normal;
+}
+
 footer .footer-primary-links {
 display: flex;
 flex-flow: wrap column ;
@@ -73,6 +82,7 @@ flex-shrink: 0;
 flex-grow: 1;
 margin-bottom: 48px;
 padding: 0 16px;
+border-bottom: 1px solid #f5f5f626;
 }
 
 .footer-primary .nav-items-wrapper.footer-social-links {
@@ -151,6 +161,40 @@ vertical-align: middle;
 .footer .social-icon .icon > img:hover {
   filter: invert(63%) sepia(58%) saturate(480%) hue-rotate(152deg) brightness(60%) contrast(107%);
   transition: filter .3s ease;
+}
+
+.landing.footer .footer-primary .footer-primary-links{
+  display: flex;
+  flex-direction: column;
+}
+
+.landing.footer .footer-primary .footer-primary-links .nav-items-wrapper .nav-heading.nav-item, .landing.footer .footer-primary .footer-primary-links .nav-items-wrapper .nav-heading.nav-item.visible{
+  display: flex;
+  justify-content: space-between;
+}
+
+.landing.footer .footer-primary .footer-primary-links .nav-items-wrapper .nav-item{
+  display: none;
+}
+
+.landing.footer .footer-primary .footer-primary-links .nav-items-wrapper .nav-item.visible{
+  display: block;
+}
+
+.landing.footer .footer-primary .footer-primary-links .icon-arrow-down{
+  transition-property: transform;
+  transition-duration: 0.3s;
+  transition-timing-function: ease;
+  transform: rotate(180deg);
+  vertical-align: middle;
+}
+
+.landing.footer .footer-primary .footer-primary-links .icon-arrow-down.close{
+  transition-property: transform;
+    transition-duration: 0.3s;
+    transition-timing-function: ease;
+    transform: rotate(360deg);
+    vertical-align: middle;
 }
 
 @media (width >= 768px) {
@@ -239,6 +283,19 @@ vertical-align: middle;
 
   .footer-secondary .sec-footer-links {
     justify-content: flex-end;
+  }
+
+  .landing.footer .footer-primary .footer-primary-links{
+    display: flex;
+    flex-direction: row;
+  }
+
+  .landing.footer .footer-primary .footer-primary-links .icon-arrow-down{
+    display: none;
+  }
+
+  .landing.footer .footer-primary .footer-primary-links .nav-items-wrapper .nav-item{
+    display: block;
   }
 }
 
