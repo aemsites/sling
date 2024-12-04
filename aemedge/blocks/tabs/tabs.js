@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/no-unresolved
 import {
   toClassName, buildBlock, decorateBlock, loadBlocks,
 } from '../../scripts/aem.js';
@@ -12,22 +11,17 @@ function hasWrapper(el) {
 }
 
 export default async function decorate(block) {
-  // nonStandard = mix of 2 and 3 column rows for sub blocks under tabs
-  // standard = all 3 column rows for sub blocks under tabs
   const numColumns = [...block.children].filter((child) => child.children.length === 3);
   const isStandard = numColumns.length === block.children.length;
   const isNonStandard = numColumns.length !== block.children.length;
   let newBlock;
-  // if tabs has 3 columns, use first col for tab category and 2nd and 3rd for tab content
-  // and build the block based on the variant provided
+
   if (isStandard || isNonStandard) {
     const subBlockToBuild = [...block.classList].filter(
       (className) => AVAILABLE_SUB_BLOCKS.includes(className),
     )[0];
-    // build a new block with sub block in the 2nd column
     if (subBlockToBuild) {
       newBlock = document.createElement('div');
-      // build content for the sub block
       const rows = [...block.children];
       block.innerHTML = '';
       if (isNonStandard) {
@@ -53,9 +47,7 @@ export default async function decorate(block) {
             subBlockContent.push([accKey, accValue]);
           }
           if (oldTabCategory && (oldTabCategory.textContent !== currentTabCategory.textContent)) {
-            // new tab category found - build sub block with the existing content
             const subBlock = buildBlock(subBlockToBuild, subBlockContent);
-            // add tabCategory and sub block content to newDiv
             const tabCategoryDiv = document.createElement('div');
             tabCategoryDiv.innerHTML = oldTabCategory.innerHTML;
             const tabContentDiv = document.createElement('div');
@@ -64,7 +56,6 @@ export default async function decorate(block) {
             newRow.append(tabCategoryDiv);
             newRow.append(tabContentDiv);
             newBlock.append(newRow);
-            // reset subBlockContent for the next set of rows
             subBlockContent = [];
             oldTabCategory = null;
           }
@@ -86,9 +77,7 @@ export default async function decorate(block) {
           const contentKey = row.children[1].innerHTML;
           const contentValue = row.children[2].innerHTML;
           subBlockContent.push([contentKey, contentValue]);
-          // build sub block with the existing content
           const subBlock = buildBlock(subBlockToBuild, subBlockContent);
-          // add tabCategory and sub block content to newDiv
           const tabCategoryDiv = document.createElement('div');
           tabCategoryDiv.innerHTML = row.firstElementChild.innerHTML;
           const tabContentDiv = document.createElement('div');
@@ -99,9 +88,7 @@ export default async function decorate(block) {
           newBlock.append(newRow);
         });
       }
-      // set block to newBlock
       block.innerHTML = newBlock.innerHTML;
-      // decorate subBlocks
       const subBlocks = block.querySelectorAll(`.${subBlockToBuild}`);
       subBlocks.forEach((subBlock) => {
         decorateBlock(subBlock);
@@ -110,14 +97,23 @@ export default async function decorate(block) {
     }
   }
 
-  // continue processing tabs as usual
-  // build tablist
+  const tabs = [...block.children].map((child) => child.firstElementChild);
+  if (tabs.length === 1) {
+    const singleTab = block.children[0];
+    singleTab.className = 'tabs-panel';
+    singleTab.setAttribute('aria-hidden', false);
+    singleTab.setAttribute('role', 'tabpanel');
+    singleTab.style.flexDirection = 'column';
+    if (!hasWrapper(singleTab.lastElementChild)) {
+      singleTab.lastElementChild.innerHTML = `<p>${singleTab.lastElementChild.innerHTML}</p>`;
+    }
+    return;
+  }
+
   const tablist = document.createElement('div');
   tablist.className = 'tabs-list';
   tablist.setAttribute('role', 'tablist');
 
-  // decorate tabs and tabpanels
-  const tabs = [...block.children].map((child) => child.firstElementChild);
   const className = block.classList.value;
   let defaultTabIndex = 1;
   if (block.classList.value.includes('default')) {
@@ -131,8 +127,6 @@ export default async function decorate(block) {
 
   tabs.forEach((tab, i) => {
     const id = toClassName(tab.textContent);
-
-    // decorate tabpanel
     const tabpanel = block.children[i];
     tabpanel.className = 'tabs-panel';
     tabpanel.id = `tabpanel-${id}`;
@@ -142,7 +136,6 @@ export default async function decorate(block) {
     if (!hasWrapper(tabpanel.lastElementChild)) {
       tabpanel.lastElementChild.innerHTML = `<p>${tabpanel.lastElementChild.innerHTML}</p>`;
     }
-    // build tab button
     const button = document.createElement('button');
     button.className = 'tabs-tab';
     button.id = `tab-${id}`;
