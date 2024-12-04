@@ -119,7 +119,7 @@ export default async function decorate(block) {
   // decorate tabs and tabpanels
   const tabs = [...block.children].map((child) => child.firstElementChild);
   const className = block.classList.value;
-  let defaultTabIndex = 1;
+  let defaultTabIndex = 0;
   if (block.classList.value.includes('default')) {
     const splitClassName = className.split(' ');
     splitClassName.forEach((name) => {
