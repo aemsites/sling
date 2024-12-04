@@ -58,7 +58,7 @@ export default async function decorate(block) {
         block.classList.add('landing');
         const img = document.createElement('img');
         img.classList.add('icon-arrow-down');
-        img.src = '/icons/arrow-down.svg';
+        img.src = '/aemedge/icons/arrow-down.svg';
         heading.appendChild(img);
         heading.addEventListener('click', () => {
           const navItems = heading.parentElement.querySelectorAll('.nav-items-wrapper .nav-item');
