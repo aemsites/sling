@@ -352,7 +352,7 @@ body.blog-article .offer-details .buttons-container {
 
 .offer-details .button-container p {
   line-height: 1em;
-  margin: 0;
+  margin-top: 10px;
 }
 
 .block.blog-breadcrumb {
