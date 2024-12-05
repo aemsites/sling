@@ -409,8 +409,8 @@
     }
 
     .columns.icons span.icon img {
-      height: 36px;
-      width: 96px;
+      height: 100%;
+      width: 100%;
     }
 
     .columns.landing p { 
