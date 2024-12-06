@@ -436,7 +436,7 @@ main .section {
   position: relative;
   color: #fff;
   margin: 0;
-  padding: 0;
+  padding: 0 0 50px;
   background-position: center;
 
 
@@ -603,19 +603,22 @@ margin-bottom:10px;
 
 
 /* pakage cards sectio */
-.section.package-cards-container
+main .section.package-cards-container{
+  margin: 0;
+  padding: 0;
+}
+
+.section.columns-container.package-cards-container
 {
-    margin: 100px auto;
+    margin: 50px auto;
     padding:0;
 }
 
 .section.package-cards-container .columns-wrapper
 {
     background-color: #fff;
-    width: 80%;
-    margin: 0 auto;
-    text-align: center;
-
+    width: 83.3333%;
+    margin-left: 8.3333%;
 }
 
 
@@ -630,7 +633,7 @@ margin-bottom:10px;
 .section.package-cards-container .columns.block > div > .fragment-wrapper
 {
   align-self: flex-end;
-    width: 80%;
+    width: 100%;
 }
 
 .section.package-cards-container .columns.block > div > .fragment-wrapper + div
