@@ -181,6 +181,10 @@ del, picture {
   display: block;
 }
 
+s {
+  opacity: 0.5;
+}
+
 .center {
   text-align: center;
 }
@@ -436,7 +440,7 @@ main .section {
   position: relative;
   color: #fff;
   margin: 0;
-  padding: 0;
+  padding: 0 0 50px;
   background-position: center;
 
 
@@ -603,19 +607,22 @@ margin-bottom:10px;
 
 
 /* pakage cards sectio */
-.section.package-cards-container
+main .section.package-cards-container{
+  margin: 0;
+  padding: 0;
+}
+
+.section.columns-container.package-cards-container
 {
-    margin: 100px auto;
+    margin: 50px auto;
     padding:0;
 }
 
 .section.package-cards-container .columns-wrapper
 {
     background-color: #fff;
-    width: 80%;
-    margin: 0 auto;
-    text-align: center;
-
+    width: 83.3333%;
+    margin-left: 8.3333%;
 }
 
 
@@ -625,12 +632,14 @@ margin-bottom:10px;
     box-shadow: 0 5px 15px 0 rgb(0 0 0 / 14%);
     padding: 40px;
     background-color: #fff;
+    display: flex;
+    flex-direction: column;
 }
 
 .section.package-cards-container .columns.block > div > .fragment-wrapper
 {
   align-self: flex-end;
-    width: 80%;
+    width: 100%;
 }
 
 .section.package-cards-container .columns.block > div > .fragment-wrapper + div
@@ -672,6 +681,23 @@ a.white {
 
 a.black {
   color: black;
+}
+
+/* stylelint-disable-next-line selector-class-pattern */
+.section.package-cards-container #package-cards-app .hlmNfh {
+  display: flex;
+  flex-direction: column;
+}
+
+/* stylelint-disable-next-line selector-class-pattern */
+.sc-gZMcBi.qgmph{
+  display: flex;
+}
+
+/* stylelint-disable-next-line selector-class-pattern */
+.sc-ifAKCX.cWMbCw{
+  display: flex;
+  justify-content: space-around;
 }
 
 @media (width >=768px) {
@@ -764,7 +790,7 @@ margin:0 auto;
 /* stylelint-disable-next-line selector-class-pattern */
 .section.package-cards-container #package-cards-app .hlmNfh
 {
-  flex-direction: column;
+  flex-direction: row;
     align-items: unset;
 }
 
@@ -789,7 +815,7 @@ margin:0 auto;
 
 }
 
-@media (width >=1024px) {
+@media (width >1024px) {
   /* CTA Banner Section */
   .section.banner {
     .buttons-container {
@@ -806,11 +832,6 @@ margin:0 auto;
       padding: 0 36px 0 0;
     }
   }
-
-  .section.package-cards-container .columns.block > div {
-    flex-direction: row;
-}
-
 
 .section.dark-grey.columns-container .columns.block  {
   width: 60%;
@@ -830,6 +851,19 @@ main .icon-still-have-questions img {
 
 }
 
+}
+
+@media (width >1200px) {
+
+  /* stylelint-disable-next-line selector-class-pattern */
+  .sc-gZMcBi.qgmph {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .section.package-cards-container .columns.block > div {
+    flex-direction: row;
+  }
 }
 
 @media (width >=1540px) {
