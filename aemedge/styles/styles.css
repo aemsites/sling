@@ -181,7 +181,8 @@ del, picture {
   display: block;
 }
 
-s {
+/* stylelint-disable-next-line selector-class-pattern */
+.sc-gzVnrw.hFddAr s {
   opacity: 0.5;
 }
 
@@ -440,7 +441,7 @@ main .section {
   position: relative;
   color: #fff;
   margin: 0;
-  padding: 0 0 50px;
+  padding: 0;
   background-position: center;
 
 
@@ -448,6 +449,10 @@ main .section {
   .buttons-container {
     text-align: center;
   }
+}
+
+.section.banner.offer-details {
+  padding: 0 0 50px;
 }
 
 .section.banner .blog-hero picture {
