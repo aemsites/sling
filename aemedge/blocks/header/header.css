@@ -40,7 +40,6 @@ header nav[aria-expanded="false"] {
 }
 
 header nav .nav-brand {
-  position: fixed;
   top: 0;
 }
 
@@ -97,7 +96,6 @@ header nav .nav-hamburger {
   display: flex;
   align-items: center;
   justify-self: flex-end;
-  position: fixed;
   top: 16px;
 }
 
