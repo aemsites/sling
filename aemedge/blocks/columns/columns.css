@@ -270,6 +270,15 @@
       order: unset;
     }
 
+    .banner .columns > div {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .tabs-panel .columns > div {
+      flex-direction: column;
+    }
+
     .columns.landing {
       margin: auto;
 
@@ -280,15 +289,6 @@
           order: 1;
         }
       }
-    }
-
-    .banner .columns > div {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .tabs-panel .columns > div {
-      flex-direction: column;
     }
 
     .columns-img-col .button-container a{
