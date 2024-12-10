@@ -32,7 +32,7 @@ import {
   martechDelayed,
 } from './martech-loader.js';
 
-import { setDataLayer } from './datalayer-utils.js';
+// import { setDataLayer } from './datalayer-utils.js';
 
 const LCP_BLOCKS = ['category']; // add your LCP blocks to the list
 const TEMPLATES = ['blog-article', 'blog-category']; // add your templates here
@@ -633,7 +633,7 @@ function loadDelayed() {
 
 async function loadPage() {
   window.adobeDataLayer = window.adobeDataLayer || [];
-  await setDataLayer();
+  // await setDataLayer();
   await loadEager(document);
   await loadLazy(document);
   loadDelayed();

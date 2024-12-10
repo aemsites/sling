@@ -35,7 +35,7 @@ function removeEmpty(obj) {
 function createPageLoadDataLayerObject(params) {
   const result = {
     // event: params.event || undefined,
-    _maruti: {
+    sling: {
       pageInfo: {
         language: params.selectedLanguage || undefined,
         city: params.cityName || undefined,
