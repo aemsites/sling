@@ -88,6 +88,7 @@ body {
   color: var(--text-color);
   background-color: var(--background-color);
   display: none;
+  -webkit-font-smoothing: antialiased !important;
 }
 
 body.appear {
