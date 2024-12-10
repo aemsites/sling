@@ -112,7 +112,7 @@ header nav[aria-expanded="true"] .zipcode-wrapper.selected{
 }
 
 .geo-form-input {
-    width: 265px;
+    width: 100%;
     position: relative;
 }
 
@@ -135,6 +135,7 @@ header nav[aria-expanded="true"] .zipcode-wrapper.selected{
     display: flex;
     flex-direction: column;
     height: 3.25rem;
+    width: 100%;
 }
 
 .zip-input-label {
