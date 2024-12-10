@@ -1,5 +1,4 @@
 import {
-  sampleRUM,
   buildBlock,
   loadFooter,
   decorateIcons,
@@ -596,9 +595,6 @@ async function loadLazy(doc) {
   buildGlobalBanner(main);
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
   loadFonts();
-  sampleRUM('lazy');
-  sampleRUM.observe(main.querySelectorAll('div[data-block-name]'));
-  sampleRUM.observe(main.querySelectorAll('picture > img'));
 }
 
 /**

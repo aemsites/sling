@@ -1,5 +1,4 @@
 // eslint-disable-next-line import/no-cycle
-import { sampleRUM } from './aem.js';
 
 const loadScript = async (url, attrs) => {
   const head = document.querySelector('head');
@@ -14,9 +13,6 @@ const loadScript = async (url, attrs) => {
   head.append(script);
   return script;
 };
-
-// Core Web Vitals RUM collection
-sampleRUM('cwv');
 
 await loadScript('/aemedge/scripts/sling-martech/analytics-lib.js');
 
