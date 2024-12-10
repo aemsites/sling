@@ -30,7 +30,6 @@ const decorateLinkItems = (footer) => {
 export default async function decorate(block) {
   const footerMeta = getMetadata('footer');
   block.textContent = '';
-
   // load footer fragment
   const footerPath = footerMeta.footer || '/aemedge/footer';
   const fragment = await loadFragment(footerPath);
@@ -53,7 +52,25 @@ export default async function decorate(block) {
       socialLinks.append(ul);
     } else {
       primarylinks.append(ul);
-      ul.firstElementChild.classList.add('nav-heading');
+      const heading = ul.firstElementChild;
+      heading.classList.add('nav-heading');
+      if (!window.location.pathname.includes('whatson')) {
+        block.classList.add('landing');
+        const img = document.createElement('img');
+        img.classList.add('icon-arrow-down');
+        img.src = '/aemedge/icons/arrow-down.svg';
+        heading.appendChild(img);
+        heading.addEventListener('click', () => {
+          const navItems = heading.parentElement.querySelectorAll('.nav-items-wrapper .nav-item');
+          navItems.forEach((item) => {
+            item.classList.toggle('visible');
+          });
+          const arrow = heading.querySelector('.icon-arrow-down');
+          if (arrow) {
+            arrow.classList.toggle('close');
+          }
+        });
+      }
     }
   });
   // organize the social links
@@ -68,10 +85,8 @@ export default async function decorate(block) {
   });
   socialLinks.prepend(socialIcons);
   footer.querySelector('.section.footer-primary .default-content-wrapper').replaceWith(primarylinks, socialLinks);
-
   // add classes for secondary footer nav items
   const secSection = footer.querySelector('.section.footer-secondary');
-
   if (secSection) {
     const copyright = createTag('ul', { class: 'copy-right' });
     const secFooterLinks = createTag('ul', { class: 'sec-footer-links' });

@@ -19,13 +19,15 @@
 
 .game-finder.block #gmfinder-app button {
     min-width: unset;
-    margin-top: unset;
-    margin-bottom: unset;
 }
 
 /* stylelint-disable-next-line selector-class-pattern */
 .game-finder.block #gmfinder-app .ykLwg {
 position: initial
+}
+
+.game-finder.block #gmfinder-app .gwxdjd {
+    margin-top: 10px;
 }
 
 .game-finder.block #gmfinder-app .iqyiwh { 

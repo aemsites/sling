@@ -88,6 +88,7 @@ body {
   color: var(--text-color);
   background-color: var(--background-color);
   display: none;
+  -webkit-font-smoothing: antialiased !important;
 }
 
 body.appear {
@@ -352,7 +353,7 @@ body.blog-article .offer-details .buttons-container {
 
 .offer-details .button-container p {
   line-height: 1em;
-  margin: 0;
+  margin-top: 10px;
 }
 
 .block.blog-breadcrumb {
@@ -383,7 +384,6 @@ a.blog-breadcrumb-link {
   display: inline-block;
   font: normal normal normal 20px / 1 var(--font-awesome);
   text-rendering: auto;
-  -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
@@ -475,7 +475,6 @@ main .icon-still-have-questions img {
   margin: 0 auto;
   width: 80%;
   padding:0;
-  -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
@@ -497,17 +496,20 @@ main .icon-still-have-questions img {
   padding: 64px 8%;
 }
 
-.section.game-finder-container {
-  margin: 0 auto;
-  padding: 50px 0;
+.section.dark.columns-container{
+  padding: 8%;
 }
 
-.section.game-finder-container .game-finder-wrapper
+.section.game-finder-container{
+  padding: 0;
+}
+
+.section.game-finder-container .game-finder-wrapper,
+.section.game-finder-container .default-content-wrapper
 {
-    width: 80%;
-    margin: 0 auto;
-    padding-top: 10px;
     max-width: 1440px;
+    margin:0 auto;
+    padding: 0 8.3% 25px;
 }
 
 .section.game-finder-container > .default-content-wrapper > h2,
@@ -536,7 +538,6 @@ main .icon-still-have-questions img {
 .section.dark-grey > * {
   width: 80%;
   margin:0 auto;
-  -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
@@ -587,7 +588,6 @@ margin-bottom:10px;
 
 .section.channel-shopper-container {
   color: var(--clr-white);
-  -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   padding: 0;
   max-width: 100%;

@@ -7,6 +7,11 @@
   justify-content: flex-start;
 }
 
+.tabs.wide .tabs-list {
+  flex-direction: row;
+  justify-content: center;
+}
+
 .tabs .tabs-list button {
   display: flex;
   min-width: fit-content;
@@ -31,6 +36,19 @@
   width: unset;
 }
 
+.rewards h5{
+  color: #faa21b;
+}
+
+.tabs.wide h1,
+.tabs.wide h2,
+.tabs.wide h3,
+.tabs.wide h4,
+.tabs.wide h5,
+.tabs.wide p {
+  text-align: center;
+}
+
 .tabs .tabs-list button p {
   max-width: fit-content;
   color: rgb(23 23 37);
@@ -41,6 +59,10 @@
 
 .tabs.columns .tabs-tab p {
   font-size:1rem;
+}
+
+.tabs.wide .tabs-panel .columns > div {
+  flex-direction: column;
 }
 
 .tabs .tabs-list button[aria-selected="true"] p {
@@ -125,10 +147,6 @@
   text-align: center;
 }
 
-.rewards h5{
-  color: #faa21b;
-}
-
 .rewards .tabs .tabs-list {
   padding-left: 6%;
   display: flex;
@@ -179,6 +197,11 @@
 }
 
 @media (width >= 768px) {
+  .tabs.wide p {
+    margin-left: 10%;
+    margin-right: 10%;
+  }
+
   .tabs.accordion .tabs-list {
     justify-content: center;
   }
@@ -210,8 +233,6 @@
     float: left;
   }
 
-
-  
   .rewards .tabs-container .tabs .tabs-panel picture{
     width: 100%;
     margin-bottom: 50px;
