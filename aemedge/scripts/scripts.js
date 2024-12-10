@@ -25,6 +25,15 @@ import {
   linkTextIncludesHref,
 } from './utils.js';
 
+import {
+  martechLoadedPromise,
+  martechEager,
+  martechLazy,
+  martechDelayed,
+} from './martech-loader.js';
+
+// import { setDataLayer } from './datalayer-utils.js';
+
 const LCP_BLOCKS = ['category']; // add your LCP blocks to the list
 const TEMPLATES = ['blog-article', 'blog-category']; // add your templates here
 const TEMPLATE_META = 'template';
@@ -519,6 +528,7 @@ export function decorateMain(main) {
    * @param {Element} doc The container element
    */
 async function loadEager(doc) {
+  // martech integration code ends
   document.documentElement.lang = 'en';
   decorateTemplateAndTheme();
   const main = doc.querySelector('main');
@@ -529,7 +539,10 @@ async function loadEager(doc) {
     decorateMain(main);
     await loadTemplate(main);
     document.body.classList.add('appear');
-    await waitForLCP(LCP_BLOCKS);
+    await Promise.all([
+      martechLoadedPromise.then(martechEager),
+      waitForLCP(LCP_BLOCKS),
+    ]);
   }
 
   try {
@@ -596,6 +609,8 @@ async function loadLazy(doc) {
   buildGlobalBanner(main);
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
   loadFonts();
+  await import('./rum-to-analytics.js');
+  await martechLazy();
   sampleRUM('lazy');
   sampleRUM.observe(main.querySelectorAll('div[data-block-name]'));
   sampleRUM.observe(main.querySelectorAll('picture > img'));
@@ -607,11 +622,18 @@ async function loadLazy(doc) {
    */
 function loadDelayed() {
   // eslint-disable-next-line import/no-cycle
-  window.setTimeout(() => import('./delayed.js'), 3000);
+  // eslint-disable-next-line import/no-cycle
+  window.setTimeout(() => {
+    martechDelayed();
+    return import('./delayed.js');
+  }, 3000);
+  // window.setTimeout(() => import('./delayed.js'), 3000);
   // load anything that can be postponed to the latest here
 }
 
 async function loadPage() {
+  window.adobeDataLayer = window.adobeDataLayer || [];
+  // await setDataLayer();
   await loadEager(document);
   await loadLazy(document);
   loadDelayed();
