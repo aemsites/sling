@@ -650,7 +650,7 @@ main .section.package-cards-container{
 
 .section.package-cards-container .columns.block > div > .fragment-wrapper + div
 {
-    width: 80%;
+    width: 100%;
     margin: 0 auto;
     text-align: justify;
     place-self: auto;
@@ -691,20 +691,9 @@ a.black {
   color: black;
 }
 
-/* stylelint-disable-next-line selector-class-pattern */
-.section.package-cards-container #package-cards-app .hlmNfh {
+.section.columns-container.package-cards-container .button-container.fragment-wrapper .offer-details .default-content-wrapper {
   display: flex;
-  flex-direction: column;
-}
-
-/* stylelint-disable-next-line selector-class-pattern */
-.sc-gZMcBi.qgmph{
-  display: flex;
-}
-
-/* stylelint-disable-next-line selector-class-pattern */
-.sc-ifAKCX.cWMbCw{
-  display: flex;
+  justify-content: center;
 }
 
 @media (width >=768px) {
@@ -794,13 +783,6 @@ a.black {
   margin:0;
 }
 
-/* stylelint-disable-next-line selector-class-pattern */
-.section.package-cards-container #package-cards-app .hlmNfh
-{
-  flex-direction: row;
-    align-items: unset;
-}
-
 /* channel-shopper columns block styling */
 
 .section.channel-shopper-container {
@@ -822,7 +804,7 @@ a.black {
 
 }
 
-@media (width >1024px) {
+@media (width >=1024px) {
   /* CTA Banner Section */
   .section.banner {
     .buttons-container {
