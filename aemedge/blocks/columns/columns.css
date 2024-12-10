@@ -41,8 +41,13 @@
   text-align: center;
   margin: auto 7%;
 
-  .columns-img-col {
+  > div > div {
+    order: 1;
+
+  &.columns-img-col {
     display: flex;
+    order: 0;
+  }
   }
 }
 
@@ -266,11 +271,15 @@
     }
 
     .columns.landing {
-        margin: auto;
+      margin: auto;
 
-       div {
-         align-items: center;
-       }
+      > div > div {
+        align-items: center;
+
+        &.columns-img-col {
+          order: 1;
+        }
+      }
     }
 
     .banner .columns > div {
