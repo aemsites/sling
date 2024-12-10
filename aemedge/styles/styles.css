@@ -88,6 +88,7 @@ body {
   color: var(--text-color);
   background-color: var(--background-color);
   display: none;
+  -webkit-font-smoothing: antialiased !important;
 }
 
 body.appear {
@@ -383,7 +384,6 @@ a.blog-breadcrumb-link {
   display: inline-block;
   font: normal normal normal 20px / 1 var(--font-awesome);
   text-rendering: auto;
-  -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
@@ -475,7 +475,6 @@ main .icon-still-have-questions img {
   margin: 0 auto;
   width: 80%;
   padding:0;
-  -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
@@ -539,7 +538,6 @@ main .icon-still-have-questions img {
 .section.dark-grey > * {
   width: 80%;
   margin:0 auto;
-  -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
@@ -590,7 +588,6 @@ margin-bottom:10px;
 
 .section.channel-shopper-container {
   color: var(--clr-white);
-  -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   padding: 0;
   max-width: 100%;
