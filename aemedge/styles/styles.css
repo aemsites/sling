@@ -696,6 +696,12 @@ a.black {
   justify-content: center;
 }
 
+.section.columns-container.package-cards-container ul li{
+  font-size: 1.125em;
+  line-height: 1.125;
+}
+
+
 @media (width >=768px) {
   main .section {
   padding: 0 48px;
@@ -850,6 +856,11 @@ main .icon-still-have-questions img {
   display: flex;
   flex: auto;
   padding: 0;
+}
+
+.section.columns-container.package-cards-container .button-container.fragment-wrapper .offer-details .default-content-wrapper {
+  display: flex;
+  justify-content: flex-start;
 }
 
 }
