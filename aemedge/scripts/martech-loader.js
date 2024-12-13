@@ -15,9 +15,6 @@ const martechLoadedPromise = initMartech(
     orgId: '9425401053CD40810A490D4C@AdobeOrg',
     onBeforeEventSend: (payload) => {
       payload.data.__adobe.target ||= {};
-
-      // set custom Analytics params
-      // see doc at https://experienceleague.adobe.com/en/docs/analytics/implementation/aep-edge/data-var-mapping
       payload.data.__adobe.analytics ||= {};
     },
   },
@@ -37,13 +34,19 @@ const martechLoadedPromise = initMartech(
 
 // Integrating OneTrsut consent management with the internal Adobe consent model
 function consentEventHandler(ev) {
-  const groups = ev.detail;
-  const collect = groups.includes('C0002'); // Performance Cookies
-  const personalize = groups.includes('C0003'); // Functional Cookies
-  const share = groups.includes('C0008'); // Targeted Advertising and Selling/Sharing of Personal Information
-  updateUserConsent({ collect, personalize, share });
+  const collect = ev.detail.categories.includes('CC_ANALYTICS');
+  const marketing = ev.detail.categories.includes('CC_MARKETING');
+  const personalize = ev.detail.categories.includes('CC_TARGETING');
+  const share = ev.detail.categories.includes('CC_SHARING');
+  // updateUserConsent({ collect, personalize, share });
+  updateUserConsent({
+    collect,
+    personalize,
+    marketing,
+    share,
+  });
 }
-window.addEventListener('consent.onetrust', consentEventHandler);
+window.addEventListener('consent', consentEventHandler);
 export {
   martechLoadedPromise,
   martechEager,

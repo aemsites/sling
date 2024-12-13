@@ -452,7 +452,9 @@ export async function initMartech(webSDKConfig, martechConfig = {}) {
       }
     },
   };
+
   if (config.personalization) {
+    console.log(`Personalization Enabled`);
     await loadAndConfigureAlloy(config.alloyInstanceName, alloyConfig);
   }
   return Promise.resolve();
