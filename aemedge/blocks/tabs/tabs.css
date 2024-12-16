@@ -82,7 +82,7 @@
 }
 
 .tabs .tabs-panel {
-  padding: 0 16px;
+  padding: 16px 16px 0;
   overflow: auto;
 }
 
@@ -209,7 +209,7 @@
   .rewards .tabs-container .tabs #tabpanel-upcoming-giveaways p:last-of-type{
     display: none;
   }
-  
+
   .rewards .tabs-container .tabs #tabpanel-upcoming-giveaways p:first-of-type{
     display: flex;
     justify-content: center;
@@ -237,12 +237,12 @@
     width: 100%;
     margin-bottom: 50px;
   }
-  
+
   .rewards .tabs-container .tabs .tabs-panel picture img{
     margin-left: 16.6667%;
     width: 66.6667%;
   }
-  
+
   .rewards .tabs-container .tabs .tabs-panel{
     padding: 50px 0;
   }
