@@ -391,16 +391,16 @@
       background-color: transparent;
     }
 
+    .columns > div > div:not(.columns-img-col){
+      place-self: center;
+    }
+
     .columns.icons.block div {
       display: flex ;
       -webkit-box-align: center;
       align-items: center;
       fill-opacity: 0.6;
       margin: 8.75px;
-    }
-
-    .columns > div > div:not(.columns-img-col){
-      place-self: center;
     }
 
     .columns.icons.block span {
