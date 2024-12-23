@@ -492,7 +492,6 @@ main .icon-still-have-questions img {
   flex-direction: column-reverse;
 }
 
-
 /* Section with Dark or Centered content */
 .section.dark {
   background-color: var(--dark-background-color);
@@ -797,6 +796,18 @@ a.black {
       align-items: center;
     }
   }
+
+    .section.columns-2 {
+        margin-left: 8%;
+        margin-right: 8%;
+        width: 83%;
+
+        > div {
+            display: flex;
+            flex-direction: row;
+            gap: 8%;
+        }
+    }
 
   section > .default-content-wrapper > p.fragment-wrapper {
     .section.banner {

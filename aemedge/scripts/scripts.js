@@ -224,6 +224,49 @@ function createOptimizedBackgroundImage(section, breakpoints = [
   updateBackground();
 }
 
+function makeTwoColumns(main) {
+  const sections = main.querySelectorAll('.section.columns-2');
+  sections.forEach((section) => {
+    const columnTarget = section.querySelector('div:nth-child(odd)');
+    const columnOne = document.createElement('div');
+    columnOne.classList.add('column-1');
+    columnOne.append(...columnTarget.children);
+    const columnTwo = document.createElement('div');
+    columnTwo.classList.add('column-2');
+    const columnTwoItems = section.querySelector('div:nth-child(even)');
+    columnTwo.append(columnTwoItems);
+    columnTarget.append(columnOne, columnTwo);
+  });
+}
+
+/**
+ * consolidate the offer boxes into one wrapper div
+ *
+ * @param main
+ */
+/*
+function consolidateSectionColumns(main) {
+  const ob = main.querySelectorAll('.offer-box-wrapper');
+  let firstOB;
+  if (ob && ob.length > 1) {
+    ob.forEach((box, index) => {
+      if (index === 0) {
+        firstOB = box;
+      } else {
+        firstOB.append(...box.children);
+        box.remove();
+      }
+    });
+    if (main.querySelector('.section.offer-box-container.two-columns')) {
+      makeTwoColumns(main);
+    }
+  }
+}
+
+ */
+
+
+
 /**
  * Finds all sections in the main element of the document
  * that require adding a background image
@@ -507,6 +550,7 @@ export function decorateMain(main) {
   buildAutoBlocks(main);
   decorateSections(main);
   decorateBlocks(main);
+  makeTwoColumns(main);
   decorateStyledSections(main);
   buildSpacer(main);
   decorateExtImage(main);
