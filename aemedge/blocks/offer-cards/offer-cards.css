@@ -1,0 +1,200 @@
+.offer-cards.block {
+    color: var(--clr-white);
+    position: relative;
+    border: none;
+    overflow: hidden;
+    min-height: 580px;
+    width:327px;
+}
+
+.offer-cards-content {
+  color: var(--clr-white);
+  border: none;
+  display: flex;
+  -webkit-box-pack: justify;
+  flex-flow: column;
+  inset: 0;
+  background: linear-gradient(#33334c00 50%, 85%, #171725 100%), radial-gradient(110% 100% at 75% 25%, #20203200 0%, #171725 100%);
+  box-sizing: border-box;
+  width: 100%;
+  -webkit-box-align: start;
+  align-items: start;
+  text-align: left;
+  position: relative;
+  height: 100%;
+    min-height: 550px;
+    padding: 20px;
+  }
+
+.offer-cards-content .text-cta-container {
+    margin: 1rem 0;
+}
+
+.offer-cards-content .headline p {
+    font-size: var(--heading-font-size-l);
+    line-height: 30px;
+}
+
+  .offer-cards-content h1 {
+    font-size: 30px;
+    line-height: 1.2;
+    font-weight: 600;
+    letter-spacing: -1.15px;
+    margin: 0 0 1rem;
+    max-width: 600px;
+  }
+
+  .offer-cards-content h2 {
+    font-size: var(--heading-font-size-3xl);
+    line-height: 54px;
+    letter-spacing: -1.15px;
+    margin: 0 0 1rem;
+    max-width: 600px;
+    -webkit-font-smoothing: antialiased;
+    text-wrap: wrap;
+    scroll-margin: 0;
+  }
+
+  .offer-cards .background {
+    position:absolute;
+    z-index: 0;
+    inset: 0;
+    height: 100%;
+
+      picture {
+          display: unset;
+      }
+  }
+
+  .offer-cards .background video,
+  .offer-cards .background picture img{
+    position: relative;
+    z-index: 0;
+    object-fit: cover;
+    width: 100%;
+    box-sizing: border-box;
+    inset: 0;
+    height: 550px;
+  }
+
+  .offer-cards-content .sub-headline picture img {
+    width: auto;
+    height: auto;
+  }
+
+  .offer-cards-content .text-cta-container .button-container
+  {
+    display: flex;
+    flex-direction: column;
+    -webkit-box-align: center;
+    align-items: center;
+    width: fit-content;
+    max-width: unset;
+  }
+
+  .offer-cards-content .text-cta-container .button-container p {
+  margin:0;
+ }
+
+
+.offer-cards-content .foreground-container {
+  margin: 1rem auto;
+    text-align: center;
+}
+
+.rewards .section.offer-cards-container .offer-cards .offer-cards-content .text-cta-container .sub-headline h2 a{
+  color: rgb(0 185 255);
+}
+
+.rewards .section.offer-cards-container .offer-cards-wrapper .offer-cards.block .offer-cards-content .text-cta-container .headline p picture img{
+  width: 30%;
+}
+
+.rewards .section.offer-cards-container .offer-cards-wrapper .offer-cards.block .offer-cards-content .text-cta-container .button-container p a{
+  margin-top: 10px;
+  margin-left: 0;
+}
+
+.offer-cards-content .badge {
+    line-height: 1;
+    vertical-align: bottom;
+    padding: 0 0 0 13px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    background-color: rgb(16 6 159);
+    color: rgb(245 245 246);
+    border-radius: 0.125rem;
+    text-transform: uppercase;
+    margin: 0 0 1rem;
+    width: 45%;
+}
+
+.offer-cards-container .default-content-wrapper .button-container {
+    margin-left: 114px;
+}
+
+@media (width >= 768px) {
+    .offer-cards.block ul {
+        list-style: none;
+    }
+
+    .offer-cards.block ul li::before {
+        content: '\2713\00a0';
+    }
+
+    .offer-cards.block {
+        width:343px;
+    }
+
+  .offer-cards-content .text-cta-container {
+    margin-right:20px;
+  }
+
+
+ }
+
+ @media (width >= 1024px) {
+  .offer-cards-content h1
+  {
+    font-size: 34px;
+    line-height: 40px;
+    letter-spacing: -1.25px;
+    margin: 0 0 1rem;
+    font-weight: 600;
+  }
+
+  .offer-cards-content h2 {
+    font-size: 52px;
+    font-weight: 800;
+    line-height: 58px;
+    letter-spacing: -1px;
+    margin: 0.5rem 0 1rem;
+  }
+
+  .offer-cards-content .text-cta-container {
+      max-width: 600px;
+
+      .button-container {
+          display: block;
+          margin: 0;
+      }
+  }
+
+     .offer-cards-content .foreground-container {
+         padding-left: 1.5rem;
+         width: 50%;
+         margin: 0;
+     }
+
+   .offer-cards-content .cta a.scroll-into-header{
+    position: fixed;
+    top: 35px;
+    right: 132px;
+    z-index: 1030;
+    padding: 10.5px;
+    min-width: 180px;
+    margin: 0;
+    min-height: 50px;
+    }
+
+ }
