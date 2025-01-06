@@ -149,6 +149,10 @@ blockquote {
   margin: 0;
 }
 
+.button-container sub, sup {
+  font-size: 0.875rem;
+}
+
 .buttons-container .button-container{
   margin: 0;
 }
@@ -423,7 +427,6 @@ main .section {
   margin: 0;
 }
 
-
 /* FAQ Section */
 .section.tabs-container.accordion-container .default-content-wrapper {
   text-align: center;
@@ -443,8 +446,6 @@ main .section {
   margin: 0;
   padding: 0;
   background-position: center;
-
-
 
   .buttons-container {
     text-align: center;
@@ -483,7 +484,6 @@ main .icon-still-have-questions img {
   -moz-osx-font-smoothing: grayscale;
 }
 
-
 .section.wide-columns .columns.block  div {
   margin-bottom: 50px;
 }
@@ -491,7 +491,6 @@ main .icon-still-have-questions img {
 .section.wide-columns .columns.block > div {
   flex-direction: column-reverse;
 }
-
 
 /* Section with Dark or Centered content */
 .section.dark {
@@ -523,7 +522,6 @@ main .icon-still-have-questions img {
   text-align:center;
   margin-bottom: 10px;
 }
-
 
 .section.game-finder-container > .default-content-wrapper > h2 {
   font-size: 40px;
@@ -603,20 +601,6 @@ margin-bottom:10px;
 }
 
 .section.package-cards-container.offer-details {
-    margin: 64px 0;
-
-    .buttons-container {
-        align-items: normal;
-
-       .button-container .buttons-container {
-            align-items: center;
-
-           .button-container {
-               align-items: center;
-           }
-        }
-    }
-
 .columns.block > div {
     border-radius: 4px;
     box-shadow: 0 5px 15px 0 rgb(0 0 0 / 14%);
@@ -711,24 +695,6 @@ a.black {
         padding: 64px 32px;
     }
 
-    /* package cards desktop styles
-.section.package-cards-container.offer-details {
-    padding: 0 18px;
-
-    .columns.block > div {
-        .section.package-cards-container {
-            margin: unset;
-            padding: 0;
-        }
-    }
-}
-
-     */
-    .section.package-cards-container .offer-details a.button.text {
-        color: unset;
-    }
-
-
     .section.wide-columns .columns.block div {
         margin-bottom: 20px;
     }
@@ -764,13 +730,6 @@ a.black {
         margin: 0 auto;
     }
 
-
-    /* stylelint-disable-next-line selector-class-pattern */
-    .section.package-cards-container #package-cards-app .hlmNfh {
-        flex-direction: column;
-        align-items: unset;
-    }
-
     .section.channel-shopper-container {
         text-align: left;
 
@@ -798,6 +757,17 @@ a.black {
     }
   }
 
+    .section.columns-2 {
+        margin-left: 11%;
+        margin-right: 11%;
+        display: flex;
+
+        > div {
+            flex-direction: row;
+            gap: 8%;
+        }
+    }
+
   section > .default-content-wrapper > p.fragment-wrapper {
     .section.banner {
       padding: 0 36px 0 0;
@@ -818,20 +788,8 @@ main h2#still-have-questions {
 
 main .icon-still-have-questions img {
   width: 64px!important;
-
 }
-
 }
-
-@media (width >=1540px) {
-
-    /* stylelint-disable-next-line selector-class-pattern */
-.section.package-cards-container #package-cards-app .hlmNfh
-{
-  flex-direction: row;
-    align-items: center;
-}
- }
 
 /* section metadata */
 main .section.light,

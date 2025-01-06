@@ -225,6 +225,41 @@ function createOptimizedBackgroundImage(section, breakpoints = [
 }
 
 /**
+ * consolidate the first two divs in a section into two columns
+ * Special case for when there is 1 fragment-wrapper
+ * @param main
+ */
+
+function makeTwoColumns(main) {
+  const sections = main.querySelectorAll('.section.columns-2');
+  let columnTarget;
+  let columnTwoItems;
+  sections.forEach((section) => {
+    const fragmentSections = section.querySelector('.fragment-wrapper');
+    const columnOne = document.createElement('div');
+    columnOne.classList.add('column-1');
+    const columnTwo = document.createElement('div');
+    columnTwo.classList.add('column-2');
+    if (!fragmentSections) {
+      // 1 block div plus 1 default content div only
+      columnTarget = section.querySelector('div:nth-child(odd)');
+      columnOne.append(...columnTarget.children);
+      columnTwoItems = section.querySelector('div:nth-child(even)');
+      columnTwo.append(columnTwoItems);
+      section.innerHTML = ''; // any extra divs are removed
+      section.append(columnOne, columnTwo);
+    } else {
+      // 1 fragment-wrapper div plus 1 default content div only
+      columnTarget = section.querySelector('.fragment-wrapper');
+      columnOne.append(...columnTarget.children);
+      columnTwoItems = section.querySelector('div');
+      columnTwo.append(columnTwoItems);
+      section.append(columnOne, columnTwo);
+    }
+  });
+}
+
+/**
  * Finds all sections in the main element of the document
  * that require adding a background image
  * @param {Element} main
@@ -507,6 +542,7 @@ export function decorateMain(main) {
   buildAutoBlocks(main);
   decorateSections(main);
   decorateBlocks(main);
+  makeTwoColumns(main);
   decorateStyledSections(main);
   buildSpacer(main);
   decorateExtImage(main);
