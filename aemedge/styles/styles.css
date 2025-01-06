@@ -601,20 +601,6 @@ margin-bottom:10px;
 }
 
 .section.package-cards-container.offer-details {
-    margin: 64px 0;
-
-    .buttons-container {
-        align-items: normal;
-
-       .button-container .buttons-container {
-            align-items: center;
-
-           .button-container {
-               align-items: center;
-           }
-        }
-    }
-
 .columns.block > div {
     border-radius: 4px;
     box-shadow: 0 5px 15px 0 rgb(0 0 0 / 14%);
