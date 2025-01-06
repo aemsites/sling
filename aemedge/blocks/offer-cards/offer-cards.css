@@ -137,15 +137,22 @@
     .offer-cards .background picture img{
         height: 566px;
     }
-
+    
     .section.offer-cards-container{
         display: flex;
+        flex-wrap: wrap;
         max-width: fit-content;
         margin-left: auto;
         margin-right: auto;
     }
 
-    .section.offer-cards-container>div {
+    .offer-cards-container>div:not(.offer-cards-wrapper)
+    {
+        display: block;
+        width:100%
+    }
+
+    .section.offer-cards-container>div.offer-cards-wrapper{
         padding: 5px;
     }
 
