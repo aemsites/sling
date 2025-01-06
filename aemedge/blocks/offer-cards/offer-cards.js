@@ -5,7 +5,6 @@ function setupBGPictures(block) {
   const background = block.querySelector('.background');
   const pictures = Array.from(background.querySelectorAll('picture'));
   let currentPicture = getPictureUrlByScreenWidth(pictures);
-  // Remove video links from DOM to prevent them from showing up as text
   pictures.forEach((picture) => picture.parentElement.remove());
   const existingPicture = background.querySelector('picture');
   if (existingPicture) {
@@ -14,12 +13,8 @@ function setupBGPictures(block) {
   const bgDIV = createTag('div', { class: 'background' });
   bgDIV.append(currentPicture);
   block.prepend(bgDIV);
-
-  // Resize event listener to update video based on screen size changes
   window.addEventListener('resize', () => {
     const newPicture = getPictureUrlByScreenWidth(pictures);
-
-    // Update video only if the URL changes
     if (newPicture !== currentPicture) {
       currentPicture = newPicture;
       const oldPicture = block.querySelector('picture');
@@ -33,22 +28,9 @@ function setupBGPictures(block) {
   });
 }
 
-const scrollCTAIntoHeader = (entries) => {
-  entries.forEach((entry) => {
-    const block = entry.target;
-    const cta = block.querySelector('.cta a');
-    if (entry.isIntersecting) {
-      cta.classList.remove('scroll-into-header');
-    } else {
-      cta.classList.add('scroll-into-header');
-    }
-  });
-};
-
 // read the config and construct the DOM
 function processBlockConfig(block) {
-  const marqueContent = createTag('div', { class: 'offer-cards-content' });
-  const mediaDIV = createTag('div', { class: 'foreground-container' });
+  const offerCardContent = createTag('div', { class: 'offer-cards-content' });
   const nonMediaDIV = createTag('div', { class: 'text-cta-container' });
   block.querySelectorAll(':scope > div:not([id])').forEach((row) => {
     if (row.children) {
@@ -59,19 +41,11 @@ function processBlockConfig(block) {
         cols[0].classList.add('config-property');
         col.classList.add(name);
         if (name !== 'foreground') nonMediaDIV.append(col);
-        else mediaDIV.append(col);
       }
     }
   });
-
-  if (mediaDIV.querySelector('.foreground')
-      && mediaDIV.querySelector('.foreground').children.length > 0) {
-    marqueContent.append(nonMediaDIV, mediaDIV);
-  } else {
-    marqueContent.append(nonMediaDIV);
-  }
-
-  block.append(marqueContent);
+  offerCardContent.append(nonMediaDIV);
+  block.append(offerCardContent);
   block.querySelectorAll('.config-property').forEach((prop) => prop.remove()); // remove config property divs from dom
 }
 
@@ -79,21 +53,6 @@ export default function decorate(block) {
   processBlockConfig(block);
   const background = block.querySelector('.background');
   const bgColor = block.querySelector('.background-color');
-  const scrollCTA = block.querySelector('.scroll-cta-into-header');
-
-  // if scroll configured then toggle the respective css class
-  if (scrollCTA) {
-    const cta = document.querySelector('.cta a');
-    if (cta) {
-      const options = {
-        root: null,
-        threshold: 0.1,
-      };
-      const observer = new IntersectionObserver(scrollCTAIntoHeader, options);
-      observer.observe(block);
-    }
-    scrollCTA.remove();
-  }
   let bgMediaType;
   if (background) {
     if (background.querySelector('picture')) {
@@ -109,7 +68,7 @@ export default function decorate(block) {
     bgColor.remove();
   }
   if (window.innerWidth < 768) {
-    const divElement = document.querySelector('.bullet-items');
+    const divElement = block.querySelector('.bullet-items');
     if (divElement) {
       divElement.style.display = 'none';
     }
