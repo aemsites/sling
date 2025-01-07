@@ -645,11 +645,11 @@ async function loadLazy(doc) {
   buildGlobalBanner(main);
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
   loadFonts();
-  await import('./rum-to-analytics.js');
+  // sampleRUM('lazy');
+  // sampleRUM.observe(main.querySelectorAll('div[data-block-name]'));
+  // sampleRUM.observe(main.querySelectorAll('picture > img'));
+  // await import('./rum-to-analytics.js');
   await martechLazy();
-  sampleRUM('lazy');
-  sampleRUM.observe(main.querySelectorAll('div[data-block-name]'));
-  sampleRUM.observe(main.querySelectorAll('picture > img'));
 }
 
 /**
