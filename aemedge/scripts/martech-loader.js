@@ -11,6 +11,7 @@ import {
 
 const isConsentGiven = updateUserConsent({
   collect: true,
+  alloyInstanceName: 'alloy',
   marketing: {
     preferred: 'email',
     any: false,
