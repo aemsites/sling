@@ -39,12 +39,6 @@ const DEFAULT_ALLOY_CONFIG = {
       ...payload.xdm,
       ...dlState,
     };
-    if (payload.xdm.eventType === 'decisioning.propositionFetch'
-        && dlState._maruti.carInfo !== undefined
-        && dlState._maruti.carInfo.model !== undefined
-        && !Object.keys(payload.data.__adobe.target).length) {
-      payload.data.__adobe.target['user.categoryId'] = dlState._maruti.carInfo.model;
-    }
   },
   edgeConfigOverrides: {
   },
