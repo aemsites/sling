@@ -9,6 +9,11 @@ body.modal-open {
     border: 1px solid var(--dark-color);
     border-radius: var(--dialog-border-radius);
     width: 100vw;
+
+      p, li {
+        font-size: 1em;
+        line-height: 1.5;
+      }
   }
 
   .modal dialog .modal-content {
