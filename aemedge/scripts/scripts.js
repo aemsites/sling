@@ -147,9 +147,11 @@ function autolinkModals(element) {
 }
 
 export function buildMultipleButtons(main) {
-  const buttons = main.querySelectorAll('p.button-container');
+  const buttons = main.querySelectorAll('.button-container');
   buttons.forEach((button) => {
-    if (button.nextElementSibling && button.nextElementSibling.classList.contains('button-container')) {
+    if (button.nextElementSibling
+        && (button.nextElementSibling.classList.contains('button-container')
+            || (button.nextElementSibling.firstElementChild && button.nextElementSibling.firstElementChild.classList.contains('button-container')))) {
       const siblingButton = button.nextElementSibling;
       if (siblingButton && !button.parentElement.classList.contains('buttons-container')) {
         const buttonContainer = createTag('div', { class: 'buttons-container' });
@@ -328,7 +330,7 @@ export function decorateButtons(element) {
         const isSubscript = Tagname === 'sub';
         const isSuperscript = Tagname === 'sup';
         if (isSubscript) {
-          a.classList.add('black');
+          a.classList.add('blue');
           a.parentElement.classList.add('button-container');
         } else if (isSuperscript) {
           a.classList.add('white');
