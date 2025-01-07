@@ -34,28 +34,12 @@ const martechLoadedPromise = initMartech(
 
 // Integrating OneTrsut consent management with the internal Adobe consent model
 function consentEventHandler(ev) {
-  // const collect = ev.detail.categories.includes('CC_ANALYTICS');
-  // const marketing = ev.detail.categories.includes('CC_MARKETING');
-  // const personalize = ev.detail.categories.includes('CC_TARGETING');
-  // const share = ev.detail.categories.includes('CC_SHARING');
-  /// / updateUserConsent({ collect, personalize, share });
-  /// /updateUserConsent({
-  /// /  collect,
-  /// /  personalize,
-  /// /  marketing,
-  /// /  share,
-  /// /});
+  const collect = ev.detail.categories.includes('CC_ANALYTICS') || true;
+  const marketing = ev.detail.categories.includes('CC_MARKETING') || true;
+  const personalize = ev.detail.categories.includes('CC_TARGETING') || true;
+  const share = ev.detail.categories.includes('CC_SHARING') || true;
   updateUserConsent({
-    collect: true,
-    marketing: {
-      preferred: 'email',
-      any: false,
-      email: true,
-      push: false,
-      sms: true,
-    },
-    personalize: true,
-    share: true,
+    collect, marketing, personalize, share,
   });
 }
 window.addEventListener('consent', consentEventHandler);
