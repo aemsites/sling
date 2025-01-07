@@ -26,24 +26,36 @@ const martechLoadedPromise = initMartech(
     dataLayerInstanceName: 'adobeDataLayer', // the name of the global ACDL instance
     includeDataLayerState: true, // whether to include the whole data layer state on every event sent
     launchUrls: ['https://assets.adobedtm.com/f4211b096882/1811238be96f/launch-088c475bb1c3-development.min.js'], // the list of Launch containers to load
-    personalization: false, // whether to apply page personalization from Adobe Target (AT) or Adobe Journey Optimizer (AJO)
-    performanceOptimized: false, // whether to use the agressive performance optimized approach or more traditional
+    personalization: true, // whether to apply page personalization from Adobe Target (AT) or Adobe Journey Optimizer (AJO)
+    performanceOptimized: true, // whether to use the agressive performance optimized approach or more traditional
     personalizationTimeout: 1000, // the amount of time to wait (in ms) before bailing out and continuing page rendering
   },
 );
 
 // Integrating OneTrsut consent management with the internal Adobe consent model
 function consentEventHandler(ev) {
-  const collect = ev.detail.categories.includes('CC_ANALYTICS');
-  const marketing = ev.detail.categories.includes('CC_MARKETING');
-  const personalize = ev.detail.categories.includes('CC_TARGETING');
-  const share = ev.detail.categories.includes('CC_SHARING');
-  // updateUserConsent({ collect, personalize, share });
+  // const collect = ev.detail.categories.includes('CC_ANALYTICS');
+  // const marketing = ev.detail.categories.includes('CC_MARKETING');
+  // const personalize = ev.detail.categories.includes('CC_TARGETING');
+  // const share = ev.detail.categories.includes('CC_SHARING');
+  /// / updateUserConsent({ collect, personalize, share });
+  /// /updateUserConsent({
+  /// /  collect,
+  /// /  personalize,
+  /// /  marketing,
+  /// /  share,
+  /// /});
   updateUserConsent({
-    collect,
-    personalize,
-    marketing,
-    share,
+    collect: true,
+    marketing: {
+      preferred: 'email',
+      any: false,
+      email: true,
+      push: false,
+      sms: true,
+    },
+    personalize: true,
+    share: true,
   });
 }
 window.addEventListener('consent', consentEventHandler);
