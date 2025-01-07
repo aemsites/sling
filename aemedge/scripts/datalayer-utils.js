@@ -43,15 +43,6 @@ function createPageLoadDataLayerObject(params) {
       userInfo: {
         authenticatedState: params.authenticatedState || undefined,
       },
-      identities: {
-        ecid: params.ecid || undefined,
-        hashedphoneSHA256: params.hashedphoneSHA256 || undefined,
-      },
-      carInfo: {
-        model: params.model || undefined,
-        color: params.color || undefined,
-        carType: params.carType || undefined,
-      },
     },
     web: {
       webPageDetails: {
