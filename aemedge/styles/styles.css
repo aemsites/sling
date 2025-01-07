@@ -149,13 +149,9 @@ blockquote {
   margin: 0;
 }
 
-.button-container sub, sup {
-  font-size: 0.875rem;
-}
 
-.buttons-container .button-container{
-  margin: 0;
-}
+
+
 
 code,
 pre {
@@ -300,12 +296,17 @@ button:disabled:hover {
     a.button {
         margin: 8px 0 0;
     }
+}
 
-    sub, sup {
+.button-container {
+    margin: 0;
+
+    sub, sup, em sup, em sub {
         display: block;
         text-align: center;
         font-style: italic;
         margin-top: 6px;
+        font-size: 0.875rem;
     }
 }
 
@@ -651,8 +652,12 @@ a.white {
   color: white;
 }
 
-a.black {
+a.black, em.button-container > a.blue {
   color: black;
+}
+
+a.blue {
+    color: var(--link-color);
 }
 
 @media (width >=768px) {
