@@ -9,19 +9,7 @@ import {
   // eslint-disable-next-line import/no-relative-packages, import/no-unresolved
 } from '../plugins/martech/src/index.js';
 
-const isConsentGiven = updateUserConsent({
-  collect: true,
-  alloyInstanceName: 'alloy',
-  marketing: {
-    preferred: 'email',
-    any: false,
-    email: true,
-    push: false,
-    sms: true,
-  },
-  personalize: true,
-  share: true,
-});
+const isConsentGiven = true;
 
 const DEFAULT_ALLOY_CONFIG = {
   orgId: '9425401053CD40810A490D4C@AdobeOrg',
