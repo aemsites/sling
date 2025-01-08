@@ -38,6 +38,7 @@ function createPageLoadDataLayerObject(params) {
       },
       userInfo: {
         authenticatedState: params.authenticatedState || undefined,
+        ecid: params.ecid || undefined,
       },
     },
     web: {
@@ -57,7 +58,7 @@ function createPageLoadDataLayerObject(params) {
 
 // eslint-disable-next-line import/prefer-default-export
 export async function setDataLayer() {
-  const ecid = getCookieValue('9425401053CD40810A490D4C@AdobeOrg');
+  const ecid = getCookieValue('AMCV_9425401053CD40810A490D4C@AdobeOrg');
   const { hostname: server, pathname: currentPagePath, href: url } = document.location;
   const pageName = document.title;
   const zipcode = getLocalStorage('user-zip') || '';
