@@ -1,7 +1,3 @@
-import {
-  fetchPlaceholders,
-} from './aem.js';
-
 function getCookieValue(cookieName) {
   const name = `${cookieName}=`;
   const decodedCookie = decodeURIComponent(document.cookie);
@@ -34,11 +30,11 @@ function removeEmpty(obj) {
 
 function createPageLoadDataLayerObject(params) {
   const result = {
-    // event: params.event || undefined,
+    event: params.event || undefined,
     sling: {
       pageInfo: {
         language: params.selectedLanguage || undefined,
-        city: params.cityName || undefined,
+        zipcode: params.zipcode || undefined,
       },
       userInfo: {
         authenticatedState: params.authenticatedState || undefined,
@@ -61,14 +57,12 @@ function createPageLoadDataLayerObject(params) {
 
 // eslint-disable-next-line import/prefer-default-export
 export async function setDataLayer() {
-  const { corporatepage, cardetailpage, arenacarmodels } = await fetchPlaceholders();
-  // TODO : Fix me
-  const ecid = getCookieValue('IMS ORG');
+  const ecid = getCookieValue('9425401053CD40810A490D4C@AdobeOrg');
   const { hostname: server, pathname: currentPagePath, href: url } = document.location;
   const pageName = document.title;
   const zipcode = getLocalStorage('user-zip') || '';
   const selectedLanguage = currentPagePath.includes('en') ? 'en' : null;
-  // const event = 'web.webPageDetails.pageViews';
+  const event = 'web.webPageDetails.pageViews';
   const authenticatedState = 'unauthenticated';
   const isErrorPage = false;
   let siteSection = '';
@@ -80,52 +74,17 @@ export async function setDataLayer() {
     siteSection = 'Landing Page';
   }
 
-  if (url.includes(corporatepage)) {
-    const data = {
-      // event,
-      authenticatedState,
-      ecid,
-      url,
-      pageName,
-      server,
-      siteSection,
-      isErrorPage,
-    };
-    window.adobeDataLayer.push(createPageLoadDataLayerObject(data));
-  } else if (url.includes(cardetailpage)) {
-    const arenaCars = arenacarmodels.split(',');
-    let model = '';
-    arenaCars.forEach((car) => {
-      if (url.toLowerCase().includes(car.toLowerCase())) {
-        model = car.toLowerCase();
-      }
-    });
-    const data = {
-      // event,
-      zipcode,
-      selectedLanguage,
-      authenticatedState,
-      url,
-      pageName,
-      server,
-      siteSection,
-      isErrorPage,
-      model,
-    };
-    window.adobeDataLayer.push(createPageLoadDataLayerObject(data));
-  } else {
-    const data = {
-      // event,
-      zipcode,
-      selectedLanguage,
-      authenticatedState,
-      ecid,
-      url,
-      pageName,
-      server,
-      siteSection,
-      isErrorPage,
-    };
-    window.adobeDataLayer.push(createPageLoadDataLayerObject(data));
-  }
+  const data = {
+    event,
+    zipcode,
+    selectedLanguage,
+    authenticatedState,
+    ecid,
+    url,
+    pageName,
+    server,
+    siteSection,
+    isErrorPage,
+  };
+  window.adobeDataLayer.push(createPageLoadDataLayerObject(data));
 }
