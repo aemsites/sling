@@ -28,26 +28,41 @@ function removeEmpty(obj) {
   });
 }
 
+function hasTouchSupport() {
+  return 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+}
+
 function createPageLoadDataLayerObject(params) {
   const result = {
     event: params.event || undefined,
+    screenLoadFired: true,
     sling: {
       pageInfo: {
         language: params.selectedLanguage || undefined,
         zipcode: params.zipcode || undefined,
       },
-      userInfo: {
-        authenticatedState: params.authenticatedState || undefined,
-        ecid: params.ecid || undefined,
-      },
     },
+
     web: {
+      currentEvent: params.event || undefined,
+      platform: hasTouchSupport() ? 'mobile' : 'web',
+      _sling: {
+        appName: 'aem-marketing-site',
+        analyticsVersion: '7.0.38',
+      },
       webPageDetails: {
         URL: params.url || undefined,
         name: params.pageName || undefined,
-        server: params.server || undefined,
+        domain: params.server || undefined,
         siteSection: params.siteSection || undefined,
-        isErrorPage: params.isErrorPage || false,
+        type: params.siteSubSection || undefined,
+        language: params.language || undefined,
+      },
+      user: {
+        ecid: params.ecid || undefined,
+        guid: 'null',
+        accountStatus: '',
+        authState: params.authenticatedState,
       },
     },
   };
@@ -59,20 +74,22 @@ function createPageLoadDataLayerObject(params) {
 // eslint-disable-next-line import/prefer-default-export
 export async function setDataLayer() {
   const ecid = getCookieValue('AMCV_9425401053CD40810A490D4C@AdobeOrg');
-  const { hostname: server, pathname: currentPagePath, href: url } = document.location;
+  const { hostname: server, href: url } = document.location;
   const pageName = document.title;
   const zipcode = getLocalStorage('user_zip') || '';
-  const selectedLanguage = currentPagePath.includes('en') ? 'en' : null;
-  const event = 'web.webPageDetails.pageViews';
-  const authenticatedState = 'unauthenticated';
-  const isErrorPage = false;
-  let siteSection = '';
-  if (url.includes('whatson')) {
-    siteSection = 'Blogs';
-  } else if (url.includes('help')) {
-    siteSection = 'Help';
+  const selectedLanguage = 'en';
+  const event = 'screen_load';
+  const authenticatedState = 'logged_out';
+  const siteSection = 'domestic';
+  let siteSubSection = '';
+  if (url.includes('/whatson')) {
+    siteSubSection = 'blog';
+  } else if (url.includes('/help')) {
+    siteSubSection = 'help';
+  } else if (!url.includes('/')) {
+    siteSubSection = 'home';
   } else {
-    siteSection = 'Landing Page';
+    siteSubSection = 'generic';
   }
 
   const data = {
@@ -85,7 +102,7 @@ export async function setDataLayer() {
     pageName,
     server,
     siteSection,
-    isErrorPage,
+    siteSubSection,
   };
   window.adobeDataLayer.push(createPageLoadDataLayerObject(data));
 }
