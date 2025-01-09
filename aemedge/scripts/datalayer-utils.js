@@ -77,7 +77,8 @@ export async function setDataLayer() {
   const pageName = document.title;
   const zipcode = getLocalStorage('user_zip') || '';
   const selectedLanguage = 'en';
-  const event = 'screen_load';
+  // const event = 'screen_load';
+  const event = 'web.webPageDetails.pageViews';
   const authenticatedState = 'logged_out';
   const siteSection = 'domestic';
   const guid = getLocalStorage('sling_user_guid') || '';
