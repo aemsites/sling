@@ -227,5 +227,14 @@
     margin: 0;
     min-height: 50px;
     }
-
  }
+
+@media screen and (width < 768px) {
+        .offer-cards-content .bullet-items {
+            display: none;
+        }
+    }
+
+
+
+

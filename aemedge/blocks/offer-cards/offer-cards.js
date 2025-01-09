@@ -70,12 +70,6 @@ export default function decorate(block) {
     }
     bgColor.remove();
   }
-  if (window.innerWidth < 768) {
-    const divElement = block.querySelector('.bullet-items');
-    if (divElement) {
-      divElement.style.display = 'none';
-    }
-  }
   if (bgMediaType === 'picture') setupBGPictures(block);
   background.remove();
   block.querySelectorAll('div').forEach((div) => { if (div.children.length === 0) div.remove(); }); // remove empty divs
