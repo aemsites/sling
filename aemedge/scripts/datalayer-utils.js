@@ -36,32 +36,29 @@ function createPageLoadDataLayerObject(params) {
   const result = {
     event: params.event || undefined,
     screenLoadFired: true,
-    sling: {
-      pageInfo: {
-        language: params.selectedLanguage || undefined,
-        zipcode: params.zipcode || undefined,
-      },
-    },
-
     web: {
       currentEvent: params.event || undefined,
       platform: hasTouchSupport() ? 'mobile' : 'web',
+      currentChannel: params.currentChannel || undefined,
       _sling: {
         appName: 'aem-marketing-site',
         analyticsVersion: '7.0.38',
       },
       webPageDetails: {
-        URL: params.url || undefined,
+        url: params.url || undefined,
         name: params.pageName || undefined,
         domain: params.server || undefined,
         siteSection: params.siteSection || undefined,
         type: params.siteSubSection || undefined,
         language: params.language || undefined,
+        pName: params.pName || undefined,
+        pURL: params.pURL || undefined,
       },
       user: {
         ecid: params.ecid || undefined,
-        guid: 'null',
-        accountStatus: '',
+        guid: params.guid || undefined,
+        dma: params.dma || undefined,
+        accountStatus: params.accountStatus || undefined,
         authState: params.authenticatedState,
       },
     },
@@ -73,7 +70,9 @@ function createPageLoadDataLayerObject(params) {
 
 // eslint-disable-next-line import/prefer-default-export
 export async function setDataLayer() {
-  const ecid = getCookieValue('AMCV_9425401053CD40810A490D4C@AdobeOrg');
+  const ecid = getCookieValue('AMCV_9425401053CD40810A490D4C@AdobeOrg') || '';
+  const pName = getCookieValue('pPage') || '';
+  const pURL = getCookieValue('pURL') || '';
   const { hostname: server, href: url } = document.location;
   const pageName = document.title;
   const zipcode = getLocalStorage('user_zip') || '';
@@ -81,6 +80,10 @@ export async function setDataLayer() {
   const event = 'screen_load';
   const authenticatedState = 'logged_out';
   const siteSection = 'domestic';
+  const guid = getLocalStorage('sling_user_guid') || '';
+  const accountStatus = getLocalStorage('account_status') || '';
+  const dma = getLocalStorage('user_dma') || '';
+  const currentChannel = getCookieValue('aaMC') || '';
   let siteSubSection = '';
   if (url.includes('/whatson')) {
     siteSubSection = 'blog';
@@ -98,11 +101,17 @@ export async function setDataLayer() {
     selectedLanguage,
     authenticatedState,
     ecid,
+    guid,
+    dma,
+    accountStatus,
     url,
     pageName,
     server,
     siteSection,
     siteSubSection,
+    pName,
+    pURL,
+    currentChannel,
   };
   window.adobeDataLayer.push(createPageLoadDataLayerObject(data));
 }
