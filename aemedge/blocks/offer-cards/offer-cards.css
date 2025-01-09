@@ -4,6 +4,7 @@
     border: none;
     overflow: hidden;
     box-shadow: rgb(7 7 11 / 40%) 0 4px 8px 0;
+    background-color: rgb(32 34 48);
 }
 
 .offer-cards-content {
@@ -13,7 +14,6 @@
   -webkit-box-pack: justify;
   flex-flow: column;
   inset: 0;
-  background: linear-gradient(#33334c00 50%, 85%, #171725 100%), radial-gradient(110% 100% at 75% 25%, #20203200 0%, #171725 100%);
   box-sizing: border-box;
   width: 100%;
   -webkit-box-align: start;
@@ -70,6 +70,10 @@
       height: 100%;
   }
 
+.offer-cards .background picture{
+    display: unset;
+}
+
 .offer-cards-content .sub-headline p {
     font-size: 0.875rem;
     line-height: 1.25;
@@ -119,6 +123,16 @@
     margin-bottom: 20px;
 }
 
+.offer-cards .backgroundlg{
+    border-radius: 0.25rem 0.25rem 0 0;
+    background: linear-gradient(transparent 0%, rgb(32 34 48 / 75%) 60%, rgb(32 34 48) 100%);
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+}
+
 @media (width >= 768px) {
     .offer-cards.block {
         min-height: 566px;
@@ -129,7 +143,7 @@
 
     .offer-cards-content {
         min-height: 566px;
-        padding: 20px;
+        padding: 35px 20px;
     }
 
     .offer-cards .background picture img{
@@ -164,7 +178,7 @@
     }
 
   .offer-cards-content .text-cta-container {
-    margin:30px 20px 0 0;
+    margin:87px 20px 0 0;
   }
 
  }

@@ -12,7 +12,10 @@ function setupBGPictures(block) {
   }
   const bgDIV = createTag('div', { class: 'background' });
   bgDIV.append(currentPicture);
+  const spanBtn = createTag('span', { class: 'backgroundlg' });
+  bgDIV.append(spanBtn);
   block.prepend(bgDIV);
+
   window.addEventListener('resize', () => {
     const newPicture = getPictureUrlByScreenWidth(pictures);
     if (newPicture !== currentPicture) {
