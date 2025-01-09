@@ -5,6 +5,9 @@
     overflow: hidden;
     box-shadow: rgb(7 7 11 / 40%) 0 4px 8px 0;
     background-color: rgb(32 34 48);
+    width: 21.45rem;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .offer-cards-content {
@@ -135,14 +138,11 @@
 
 @media (width >= 768px) {
     .offer-cards.block {
-        min-height: 566px;
         box-shadow: rgb(7 7 11 / 40%) 0 4px 8px 0;
-        min-width: 23.25rem;
-        width: 372px;
     }
 
     .offer-cards-content {
-        min-height: 566px;
+        min-height: 366px;
         padding: 35px 20px;
     }
 
@@ -167,6 +167,7 @@
 
     .section.offer-cards-container>div.offer-cards-wrapper{
         padding: 5px;
+        display: flex;
     }
 
     .offer-cards.block ul {
