@@ -61,7 +61,7 @@ export async function setDataLayer() {
   const ecid = getCookieValue('AMCV_9425401053CD40810A490D4C@AdobeOrg');
   const { hostname: server, pathname: currentPagePath, href: url } = document.location;
   const pageName = document.title;
-  const zipcode = getLocalStorage('user-zip') || '';
+  const zipcode = getLocalStorage('user_zip') || '';
   const selectedLanguage = currentPagePath.includes('en') ? 'en' : null;
   const event = 'web.webPageDetails.pageViews';
   const authenticatedState = 'unauthenticated';
