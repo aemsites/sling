@@ -5,9 +5,14 @@
     overflow: hidden;
     box-shadow: rgb(7 7 11 / 40%) 0 4px 8px 0;
     background-color: rgb(32 34 48);
-    width: 21.45rem;
+    width: 23.25rem;
     margin-left: auto;
     margin-right: auto;
+}
+
+.offer-cards.block:hover {
+    transition: box-shadow 200ms;
+    box-shadow: rgba(7 7 11 / 40%) 4px 36px 48px -12px;
 }
 
 .offer-cards-content {
@@ -77,7 +82,8 @@
     display: unset;
 }
 
-.offer-cards-content .sub-headline p {
+.offer-cards-content .sub-headline p,
+.offer-cards-content .sub-headline li {
     font-size: 0.875rem;
     line-height: 1.25;
     padding: 0;
@@ -94,6 +100,10 @@
     max-width: unset;
   }
 
+.offer-cards-content .badge p {
+    margin: 0;
+}
+
   .offer-cards-content .text-cta-container .button-container p {
   margin:0;
  }
@@ -107,7 +117,7 @@
 .offer-cards-content .badge {
     line-height: 1;
     vertical-align: bottom;
-    padding: 0 7px;
+    padding: 0.25rem 0.5rem;
     font-size: 0.875rem;
     font-weight: 600;
     background-color: rgb(16 6 159);
@@ -117,6 +127,7 @@
     margin: 0 0 1rem;
     width: fit-content;
 }
+
 
 .offer-cards-container .default-content-wrapper .button-container {
     margin-left: 114px;
@@ -143,7 +154,7 @@
 
     .offer-cards-content {
         min-height: 366px;
-        padding: 35px 20px;
+        padding: 35px 20px 16px;
     }
 
     .offer-cards .background picture img{
@@ -166,16 +177,23 @@
     }
 
     .section.offer-cards-container>div.offer-cards-wrapper{
-        padding: 5px;
+        margin: 5px;
         display: flex;
     }
 
     .offer-cards.block ul {
         list-style: none;
+        padding-inline-start: 0;
+    }
+
+    .offer-cards.block ul li {
+        display: flex;
     }
 
     .offer-cards.block ul li::before {
         content: '\2713\00a0';
+        padding-right: 8px;
+        padding-top: 3px;
     }
 
   .offer-cards-content .text-cta-container {
