@@ -155,6 +155,10 @@ main .hero-container + .section {
     padding: 0 4px
 }
 
+a.black, em.button-container > a.blue {
+    color: var(--link-color);
+}
+
 .blog-article p a:hover,
 .blog-article .auth-name a:hover {
     color: var(--link-hover-color);

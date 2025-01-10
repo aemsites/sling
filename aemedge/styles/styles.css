@@ -334,7 +334,7 @@ button.text:hover {
   box-shadow: none;
 }
 
-body.blog-article .offer-details .buttons-container {
+body.blog-article .buttons-container {
   display: flex;
   flex-direction: column;
   place-content: center;
