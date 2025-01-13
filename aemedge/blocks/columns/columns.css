@@ -277,17 +277,20 @@
 
     .columns.middle > div {
       align-items: center;
-      padding-bottom: 50px;
     }
 
     .columns.landing {
       margin: auto;
 
-      > div > div {
-        align-items: center;
+      > div {
+        padding-bottom: 50px;
 
-        &.columns-img-col {
-          order: 1;
+        > div {
+          align-items: center;
+
+          &.columns-img-col {
+            order: 1;
+          }
         }
       }
     }
