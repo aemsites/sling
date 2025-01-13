@@ -275,6 +275,11 @@
       flex-direction: column;
     }
 
+    .columns.middle > div {
+      align-items: center;
+      padding-bottom: 50px;
+    }
+
     .columns.landing {
       margin: auto;
 
