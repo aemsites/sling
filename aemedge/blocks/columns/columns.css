@@ -108,8 +108,8 @@
       -webkit-box-pack: center;
       justify-content: center;
       -webkit-box-align: center;
-      padding: 4rem 1.25rem 2.5rem;
-      width: 100%;
+      padding: 2.5rem 0;
+      margin: 0 8%;
     }
   }
 
@@ -441,7 +441,7 @@
 
           > div:first-child {
             flex: 2 1 0;
-            padding: 3.6rem 3.25rem;
+            padding: 3.6rem 0;
           }
 
           .buttons-container {
@@ -467,7 +467,7 @@
     .channel-shopper-container .columns {
       > div:first-of-type { /* stylelint-disable-line */
         > div:first-child {
-          padding: 0;
+          padding: 2rem 0 0;
         }
 
         .columns-img-col picture > img {
@@ -488,12 +488,3 @@
     }
   }
 
-  @media (width >=1440px) {
-    .banner .columns {
-      > div:first-of-type {
-        > div:first-child {
-          padding: 1rem 6.25rem;
-        }
-      }
-    }
-  }
