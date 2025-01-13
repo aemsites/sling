@@ -419,8 +419,8 @@ main img {
 }
 
 /* sections */
-main .section {
-  padding: 0 16px;
+main > .section {
+  padding: 0 8%;
   margin: 64px 0;
 }
 
@@ -586,15 +586,12 @@ margin-bottom:10px;
   width: 180px;
 }
 
-.section.channel-shopper-container {
+.main > .columns-2.banner {
     padding: 0;
   max-width: 100%;
   margin:0 auto;
   text-align: center;
 
-    .button-container:first-of-type > .channel-shopper-container {
-        padding:32px 24px;
-    }
 }
 
 .section.tabs-container .tabs-wrapper {
@@ -663,6 +660,10 @@ a.blue {
 @media (width >=768px) {
     main .section {
         padding: 0 48px;
+    }
+
+    main .section.channel-shopper-container {
+        padding: 0;
     }
 
     .international main .icons .icon img {
@@ -740,12 +741,7 @@ a.blue {
 
         .columns > div {
             flex-direction: row;
-            width: 86.5%;
             margin: 0 auto;
-
-        .columns-img-col {
-            margin-left: 20%;
-        }
         }
     }
 }

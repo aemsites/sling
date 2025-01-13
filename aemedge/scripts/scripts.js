@@ -308,9 +308,8 @@ export function decorateButtons(element) {
   element.querySelectorAll('a').forEach((a) => {
     // Set the title attribute if not already set
     a.title = a.title || a.textContent;
-
-    // Proceed only if href is different from textContent
-    if (a.href !== a.textContent) {
+    // Proceed only if href is different from textContent and is not a fragment link
+    if (a.href !== a.textContent && !a.href.includes('/fragments/')) {
       const hasIcon = a.querySelector('.icon');
       const up = a.parentElement;
       const twoup = up.parentElement;
