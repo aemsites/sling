@@ -90,6 +90,10 @@
 @media (width >= 1024px) {
     .package-cards-container.section.columns-2 {
         flex-direction: column;
+
+        > div {
+            width: unset;
+        }
     }
 }
 
