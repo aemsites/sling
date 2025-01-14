@@ -701,6 +701,10 @@ a.blue {
         padding: 64px 32px;
     }
 
+    .section.columns-2.dark {
+        padding: 64px 8%;
+    }
+
     .section.wide-columns .columns.block div {
         margin-bottom: 20px;
     }
@@ -762,11 +766,15 @@ a.blue {
         margin-left: 11%;
         margin-right: 11%;
         display: flex;
+        gap: 8%;
 
         > div {
-            flex-direction: row;
-            gap: 8%;
+            width: 46%;
         }
+    }
+
+    .section.dark {
+        margin: 0;
     }
 
   section > .default-content-wrapper > p.fragment-wrapper {
