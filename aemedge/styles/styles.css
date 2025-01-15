@@ -149,18 +149,13 @@ blockquote {
   margin: 0;
 }
 
-
-
-
-
-code,
 pre {
   font-family: var(--fixed-font-family);
   font-size: var(--body-font-size-s);
 }
 
 code {
-  font-family: var(--body-font-family);
+  font-family: inherit;
   color: #faa21b;
   font-size: inherit;
   font-weight: bold;
@@ -182,6 +177,11 @@ picture {
   text-decoration: unset;
   line-height: 0; /* this and display:block removes extra space */
   display: block;
+}
+
+.button-container del {
+    line-height: 0;
+    display: block;
 }
 
 .center {
