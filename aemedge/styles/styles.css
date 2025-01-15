@@ -160,6 +160,7 @@ pre {
 }
 
 code {
+  font-family: var(--body-font-family);
   color: #faa21b;
   font-size: inherit;
   font-weight: bold;
