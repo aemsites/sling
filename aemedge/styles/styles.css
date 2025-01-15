@@ -161,6 +161,9 @@ pre {
 
 code {
   padding: .125em;
+    color: #faa21b;
+    font-size: inherit;
+    font-weight: bold;
 }
 
 code.spacer2 {
@@ -175,8 +178,7 @@ pre {
   overflow: scroll;
 }
 
-
-del, picture {
+picture {
   text-decoration: unset;
   line-height: 0; /* this and display:block removes extra space */
   display: block;
