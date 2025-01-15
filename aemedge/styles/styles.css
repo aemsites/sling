@@ -152,6 +152,7 @@ blockquote {
 pre {
   font-family: var(--fixed-font-family);
   font-size: var(--body-font-size-s);
+  overflow: scroll;
 }
 
 code {
@@ -167,10 +168,6 @@ code.spacer2 {
 
 code.spacer3 {
   line-height: 4.5em;
-}
-
-pre {
-  overflow: scroll;
 }
 
 picture {
