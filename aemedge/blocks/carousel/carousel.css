@@ -134,6 +134,10 @@
   width: var(--slide-content-width, auto);
 }
 
+.carousel .carousel-slide-indicators {
+  display: none;
+}
+
 .carousel .carousel-slide-indicator span,
 .carousel .carousel-navigation-buttons span {
   border: 0;
