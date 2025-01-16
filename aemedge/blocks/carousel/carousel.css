@@ -164,6 +164,10 @@
   z-index: 1;
 }
 
+.carousel .carousel-navigation-buttons.hide{
+  display: none;
+}
+
 .carousel.medium .carousel-navigation-buttons {
   top: 45%;
 }

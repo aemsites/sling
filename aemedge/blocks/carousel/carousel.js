@@ -91,6 +91,16 @@ function createSlide(row, slideIndex, carouselId) {
   return slide;
 }
 
+function updateSlideArrows(rows, slideNavButtons) {
+  const isMobile = window.matchMedia('(max-width: 767px)').matches;
+  const imageCount = rows.length;
+  if ((isMobile && imageCount <= 2) || (!isMobile && imageCount <= 3)) {
+    slideNavButtons.classList.add('hide');
+  } else {
+    slideNavButtons.classList.remove('hide');
+  }
+}
+
 let carouselId = 0;
 export default async function decorate(block) {
   const variant = block.classList.value;
@@ -119,7 +129,6 @@ export default async function decorate(block) {
     slideIndicators.classList.add('carousel-slide-indicators');
     slideIndicatorsNav.append(slideIndicators);
     block.append(slideIndicatorsNav);
-
     const slideNavButtons = document.createElement('div');
     slideNavButtons.classList.add('carousel-navigation-buttons');
     slideNavButtons.innerHTML = `
@@ -128,6 +137,8 @@ export default async function decorate(block) {
     `;
 
     container.append(slideNavButtons);
+    updateSlideArrows(rows, slideNavButtons);
+    window.addEventListener('resize', () => updateSlideArrows(rows, slideNavButtons));
   }
 
   rows.forEach((row, idx) => {
