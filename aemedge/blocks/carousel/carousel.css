@@ -19,6 +19,10 @@
   padding: 0;
 }
 
+.carousel .carousel-slide-indicators.hide {
+  display: none;
+}
+
 .carousel .carousel-slides {
   display: flex;
   scroll-behavior: smooth;
@@ -134,10 +138,6 @@
   width: var(--slide-content-width, auto);
 }
 
-.carousel .carousel-slide-indicators {
-  display: none;
-}
-
 .carousel .carousel-slide-indicator span,
 .carousel .carousel-navigation-buttons span {
   border: 0;
@@ -162,6 +162,10 @@
   align-items: center;
   justify-content: space-between;
   z-index: 1;
+}
+
+.carousel .carousel-navigation-buttons.hide{
+  display: none;
 }
 
 .carousel.medium .carousel-navigation-buttons {
