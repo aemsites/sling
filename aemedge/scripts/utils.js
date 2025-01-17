@@ -755,7 +755,7 @@ export function configSideKick() {
     sections.forEach((section) => section.classList.toggle('highlight'));
   };
 
-  const sk = document.querySelector('helix-sidekick');
+  const sk = document.querySelector('aem-sidekick');
   if (sk) {
   // sidekick already loaded
     sk.addEventListener('custom:showblocks', showBlocks);
@@ -764,9 +764,9 @@ export function configSideKick() {
   // wait for sidekick to be loaded
     document.addEventListener('sidekick-ready', () => {
     // sidekick now loaded
-      document.querySelector('helix-sidekick')
+      document.querySelector('aem-sidekick')
         .addEventListener('custom:showblocks', showBlocks);
-      document.querySelector('helix-sidekick')
+      document.querySelector('aem-sidekick')
         .addEventListener('custom:showsections', showSections);
     }, { once: true });
   }
