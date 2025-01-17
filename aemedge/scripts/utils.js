@@ -757,9 +757,7 @@ export function configSideKick() {
     // sidekick now loaded
     document.querySelector('aem-sidekick')
       .addEventListener('custom:eventdetials', (e) => {
-        console.log(e.name);
-        console.log(e.detail);
-        console.log(e);
+        console.log(e.detail.config);
       });
   } else {
   // wait for sidekick to be loaded
