@@ -723,12 +723,6 @@ export async function getZipcode() {
 }
 
 export function configSideKick() {
-  document.addEventListener('sidekick-ready', () => {
-    // sidekick now loaded
-    document.querySelector('aem-sidekick')
-      .addEventListener('foo', (e) => console.log(e.detail));
-  });
-
   const showBlocks = ({ detail: payload }) => {
     console.log('a custom event happened', payload);
     const blocks = document.querySelectorAll('div.block');
@@ -760,10 +754,16 @@ export function configSideKick() {
   // sidekick already loaded
     sk.addEventListener('custom:showblocks', showBlocks);
     sk.addEventListener('custom:showsections', showSections);
+    // sidekick now loaded
+    document.querySelector('aem-sidekick')
+      .addEventListener('foo', (e) => console.log(e.detail));
   } else {
   // wait for sidekick to be loaded
     document.addEventListener('sidekick-ready', () => {
-    // sidekick now loaded
+      // sidekick now loaded
+      document.querySelector('aem-sidekick')
+        .addEventListener('foo', (e) => console.log(e.detail));
+      // sidekick now loaded
       document.querySelector('aem-sidekick')
         .addEventListener('custom:showblocks', showBlocks);
       document.querySelector('aem-sidekick')
