@@ -756,13 +756,13 @@ export function configSideKick() {
     sk.addEventListener('custom:showsections', showSections);
     // sidekick now loaded
     document.querySelector('aem-sidekick')
-      .addEventListener('foo', (e) => console.log(e.detail));
+      .addEventListener('custom:eventdetials', (e) => console.log(e.detail));
   } else {
   // wait for sidekick to be loaded
     document.addEventListener('sidekick-ready', () => {
       // sidekick now loaded
       document.querySelector('aem-sidekick')
-        .addEventListener('foo', (e) => console.log(e.detail));
+        .addEventListener('custom:eventdetials', (e) => console.log(e.detail));
       // sidekick now loaded
       document.querySelector('aem-sidekick')
         .addEventListener('custom:showblocks', showBlocks);

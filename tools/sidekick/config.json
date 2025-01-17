@@ -66,6 +66,11 @@
         "title": "Sections",
         "event": "showsections", 
         "environments": ["dev", "preview"]
+      },      {
+        "id": "eventdetials",
+        "title": "Events",
+        "event": "eventdetials", 
+        "environments": ["dev", "preview"]
       }
     ]
   }
