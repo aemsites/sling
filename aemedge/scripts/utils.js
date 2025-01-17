@@ -723,6 +723,12 @@ export async function getZipcode() {
 }
 
 export function configSideKick() {
+  document.addEventListener('sidekick-ready', () => {
+    // sidekick now loaded
+    document.querySelector('aem-sidekick')
+      .addEventListener('foo', (e) => console.log(e.detail));
+  });
+
   const showBlocks = ({ detail: payload }) => {
     console.log('a custom event happened', payload);
     const blocks = document.querySelectorAll('div.block');
