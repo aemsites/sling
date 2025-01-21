@@ -1,3 +1,7 @@
+.columns-wrapper {
+  container: columns / inline-size;
+}
+
 .columns {
   font-size:18px;
   line-height: 1.5em;
@@ -6,15 +10,12 @@
   .columns > div {
     display: flex;
     flex-direction: column;
+    gap: 24px;
   }
 
   .columns.icons > div {
     display: flex;
     flex-direction: row;
-  }
-
-  .columns img {
-    width: 30%;
   }
 
   .columns .columns-img-col img {
@@ -47,71 +48,145 @@
   }
 }
 
-  .banner .columns {
-    picture {
-      flex: 1 1 0;
-      display: flex;
-      -webkit-box-pack: center;
-      justify-content: center;
-      -webkit-box-align: center;
-      align-items: center;
+.columns.cards > div > div {
+  border-radius: 4px;
+  box-shadow: 0 5px 15px 0 rgb(0 0 0 / 14%);
+  padding-top: 40px;
+  padding-bottom: 40px;
+  background: var(--clr-white);
+  color: var(--text-color);
+  min-width: 140px;
 
+  > * {
+    width: calc(100% - 70px);
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+.columns:not(.cards) > div > div {
+ min-width: 100%;
+
+  &.bg-primary-light {
+    background: var(--primary-light);
+  }
+
+  &.bg-white {
+    background: var(--clr-white);
+  }
+
+  &.bg-dark-rock-candy {
+    background: var(--dark-rock-candy);
+  }
+
+  &.bg-dark-tangerine {
+    background-color: var(--dark-tangerine);
+  }
+
+  &.bg-primary-dark {
+    background: var(--primary-dark);
+  }
+
+  &.bg-highlight-coal {
+    background: var(--highlight-coal);
+  }
+
+  &.bg-blueberry {
+    background: var(--blueberry);
+  }
+
+  &.bg-mac-and-cheese {
+    background: var(--mac-and-cheese);
+  }
+
+  &[class^="bg-"] { /* stylelint-disable no-descending-specificity */
+    padding-top: 12px;
+    padding-bottom: 12px;
+
+    > * {
+      width: calc(100% - 24px);
+      margin-left: auto;
+      margin-right: auto;
     }
 
-    picture:last-of-type {
-      position: relative;
-      object-fit: contain;
-      max-width: 80%;
-      max-height: 412px;
-      margin: 0;
-    }
-
-    .columns-img-col picture {
-      max-width: 100%;
-
-      > img {
-        max-width:100%;
-        width:unset;
-      }
-    }
-
-    > div > div > p {
-      font-size: 1.25rem;
-      line-height: 1.5rem;
-      font-weight: 600;
-      margin: 0 0 1.25rem;
-    }
-
-    > div > div > h2 {
-      font-size: 2rem;
-      line-height: 2.75rem;
-      font-weight: 600;
-      margin: 1.25rem 0 ;
-    }
-
-    .buttons-container {
-      position: relative;
-      margin: 0 auto;
-      padding-bottom: 1.6rem;
-
-      span.link-button-text {
-        color: var(--clr-white);
-        text-align: center;
-      }
-    }
-
-    > div:first-of-type {
-      position: relative;
-      box-sizing: border-box;
-      display: flex;
-      flex-flow: column wrap;
-      -webkit-box-pack: center;
-      justify-content: center;
-      -webkit-box-align: center;
-      padding: 2.5rem 0;
-      margin: 0 8%;
+    h1, h2, h3, h4, h5, h6, p, li, a {
+      color: var(--clr-white);
     }
   }
+
+  &.bg-white, &.bg-primary-light {
+    h1, h2, h3, h4, h5, h6, p, li, a {
+      color: var(--clr-black);
+    }
+  }
+}
+
+.banner .columns {
+  picture {
+    flex: 1 1 0;
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+
+  }
+
+  picture:last-of-type {
+    position: relative;
+    object-fit: contain;
+    max-width: 80%;
+    max-height: 412px;
+    margin: 0;
+  }
+
+  .columns-img-col picture {
+    max-width: 100%;
+
+    > img {
+      max-width:100%;
+      width:unset;
+    }
+  }
+
+  > div > div > p {
+    font-size: 1.25rem;
+    line-height: 1.5rem;
+    font-weight: 600;
+    margin: 0 0 1.25rem;
+  }
+
+  > div > div > h2 {
+    font-size: 2rem;
+    line-height: 2.75rem;
+    font-weight: 600;
+    margin: 1.25rem 0 ;
+  }
+
+  .buttons-container {
+    position: relative;
+    margin: 0 auto;
+    padding-bottom: 1.6rem;
+
+    span.link-button-text {
+      color: var(--clr-white);
+      text-align: center;
+    }
+  }
+
+  > div:first-of-type {
+    position: relative;
+    box-sizing: border-box;
+    display: flex;
+    flex-flow: column wrap;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    padding: 2.5rem 0;
+    margin: 0 8%;
+  }
+}
+
 
   .banner.small .columns {
     picture {
@@ -258,12 +333,17 @@
   @media (width >= 768px) {
     .columns > div {
       flex-direction: row;
-      gap: 8%;
+      gap: 24px;
+      justify-content: center;
     }
 
     .columns > div > div {
       flex: 1;
       order: unset;
+    }
+
+    .columns.columns-2-cols > div {
+      gap: 7%;
     }
 
     .banner .columns > div {
@@ -273,10 +353,6 @@
 
     .tabs-panel .columns > div {
       flex-direction: column;
-    }
-
-    .columns.middle > div {
-      align-items: center;
     }
 
     .columns.landing {
@@ -293,6 +369,10 @@
           }
         }
       }
+    }
+
+    .columns:not(.cards) > div > div {
+      min-width: unset;
     }
 
     .columns-img-col .button-container a{
@@ -378,6 +458,37 @@
     .rewards .section.rewards-column.columns-container .columns-wrapper{
       width: 100%;
     }
+
+    @container (width > 200px) {
+      .columns {
+        &.columns-4-cols, &.columns-5-cols, &.columns-6-cols {
+          > div {
+            flex-wrap: wrap;
+
+            > div {
+              min-width: 33%;
+              flex: 140px;
+            }
+          }
+        }
+      }
+    }
+
+    @container (width > 500px) {
+      .columns {
+        &.columns-4-cols {
+          > div > div {
+              min-width: 140px;
+          }
+        }
+
+        &.columns-5-cols, &.columns-6-cols {
+          > div > div {
+            min-width: 30%;
+          }
+        }
+      }
+    }
   }
 
   @media (width >=992px) {
@@ -389,6 +500,18 @@
   }
 
   @media (width >=1024px) {
+    .columns {
+      &.columns-4-cols, &.columns-5-cols, &.columns-6-cols {
+        > div {
+          flex-wrap: nowrap;
+
+          > div {
+            min-width: unset;
+          }
+        }
+      }
+    }
+
     .columns.icons.block{
       width: 100%;
       max-width: 40rem;

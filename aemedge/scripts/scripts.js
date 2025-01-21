@@ -29,6 +29,21 @@ const TEMPLATES = ['blog-article', 'blog-category']; // add your templates here
 const TEMPLATE_META = 'template';
 
 /**
+ * Sanitizes a string for use as class name.
+ * @param {string} name The unsanitized string
+ * @returns {string} The class name
+ */
+export function toClassName(name) {
+  return typeof name === 'string'
+    ? name
+      .toLowerCase()
+      .replace(/[^0-9a-z]/gi, '-')
+      .replace(/-+/g, '-')
+      .replace(/^-|-$/g, '')
+    : '';
+}
+
+/**
  * Builds hero block and prepends to main in a new section.
  * @param {Element} main The container element
  */
@@ -412,6 +427,37 @@ export function makeLastButtonSticky() {
 }
 
 /**
+ * Extracts color information from p text content in curly braces.
+ * @returns {Object|null} - An object containing the extracted color
+ * or null if no color information is found.
+ */
+export function extractElementsColor() {
+  const textNodes = Array.from(document.querySelectorAll('div > p:first-child'));
+
+  textNodes.forEach((node) => {
+    const up = node.parentElement;
+    const text = node.textContent;
+    // color must be letters or dashes
+    const colorRegex = text && /{([a-zA-Z-]+)?}/;
+    // number must be 2 digits
+    const numberRegex = text && /\{(\d{1,2})?}/;
+    const colorMatches = text.match(colorRegex);
+    const numberMatches = text.match(numberRegex);
+    if (colorMatches || numberMatches) {
+      if (colorMatches) {
+        const backgroundColor = colorMatches[1];
+        up.classList.add(`bg-${toClassName(backgroundColor)}`);
+      }
+      if (numberMatches) {
+        const percentWidth = numberMatches[1];
+        up.style.maxWidth = `${percentWidth}%`;
+      }
+      node.remove();
+    }
+  });
+}
+
+/**
    * load fonts.css and set a session storage flag
    */
 async function loadFonts() {
@@ -422,20 +468,7 @@ async function loadFonts() {
     // do nothing
   }
 }
-/**
-   * Sanitizes a string for use as class name.
-   * @param {string} name The unsanitized string
-   * @returns {string} The class name
-   */
-export function toClassName(name) {
-  return typeof name === 'string'
-    ? name
-      .toLowerCase()
-      .replace(/[^0-9a-z]/gi, '-')
-      .replace(/-+/g, '-')
-      .replace(/^-|-$/g, '')
-    : '';
-}
+
 /**
    * load the template specific js and css
    */
@@ -548,6 +581,7 @@ export function decorateMain(main) {
   buildSpacer(main);
   decorateExtImage(main);
   decorateLinkedImages();
+  extractElementsColor();
 }
 
 /**
