@@ -568,8 +568,6 @@ export function decorateMain(main) {
    * @param {Element} doc The container element
    */
 async function loadEager(doc) {
-  // load sling martech eagerly
-  await loadSlingMartech();
   document.documentElement.lang = 'en';
   decorateTemplateAndTheme();
   const main = doc.querySelector('main');
@@ -580,6 +578,8 @@ async function loadEager(doc) {
     decorateMain(main);
     await loadTemplate(main);
     document.body.classList.add('appear');
+    // load sling martech eagerly
+    await loadSlingMartech();
     await waitForLCP(LCP_BLOCKS);
   }
 
