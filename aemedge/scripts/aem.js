@@ -509,7 +509,7 @@ function decorateSections(main) {
       if (spacerMatch) {
         const spacerHeight = parseInt(spacerMatch[1], 10);
         const spacerDiv = document.createElement('div');
-        spacerDiv.style.height = `${spacerHeight*10}px`;
+        spacerDiv.style.height = `${spacerHeight * 10}px`;
         code.insertAdjacentElement('afterend', spacerDiv);
         code.style.display = 'none';
       }
