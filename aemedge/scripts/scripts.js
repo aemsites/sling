@@ -578,8 +578,6 @@ async function loadEager(doc) {
     decorateMain(main);
     await loadTemplate(main);
     document.body.classList.add('appear');
-    // load sling martech eagerly
-    await loadSlingMartech();
     await waitForLCP(LCP_BLOCKS);
   }
 
@@ -591,6 +589,8 @@ async function loadEager(doc) {
   } catch (e) {
     // do nothing
   }
+  // load sling martech eagerly
+  await loadSlingMartech();
 }
 
 /**
