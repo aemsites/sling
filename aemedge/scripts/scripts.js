@@ -568,6 +568,8 @@ export function decorateMain(main) {
    * @param {Element} doc The container element
    */
 async function loadEager(doc) {
+  // load sling martech eagerly
+  await loadSlingMartech();
   document.documentElement.lang = 'en';
   decorateTemplateAndTheme();
   const main = doc.querySelector('main');
@@ -645,8 +647,6 @@ async function loadLazy(doc) {
   buildGlobalBanner(main);
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
   loadFonts();
-  // load sling martech eagerly
-  await loadSlingMartech();
 }
 
 /**
