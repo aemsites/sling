@@ -589,8 +589,6 @@ async function loadEager(doc) {
   } catch (e) {
     // do nothing
   }
-  // load sling martech eagerly
-  loadSlingMartech();
 }
 
 /**
@@ -660,6 +658,8 @@ function loadDelayed() {
 }
 
 async function loadPage() {
+  // load sling martech eagerly
+  await loadSlingMartech();
   await loadEager(document);
   await loadLazy(document);
   loadDelayed();
