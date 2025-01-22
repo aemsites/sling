@@ -645,6 +645,8 @@ async function loadLazy(doc) {
   buildGlobalBanner(main);
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
   loadFonts();
+  // load sling martech eagerly
+  await loadSlingMartech();
 }
 
 /**
@@ -658,8 +660,6 @@ function loadDelayed() {
 }
 
 async function loadPage() {
-  // load sling martech eagerly
-  await loadSlingMartech();
   await loadEager(document);
   await loadLazy(document);
   loadDelayed();
