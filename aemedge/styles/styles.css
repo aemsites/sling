@@ -656,6 +656,27 @@ a.blue {
     color: var(--link-color);
 }
 
+.section.columns-2.dark.carousel-container {
+  width: 100%;
+  margin: 0;
+  gap: 0;
+  padding: 50px 0;
+}
+
+.section.carousel-container.columns-2 .column-1 {
+  width: 33.3333%;
+  margin-left: 8.3333%;
+}
+
+.section.carousel-container.columns-2 .column-2 {
+  width: 41.6666%;
+  margin-left: 8.3333%;
+}
+
+.section.carousel-container.columns-2 .column-1 p picture {
+  width: 50%;
+}
+
 @media (width >=768px) {
     main .section {
         padding: 0 48px;
