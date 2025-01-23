@@ -11,6 +11,7 @@ import {
   getMetadata,
   decorateBlock,
   loadBlock,
+  toClassName,
 } from './aem.js';
 
 import {
@@ -33,15 +34,6 @@ const TEMPLATE_META = 'template';
  * @param {string} name The unsanitized string
  * @returns {string} The class name
  */
-export function toClassName(name) {
-  return typeof name === 'string'
-    ? name
-      .toLowerCase()
-      .replace(/[^0-9a-z]/gi, '-')
-      .replace(/-+/g, '-')
-      .replace(/^-|-$/g, '')
-    : '';
-}
 
 /**
  * Builds hero block and prepends to main in a new section.
@@ -432,18 +424,28 @@ export function makeLastButtonSticky() {
  * or null if no color information is found.
  */
 export function extractElementsColor() {
-  const textNodes = Array.from(document.querySelectorAll('div > p:first-child'));
-
+//  const textNodes = Array.from(document.querySelectorAll('div > p:first-child'));
+  const textNodes = Array.from(document.querySelectorAll('h1, h2, h3, h4, h5, h6, li, p'));
   textNodes.forEach((node) => {
     const up = node.parentElement;
+    const isParagraph = node.tagName === 'P';
     const text = node.textContent;
     // color must be letters or dashes
-    const colorRegex = text && /{([a-zA-Z-]+)?}/;
-    // number must be 2 digits
+    const colorRegex = text && /{([a-zA-Z-\s]+)?}/;
     const numberRegex = text && /\{(\d{1,2})?}/;
+    const spanRegex = new RegExp(`\\[${colorRegex.source}([a-zA-Z0-9\\s]*.)\\]`);
     const colorMatches = text.match(colorRegex);
     const numberMatches = text.match(numberRegex);
-    if (colorMatches || numberMatches) {
+    const spanMatches = text.match(spanRegex);
+    // case where colored text is wrapped in a span
+    if (spanMatches) {
+      node.innerHTML = text.replace(new RegExp(spanRegex, 'g'), (match, color, spanText) => {
+        const span = createTag('span', { class: `${toClassName(color)}` }, spanText);
+        return span.outerHTML;
+      });
+    }
+    // case where only the color or width is in the first cell
+    if (isParagraph && up.tagName === 'DIV' && up.firstElementChild === node && text.trim().startsWith('{') && text.trim().endsWith('}')) {
       if (colorMatches) {
         const backgroundColor = colorMatches[1];
         up.classList.add(`bg-${toClassName(backgroundColor)}`);
