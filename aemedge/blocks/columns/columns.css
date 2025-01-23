@@ -109,14 +109,23 @@
       margin-right: auto;
     }
 
-    h1, h2, h3, h4, h5, h6, p, li, a:not(.button) {
+    h1, h2, h3, h4, h5, h6, p, li {
       color: var(--clr-white);
+    }
+
+    a:not(.button, .white) {
+      color: var(--clr-white);
+      text-decoration: underline;
     }
   }
 
-  &.bg-white, &.bg-primary-light {
-    h1, h2, h3, h4, h5, h6, p, li, a:not(.button) {
+  &.bg-white, &.bg-primary-light, &.bg-mac-and-cheese {
+    h1, h2, h3, h4, h5, h6, p, li {
       color: var(--clr-black);
+    }
+
+    a:not(.button, .blue) {
+      color: var(--link-color);
     }
   }
 }

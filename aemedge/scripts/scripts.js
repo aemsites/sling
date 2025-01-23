@@ -154,17 +154,42 @@ function autolinkModals(element) {
 }
 
 export function buildMultipleButtons(main) {
-  const buttons = main.querySelectorAll('.button-container');
+  let siblingButton;
+  const buttons = main.querySelectorAll('.button-container:not(.subtext)');
   buttons.forEach((button) => {
-    if (button.nextElementSibling
-        && (button.nextElementSibling.classList.contains('button-container')
-            || (button.nextElementSibling.firstElementChild && button.nextElementSibling.firstElementChild.classList.contains('button-container')))) {
-      const siblingButton = button.nextElementSibling;
+    const nextButton = button.nextElementSibling;
+
+    if (nextButton
+        && nextButton.classList.contains('subtext')) {
+      siblingButton = button.nextElementSibling;
+
+      if (siblingButton && !button.parentElement.classList.contains('button-subtext-container')) {
+        const buttonContainer = createTag('div', { class: 'button-subtext-container' });
+        button.parentElement.insertBefore(buttonContainer, button);
+        buttonContainer.append(button, siblingButton);
+      }
+    }
+
+    if (nextButton
+        && ((nextButton.classList.contains('button-container') && !button.nextElementSibling.classList.contains('subtext'))
+        )) {
+      siblingButton = button.nextElementSibling;
+
       if (siblingButton && !button.parentElement.classList.contains('buttons-container')) {
         const buttonContainer = createTag('div', { class: 'buttons-container' });
         button.parentElement.insertBefore(buttonContainer, button);
         buttonContainer.append(button, siblingButton);
       }
+    }
+  });
+
+  const buttonGroups = main.querySelectorAll('.button-subtext-container');
+  buttonGroups.forEach((buttonGroup) => {
+    siblingButton = buttonGroup.nextElementSibling;
+    if (siblingButton && !buttonGroup.parentElement.classList.contains('buttons-container')) {
+      const buttonContainer = createTag('div', { class: 'buttons-container' });
+      buttonGroup.parentElement.insertBefore(buttonContainer, buttonGroup);
+      buttonContainer.append(buttonGroup, siblingButton);
     }
   });
 }
@@ -335,12 +360,16 @@ export function decorateButtons(element) {
         }
         const isSubscript = Tagname === 'sub';
         const isSuperscript = Tagname === 'sup';
-        if (isSubscript) {
+        const isEm = up.tagName === 'EM';
+        if (isSubscript && !isEm) {
           a.classList.add('blue');
-          a.parentElement.classList.add('button-container');
-        } else if (isSuperscript) {
+          up.classList.add('button-container', 'subtext');
+        } else if (isSubscript && isEm) {
           a.classList.add('white');
-          a.parentElement.classList.add('button-container');
+          twoup.classList.add('button-container', 'subtext');
+        } else if (isSuperscript) {
+          a.classList.add('black');
+          up.classList.add('button-container', 'subtext');
         } else {
           const linkText = a.textContent;
           const linkTextEl = document.createElement('span');
@@ -386,7 +415,7 @@ export function decorateButtons(element) {
               twoup.classList.add('button-container');
             }
 
-            // Secondary buttons in non-blog pages
+            // Secondary buttons in non-blog pages - these are light
             if (
               up.childNodes.length === 1 && up.tagName === 'EM' && threeup.childNodes.length === 1 && twoup.tagName === 'DEL' && (threeup.tagName === 'P' || threeup.tagName === 'DIV')
             ) {
@@ -394,7 +423,7 @@ export function decorateButtons(element) {
               threeup.classList.add('button-container');
             }
 
-            // Dark buttons
+            // Dark buttons REMOVE
             if (
               up.childNodes.length === 1 && up.tagName === 'EM' && twoup.tagName === 'STRONG' && threeup.tagName === 'DEL' && (threeup.parentElement.tagName === 'P' || threeup.parentElement.tagName === 'DIV')
             ) {
@@ -437,13 +466,25 @@ export function extractElementsColor() {
     const colorMatches = text.match(colorRegex);
     const numberMatches = text.match(numberRegex);
     const spanMatches = text.match(spanRegex);
-    // case where colored text is wrapped in a span
+    // case where colored text is wrapped in a span.
+    // no HTML elements allowed (no bold, no links).
     if (spanMatches) {
       node.innerHTML = text.replace(new RegExp(spanRegex, 'g'), (match, color, spanText) => {
         const span = createTag('span', { class: `${toClassName(color)}` }, spanText);
         return span.outerHTML;
       });
     }
+
+    // case for buttons
+    if (isParagraph && node.querySelector('a')) {
+      const anchor = node.querySelector('a');
+      if (colorMatches) {
+        anchor.classList.add(`bg-${toClassName(colorMatches[1])}`);
+        // remove the color from the text
+        anchor.textContent = anchor.textContent.replace(colorMatches[0], '');
+      }
+    }
+
     // case where only the color or width is in the first cell
     if (isParagraph && up.tagName === 'DIV' && up.firstElementChild === node && text.trim().startsWith('{') && text.trim().endsWith('}')) {
       if (colorMatches) {
