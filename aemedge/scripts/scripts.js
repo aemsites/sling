@@ -589,8 +589,6 @@ async function loadEager(doc) {
   } catch (e) {
     // do nothing
   }
-  // load sling martech eagerly
-  await loadSlingMartech();
 }
 
 /**
@@ -617,6 +615,8 @@ async function loadHeader(header) {
    * @param {Element} doc The container element
    */
 async function loadLazy(doc) {
+  // load sling martech lazily
+  await loadSlingMartech();
   autolinkModals(doc);
   const main = doc.querySelector('main');
   await loadBlocks(main);
