@@ -44,6 +44,7 @@ export default {
     // Remove unnecessary parts of the content
     const main = document.querySelector('main');
     const results = [];
+    // Get metadata from document
     const meta = WebImporter.Blocks.getMetadata(document);
     let authorImage = document.querySelector('.author-card--author-image')?.src;
     let authorName = document.querySelector('.author-card--author-name')?.textContent;
