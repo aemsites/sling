@@ -1,0 +1,133 @@
+.accordion-wrapper {
+  padding-left: 2.5rem;
+}
+
+.tabs-panel .accordion-wrapper {
+  padding-left: 0;
+}
+
+.accordion .details {
+  overflow-x: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 0.75rem 1rem 0 0;
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+.accordion .details + .details {
+  margin-top: 10px;
+  width: 100%;
+}
+
+.accordion .details .summary {
+  position: relative;
+  cursor: pointer;
+  list-style: none;
+  overflow: auto;
+  display: flex;
+  background-color: transparent;
+  font-size: 1.125rem;
+  font-weight: 600;
+  border: none;
+  text-align: left;
+  line-height: 1.375;
+  margin: 0;
+  color: rgb(23 23 37);
+  padding-bottom: 1rem; /* issue 147 to reduce spacing between accordions summary and body */
+}
+
+.accordion .details.open .summary {
+  font-weight: bold;
+  transition: color 0.3s ease-in-out 0s;
+}
+
+.accordion .details .summary::-webkit-details-marker {
+  display: none;
+}
+
+.accordion .details .summary::before {
+  content: '';
+  position: relative;
+  color: rgb(23 23 37);
+  background: url('../../icons/accordion-arrow-down.svg') no-repeat;
+  width: 16px;
+  height: 16px;
+  margin: 1px 1.5rem 0 0; /* issue 147 - margin top updates */
+  transition: transform 0.5s ease 0s;
+}
+
+.accordion .details.open .summary::before {
+  transform: rotate3d(1, 0, 0, -180deg);
+  transition: transform 0.5s ease 0s;
+}
+
+.accordion .details .summary p {
+  margin: unset;
+  line-height: unset;
+}
+
+.accordion .details .accordion-item-body {
+  text-align: left;
+  height: auto;
+  max-height: 0;
+  overflow: hidden;
+  padding-left: 42px;
+  transition: max-height 500ms ease-in-out 0s;
+  font-size: 1rem;
+}
+
+.accordion.details.open .accordion-item-body ul {
+  margin-left: 40px;
+}
+
+.accordion.details.open .accordion-item-body ul li {
+  padding: 0.5rem 0;
+}
+
+.rewards .accordion-container .default-content-wrapper h2{
+  text-align: center;
+}
+
+/* width greater than 768px */
+@media (width >= 768px) {
+  .accordion .details .accordion-item-body ul li {
+    padding: 0.5rem 4rem 0.5rem 0;
+  }
+
+  .accordion .details.open .accordion-item-body ul li {
+    padding: 0.5rem 4rem 0.5rem 0;
+  }
+
+  .accordion .details .accordion-item-body {
+    padding-left: 65px;
+    padding-right: 8rem;
+    line-height: 1.5rem;
+  }
+
+  .accordion .details.open .accordion-item-body {
+    padding-left: 65px;
+  }
+
+  .accordion .details .summary::before {
+    margin-left: 1.5rem;
+  }
+
+  .accordion-wrapper {
+    margin: 1.25rem auto 4rem;
+  }
+
+  .tabs-panel .accordion-wrapper {
+    padding-left: 1rem;
+    width: unset;
+    max-width: 780px;
+    margin: auto;
+  }
+
+  .rewards .accordion-wrapper .accordion {
+    max-width: 780px;
+    margin: auto;
+    padding: 0 1rem;
+  }
+
+}

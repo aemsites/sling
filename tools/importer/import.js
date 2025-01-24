@@ -44,6 +44,7 @@ export default {
     // Remove unnecessary parts of the content
     const main = document.querySelector('main');
     const results = [];
+    // Get metadata from document
     const meta = WebImporter.Blocks.getMetadata(document);
     let authorImage = document.querySelector('.author-card--author-image')?.src;
     let authorName = document.querySelector('.author-card--author-name')?.textContent;
@@ -371,6 +372,8 @@ export default {
     WebImporter.rules.transformBackgroundImages(main, document);
     WebImporter.rules.adjustImageUrls(main, url, params.originalURL);
     WebImporter.rules.convertIcons(main, document);
+    // // Add metadata block to the document
+    const block = WebImporter.Blocks.getMetadataBlock(document, meta);
 
     // Handle anchor links or odd links
     // commenting due to the issue - https://github.com/aemsites/sling/issues/122

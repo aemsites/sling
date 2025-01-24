@@ -1,0 +1,396 @@
+/* stylelint-disable no-descending-specificity */
+.plan-offer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 64px;
+    text-align: center;
+    line-height: 1.1;
+}
+
+.plan-offer .icon-info {
+    height: 20px;
+    width: 20px;
+}
+
+.plan-offer .section-title {
+    font-size: calc(27.3775px + 1.2327vw);
+    margin: 0;
+    line-height: 1.4;
+}
+
+.plan-offer .section-subtitle {
+    margin: 0 0 2.5rem;
+}
+
+.plan-offer .card-wrapper {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    gap: 16px;
+}
+
+.plan-offer .card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    margin: 1px 0 16px 1px;
+    padding: 1px;
+    box-shadow: rgb(0 0 0 / 10%) 0 0 20px;
+    border-radius: 4px;
+    width: 347px;
+    font-size: 14px;
+    line-height: 14px;
+}
+
+.plan-offer .plan-link {
+    font-weight: 600;
+}
+
+.plan-offer .carousel {
+    padding: 0 16px 16px;
+}
+
+.plan-offer .carousel .carousel-slide {
+    min-width: 34%;
+    margin-top: 6px;
+}
+
+.plan-offer .carousel .carousel-navigation-buttons {
+    display: none;
+}
+
+.plan-offer .carousel .carousel-slide-indicators {
+    display: flex;
+    justify-content: center;
+}
+
+.plan-offer .card.single .card-body-text {
+    font-weight: 700;
+    font-size: 18px;
+}
+
+.plan-offer .card-body-subtext {
+    margin-top: 3px;
+    margin-bottom: 16px;
+}
+
+.plan-offer .carousel li button {
+    background: var(--dark-color);
+    border-radius: 50%;
+    width: 9px;
+    height: 9px;
+    margin: 3px;
+    padding: unset;
+    min-width: unset;
+}
+
+.plan-offer .card-body .button {
+    margin-top: 0;
+    width: 311px;
+    border: 0;
+    font-size: 16px;
+    border-radius: 2px;
+}
+
+.plan-offer .card-body button:disabled, button:disabled:hover {
+    background: rgb(112 112 121);
+}
+
+.plan-offer .card-body .button.compare {
+    background: linear-gradient(to right, rgb(32 34 48), rgb(68 68 79));
+    color: white;
+}
+
+.plan-offer .carousel .carousel-slide .carousel-slide-image {
+    aspect-ratio: 1;
+}
+
+.plan-offer .card.single.orange, .plan-offer .card .button.plan, .plan-offer .card-body .button  {
+    background: linear-gradient(to right, rgb(255 163 0), rgb(255 208 60));
+    color: rgb(23 23 37);
+}
+
+.plan-offer .card.single.blue, .plan-offer .card.single.blue .button.plan {
+    background: linear-gradient(to right, rgb(0 50 175) 0.01%, rgb(0 91 255) 100%);
+    color: white;
+}
+
+.plan-offer .card.single.blue:hover {
+    box-shadow: rgb(0 50 175 / 40%) 0 0 30px;
+}
+
+.plan-offer .card.single.orange:hover {
+    box-shadow: rgb(255 163 0 / 40%) 0 0 30px;
+}
+
+.plan-offer .card.combo {
+    margin: 0 auto;
+    display: flex;
+    border-radius: 4px;
+    color: rgb(23 23 37);
+    background: linear-gradient(87.61deg, rgb(23 23 37) 0%, rgb(0 50 175) 100%) rgb(255 255 255);
+    flex-flow: row wrap;
+    justify-content: space-around;
+    align-items: center;
+    border: 1px transparent solid;
+}
+
+.plan-offer .card.combo:hover {
+    border: 1px white solid;
+}
+
+.plan-offer .card.combo:hover::before {
+        content: "";
+        z-index: -1;
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(-45deg, #ffcf3b 0%, #005aff 100% );
+        transform: translate3d(0, 2px, 0) scale(0.95);
+        filter: blur(20px);
+        opacity: var(0.7);
+        transition: opacity 0.3s;
+        border-radius: inherit;
+    }
+
+.plan-offer .card.combo:hover::after {
+        content: "";
+        z-index: -1;
+        position: absolute;
+        inset: 0;
+        background: inherit;
+        border-radius: inherit;
+    }
+
+.modal-content .card-header,
+.plan-offer .card .card-header {
+    justify-content: space-between;
+    padding: 8px 16px;
+    display: flex;
+    width: 100%;
+    box-sizing: border-box;
+    align-items: center;
+}
+
+.modal-content .card-header h3,
+.plan-offer .card .card-header h3 {
+    font-size: 18px;
+    letter-spacing: 2px;
+}
+
+.plan-offer .card.single.orange .card-header {
+    background: linear-gradient(to right, rgb(255 163 0), rgb(255 208 60));
+    color: black;
+}
+
+.plan-offer .card.single.blue .card-header {
+    background: linear-gradient(to right, rgb(0 50 175) 0.01%, rgb(0 91 255) 100%);
+    color: white;
+}
+
+.plan-offer .card.combo .card-header {
+    color: white;
+}
+
+.plan-offer .card.combo .card-body {
+    background-color: unset;
+    color: white;
+    text-align: left;
+}
+
+.plan-offer .card.combo .card-body .channels,
+.plan-offer .card.combo .card-body .stream-devices,
+.plan-offer .card.combo .card-body .compare.button {
+    display: none;
+}
+
+.modal-content .card-header .price,
+.plan-offer .card .card-header .price {
+    text-align: end;
+    line-height: 18px;
+}
+
+.modal-content .card-header .base-price,
+.plan-offer .card .card-header .base-price {
+    font-size: 18px;
+    font-weight: 600;
+    opacity: 0.6;
+    text-decoration: line-through;
+}
+
+.modal-content .card-header .offer-price,
+.plan-offer .card .card-header .offer-price {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.modal-content .card-header .discount-price,
+.plan-offer .card .card-header .discount-price {
+    font-weight: unset;
+}
+
+.plan-offer .card.single .card-body {
+    overflow: hidden;
+    background-color: white;
+    color: black;
+    position: relative;
+    width: 343px;
+    height: 100%;
+    border-radius: 4px;
+    margin: 1px 0 2px 1px;
+    padding: 16px 0 8px;
+}
+
+.plan-offer .card.single .channels span {
+    position: relative;
+    width: 93px;
+    height: 93px;
+    border-radius: 50%;
+    background: rgb(255 255 255);
+    box-shadow: rgba(0 0 0 / 20%) 0 0 8px;
+    margin-right: 8px;
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.plan-offer .card.single .channels span img {
+    width: 60px;
+    object-fit: cover;
+}
+
+.plan-offer .card.single .carousel-slide-image {
+    justify-content: center;
+    align-items: center;
+}
+
+.plan-offer .card.single .carousel-slide-image p {
+    margin: 0;
+    padding: 0;
+}
+
+.modal-content .stream-devices,
+.plan-offer .card.single .stream-devices {
+    position: relative;
+    display: flex;
+    line-height: normal;
+    align-items: center;
+    gap: 0.5em;
+    margin: 16px;
+    border-top: rgb(207 207 207) 1px solid;
+    padding-top: 16px;
+}
+
+.modal.block .modal-content .zipcode .geo-container {
+    color: black;
+}
+
+.modal.block .modal-content .zipcode .geo-container .geo-pin img,
+.modal.block .modal-content .zipcode .geo-container .geo-selector img {
+    filter: invert(0);
+}
+
+.modal.block .modal-content .comparison-table-content {
+    padding-top: 2em;
+}
+
+.modal.block .modal-content .comparison-table-content .header-row,
+.modal.block .modal-content .comparison-table-content .channel-div {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    align-items: center;
+}
+
+.modal.block .modal-content .comparison-table-content .channel-div .channel-details {
+    display: flex;
+    align-items: center;
+}
+
+.modal.block .modal-content .shared-channels .channel img,
+.modal.block .modal-content .exclusive-channels .channel img,
+.modal.block .modal-content .comparison-table-content .channel-div img {
+    width: 3.125rem;
+    margin-right: 1.375rem;
+}
+
+.modal.block .modal-content .comparison-table-content .header-row .base-price {
+    text-align: center;
+    text-decoration: line-through;
+}
+
+.modal.block .modal-content .dvr-storage {
+    display: flex;
+    gap: 0.5em;
+}
+
+@media (width >= 768px) {
+    .plan-offer {
+        margin-bottom: 64px;
+    }
+
+    .plan-offer .card-wrapper {
+        max-width: 750px;
+        gap: 36px;
+    }
+
+    .plan-offer .card.combo {
+        flex-grow: 1;
+        justify-content: unset;
+        padding: 12px 16px 0;
+        height: 80px;
+    }
+
+    .plan-offer .carousel .carousel-navigation-buttons {
+        display: flex;
+        left: -30px;
+        right: -30px;
+    }
+
+    .plan-offer .carousel .carousel-navigation-buttons button::after {
+        border: 3px var(--dark-color) solid;
+        border-bottom: 0;
+        border-left: 0;
+    }
+
+    .plan-offer .carousel .carousel-navigation-buttons button {
+        filter: none;
+        backdrop-filter: opacity(1);
+        background: transparent;
+    }
+
+    .plan-offer .card.combo .card-body-text {
+        position: absolute;
+        left: 16px;
+        top: 50%;
+    }
+
+    .plan-offer .card.combo .card-body-subtext {
+        position: absolute;
+        left: 16px;
+        top: calc(50% + 10px);
+    }
+
+    .plan-offer .card.combo .card-body .button {
+        width: 200px;
+        align-content: flex-end;
+    }
+
+    .plan-offer .card.combo .card-header {
+        width: 65%;
+        align-items: unset;
+        align-self: baseline;
+        padding: 12px 16px 8px 0;
+    }
+
+    .modal-content .card-header h3,
+    .plan-offer .card.combo .card-header h3 {
+        margin: 0;
+    }
+
+    .modal-content .card-header .price,
+    .plan-offer .card .card-header .price {
+        margin-top: 4px;
+    }
+}

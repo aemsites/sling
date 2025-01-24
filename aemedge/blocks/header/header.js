@@ -1,8 +1,12 @@
-import { getMetadata } from '../../scripts/aem.js';
+import {
+  buildBlock, decorateBlock, getMetadata,
+  loadBlock,
+} from '../../scripts/aem.js';
+import { createTag } from '../../scripts/utils.js';
 import { loadFragment } from '../fragment/fragment.js';
 
 // media query match that indicates mobile/tablet width
-const isDesktop = window.matchMedia('(min-width: 1400px)');
+const isDesktop = window.matchMedia('(min-width: 1024px)');
 
 function closeOnEscape(e) {
   if (e.code === 'Escape') {
@@ -72,6 +76,8 @@ function toggleMenu(nav, navSections, forceExpanded = null) {
     'aria-label',
     expanded ? 'Open navigation' : 'Close navigation',
   );
+  const menuicon = button.querySelector('.nav-hamburger-icon img');
+  menuicon.src = expanded ? '/aemedge/icons/menu-open.svg' : '/aemedge/icons/menu-close.svg';
   // enable nav dropdown keyboard accessibility
   const navDrops = navSections.querySelectorAll('.nav-drop');
   if (isDesktop.matches) {
@@ -98,6 +104,21 @@ function toggleMenu(nav, navSections, forceExpanded = null) {
   }
 }
 
+function moveTopNav(e, topNavSection, navSections) {
+  const topnav = topNavSection.querySelector('.default-content-wrapper');
+  if (e.matches) {
+    topnav.classList.add('nav-top');
+    navSections.append(topnav);
+  } else {
+    // topnav = navSections.querySelector('.default-content-wrapper.nav-top-links');
+    if (!topnav) {
+      topNavSection.append(navSections.querySelector('.nav-top'));
+      topNavSection.querySelector('.default-content-wrapper').classList.remove('nav-top');
+    }
+
+    navSections.querySelector('.nav-top')?.remove();
+  }
+}
 /**
  * decorates the header, mainly the nav
  * @param {Element} block The header block element
@@ -105,18 +126,28 @@ function toggleMenu(nav, navSections, forceExpanded = null) {
 export default async function decorate(block) {
   // load nav as fragment
   const navMeta = getMetadata('nav');
-  const navPath = navMeta ? new URL(navMeta).pathname : '/nav';
+  const navPath = navMeta ? new URL(navMeta).pathname : '/aemedge/nav';
   const fragment = await loadFragment(navPath);
-
+  let topnavSection;
+  if (fragment.childElementCount === 4) {
+    topnavSection = fragment.firstElementChild;
+    topnavSection.classList.add('nav-top');
+    topnavSection.setAttribute('aria-labelledby', 'secondary navigation');
+  }
   // decorate nav DOM
   const nav = document.createElement('nav');
   nav.id = 'nav';
   while (fragment.firstElementChild) nav.append(fragment.firstElementChild);
 
   const classes = ['brand', 'sections', 'tools'];
+  if (nav.children.length === 4) {
+    classes.unshift('top');
+  }
   classes.forEach((c, i) => {
     const section = nav.children[i];
-    if (section) section.classList.add(`nav-${c}`);
+    if (section) {
+      section.classList.add(`nav-${c}`);
+    }
   });
 
   // nav brand
@@ -124,8 +155,8 @@ export default async function decorate(block) {
   const brandLink = navBrand.querySelector('a');
   if (brandLink) {
     const brandLogo = document.createElement('img');
-    brandLogo.src = '/icons/whats-on.png';
-    brandLogo.alt = 'What\'s On Sling';
+    brandLogo.src = '/aemedge/icons/sling-blue-logo.svg';
+    brandLogo.alt = 'Sling TV Logo';
     brandLogo.classList.add('nav-brand-logo');
     brandLink.innerHTML = '';
     brandLink.append(brandLogo);
@@ -158,7 +189,8 @@ export default async function decorate(block) {
   const hamburger = document.createElement('div');
   hamburger.classList.add('nav-hamburger');
   hamburger.innerHTML = `<button type="button" aria-controls="nav" aria-label="Open navigation">
-      <span class="nav-hamburger-icon"></span>
+      <span class="nav-hamburger-icon">
+      <img src ="/aemedge/icons/menu-open.svg" /></span>
     </button>`;
   hamburger.addEventListener('click', () => toggleMenu(nav, navSections, null));
   nav.append(hamburger);
@@ -166,9 +198,24 @@ export default async function decorate(block) {
   // prevent mobile nav behavior on window resize
   toggleMenu(nav, navSections, isDesktop.matches);
   isDesktop.addEventListener('change', () => toggleMenu(nav, navSections, isDesktop.matches));
-
   const navWrapper = document.createElement('div');
   navWrapper.className = 'nav-wrapper';
   navWrapper.append(nav);
+  if (topnavSection && navSections) {
+    navWrapper.append(topnavSection);
+    // code to set up carousel for mobile
+    const mquery = window.matchMedia('(max-width: 1024px)');
+    mquery.addEventListener(
+      'change',
+      (event) => moveTopNav(event, topnavSection, navSections),
+    );
+    moveTopNav(mquery, topnavSection, navSections);
+  }
+  const wrapper = createTag('div');
+  const zipblock = buildBlock('zipcode', createTag('div'));
+  wrapper.append(zipblock);
+  decorateBlock(zipblock);
+  await loadBlock(zipblock);
+  nav.insertBefore(wrapper, navSections);
   block.append(navWrapper);
 }

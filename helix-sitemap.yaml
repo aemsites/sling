@@ -1,0 +1,5 @@
+sitemaps:
+  whatson:
+    source: /whatson/query-index.json
+    destination: /sitemap-whatson.xml
+    lastmod: YYYY-MM-DD

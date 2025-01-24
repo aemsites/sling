@@ -1,0 +1,23 @@
+
+.chat.block > div:not([id]) p {
+    display: none;
+}
+
+.chat-container{
+    bottom: 10px;
+    height: 80px;
+    position: fixed;
+    right: 50px;
+    width: 80px;
+    z-index: 1030;
+    
+}
+
+/* stylelint-disable-next-line selector-class-pattern */
+.chat.block > #chat-app > div.fKlBEx {
+    background: url("../../../aemedge/icons/sling-chat-icon.svg") 24px center / 25px no-repeat, linear-gradient(rgb(41 40 40), rgb(0 0 0));
+    border-style: solid;
+    border-color: rgb(0 114 236);
+    border-image: initial;
+    border-width: 2px;
+}

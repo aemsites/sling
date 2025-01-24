@@ -1,0 +1,132 @@
+/* main .hero-container > div {
+  max-width: unset;
+} */
+
+main .blog-hero-container {
+  padding: 0;
+  margin: 0;
+}
+
+.blog-hero.category {
+  text-align: center;
+  padding: 0;
+  margin-bottom: 10px;
+  min-height: unset;
+}
+
+.blog-hero.category.red {
+  background: rgb(25 23 37);
+  background: linear-gradient(290deg, rgb(25 23 37 / 100%) 25%, rgb(164 30 32 / 100%) 82%);
+}
+
+.blog-hero.category.cyan {
+  background: rgb(25 23 37);
+  background: linear-gradient(to bottom, rgb(2 174 240 / 100%) 0%,rgb(0 39 54 / 100%) 100%);
+}
+
+.blog-hero.category.green {
+  background: rgb(25 23 37);
+  background: linear-gradient(to bottom, rgb(1 241 237 / 100%) 15%,rgb(0 54 53 / 100%) 100%);
+}
+
+.blog-hero.category.dark-orange {
+  background: rgb(25 23 37);
+  background: linear-gradient(to bottom, rgb(239 100 1 / 100%) 15%,rgb(53 23 0 / 100%) 100%);
+}
+
+.blog-hero.category.yellow {
+  background: rgb(0 15 65);
+  background: linear-gradient(to bottom, rgb(255 201 63 / 100%) 0%,rgb(254 188 15 / 100%) 19%,rgb(255 186 5 / 100%) 21%,rgb(252 183 2 / 100%) 24%,rgb(218 156 2 / 100%) 37%,rgb(62 43 0 / 100%) 97%,rgb(52 38 0 / 100%) 100%,rgb(65 52 16 / 100%) 100%);
+}
+
+.blog-hero.category.orange {
+  background: rgb(0 15 65);
+  background: linear-gradient(to bottom, rgb(226 144 1 / 100%) 15%,rgb(54 34 0 / 100%) 100%);
+}
+
+.blog-hero.category.blue {
+  background: rgb(0 15 65);
+  background: linear-gradient(to bottom, rgb(1 125 239 / 100%) 10%,rgb(1 28 55 / 100%) 100%);
+}
+
+.blog-hero h1 {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  color: white;
+}
+
+.blog-hero .hero-container h1 {
+  text-align: center;
+}
+
+.blog-hero.category h1 {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.blog-hero.category p {
+  margin: 0;
+}
+
+.blog-hero.category > div {
+  max-width: 1168px;
+  margin: 0 auto;
+  width: 100%
+}
+
+.blog-hero.category > div > div {
+  margin: 0 auto;
+  width: 80%;
+}
+
+.blog-hero {
+  position: relative;
+  min-height: 300px;
+}
+
+/* CTA Banner Variation */
+.cta-banner .blog-hero {
+  padding: 0;
+}
+
+.blog-hero picture {
+  z-index: -1;
+  inset: 0;
+  object-fit: cover;
+  box-sizing: border-box;
+}
+
+.blog-hero img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+.blog-hero picture.desktop {
+  display: none;
+}
+
+.blog-hero picture.desktop.mobile {
+  display: block;
+}
+
+@media (width >= 768px) {
+  .blog-hero {
+    position: relative;
+    min-height: 200px;
+  }
+
+  .blog-hero picture.mobile {
+    display: none;
+  }
+
+  .blog-hero picture.desktop,
+  .blog-hero picture.desktop.mobile {
+    display: block;
+  }
+
+  .blog-hero.category > div > div {
+    width: 33%;
+  }
+}

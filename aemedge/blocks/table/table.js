@@ -5,7 +5,9 @@
  */
 
 function buildCell(rowIndex) {
-  const cell = rowIndex ? document.createElement('td') : document.createElement('th');
+  const cell = rowIndex
+    ? document.createElement('td')
+    : document.createElement('th');
   if (!rowIndex) cell.setAttribute('scope', 'col');
   return cell;
 }
@@ -33,4 +35,31 @@ export default async function decorate(block) {
   });
   block.innerHTML = '';
   block.append(table);
+
+  let tableRows = '';
+  if (block.classList.contains('schedule')) {
+    const scheduletableRows = block.querySelectorAll('table tbody tr');
+    tableRows = scheduletableRows;
+  } else if (block.classList.contains('playoffs')) {
+    const playoffstableRows = block.querySelectorAll('table tbody tr');
+    tableRows = playoffstableRows;
+  }
+  let trcount = 0;
+  if (tableRows) {
+    tableRows.forEach((row) => {
+      const cells = row.querySelectorAll('td');
+      if (cells.length === 1) {
+        trcount = 0;
+        row.classList.add('single-column-row');
+        for (let i = 0; i < tableRows[1].childElementCount - 1; i += 1) {
+          const newCell = document.createElement('td');
+          row.appendChild(newCell);
+        }
+      }
+      if (trcount % 2 === 0) {
+        row.classList.add('lightgrey');
+      }
+      trcount += 1;
+    });
+  }
 }

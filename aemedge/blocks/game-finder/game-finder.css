@@ -1,3 +1,35 @@
 .game-finder.block {
-    background: #eee;
+    background: initial;
+}
+
+.game-finder.block > div:not([id]) p {
+    display: none;
+}
+
+.game-finder.block #gmfinder-app {
+    z-index: 0;
+    position: relative;
+    margin-bottom: 2.5rem;
+}
+
+.game-finder.block #gmfinder-app svg {
+    width: 15px;
+    height: 20px;
+}
+
+.game-finder.block #gmfinder-app button {
+    min-width: unset;
+}
+
+/* stylelint-disable-next-line selector-class-pattern */
+.game-finder.block #gmfinder-app .ykLwg {
+position: initial
+}
+
+.game-finder.block #gmfinder-app .gwxdjd {
+    margin-top: 10px;
+}
+
+.game-finder.block #gmfinder-app .iqyiwh { 
+    height: auto;
 }

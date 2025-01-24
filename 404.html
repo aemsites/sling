@@ -9,9 +9,9 @@
   </script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta property="og:title" content="Page not found">
-  <script src="/scripts/scripts.js" type="module" crossorigin="use-credentials"></script>
+  <script src="/aemedge/scripts/scripts.js" type="module" crossorigin="use-credentials"></script>
   <script type="module">
-    import { sampleRUM } from '/scripts/aem.js';
+    import { sampleRUM } from '/aemedge/scripts/aem.js';
 
     window.addEventListener('load', () => {
       if (document.referrer) {
@@ -26,39 +26,108 @@
           btnContainer.append(backBtn);
         }
       }
-      sampleRUM('404', { source: document.referrer, target: window.location.href });
+      sampleRUM('404', { source: document.referrer });
     });
   </script>
-  <link rel="stylesheet" href="/styles/styles.css">
+  <link rel="stylesheet" href="/aemedge/styles/styles.css">
   <style>
+    header {
+      height: 58px !important;
+    }
+
     main.error {
-      min-height: calc(100vh - var(--nav-height));
+      min-height: 400px;
       display: flex;
       align-items: center;
+
+      .section {
+        width: 100%;
+        padding: 0;
+        margin: 0;
+
+      > div {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin: 0 auto;
+        width: 50%;
+      }
+       > div:first-child {
+          background-color: white;
+         width: 100%;
+        }
+
+        picture {
+
+          img {
+            object-fit: cover;
+            height: 100%;
+            aspect-ratio: 4/3;
+          }
+        }
+
+        .content {
+            text-align: center;
+
+          h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin: 0;
+          }
+        }
+      }
     }
 
     main.error .error-number {
       width: 100%;
     }
 
+    #nav .zipcode-wrapper, #nav .nav-sections, header .section.nav-top {
+      display: none !important;
+    }
+
+    header nav#nav[aria-expanded="true"] .nav-brand {
+      width: 100%;
+    }
+
     main.error .error-number text {
       font-family: var(--fixed-font-family);
     }
+
+    @media (width >= 768px) {
+        main.error .section {
+            display: flex;
+
+            > div:first-child {
+            width: 50%;
+            }
+        }
+    }
   </style>
-  <link rel="stylesheet" href="/styles/lazy-styles.css">
+  <link rel="stylesheet" href="/aemedge/styles/lazy-styles.css">
 </head>
 
 <body>
   <header></header>
   <main class="error">
     <div class="section">
-      <svg viewBox="1 0 38 18" class="error-number">
-        <text x="0" y="17">404</text>
-      </svg>
-      <h2 class="error-message">Page Not Found</h2>
+      <div>
+        <picture><img src="https://main--sling--aemsites.aem.live/aemedge/icons/application-assets/404-desktop.jpg" width="100%">
+        </picture></div>
+      <div class="content">
+        <h1>404</h1>
+      <h3 class="error-message">SOMETHING'S BROKE</h3>
       <p class="button-container">
-        <a href="/" class="button secondary error-button-home">Go home</a>
+        <a href="https://www.sling.com" class="button primary error-button-home">Home</a>
       </p>
+      <p>
+        <a href="https://www.sling.com/latino-es" class="button primary error-button-home">Latino Entertainment</a>
+      </p>
+      <p class="button-container">
+        <a href="https://www.sling.com/international" class="button primary error-button-home">International Entertainment</a>
+      </p>
+        </div>
     </div>
   </main>
   <footer></footer>
