@@ -433,7 +433,7 @@ export function decorateButtons(element) {
               twoup.classList.add('button-container');
             }
 
-            // Secondary buttons in non-blog pages - these are light
+            // Secondary buttons in non-blog pages
             if (
               up.childNodes.length === 1 && up.tagName === 'EM' && threeup.childNodes.length === 1 && twoup.tagName === 'DEL' && (threeup.tagName === 'P' || threeup.tagName === 'DIV')
             ) {
@@ -441,7 +441,7 @@ export function decorateButtons(element) {
               threeup.classList.add('button-container');
             }
 
-            // Dark buttons REMOVE
+            // Dark buttons
             if (
               up.childNodes.length === 1 && up.tagName === 'EM' && twoup.tagName === 'STRONG' && threeup.tagName === 'DEL' && (threeup.parentElement.tagName === 'P' || threeup.parentElement.tagName === 'DIV')
             ) {

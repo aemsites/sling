@@ -458,13 +458,6 @@ button.text:hover {
   box-shadow: none;
 }
 
-/*body.blog-article .buttons-container {*/
-/*  display: flex;*/
-/*  flex-direction: column;*/
-/*  place-content: center;*/
-/*  width: 100%;*/
-/*}*/
-
 .button-container.combined {
     flex-direction: column;
     place-content: center;
