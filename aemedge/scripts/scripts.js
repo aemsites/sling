@@ -154,44 +154,60 @@ function autolinkModals(element) {
 }
 
 export function buildMultipleButtons(main) {
-  let siblingButton;
   const buttons = main.querySelectorAll('.button-container:not(.subtext)');
+  const fragment = document.createDocumentFragment();
+
   buttons.forEach((button) => {
-    const nextButton = button.nextElementSibling;
+    const parent = button.parentElement;
+    const siblingButton = button.nextElementSibling;
 
-    if (nextButton
-        && nextButton.classList.contains('subtext')) {
-      siblingButton = button.nextElementSibling;
-
-      if (siblingButton && !button.parentElement.classList.contains('button-subtext-container')) {
-        const buttonContainer = createTag('div', { class: 'button-subtext-container' });
-        button.parentElement.insertBefore(buttonContainer, button);
-        buttonContainer.append(button, siblingButton);
-      }
+    if (siblingButton && siblingButton.classList.contains('subtext') && !parent.classList.contains('combined')) {
+      const buttonContainer = createTag('div', { class: 'button-container combined' });
+      parent.insertBefore(buttonContainer, button);
+      buttonContainer.append(button, siblingButton);
     }
 
-    if (nextButton
-        && ((nextButton.classList.contains('button-container') && !button.nextElementSibling.classList.contains('subtext'))
-        )) {
-      siblingButton = button.nextElementSibling;
-
-      if (siblingButton && !button.parentElement.classList.contains('buttons-container')) {
+    if (siblingButton && siblingButton.classList.contains('button-container') && !siblingButton.classList.contains('subtext')) {
+      const nextSibling = siblingButton.nextElementSibling;
+      if (nextSibling && !nextSibling.classList.contains('subtext') && !parent.classList.contains('buttons-container')) {
         const buttonContainer = createTag('div', { class: 'buttons-container' });
-        button.parentElement.insertBefore(buttonContainer, button);
+        parent.insertBefore(buttonContainer, button);
         buttonContainer.append(button, siblingButton);
       }
     }
   });
 
-  const buttonGroups = main.querySelectorAll('.button-subtext-container');
+  const buttonGroups = main.querySelectorAll('div.button-container.combined');
+  // begin grouping buttons that have subtext
   buttonGroups.forEach((buttonGroup) => {
-    siblingButton = buttonGroup.nextElementSibling;
-    if (siblingButton && !buttonGroup.parentElement.classList.contains('buttons-container')) {
-      const buttonContainer = createTag('div', { class: 'buttons-container' });
-      buttonGroup.parentElement.insertBefore(buttonContainer, buttonGroup);
-      buttonContainer.append(buttonGroup, siblingButton);
+    const parent = buttonGroup.parentElement;
+    const siblingButton = buttonGroup.nextElementSibling;
+    const siblingUp = buttonGroup.previousElementSibling;
+
+    if (!parent.classList.contains('buttons-container')) {
+      // case for grouping 2 subtext buttons
+      if (siblingButton && siblingButton.classList.contains('combined')) {
+        const buttonContainer = createTag('div', { class: 'buttons-container' });
+        parent.insertBefore(buttonContainer, buttonGroup);
+        buttonContainer.append(buttonGroup, siblingButton);
+      }
+      // case for grouping 1 subtext button and 1 button P
+      if (siblingButton && siblingButton.classList.contains('button-container') && !siblingButton.classList.contains('combined')) {
+        const buttonContainer = createTag('div', { class: 'buttons-container' });
+        parent.insertBefore(buttonContainer, buttonGroup);
+        buttonContainer.append(buttonGroup, siblingButton);
+      }
+      // case for grouping 1 button P and 1 subtext button
+      if (siblingUp && siblingUp.classList.contains('button-container') && !siblingUp.classList.contains('combined')) {
+        const buttonContainer = createTag('div', { class: 'buttons-container' });
+        parent.insertBefore(buttonContainer, buttonGroup);
+        buttonContainer.append(siblingUp);
+        buttonContainer.append(buttonGroup);
+      }
     }
   });
+
+  main.appendChild(fragment);
 }
 
 /**
@@ -340,8 +356,10 @@ export function decorateButtons(element) {
   element.querySelectorAll('a').forEach((a) => {
     // Set the title attribute if not already set
     a.title = a.title || a.textContent;
-    // Proceed only if href is different from textContent and is not a fragment link
-    if (a.href !== a.textContent && !a.href.includes('/fragments/')) {
+    // Proceed only if href is different from textContent, is not a fragment link,
+    // and is not an external image
+    const extImageUrl = /dish\.scene7\.com|\/aemedge\/svgs\//;
+    if (a.href !== a.textContent && !a.href.includes('/fragments/') && !extImageUrl.test(a.href)) {
       const hasIcon = a.querySelector('.icon');
       const up = a.parentElement;
       const twoup = up.parentElement;
@@ -563,6 +581,9 @@ export function decorateExtImage() {
   // dynamic media link or images in /svg folder
   // not for bitmap images because we're not doing renditions here
   const extImageUrl = /dish\.scene7\.com|\/aemedge\/svgs\//;
+  const numberRegex = /\{(\d{1,2})?}/;
+  const fragment = document.createDocumentFragment();
+
   document.querySelectorAll('a[href]').forEach((a) => {
     if (extImageUrl.test(a.href) && linkTextIncludesHref(a)) {
       const extImageSrc = a.href;
@@ -575,7 +596,18 @@ export function decorateExtImage() {
       img.loading = 'lazy';
       img.src = extImageSrc;
       picture.append(img);
-      a.replaceWith(picture);
+
+      // Check if the link's text content matches numberRegex
+      const numberMatches = a.textContent.match(numberRegex);
+      if (numberMatches) {
+        const percentWidth = numberMatches[1];
+        img.style.maxWidth = `${percentWidth}%`;
+        // Remove the text content matching numberRegex
+        a.textContent = a.textContent.replace(numberRegex, '');
+      }
+
+      fragment.append(picture);
+      a.replaceWith(fragment);
     }
   });
 }
@@ -622,9 +654,9 @@ export function decorateMain(main) {
   makeTwoColumns(main);
   decorateStyledSections(main);
   buildSpacer(main);
+  extractElementsColor();
   decorateExtImage(main);
   decorateLinkedImages();
-  extractElementsColor();
 }
 
 /**

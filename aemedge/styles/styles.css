@@ -243,8 +243,37 @@ picture {
     display: block;
 }
 
-.center {
+.center, [data-align="center"] {
   text-align: center;
+
+    .button-container.combined {
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+}
+
+[data-valign="bottom"] {
+    align-content: end;
+}
+
+[data-valign="middle"] {
+    align-content: center;
+}
+
+[data-valign="top"] {
+    align-content: start;
+}
+
+[data-align="right"] {
+    text-align: right;
+
+    .button-container.combined {
+        margin-left: auto !important;
+    }
+}
+
+[data-align="left"] {
+    text-align: left;
 }
 
 main pre {
@@ -374,12 +403,11 @@ button:disabled:hover {
   cursor: unset;
 }
 
-.buttons-container {
+.buttons-container, .button-container.combined {
   display: flex;
   flex-direction: row;
     column-gap: 16px;
     width: max-content;
-    margin-bottom: 1em;
 
     a.button {
         margin: 8px 0 0;
@@ -391,7 +419,7 @@ button:disabled:hover {
 }
 
 .button-container {
-    margin: 0;
+    margin: 0 0 12px;
 
     sub, sup, em sup, em sub {
         display: block;
@@ -430,11 +458,24 @@ button.text:hover {
   box-shadow: none;
 }
 
-body.blog-article .buttons-container {
-  display: flex;
-  flex-direction: column;
-  place-content: center;
-  width: 100%;
+/*body.blog-article .buttons-container {*/
+/*  display: flex;*/
+/*  flex-direction: column;*/
+/*  place-content: center;*/
+/*  width: 100%;*/
+/*}*/
+
+.button-container.combined {
+    flex-direction: column;
+    place-content: center;
+
+    > p.button-container:not(.subtext) {
+        width: max-content;
+    }
+
+    > p.button-container.subtext {
+
+    }
 }
 
 .offer-details .button.text {
@@ -668,10 +709,6 @@ main .icon-still-have-questions img {
 margin-bottom:10px;
 }
 
-.section.center {
-  text-align: center;
-}
-
 /* specially for supported devices illustration */
 .section.dark .section.dark {
   padding: 0;
@@ -741,42 +778,12 @@ margin-bottom:10px;
     }
 }
 
-/* these only work in table cells */
-
-[data-valign="bottom"] {
-    align-content: end;
-}
-
-[data-valign="middle"] {
-    align-content: center;
-}
-
-[data-valign="top"] {
-    align-content: start;
-}
-
-[data-align="right"] {
-    text-align: right;
-}
-
-[data-align="center"] {
-    text-align: center;
-}
-
-[data-align="left"] {
-    text-align: left;
-}
-
 a.white {
   color: white;
 }
 
-a.black, em.button-container sup {
+a.black {
   color: black;
-}
-
-a.blue {
-    color: var(--link-color);
 }
 
 @media (width >=768px) {
