@@ -115,11 +115,13 @@
     }
     }
 
-  &.bg-mac-and-cheese {
-    background: var(--mac-and-cheese);
-
+  &.bg-white, &.bg-primary-light, &.bg-mac-and-cheese {
     h1, h2, h3, h4, h5, h6, p, li {
       color: inherit;
+    }
+
+    a:not(.button, .blue) {
+      color: var(--link-color);
     }
   }
 
@@ -129,15 +131,7 @@
     }
   }
 
-&.bg-white, &.bg-primary-light, &.bg-mac-and-cheese {
-    h1, h2, h3, h4, h5, h6, p, li {
-      color: var(--clr-black);
-    }
 
-    a:not(.button, .blue) {
-      color: var(--link-color);
-    }
-  }
 
 .banner .columns {
   picture {
