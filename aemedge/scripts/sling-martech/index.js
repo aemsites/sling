@@ -10,7 +10,9 @@ import { getInstance } from './AnalyticsADL.js';
 export const getAnalyticsInstance = getInstance;
 // setting the analytics instance on window object
 (() => {
-    console.log(`instantiate analtics instance `)
+    console.log(`setting getAnalyticsInstance on window.anlyticsInstance variable`);
     window.anlyticsInstance = getInstance;
+    const myanalyticsInstance = window.anlyticsInstance;
+    console.log(myanalyticsInstance('sling-martech'))
 })();
 
