@@ -465,10 +465,6 @@ button.text:hover {
     > p.button-container:not(.subtext) {
         width: max-content;
     }
-
-    > p.button-container.subtext {
-
-    }
 }
 
 .offer-details .button.text {
