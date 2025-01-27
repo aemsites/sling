@@ -461,7 +461,7 @@ async function loadTemplate(main) {
 
 async function loadSlingMartech() {
   // load
-  // await loadScript('/aemedge/scripts/sling-martech/analytics-lib.js');
+  await loadScript('/aemedge/scripts/sling-martech/index.js', { type: 'module' });
 
   if (window.location.host.startsWith('localhost')) {
     await loadScript('https://assets.adobedtm.com/f4211b096882/26f71ad376c4/launch-b69ac51c7dcd-development.min.js');

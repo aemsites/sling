@@ -1,0 +1,7 @@
+{
+  "cancelStart": "cancel",
+  "cancelUpdate": "cancel",
+  "cancelReason": "cancel",
+  "cancelRebuttal": "cancel",
+  "cancelComplete": "cancel"
+}

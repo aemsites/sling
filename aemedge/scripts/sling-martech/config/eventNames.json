@@ -1,0 +1,47 @@
+{
+  "screenLoad": "screen_load",
+  "cartStep": {
+    "account": "cart_step_account",
+    "products": "cart_step_products",
+    "billing": "cart_step_billing",
+    "confirm": "cart_step_confirm",
+    "restartBilling": "restart_step_billing",
+    "restartProducts": "restart_step_products",
+    "changeProducts": "change_step_products",
+    "changeBilling": "change_step_billing"
+  },
+  "form": {
+    "complete": "form_complete",
+    "error": "form_error",
+    "interaction": "form_field_interaction",
+    "start": "form_start"
+  },
+  "order": {
+    "create": "sub_create",
+    "change": "sub_change",
+    "upgrade": "sub_upgrade",
+    "downgrade": "sub_downgrade",
+    "restart": "sub_restart"
+  },
+  "userLogin": "user_login",
+  "userLogout": "user_logout",
+  "userRegister": "user_register",
+  "cancelTenure": "cancel_tenure",
+  "uiInteraction": "ui_click",
+  "modal": {
+    "modalOpen": "modal_open",
+    "modalClose": "modal_close"
+  },
+  "search": {
+    "begin": "search",
+    "complete": "search_complete"
+  },
+  "cartSelection": {
+    "add": "cart_add",
+    "remove": "cart_remove"
+  },
+  "pause": {
+    "start": "pause_start",
+    "end": "sub_pause"
+  }
+}
