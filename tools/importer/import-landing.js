@@ -1,4 +1,6 @@
 /* eslint-disable no-undef */
+const DATA_SLING_PROPS = 'data-sling-props';
+const EDS_BASE_URL = 'https://main--sling--aemsites.aem.page/';
 const createMetadataBlock = (main, document) => {
   const meta = {};
 
@@ -36,12 +38,31 @@ const createMetadataBlock = (main, document) => {
 };
 
 const createMarqueBlock = (main, document) => {
+  const marqueeEl = main.querySelector('div.js-react.js-react-marquee-template');
+  let reactProps = marqueeEl?.getAttribute(DATA_SLING_PROPS);
+  if (reactProps) {
+    reactProps = JSON.parse(reactProps);
+    const {
+      backgroundColor, backgroundMediaUrlDesktop, backgroundMediaUrlMobile, backgroundMediaUrlTablet, ctaScrollIntoHeader, ctaSubtext, ctaText, ctaUrl, headlineText, mediaAlt, subHeadlineText,
+    } = reactProps;
+    const ctaLink = document.createElement('a');
+    ctaLink.text = ctaText;
+    ctaLink.href = '';
+    const marqueeCells = [
+      ['Healine', headlineText],
+      ['Sub Headline', subHeadlineText],
+      ['Bacground', [backgroundMediaUrlDesktop, backgroundMediaUrlTablet, backgroundMediaUrlMobile].join('</br>')],
+      ['Background Color', backgroundColor],
+      ['Foreground', getForegroundImage(marqueeEl)],
+      ['CTA', document.create],
+    ];
+  }
   const el = document.createElement('img');
   el.src = 'https://www.sample.com/images/helloworld.png';
 
   const cells = [
     ['Marquee'],
-    ['Title', 'The Hello World page'],
+    ['Headline', 'The Hello World page'],
     ['Sub Title', 'This is a really cool Hello World page.'],
     ['Image', el],
   ];
