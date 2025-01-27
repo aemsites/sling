@@ -11,6 +11,7 @@ import {
   getMetadata,
   decorateBlock,
   loadBlock,
+  toClassName,
 } from './aem.js';
 
 import {
@@ -27,6 +28,12 @@ import {
 const LCP_BLOCKS = ['category']; // add your LCP blocks to the list
 const TEMPLATES = ['blog-article', 'blog-category']; // add your templates here
 const TEMPLATE_META = 'template';
+
+/**
+ * Sanitizes a string for use as class name.
+ * @param {string} name The unsanitized string
+ * @returns {string} The class name
+ */
 
 /**
  * Builds hero block and prepends to main in a new section.
@@ -147,19 +154,60 @@ function autolinkModals(element) {
 }
 
 export function buildMultipleButtons(main) {
-  const buttons = main.querySelectorAll('.button-container');
+  const buttons = main.querySelectorAll('.button-container:not(.subtext)');
+  const fragment = document.createDocumentFragment();
+
   buttons.forEach((button) => {
-    if (button.nextElementSibling
-        && (button.nextElementSibling.classList.contains('button-container')
-            || (button.nextElementSibling.firstElementChild && button.nextElementSibling.firstElementChild.classList.contains('button-container')))) {
-      const siblingButton = button.nextElementSibling;
-      if (siblingButton && !button.parentElement.classList.contains('buttons-container')) {
+    const parent = button.parentElement;
+    const siblingButton = button.nextElementSibling;
+
+    if (siblingButton && siblingButton.classList.contains('subtext') && !parent.classList.contains('combined')) {
+      const buttonContainer = createTag('div', { class: 'button-container combined' });
+      parent.insertBefore(buttonContainer, button);
+      buttonContainer.append(button, siblingButton);
+    }
+
+    if (siblingButton && siblingButton.classList.contains('button-container') && !siblingButton.classList.contains('subtext')) {
+      const nextSibling = siblingButton.nextElementSibling;
+      if (nextSibling && !nextSibling.classList.contains('subtext') && !parent.classList.contains('buttons-container')) {
         const buttonContainer = createTag('div', { class: 'buttons-container' });
-        button.parentElement.insertBefore(buttonContainer, button);
+        parent.insertBefore(buttonContainer, button);
         buttonContainer.append(button, siblingButton);
       }
     }
   });
+
+  const buttonGroups = main.querySelectorAll('div.button-container.combined');
+  // begin grouping buttons that have subtext
+  buttonGroups.forEach((buttonGroup) => {
+    const parent = buttonGroup.parentElement;
+    const siblingButton = buttonGroup.nextElementSibling;
+    const siblingUp = buttonGroup.previousElementSibling;
+
+    if (!parent.classList.contains('buttons-container')) {
+      // case for grouping 2 subtext buttons
+      if (siblingButton && siblingButton.classList.contains('combined')) {
+        const buttonContainer = createTag('div', { class: 'buttons-container' });
+        parent.insertBefore(buttonContainer, buttonGroup);
+        buttonContainer.append(buttonGroup, siblingButton);
+      }
+      // case for grouping 1 subtext button and 1 button P
+      if (siblingButton && siblingButton.classList.contains('button-container') && !siblingButton.classList.contains('combined')) {
+        const buttonContainer = createTag('div', { class: 'buttons-container' });
+        parent.insertBefore(buttonContainer, buttonGroup);
+        buttonContainer.append(buttonGroup, siblingButton);
+      }
+      // case for grouping 1 button P and 1 subtext button
+      if (siblingUp && siblingUp.classList.contains('button-container') && !siblingUp.classList.contains('combined')) {
+        const buttonContainer = createTag('div', { class: 'buttons-container' });
+        parent.insertBefore(buttonContainer, buttonGroup);
+        buttonContainer.append(siblingUp);
+        buttonContainer.append(buttonGroup);
+      }
+    }
+  });
+
+  main.appendChild(fragment);
 }
 
 /**
@@ -308,8 +356,10 @@ export function decorateButtons(element) {
   element.querySelectorAll('a').forEach((a) => {
     // Set the title attribute if not already set
     a.title = a.title || a.textContent;
-    // Proceed only if href is different from textContent and is not a fragment link
-    if (a.href !== a.textContent && !a.href.includes('/fragments/')) {
+    // Proceed only if href is different from textContent, is not a fragment link,
+    // and is not an external image
+    const extImageUrl = /dish\.scene7\.com|\/aemedge\/svgs\//;
+    if (a.href !== a.textContent && !a.href.includes('/fragments/') && !extImageUrl.test(a.href)) {
       const hasIcon = a.querySelector('.icon');
       const up = a.parentElement;
       const twoup = up.parentElement;
@@ -328,12 +378,16 @@ export function decorateButtons(element) {
         }
         const isSubscript = Tagname === 'sub';
         const isSuperscript = Tagname === 'sup';
-        if (isSubscript) {
+        const isEm = up.tagName === 'EM';
+        if (isSubscript && !isEm) {
           a.classList.add('blue');
-          a.parentElement.classList.add('button-container');
-        } else if (isSuperscript) {
+          up.classList.add('button-container', 'subtext');
+        } else if (isSubscript && isEm) {
           a.classList.add('white');
-          a.parentElement.classList.add('button-container');
+          twoup.classList.add('button-container', 'subtext');
+        } else if (isSuperscript) {
+          a.classList.add('black');
+          up.classList.add('button-container', 'subtext');
         } else {
           const linkText = a.textContent;
           const linkTextEl = document.createElement('span');
@@ -412,6 +466,59 @@ export function makeLastButtonSticky() {
 }
 
 /**
+ * Extracts color information from p text content in curly braces.
+ * @returns {Object|null} - An object containing the extracted color
+ * or null if no color information is found.
+ */
+export function extractElementsColor() {
+//  const textNodes = Array.from(document.querySelectorAll('div > p:first-child'));
+  const textNodes = Array.from(document.querySelectorAll('h1, h2, h3, h4, h5, h6, li, p'));
+  textNodes.forEach((node) => {
+    const up = node.parentElement;
+    const isParagraph = node.tagName === 'P';
+    const text = node.textContent;
+    // color must be letters or dashes
+    const colorRegex = text && /{([a-zA-Z-\s]+)?}/;
+    const numberRegex = text && /\{(\d{1,2})?}/;
+    const spanRegex = new RegExp(`\\[${colorRegex.source}([a-zA-Z0-9\\s]*.)\\]`);
+    const colorMatches = text.match(colorRegex);
+    const numberMatches = text.match(numberRegex);
+    const spanMatches = text.match(spanRegex);
+    // case where colored text is wrapped in a span.
+    // no HTML elements allowed (no bold, no links).
+    if (spanMatches) {
+      node.innerHTML = text.replace(new RegExp(spanRegex, 'g'), (match, color, spanText) => {
+        const span = createTag('span', { class: `${toClassName(color)}` }, spanText);
+        return span.outerHTML;
+      });
+    }
+
+    // case for buttons
+    if (isParagraph && node.querySelector('a')) {
+      const anchor = node.querySelector('a');
+      if (colorMatches) {
+        anchor.classList.add(`bg-${toClassName(colorMatches[1])}`);
+        // remove the color from the text
+        anchor.textContent = anchor.textContent.replace(colorMatches[0], '');
+      }
+    }
+
+    // case where only the color or width is in the first cell
+    if (isParagraph && up.tagName === 'DIV' && up.firstElementChild === node && text.trim().startsWith('{') && text.trim().endsWith('}')) {
+      if (colorMatches) {
+        const backgroundColor = colorMatches[1];
+        up.classList.add(`bg-${toClassName(backgroundColor)}`);
+      }
+      if (numberMatches) {
+        const percentWidth = numberMatches[1];
+        up.style.maxWidth = `${percentWidth}%`;
+      }
+      node.remove();
+    }
+  });
+}
+
+/**
    * load fonts.css and set a session storage flag
    */
 async function loadFonts() {
@@ -422,20 +529,7 @@ async function loadFonts() {
     // do nothing
   }
 }
-/**
-   * Sanitizes a string for use as class name.
-   * @param {string} name The unsanitized string
-   * @returns {string} The class name
-   */
-export function toClassName(name) {
-  return typeof name === 'string'
-    ? name
-      .toLowerCase()
-      .replace(/[^0-9a-z]/gi, '-')
-      .replace(/-+/g, '-')
-      .replace(/^-|-$/g, '')
-    : '';
-}
+
 /**
    * load the template specific js and css
    */
@@ -487,6 +581,9 @@ export function decorateExtImage() {
   // dynamic media link or images in /svg folder
   // not for bitmap images because we're not doing renditions here
   const extImageUrl = /dish\.scene7\.com|\/aemedge\/svgs\//;
+  const numberRegex = /\{(\d{1,2})?}/;
+  const fragment = document.createDocumentFragment();
+
   document.querySelectorAll('a[href]').forEach((a) => {
     if (extImageUrl.test(a.href) && linkTextIncludesHref(a)) {
       const extImageSrc = a.href;
@@ -499,7 +596,18 @@ export function decorateExtImage() {
       img.loading = 'lazy';
       img.src = extImageSrc;
       picture.append(img);
-      a.replaceWith(picture);
+
+      // Check if the link's text content matches numberRegex
+      const numberMatches = a.textContent.match(numberRegex);
+      if (numberMatches) {
+        const percentWidth = numberMatches[1];
+        img.style.maxWidth = `${percentWidth}%`;
+        // Remove the text content matching numberRegex
+        a.textContent = a.textContent.replace(numberRegex, '');
+      }
+
+      fragment.append(picture);
+      a.replaceWith(fragment);
     }
   });
 }
@@ -546,6 +654,7 @@ export function decorateMain(main) {
   makeTwoColumns(main);
   decorateStyledSections(main);
   buildSpacer(main);
+  extractElementsColor();
   decorateExtImage(main);
   decorateLinkedImages();
 }
