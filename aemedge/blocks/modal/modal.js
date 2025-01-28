@@ -3,6 +3,8 @@ import {
   buildBlock, decorateBlock, decorateIcons, loadBlock, loadCSS,
 } from '../../scripts/aem.js';
 
+// const getAnalyticsInstance = window.analyticsInstance;
+const analytics = window.analyticsInstance('modal');
 // This is not a traditional block, so there is no decorate function. Instead, links to
 // a */modals/* path  are automatically transformed into a modal. Other blocks can also use
 // the createModal() and openModal() functions.
@@ -37,9 +39,10 @@ export async function createModal(contentNodes) {
   decorateBlock(block);
   await loadBlock(block);
   decorateIcons(closeButton);
-
   dialog.addEventListener('close', () => {
     document.body.classList.remove('modal-open');
+    const name = document.querySelector('.modal-content')?.querySelector('h1,h2,h3,h4,h5,h6')?.innerText;
+    analytics.modalClose({ name });
     block.remove();
   });
 
@@ -51,8 +54,9 @@ export async function createModal(contentNodes) {
       // Google Chrome restores the scroll position when the dialog is reopened,
       // so we need to reset it.
       setTimeout(() => { dialogContent.scrollTop = 0; }, 0);
-
       document.body.classList.add('modal-open');
+      const name = document.querySelector('.modal-content')?.querySelector('h1,h2,h3,h4,h5,h6')?.innerText;
+      analytics.modalOpen({ name });
     },
   };
 }
