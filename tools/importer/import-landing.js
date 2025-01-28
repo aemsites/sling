@@ -1,6 +1,8 @@
 /* eslint-disable no-undef */
 const DATA_SLING_PROPS = 'data-sling-props';
 const EDS_BASE_URL = 'https://main--sling--aemsites.aem.page/';
+const OFFER_DETAIL_MODAL_URL = '/aemedge/modals/try-sling-offer-details';
+const getForegroundImage = (el) => document.createElement('img');
 const createMetadataBlock = (main, document) => {
   const meta = {};
 
@@ -37,46 +39,92 @@ const createMetadataBlock = (main, document) => {
   return meta;
 };
 
-const createMarqueBlock = (main, document) => {
-  const marqueeEl = main.querySelector('div.js-react.js-react-marquee-template');
-  let reactProps = marqueeEl?.getAttribute(DATA_SLING_PROPS);
+const createMarqueBlock = (main, document, marqueeEl) => {
+  let reactProps = marqueeEl.getAttribute(DATA_SLING_PROPS);
+  let marqueeCells = [];
   if (reactProps) {
     reactProps = JSON.parse(reactProps);
     const {
-      backgroundColor, backgroundMediaUrlDesktop, backgroundMediaUrlMobile, backgroundMediaUrlTablet, ctaScrollIntoHeader, ctaSubtext, ctaText, ctaUrl, headlineText, mediaAlt, subHeadlineText,
+      backgroundColor,
+      backgroundMediaUrlDesktop,
+      backgroundMediaUrlMobile,
+      backgroundMediaUrlTablet,
+      ctaScrollIntoHeader,
+      ctaSubtext,
+      ctaText,
+      ctaUrl,
+      headlineText,
+      mediaAlt,
+      subHeadlineText,
     } = reactProps;
     const ctaLink = document.createElement('a');
-    ctaLink.text = ctaText;
-    ctaLink.href = '';
-    const marqueeCells = [
-      ['Healine', headlineText],
+    ctaLink.title = ctaText;
+    ctaLink.href = ctaUrl;
+    ctaLink.innerHTML = `<del>${ctaText}</del>`;
+
+    const offerDetailsLink = document.createElement('a');
+    offerDetailsLink.title = ctaSubtext;
+    offerDetailsLink.href = `${OFFER_DETAIL_MODAL_URL}`;
+    offerDetailsLink.innerText = ctaSubtext;
+
+    const bgDesktopImg = document.createElement('img');
+    bgDesktopImg.src = backgroundMediaUrlDesktop;
+    bgDesktopImg.alt = mediaAlt;
+
+    const bgTabletImg = document.createElement('img');
+    bgTabletImg.src = backgroundMediaUrlTablet;
+    bgTabletImg.alt = mediaAlt;
+
+    const bgMobileImg = document.createElement('img');
+    bgMobileImg.src = backgroundMediaUrlMobile;
+    bgMobileImg.alt = mediaAlt;
+
+    marqueeCells = [
+      ['Headline', headlineText],
       ['Sub Headline', subHeadlineText],
-      ['Bacground', [backgroundMediaUrlDesktop, backgroundMediaUrlTablet, backgroundMediaUrlMobile].join('</br>')],
+      ['Bacground', [bgDesktopImg.outerHTML, bgDesktopImg.outerHTML, bgMobileImg.outerHTML].join('</br>')],
       ['Background Color', backgroundColor],
       ['Foreground', getForegroundImage(marqueeEl)],
-      ['CTA', document.create],
+      ['CTA', ctaLink],
+      ['Scroll CTA Into Header', ctaScrollIntoHeader],
+      ['Offer Details', offerDetailsLink],
     ];
   }
-  const el = document.createElement('img');
-  el.src = 'https://www.sample.com/images/helloworld.png';
 
   const cells = [
     ['Marquee'],
-    ['Headline', 'The Hello World page'],
-    ['Sub Title', 'This is a really cool Hello World page.'],
-    ['Image', el],
+    ...marqueeCells,
   ];
-  const table = WebImporter.DOMUtils.createTable(cells, document);
-  main.append(table);
+  return WebImporter.DOMUtils.createTable(cells, document);
 };
 
+const createGameFinderBlock = (main, document, gamefinderEl) => {
+  let reactProps = gamefinderEl.getAttribute(DATA_SLING_PROPS);
+  if (reactProps) reactProps = JSON.parse(reactProps);
+  const cells = [
+    ['Game Finder'],
+  ];
+  Object.keys(reactProps).forEach((key) => {
+    if (key !== 'channelsLogoPath' && key !== 'modalChannelsLogoPath') cells.push([key, reactProps[key]]);
+  });
+
+  return WebImporter.DOMUtils.createTable(cells, document);
+};
 const createFAQBlock = (main, document) => {
+  // find the <title> element
+  const title = document.querySelector('title');
+  let fragPath = 'aemedge/fragments/faq-global';
+  if (title && title.innerHTML?.includes('NBA')) {
+    fragPath = 'aemedge/fragments/faq-nba';
+  }
+  const fragLink = document.createElement('a');
+  fragLink.href = `${EDS_BASE_URL}${fragPath}`;
+  fragLink.innerText = fragLink.href;
   const cells = [
     ['Fragment'],
-    ['Replace with Fragment URL'],
+    [fragLink],
   ];
-  const table = WebImporter.DOMUtils.createTable(cells, document);
-  main.append(table);
+  return WebImporter.DOMUtils.createTable(cells, document);
 };
 
 export default {
@@ -96,8 +144,12 @@ export default {
     // define the main element: the one that will be transformed to Markdown
     const main = document.querySelector('main');
     // create marquee / hero block
-    createMarqueBlock(main, document);
-    createFAQBlock(main, document);
+    const marqueeEl = main.querySelector('div.js-react.js-react-marquee-template');
+    if (marqueeEl) marqueeEl.replaceWith(createMarqueBlock(main, document, marqueeEl));
+    const faqEl = document.querySelector('div.js-react.js-react-faq');
+    if (faqEl) { faqEl.replaceWith(createFAQBlock(main, document)); }
+    const gamefinderEl = document.querySelector('div.js-react.js-react-gamefinder');
+    if (gamefinderEl) gamefinderEl.replaceWith(createGameFinderBlock(main, document, gamefinderEl));
     // create metadata block
     createMetadataBlock(main, document);
 
