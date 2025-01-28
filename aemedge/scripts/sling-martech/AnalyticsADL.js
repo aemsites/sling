@@ -1,11 +1,8 @@
-
-const  eventNames  = JSON.parse(JSON.stringify('./config/eventNames.json'));
-const validSteps   = JSON.parse(JSON.stringify('./config/validSteps.json'));
-const stepPageTypeOverrides  = JSON.parse(JSON.stringify('./config/stepPageTypeOverrides.json'));
+import eventNames from "./config/eventNames.json" with { type: "json" };
+import validSteps   from'./config/validSteps.json' with { type: "json" };;
+import stepPageTypeOverrides from './config/stepPageTypeOverrides.json' with { type: "json" };;
 const version = '7.0.39';
-const parameterConfig  = JSON.parse(JSON.stringify('./config/queryParameters.json'));
-
-
+import parameterConfig  from './config/queryParameters.json' with { type: "json" };;
 
 const SIMPLE_TYPES = [
   'text',
@@ -989,7 +986,6 @@ export class AnalyticsADL {
       analyticsWarn('Could not find "name" argument in modalOpen');
       return;
     }
-
     const data = {
       event: eventNames.modal.modalOpen,
       web: {
@@ -1001,7 +997,6 @@ export class AnalyticsADL {
         currentEvent: eventNames.modal.modalOpen,
       },
     };
-
     this.dataLayer.push(data);
   }
 
@@ -1033,7 +1028,6 @@ export class AnalyticsADL {
         currentEvent: eventNames.modal.modalClose,
       },
     };
-
     this.dataLayer.push(data);
   }
 
@@ -1367,34 +1361,35 @@ let instance;
  */
 export function getInstance(appName) {
   if (!instance) {
-    const handler = {
-      get(target, prop) {
-        const fn = target[prop];
+    //const handler = {
+    //  get(target, prop) {
+    //    const fn = target[prop];
 
-        if (!fn) {
-          analyticsError(`Property ${prop} accessed, but does not exist.`
-            + ' If this is a function call, it will silently fail as a no-op.'
-            + ' This needs to be fixed in the calling code.'
-          );
+    //    if (!fn) {
+    //      analyticsError(`Property ${prop} accessed, but does not exist.`
+    //        + ' If this is a function call, it will silently fail as a no-op.'
+    //        + ' This needs to be fixed in the calling code.'
+    //      );
 
-          return () => { /* intentionally empty */ };
-        }
+    //      return () => { /* intentionally empty */ };
+    //    }
 
-        return (...args) => {
-          try {
-            return target[prop](...args);
-          } catch (e) {
-            analyticsError(e);
-          }
+    //    return (...args) => {
+    //      try {
+    //        return target[prop](...args);
+    //      } catch (e) {
+    //        analyticsError(e);
+    //      }
 
-          return undefined;
-        };
-      }
-    };
+    //      return undefined;
+    //    };
+    //  }
+    //};
 
     window.adobeDataLayer = window.adobeDataLayer ?? [];
 
-    instance = new Proxy(new AnalyticsADL(appName, window.adobeDataLayer), handler);
+   //instance = new Proxy(new AnalyticsADL(appName, window.adobeDataLayer), handler);
+   instance = new AnalyticsADL(appName, window.adobeDataLayer );
 
     // Add debug data to the data layer
     instance.updateDebugData();
