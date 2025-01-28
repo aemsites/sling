@@ -615,8 +615,6 @@ async function loadHeader(header) {
    * @param {Element} doc The container element
    */
 async function loadLazy(doc) {
-  // load sling martech lazily
-  await loadSlingMartech();
   autolinkModals(doc);
   const main = doc.querySelector('main');
   await loadBlocks(main);
@@ -660,6 +658,8 @@ function loadDelayed() {
 }
 
 async function loadPage() {
+  // load sling martech
+  await loadSlingMartech();
   await loadEager(document);
   await loadLazy(document);
   loadDelayed();
