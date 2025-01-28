@@ -41,7 +41,7 @@ export async function createModal(contentNodes) {
   decorateIcons(closeButton);
   dialog.addEventListener('close', () => {
     document.body.classList.remove('modal-open');
-    const name = document.querySelector('.modal-content')?.querySelector('h1,h2,h3,h4,h5,h6')?.innerText;
+    const name = document.querySelector('.modal-content')?.querySelector('h1,h2,h3,h4,h5,h6')?.innerText || 'modal';
     analytics.modalClose({ name });
     block.remove();
   });
@@ -55,7 +55,7 @@ export async function createModal(contentNodes) {
       // so we need to reset it.
       setTimeout(() => { dialogContent.scrollTop = 0; }, 0);
       document.body.classList.add('modal-open');
-      const name = document.querySelector('.modal-content')?.querySelector('h1,h2,h3,h4,h5,h6')?.innerText;
+      const name = document.querySelector('.modal-content')?.querySelector('h1,h2,h3,h4,h5,h6')?.innerText || 'modal';
       analytics.modalOpen({ name });
     },
   };
