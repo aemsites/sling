@@ -8,7 +8,7 @@ const analytics = window.analyticsInstance('modal');
 // This is not a traditional block, so there is no decorate function. Instead, links to
 // a */modals/* path  are automatically transformed into a modal. Other blocks can also use
 // the createModal() and openModal() functions.
-
+let modalName = 'modal';
 export async function createModal(contentNodes) {
   await loadCSS(`${window.hlx.codeBasePath}/blocks/modal/modal.css`);
   const dialog = document.createElement('dialog');
@@ -41,8 +41,8 @@ export async function createModal(contentNodes) {
   decorateIcons(closeButton);
   dialog.addEventListener('close', () => {
     document.body.classList.remove('modal-open');
-    const name = document.querySelector('.modal-content')?.querySelector('h1,h2,h3,h4,h5,h6')?.innerText || 'modal';
-    analytics.modalClose({ name });
+    modalName = document.querySelector('.modal-content')?.querySelector('h1,h2,h3,h4,h5,h6')?.innerText || modalName;
+    analytics.modalClose({ name: modalName });
     block.remove();
   });
 
@@ -55,8 +55,8 @@ export async function createModal(contentNodes) {
       // so we need to reset it.
       setTimeout(() => { dialogContent.scrollTop = 0; }, 0);
       document.body.classList.add('modal-open');
-      const name = document.querySelector('.modal-content')?.querySelector('h1,h2,h3,h4,h5,h6')?.innerText || 'modal';
-      analytics.modalOpen({ name });
+      modalName = document.querySelector('.modal-content')?.querySelector('h1,h2,h3,h4,h5,h6')?.innerText || modalName;
+      analytics.modalOpen({ name: modalName });
     },
   };
 }
@@ -65,7 +65,7 @@ export async function openModal(fragmentUrl) {
   const path = fragmentUrl.startsWith('http')
     ? new URL(fragmentUrl, window.location).pathname
     : fragmentUrl;
-
+  modalName = path;
   const fragment = await loadFragment(path);
   const { showModal } = await createModal(fragment.childNodes);
   showModal();
