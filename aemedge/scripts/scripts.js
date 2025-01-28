@@ -11,7 +11,6 @@ import {
   getMetadata,
   decorateBlock,
   loadBlock,
-  loadScript,
 } from './aem.js';
 
 import {
@@ -459,18 +458,6 @@ async function loadTemplate(main) {
   }
 }
 
-// async function loadSlingMartech() {
-//  // load
-//  await loadScript('/aemedge/scripts/sling-martech/index.js', { type: 'module' });
-
-//  if (window.location.host.startsWith('localhost')) {
-//    await loadScript('https://assets.adobedtm.com/f4211b096882/26f71ad376c4/launch-b69ac51c7dcd-development.min.js');
-//  } else if (window.location.host.startsWith('www.sling.com') || window.location.host.endsWith('.live')) {
-//    await loadScript('https://assets.adobedtm.com/f4211b096882/26f71ad376c4/launch-c846c0e0cbc6.min.js');
-//  } else if (window.location.host.endsWith('.page')) {
-//    await loadScript('https://assets.adobedtm.com/f4211b096882/26f71ad376c4/launch-6367a8aeb307-staging.min.js');
-//  }
-// }
 /**
    * Builds a spacer out of a code block with the text 'spacer'.
    * add up to 3 spacers with 'spacer1', 'spacer2', 'spacer3'
@@ -658,8 +645,6 @@ function loadDelayed() {
 }
 
 async function loadPage() {
-  // load sling martech
-  // await loadSlingMartech();
   await loadEager(document);
   await loadLazy(document);
   loadDelayed();
