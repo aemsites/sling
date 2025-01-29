@@ -463,22 +463,15 @@ async function loadTemplate(main) {
    * add up to 3 spacers with 'spacer1', 'spacer2', 'spacer3'
    */
 function buildSpacer(main) {
-  const allPageSpacers = main.querySelectorAll('code');
-
-  allPageSpacers.forEach((el) => {
-    const alt = el.innerText.trim();
-
-    if (alt === 'spacer' || alt === 'spacer1') {
-      el.innerText = '';
-      el.classList.add('spacer1');
-    }
-    if (alt === 'spacer2') {
-      el.innerText = '';
-      el.classList.add('spacer2');
-    }
-    if (alt === 'spacer3') {
-      el.innerText = '';
-      el.classList.add('spacer3');
+  const codeElements = main.querySelectorAll('code');
+  codeElements.forEach((code) => {
+    const spacerMatch = code.textContent.match(/spacer-(\d+)/);
+    if (spacerMatch) {
+      const spacerHeight = parseInt(spacerMatch[1], 10);
+      const spacerDiv = document.createElement('div');
+      spacerDiv.style.height = `${spacerHeight * 10}px`;
+      code.insertAdjacentElement('afterend', spacerDiv);
+      code.remove();
     }
   });
 }

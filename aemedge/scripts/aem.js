@@ -503,17 +503,6 @@ function decorateSections(main) {
       });
       sectionMeta.parentNode.remove();
     }
-    const codeElements = section.querySelectorAll('code');
-    codeElements.forEach((code) => {
-      const spacerMatch = code.textContent.match(/spacer-(\d+)/);
-      if (spacerMatch) {
-        const spacerHeight = parseInt(spacerMatch[1], 10);
-        const spacerDiv = document.createElement('div');
-        spacerDiv.style.height = `${spacerHeight * 10}px`;
-        code.insertAdjacentElement('afterend', spacerDiv);
-        code.style.display = 'none';
-      }
-    });
   });
 }
 
