@@ -381,6 +381,15 @@ body.blog-article .section.chat-container .chat-wrapper .chat{
         text-align: center;
     }
 
+    .button-container.combined {
+        width: 100%;
+
+        > p.button-container:not(.subtext) {
+            width: 100%;
+            text-align: center;
+        }
+    }
+
     p.button-container:has(a[class='button primary sticky']) .button {
         margin: 0;
     }
