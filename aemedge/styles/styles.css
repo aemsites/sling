@@ -775,7 +775,6 @@ a.black {
   color: black;
 }
 
-<<<<<<< HEAD
 a.blue {
     color: var(--link-color);
 }
@@ -796,8 +795,6 @@ main .section.tabs-with-background {
   width: 100%;
 }
 
-=======
->>>>>>> c36fa3b97f9d8415c57a4392ad140eb04b4b0933
 @media (width >=768px) {
     main .section {
         padding: 0 48px;
