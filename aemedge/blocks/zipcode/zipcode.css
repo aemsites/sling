@@ -18,7 +18,7 @@ header nav[aria-expanded="false"] .zipcode-wrapper {
     width: 127px;
 }
 
-header nav[aria-expanded="true"] .zipcode-wrapper.selected{ 
+header nav[aria-expanded="true"] .zipcode-wrapper.selected{
     background: #44444f;
     width: 127px;
 }
@@ -140,7 +140,7 @@ header nav[aria-expanded="true"] .zipcode-wrapper.selected{
 
 .zip-input-label {
     position: absolute;
-    color: var(--clr-light-black);
+    color: var(--coal);
     opacity: 1;
     font-size: 0.75rem;
     font-weight: 500;
