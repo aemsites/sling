@@ -255,6 +255,15 @@
   }
 }
 
+@media (width > 992px) {
+  .section.tabs-with-background .tabs .tabs-panel{
+    line-height: 30px;
+    max-width: 1168px;
+    margin: 0 auto;
+    padding: 100px 0;
+  }
+}
+
 @media (width >= 1440px) {
   .rewards .tabs .tabs-list {
     justify-content: center;
