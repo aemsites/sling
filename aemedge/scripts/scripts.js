@@ -528,7 +528,6 @@ export function decorateExtImage() {
   // not for bitmap images because we're not doing renditions here
   const extImageUrl = /dish\.scene7\.com|\/aemedge\/svgs\//;
   const numberRegex = /\{(\d{1,2})?}/;
-  const numberTextRegex = /\{(\d.*)?\}/;
   const fragment = document.createDocumentFragment();
 
   document.querySelectorAll('a[href]').forEach((a) => {
@@ -543,26 +542,13 @@ export function decorateExtImage() {
       img.loading = 'lazy';
       img.src = extImageSrc;
       picture.append(img);
-      // Check if the link's text content matches numberRegex
-      const numberTextMatches = a.textContent.match(numberTextRegex);
+
       const numberMatches = a.textContent.match(numberRegex);
       if (numberMatches) {
-        console.log(numberMatches);
         const width = numberMatches[1];
-        if (numberTextMatches && numberTextMatches[0] === numberMatches[0]) {
-          img.style.maxWidth = `${width}`;
-        } else {
-          img.style.maxWidth = `${width}%`;
-        }
+        img.style.maxWidth = `${width}%`;
         a.textContent = a.textContent.replace(numberRegex, '');
       }
-
-      // const numberMatches = a.textContent.match(numberRegex);
-      // if (numberMatches) {
-      //   const width = numberMatches[1];
-      //   img.style.maxWidth = `${width}`;
-      //   a.textContent = a.textContent.replace(numberRegex, '');
-      // }
 
       fragment.append(picture);
       a.replaceWith(fragment);
