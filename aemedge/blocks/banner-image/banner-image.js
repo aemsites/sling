@@ -9,7 +9,7 @@ function processBlockConfig(block) {
   const nonMediaDIV = createTag('div', { class: 'text-cta-container' });
   const btnsDIV = createTag('div', { class: 'buttons-container' });
   let bgImages = [];
-  // data-analytics-props="{'event':'click','eventCategory':'cta','eventAction':'click','eventLabel':'${ctaText}'}"
+
   block.querySelectorAll(':scope > div:not([id])').forEach((row) => {
     if (row.children) {
       const cols = [...row.children];
@@ -27,30 +27,13 @@ function processBlockConfig(block) {
           }
 
           const pictures = Array.from(col.querySelectorAll('img[src]'));
-          // if (extImageUrl.matches) {
-          //   bgImages = Array.from(pictures).map((source) => source.getAttribute('src'));
-          //   console.log('external images', bgImages);
-          // } else { // local image
-            bgImages = pictures.map((source) => new URL(source.getAttribute('src'), window.location.href).href);
-        //  }
+          bgImages = pictures.map((source) => new URL(source.getAttribute('src'), window.location.href).href);
           // set image array as data attribute for storage
           block.setAttribute('data-background', bgImages);
-
-        //   const extImageUrl = /dish\.scene7\.com|\/aemedge\/svgs\//;
-        //   const pictures = Array.from(col.querySelectorAll('picture > source:nth-child(2)'));
-        //   const additionalSources = Array.from(col.querySelectorAll('img[src]')); // Example of additional sources
-        //
-        //   const bgImages = pictures
-        //     .map((source) => new URL(source.getAttribute('srcset'), window.location.href).href)
-        //     .concat(
-        //       additionalSources
-        //         .filter((img) => extImageUrl.test(img.src))
-        //         .map((img) => new URL(img.src, window.location.href).href),
-        //     );
-         }
+        }
 
         if (name === 'background-color') {
-          block.parentElement.style.backgroundColor = col.textContent
+          block.parentElement.style.backgroundColor = col.textContent;
         }
         if (name === 'background-gradient') {
           const colorHex = col.textContent;
