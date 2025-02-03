@@ -238,8 +238,12 @@ export function createOptimizedBackgroundImage(element, breakpoints = [
   const updateBackground = () => {
     const bgImage = getBackgroundImage(element);
     const extImageUrl = /dish\.scene7\.com|\/aemedge\/svgs\//;
+    // const pathname = extImageUrl.test(bgImage)
+    //   ? encodeURI(bgImage) : encodeURI(new URL(bgImage, window.location.href).pathname);
+
     const pathname = extImageUrl.test(bgImage)
-      ? encodeURI(bgImage) : encodeURI(new URL(bgImage, window.location.href).pathname);
+      ? bgImage
+      : new URL(bgImage, window.location.href).pathname;
 
     const matchedBreakpoint = breakpoints
       .filter((br) => !br.media || window.matchMedia(br.media).matches)
@@ -543,10 +547,12 @@ export function decorateExtImage() {
       img.src = extImageSrc;
       picture.append(img);
 
+      // Check if the link's text content matches numberRegex
       const numberMatches = a.textContent.match(numberRegex);
       if (numberMatches) {
-        const width = numberMatches[1];
-        img.style.maxWidth = `${width}%`;
+        const percentWidth = numberMatches[1];
+        img.style.maxWidth = `${percentWidth}%`;
+        // Remove the text content matching numberRegex
         a.textContent = a.textContent.replace(numberRegex, '');
       }
 
