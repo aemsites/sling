@@ -245,6 +245,7 @@ picture {
 
 .center, [data-align="center"] {
   text-align: center;
+    background-position-x: center;
 
     .button-container.combined {
         margin-left: auto !important;
@@ -254,18 +255,22 @@ picture {
 
 [data-valign="bottom"] {
     align-content: end;
+    background-position-y: bottom;
 }
 
 [data-valign="middle"] {
     align-content: center;
+    background-position-y: center;
 }
 
 [data-valign="top"] {
     align-content: start;
+    background-position-y: top;
 }
 
 [data-align="right"] {
     text-align: right;
+    background-position-x: right;
 
     .button-container.combined {
         margin-left: auto !important;
@@ -274,6 +279,7 @@ picture {
 
 [data-align="left"] {
     text-align: left;
+    background-position-x: left;
 }
 
 main pre {
@@ -419,14 +425,15 @@ button:disabled:hover {
 }
 
 .button-container {
-    margin: 0 0 12px;
+    &:has(.button-container) {
+        margin: 0 0 12px;
+    }
 
     sub, sup, em sup, em sub {
         display: block;
         text-align: center;
         font-style: italic;
         margin-top: 6px;
-        font-size: 0.875rem;
     }
 
     a.button {
@@ -541,7 +548,6 @@ main img {
 
 .icon img, img.svg {
   height: 100%;
-  width: 100%;
 }
 
 /* sections */
@@ -573,6 +579,7 @@ main > .section {
   margin: 0;
   padding: 0;
   background-position: center;
+  background-size: cover;
 
   .buttons-container {
     text-align: center;
@@ -738,7 +745,7 @@ margin-bottom:10px;
 }
 }
 
-.section.marquee-container {
+.section.marquee-container, .section.banner-image-container {
   margin:0;
   padding:0;
   width: 100%;

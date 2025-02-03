@@ -152,20 +152,6 @@
     }
   }
 
-  > div > div > p {
-    font-size: 1.25rem;
-    line-height: 1.5rem;
-    font-weight: 600;
-    margin: 0 0 1.25rem;
-  }
-
-  > div > div > h2 {
-    font-size: 2rem;
-    line-height: 2.75rem;
-    font-weight: 600;
-    margin: 1.25rem 0 ;
-  }
-
   .buttons-container {
     position: relative;
     margin: 0 auto;
@@ -189,21 +175,6 @@
     margin: 0 8%;
   }
 }
-
-
-  .banner.small .columns {
-    picture {
-      justify-content: left;
-    }
-
-    > div {
-      margin-top: 0;
-    }
-
-    &:first-child {
-      padding: 1.5rem;
-    }
-  }
 
   .section {
     padding: 0;
