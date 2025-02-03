@@ -253,10 +253,20 @@
     text-align: center;
     margin-top: 50px;
   }
+
+  main .section.tabs-with-background .tabs .tabs-panel .columns > div {
+    display: flex;
+    flex-direction: row;
+    gap: 24px;
+  }
+
+  main .section.tabs-with-background .tabs .tabs-panel .columns .carousel-wrapper{
+    width: 50%;
+  }
 }
 
 @media (width > 992px) {
-  .section.tabs-with-background .tabs .tabs-panel{
+  main .section.tabs-with-background .tabs .tabs-panel{
     line-height: 30px;
     max-width: 1168px;
     margin: 0 auto;

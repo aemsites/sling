@@ -775,6 +775,26 @@ a.black {
   color: black;
 }
 
+main .section.section.tabs-with-background{
+  padding: 0;
+  color: var(--steam);
+}
+
+main .section.tabs-with-background .tabs-list {
+  background-color: var(--background-color);
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 20px;
+  overflow: auto;
+  padding-left: 6%;
+  padding-right: 6%;
+  white-space: nowrap;
+}
+
+main .section.tabs-with-background .tabs.columns{
+  width: auto;
+}
+
 @media (width >=768px) {
     main .section {
         padding: 0 48px;
