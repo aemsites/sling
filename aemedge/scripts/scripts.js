@@ -391,7 +391,7 @@ export function decorateButtons(element) {
             a.className = 'button primary';
             twoup.classList.add('button-container');
           }
-          if (up.childNodes.length === 1 && up.tagName === 'EM' && threeup.childNodes.length === 1 && twoup.tagName === 'DEL' && (threeup.tagName === 'P' || twoup.tagName === 'DIV')) {
+          if (up.childNodes.length === 1 && up.tagName === 'EM' && threeup.childNodes.length === 1 && twoup.tagName === 'DEL' && (threeup.tagName === 'P' || threeup.tagName === 'DIV')) {
             a.className = 'button secondary';
             threeup.classList.add('button-container');
           }
