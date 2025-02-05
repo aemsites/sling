@@ -51,7 +51,6 @@ export default async function decorate(block) {
       tableRows.forEach((row) => {
         const cells = row.querySelectorAll('td');
         if (cells.length === 1) {
-          console.log('single column row', cells.length);
           trcount = 0;
           row.classList.add('single-column-row');
           const childCount = tableRows[1] ? tableRows[1].childElementCount : 1;

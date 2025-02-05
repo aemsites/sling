@@ -8,40 +8,28 @@
   max-width: 100%;
   border-collapse: collapse;
   font-size: var(--body-font-size-xs);
-}
 
-.table.playoffs, .table.schedule {
-   td:not([data-align="right"], [data-align="left"]) {
-     text-align: center;
-   }
-}
+  th, td {
+    padding: 0 6px;
+  }
 
-@media (width >= 768px) {
-  .table table {
-    font-size: var(--body-font-size-s);
+  thead tr {
+    border-top: 2px solid;
+    border-bottom: 2px solid;
   }
 }
 
-@media (width >= 992px) {
-  .table table {
-    font-size: var(--body-font-size-m);
-  }
-}
-
-.table table th,
-.table table td { /* stylelint-disable-line */
-  padding: 0 6px;
-}
-
-.table table thead tr {
-  border-top: 2px solid;
-  border-bottom: 2px solid;
-}
 
 /* bordered variant */
 .table.bordered table th,
 .table.bordered table td { /* stylelint-disable-line */
   border: 1px solid;
+}
+
+.table.playoffs, .table.schedule {
+  td:not([data-align="right"], [data-align="left"]) {
+    text-align: center;
+  }
 }
 
 .table:not(.playoffs, .schedule) table tbody tr {
@@ -144,6 +132,10 @@ div.section.table-container .default-content-wrapper .button-container ~ p {
 }
 
 @media (width >= 768px) {
+  .table table {
+    font-size: var(--body-font-size-s);
+  }
+
   .blog-article > main div.section.table-container {
     padding: unset;
     width: unset;
@@ -154,6 +146,12 @@ div.section.table-container .default-content-wrapper .button-container ~ p {
   .playoffs.table, .schedule.table{
     margin-left: 8px;
     margin-bottom: 48px;
+  }
+}
+
+@media (width >= 992px) {
+  .table table {
+    font-size: var(--body-font-size-m);
   }
 }
 
