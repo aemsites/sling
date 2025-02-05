@@ -17,6 +17,10 @@
     border-top: 2px solid;
     border-bottom: 2px solid;
   }
+
+  td:not([data-align="right"], [data-align="justify"], [data-align="justify"]) {
+    text-align: center;
+  }
 }
 
 
@@ -26,19 +30,9 @@
   border: 1px solid;
 }
 
-.table.playoffs, .table.schedule {
-  td:not([data-align="right"], [data-align="left"]) {
-    text-align: center;
-  }
-}
 
 .table:not(.playoffs, .schedule) table tbody tr {
   border-bottom: 1px solid;
-  text-align: center;
-}
-
-.table table th { /* stylelint-disable-line */
-  font-weight: 700;
 }
 
 /* no header variant */
@@ -58,8 +52,10 @@
 }
 
 .playoffs.table table thead tr {
-  background-color: rgb(84 172 210);
-  color: white;
+  background-color: var(--dark-rock-candy);
+  border-color: var(--dark-rock-candy);
+  color: var(--clr-white);
+
 }
 
 /* striped variant */
@@ -112,7 +108,6 @@ blockquote {
 
 .playoffs.table table,
 .schedule.table table {
-  font-size: 16px;
   table-layout: fixed;
 }
 
@@ -131,12 +126,6 @@ blockquote {
   .playoffs.table, .schedule.table{
     margin-left: 8px;
     margin-bottom: 48px;
-  }
-}
-
-@media (width >= 992px) {
-  .table table {
-    font-size: var(--body-font-size-m);
   }
 }
 

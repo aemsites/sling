@@ -277,7 +277,7 @@ picture {
     }
 }
 
-[data-align="left"] {
+[data-align="left"], [data-align="justify"] {
     text-align: left;
     background-position-x: left;
 }
