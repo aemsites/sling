@@ -23,12 +23,6 @@
     align-items: center;
 }
 
-.popular-blogs .heading-wrapper img {
-    max-height: 36px;
-    max-width: 36px;
-    vertical-align: middle;
-}
-
 .popular-blogs .headline {
     color: #1d1d1d;
     font-size: 20px;
