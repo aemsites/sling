@@ -20,46 +20,48 @@ export default async function decorate(block) {
   const header = !block.classList.contains('no-header');
   if (header) {
     table.append(thead);
-  }
-  table.append(tbody);
+    table.append(tbody);
 
-  [...block.children].forEach((child, i) => {
-    const row = document.createElement('tr');
-    if (header && i === 0) thead.append(row);
-    else tbody.append(row);
-    [...child.children].forEach((col) => {
-      const cell = buildCell(header ? i : i + 1);
-      cell.innerHTML = col.innerHTML;
-      row.append(cell);
-    });
-  });
-  block.innerHTML = '';
-  block.append(table);
+    [...block.children].forEach((child, i) => {
+      const row = document.createElement('tr');
+      if (header && i === 0) thead.append(row);
+      else tbody.append(row);
+      [...child.children].forEach((col) => {
+        const cell = buildCell(header ? i : i + 1);
+        cell.innerHTML = col.innerHTML;
 
-  let tableRows = '';
-  if (block.classList.contains('schedule')) {
-    const scheduletableRows = block.querySelectorAll('table tbody tr');
-    tableRows = scheduletableRows;
-  } else if (block.classList.contains('playoffs')) {
-    const playoffstableRows = block.querySelectorAll('table tbody tr');
-    tableRows = playoffstableRows;
-  }
-  let trcount = 0;
-  if (tableRows) {
-    tableRows.forEach((row) => {
-      const cells = row.querySelectorAll('td');
-      if (cells.length === 1) {
-        trcount = 0;
-        row.classList.add('single-column-row');
-        for (let i = 0; i < tableRows[1].childElementCount - 1; i += 1) {
-          const newCell = document.createElement('td');
-          row.appendChild(newCell);
+        // Add data attributes if present
+        if (col.dataset.align) {
+          cell.setAttribute('data-align', col.dataset.align);
         }
-      }
-      if (trcount % 2 === 0) {
-        row.classList.add('lightgrey');
-      }
-      trcount += 1;
+        if (col.dataset.valign) {
+          cell.setAttribute('data-valign', col.dataset.valign);
+        }
+
+        row.append(cell);
+      });
     });
+    block.innerHTML = '';
+    block.append(table);
+
+    const tableRows = block.querySelectorAll('table tbody tr');
+    let trcount = 0;
+
+    if (tableRows) {
+      tableRows.forEach((row) => {
+        const cells = row.querySelectorAll('td');
+        if (cells.length === 1) {
+          console.log('single column row', cells.length);
+          trcount = 0;
+          row.classList.add('single-column-row');
+          const childCount = tableRows[1] ? tableRows[1].childElementCount : 1;
+          cells[0].setAttribute('colspan', childCount);
+        }
+        if (trcount % 2 === 0) {
+          row.classList.add('lightgrey');
+        }
+        trcount += 1;
+      });
+    }
   }
 }
