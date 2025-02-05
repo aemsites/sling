@@ -223,6 +223,7 @@ export function buildMultipleButtons(main) {
 export const resizeListeners = new WeakMap();
 export function getBackgroundImage(element) {
   const sectionData = element.dataset.background;
+  console.log('getBackgroundImage sectionData', sectionData);
   const bgImages = sectionData.split(',').map((img) => img.trim());
   return (bgImages.length === 1
     || (window.innerWidth > 1024 && bgImages.length === 2)) ? bgImages[0] : bgImages[1];
@@ -236,6 +237,7 @@ export function createOptimizedBackgroundImage(element, breakpoints = [
   { media: '(min-width: 1600px)', width: '2000' },
 ]) {
   const updateBackground = () => {
+    console.log('looking for a background image to update');
     const bgImage = getBackgroundImage(element);
     const extImageUrl = /dish\.scene7\.com|\/aemedge\/svgs\//;
     // const pathname = extImageUrl.test(bgImage)
@@ -529,9 +531,11 @@ export function decorateExtImage() {
 
   document.querySelectorAll('a[href]').forEach((a) => {
     if (extImageUrl.test(a.href) && linkTextIncludesHref(a)) {
+      console.log('decorateExtImage started x6', a.href);
       const extImageSrc = a.href;
       const picture = document.createElement('picture');
       const img = document.createElement('img');
+      console.log('decorateExtImage create img?', img);
       img.classList.add('svg');
       // this alt is a cop out, but it's better than nothing
       img.alt = 'Sling TV image';
@@ -563,6 +567,7 @@ function buildAutoBlocks(main) {
   try {
     buildHeroBlock(main);
     if (getPageType() !== 'blog') buildFragmentBlocks(main);
+    console.log('buildAutoBlocks successful for not blog');
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('Auto Blocking failed', error);

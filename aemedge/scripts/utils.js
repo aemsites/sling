@@ -155,6 +155,7 @@ export function buildFragmentBlocks(main) {
       const block = buildBlock('fragment', url.pathname);
       a.replaceWith(block);
       decorateBlock(block);
+      console.log('buildFragmentBlocks decorate block happened', url.pathname);
     }
   });
 }

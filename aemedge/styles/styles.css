@@ -631,7 +631,6 @@ main .icon-still-have-questions img {
   background-color: var(--dark-background-color);
   color: var(--light-color);
   margin: 0;
-  padding: 64px 8%;
 }
 
 .section.dark.columns-container{
