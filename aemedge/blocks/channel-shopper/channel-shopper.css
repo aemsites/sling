@@ -40,3 +40,13 @@
 #channel-shopper-app img {
     width: 60px;
 }
+
+@media (width >= 768px) {
+    .section.columns-2.channel-shopper-container {
+        display: flex;
+    }
+
+    .channel-shopper-container {
+        text-align: unset;
+    }
+}

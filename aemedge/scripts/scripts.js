@@ -285,13 +285,18 @@ function makeTwoColumns(main) {
     columnOne.classList.add('column-1');
     const columnTwo = document.createElement('div');
     columnTwo.classList.add('column-2');
+
     if (!fragmentSections) {
-      // 1 block div plus 1 default content div only
-      columnTarget = section.querySelector('div:nth-child(odd)');
-      columnOne.append(...columnTarget.children);
-      columnTwoItems = section.querySelector('div:nth-child(even)');
-      columnTwo.append(columnTwoItems);
-      section.innerHTML = ''; // any extra divs are removed
+      const children = Array.from(section.children);
+      children.forEach((child, index) => {
+        if (index % 2 === 0) {
+          columnOne.append(child);
+        } else {
+          columnTwo.append(child);
+        }
+      });
+
+      // section.innerHTML = ''; // any extra divs are removed
       section.append(columnOne, columnTwo);
     } else {
       // 1 fragment-wrapper div plus 1 default content div only
