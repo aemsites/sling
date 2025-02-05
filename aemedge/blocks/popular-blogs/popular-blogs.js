@@ -127,8 +127,7 @@ export default async function decorate(block) {
       const headlineWrapper = createTag('div', { class: 'heading-wrapper' });
       const headingTitle = createTag('h4', { class: 'headline' });
       headingTitle.innerText = 'Most Popular';
-      const headingImg = createTag('img', { class: 'heading-img', src: '/whatson/images/whats-on-sling.png' });
-      headlineWrapper.append(headingImg, headingTitle);
+      headlineWrapper.append(headingTitle);
       const cardsWrapper = createTag('div', { class: 'slides-wrapper' });
       const cardsDiv = createTag('ul', { class: 'blog-slides' });
       let rendered = 0;
