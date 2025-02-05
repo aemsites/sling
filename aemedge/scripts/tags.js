@@ -1,4 +1,8 @@
+import ffetch from './ffetch.js';
+
 const tagsEndpoint = '/aemedge/tags.json';
+const colorsEndpoint = '/aemedge/color-tags.json';
+
 let tagsPromise;
 const tagToPath = (
   (name) => {
@@ -87,3 +91,25 @@ export const getTag = async (tag) => {
   const tags = await getTags();
   return getDeepNestedObject(tags, tag)[0];
 };
+
+/* color chips rendering */
+let palettePromise;
+function fetchPalette(sheet) {
+  if (!palettePromise) {
+    palettePromise = new Promise((resolve, reject) => {
+      (async () => {
+        try {
+          const paletteJson = await ffetch(colorsEndpoint, sheet).all();
+          resolve(paletteJson);
+        } catch (e) {
+          reject(e);
+        }
+      })();
+    });
+  }
+  return palettePromise;
+}
+
+export async function getPalette() {
+  return fetchPalette('palette');
+}
