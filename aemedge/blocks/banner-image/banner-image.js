@@ -25,10 +25,15 @@ function processBlockConfig(block) {
           if (col.dataset.valign) {
             block.setAttribute('data-valign', col.dataset.valign);
           }
-          // when banner-image is called from a fragment, the background image is not in the picture tag
+          // when banner-image is called from a FRAGMENT, the background image is not in the picture tag
           const imageLinks = Array.from(col.querySelectorAll('a[href]'));
           if (imageLinks.length > 0) {
             bgImages = imageLinks.map((source) => new URL(source.getAttribute('href'), window.location.href).href);
+            // taking from getBackgroundElement in scripts.js
+            // const applyBg = bgImages.split(',').map((img) => img.trim());
+            // return (applyBg.length === 1
+            //     || (window.innerWidth > 1024 && applyBg.length === 2)) ? applyBg[0] : applyBg[1];
+// end
           }
           const pictures = Array.from(col.querySelectorAll('img[src]'));
           if (pictures.length > 0) {
@@ -37,6 +42,7 @@ function processBlockConfig(block) {
           // set image array as data attribute for storage
           // WORKING - setting as data attribute
           block.setAttribute('data-background', bgImages);
+
         }
 
         if (name === 'background-color') {
