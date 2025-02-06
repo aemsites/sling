@@ -91,7 +91,6 @@ export default function decorate(block) {
   processBlockConfig(block);
   const background = block.querySelector('.background');
   const bgColor = block.querySelector('.background-color');
-  console.log('background class contents', background);
   if (background) {
     createOptimizedBackgroundImage(block);
     background.remove();
