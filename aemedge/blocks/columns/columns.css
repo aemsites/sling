@@ -570,18 +570,6 @@
         }
       }
     }
-
-    .channel-shopper-container .columns {
-      > div:first-of-type { /* stylelint-disable-line */
-        > div:first-child {
-          padding: 2rem 0 0;
-        }
-
-        .columns-img-col picture > img {
-          margin: unset;
-        }
-      }
-    }
   }
 
   @media (width >=1200px) {
