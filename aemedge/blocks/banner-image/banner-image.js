@@ -25,24 +25,17 @@ function processBlockConfig(block) {
           if (col.dataset.valign) {
             block.setAttribute('data-valign', col.dataset.valign);
           }
-          // when banner-image is called from a FRAGMENT, the background image is not in the picture tag
-          const imageLinks = Array.from(col.querySelectorAll('a[href]'));
-          if (imageLinks.length > 0) {
-            bgImages = imageLinks.map((source) => new URL(source.getAttribute('href'), window.location.href).href);
-            // taking from getBackgroundElement in scripts.js
-            // const applyBg = bgImages.split(',').map((img) => img.trim());
-            // return (applyBg.length === 1
-            //     || (window.innerWidth > 1024 && applyBg.length === 2)) ? applyBg[0] : applyBg[1];
-// end
-          }
           const pictures = Array.from(col.querySelectorAll('img[src]'));
           if (pictures.length > 0) {
             bgImages = pictures.map((source) => new URL(source.getAttribute('src'), window.location.href).href);
           }
+          // when called from a FRAGMENT, the background image is not in the picture tag
+          const fragPictures = Array.from(col.querySelectorAll('a[href]'));
+          if (fragPictures.length > 0) {
+            bgImages = fragPictures.map((source) => new URL(source.getAttribute('href'), window.location.href).href);
+          }
           // set image array as data attribute for storage
-          // WORKING - setting as data attribute
           block.setAttribute('data-background', bgImages);
-
         }
 
         if (name === 'background-color') {
@@ -99,13 +92,10 @@ export default function decorate(block) {
   const background = block.querySelector('.background');
   const bgColor = block.querySelector('.background-color');
   console.log('background class contents', background);
- // if (background) {
-    if (background.querySelector('picture')) {
-      console.log('is there picture under a background class?', (background.querySelector('picture')));
-      createOptimizedBackgroundImage(block);
-      background.remove();
-    }
- // }
+  if (background) {
+    createOptimizedBackgroundImage(block);
+    background.remove();
+  }
   // set the bg color on the section
   if (bgColor) {
     const section = block.closest('.section');
