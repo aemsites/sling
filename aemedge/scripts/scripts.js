@@ -565,8 +565,6 @@ function buildAutoBlocks(main) {
   try {
     buildHeroBlock(main);
     if (getPageType() !== 'blog') buildFragmentBlocks(main);
-    // eslint-disable-next-line no-console
-    console.log('buildAutoBlocks successful for not blog');
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('Auto Blocking failed', error);
