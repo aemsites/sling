@@ -25,9 +25,15 @@ function processBlockConfig(block) {
           if (col.dataset.valign) {
             block.setAttribute('data-valign', col.dataset.valign);
           }
-
           const pictures = Array.from(col.querySelectorAll('img[src]'));
-          bgImages = pictures.map((source) => new URL(source.getAttribute('src'), window.location.href).href);
+          if (pictures.length > 0) {
+            bgImages = pictures.map((source) => new URL(source.getAttribute('src'), window.location.href).href);
+          }
+          // when called from a FRAGMENT, the background image is not in the picture tag
+          const fragPictures = Array.from(col.querySelectorAll('a[href]'));
+          if (fragPictures.length > 0) {
+            bgImages = fragPictures.map((source) => new URL(source.getAttribute('href'), window.location.href).href);
+          }
           // set image array as data attribute for storage
           block.setAttribute('data-background', bgImages);
         }
@@ -86,10 +92,8 @@ export default function decorate(block) {
   const background = block.querySelector('.background');
   const bgColor = block.querySelector('.background-color');
   if (background) {
-    if (background.querySelector('picture')) {
-      createOptimizedBackgroundImage(block);
-      background.remove();
-    }
+    createOptimizedBackgroundImage(block);
+    background.remove();
   }
   // set the bg color on the section
   if (bgColor) {

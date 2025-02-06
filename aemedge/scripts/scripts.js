@@ -238,9 +238,6 @@ export function createOptimizedBackgroundImage(element, breakpoints = [
   const updateBackground = () => {
     const bgImage = getBackgroundImage(element);
     const extImageUrl = /dish\.scene7\.com|\/aemedge\/svgs\//;
-    // const pathname = extImageUrl.test(bgImage)
-    //   ? encodeURI(bgImage) : encodeURI(new URL(bgImage, window.location.href).pathname);
-
     const pathname = extImageUrl.test(bgImage)
       ? bgImage
       : new URL(bgImage, window.location.href).pathname;
