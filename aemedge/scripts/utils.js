@@ -726,32 +726,40 @@ export function configSideKick() {
   const showBlocks = ({ detail: payload }) => {
     console.log('a custom event happened', payload);
     const blocks = document.querySelectorAll('div.block');
-
+    const excludedBlockList = ['header', 'zipcode', 'footer'];
     blocks.forEach((block) => {
-      block.classList.toggle('highlight');
-      let blockName = block.parentElement.querySelector('.blockname');
-      const copyAction = document.createElement('a');
-      if (!blockName) blockName = document.createElement('span');
-      if (block.classList.contains('highlight') && blockName !== 'header') {
-        blockName.classList.add('blockname');
-        // eslint-disable-next-line prefer-destructuring
-        blockName.innerText = block.className.split(' ')[0];
-        blockName.classList.toggle('show');
-        block.prepend(blockName);
-        copyAction.href = block.querySelector('a').href;
-        copyAction.classList.add('copy-action');
-        copyAction.target = '_blank';
-        copyAction.textContent = 'Copy HTML';
-        copyAction.classList.toggle('show');
-        copyAction.addEventListener('click', (event) => {
-          event.preventDefault();
-          const html = block.parentElement?.outerHTML?.replace(/\s/g, '');
-          navigator.clipboard.writeText(html);
-        });
-        block.prepend(copyAction);
-      } else {
-        blockName.remove();
-        block.querySelector('.copy-action')?.remove();
+      const name = block.parentElement.querySelector('.blockname');
+
+      if (name && !excludedBlockList.includes(name)) {
+        block.classList.toggle('highlight');
+        const copyAction = document.createElement('a');
+        const blockName = document.createElement('span');
+        if (block.classList.contains('highlight')) {
+          blockName.classList.add('blockname');
+          // eslint-disable-next-line prefer-destructuring
+          blockName.innerText = block.className.split(' ')[0];
+          blockName.classList.toggle('show');
+          block.prepend(blockName);
+          copyAction.href = block.querySelector('a').href;
+          copyAction.classList.add('copy-action');
+          copyAction.target = '_blank';
+          copyAction.textContent = 'Copy HTML';
+          copyAction.classList.toggle('show');
+          copyAction.addEventListener('click', (event) => {
+            event.preventDefault();
+            const html = block.parentElement?.outerHTML?.replace(/\n/g, '');
+            navigator.clipboard.writeText(html);
+          });
+          block.prepend(copyAction);
+        } else {
+          blockName.remove();
+          block.querySelector('.copy-action')?.removeEventListener('click', (event) => {
+            event.preventDefault();
+            const html = block.parentElement?.outerHTML?.replace(/\n/g, '');
+            navigator.clipboard.writeText(html);
+          });
+          block.querySelector('.copy-action')?.remove();
+        }
       }
     });
   };
