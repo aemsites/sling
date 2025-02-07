@@ -728,7 +728,7 @@ export function configSideKick() {
     const blocks = document.querySelectorAll('div.block');
     const excludedBlockList = ['header', 'zipcode', 'footer'];
     blocks.forEach((block) => {
-      const name = block.classList.split(' ')[0];
+      const name = block.getAttribute('data-block-name');
       if (name && !excludedBlockList.includes(name)) {
         block.classList.toggle('highlight');
         const copyAction = document.createElement('a');
@@ -736,7 +736,7 @@ export function configSideKick() {
         if (block.classList.contains('highlight')) {
           blockName.classList.add('blockname');
           // eslint-disable-next-line prefer-destructuring
-          blockName.innerText = block.className.split(' ')[0];
+          blockName.innerText = name;
           blockName.classList.toggle('show');
           block.prepend(blockName);
           copyAction.href = block.querySelector('a').href;
