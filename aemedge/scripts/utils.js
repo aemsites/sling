@@ -732,7 +732,7 @@ export function configSideKick() {
       let blockName = block.parentElement.querySelector('.blockname');
       const copyAction = document.createElement('a');
       if (!blockName) blockName = document.createElement('span');
-      if (block.classList.contains('highlight')) {
+      if (block.classList.contains('highlight') && blockName !== 'header') {
         blockName.classList.add('blockname');
         // eslint-disable-next-line prefer-destructuring
         blockName.innerText = block.className.split(' ')[0];
