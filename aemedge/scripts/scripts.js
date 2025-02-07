@@ -28,6 +28,7 @@ import {
 const LCP_BLOCKS = ['category']; // add your LCP blocks to the list
 const TEMPLATES = ['blog-article', 'blog-category']; // add your templates here
 const TEMPLATE_META = 'template';
+const EXT_IMAGE_URL = /dish\.scene7\.com|\/aemedge\/svgs\//;
 
 /**
  * Sanitizes a string for use as class name.
@@ -155,7 +156,6 @@ function autolinkModals(element) {
 
 export function buildMultipleButtons(main) {
   const buttons = main.querySelectorAll('.button-container:not(.subtext)');
-  const fragment = document.createDocumentFragment();
 
   buttons.forEach((button) => {
     const parent = button.parentElement;
@@ -178,36 +178,29 @@ export function buildMultipleButtons(main) {
   });
 
   const buttonGroups = main.querySelectorAll('div.button-container.combined');
-  // begin grouping buttons that have subtext
   buttonGroups.forEach((buttonGroup) => {
     const parent = buttonGroup.parentElement;
     const siblingButton = buttonGroup.nextElementSibling;
     const siblingUp = buttonGroup.previousElementSibling;
 
     if (!parent.classList.contains('buttons-container')) {
-      // case for grouping 2 subtext buttons
       if (siblingButton && siblingButton.classList.contains('combined')) {
         const buttonContainer = createTag('div', { class: 'buttons-container' });
         parent.insertBefore(buttonContainer, buttonGroup);
         buttonContainer.append(buttonGroup, siblingButton);
       }
-      // case for grouping 1 subtext button and 1 button P
       if (siblingButton && siblingButton.classList.contains('button-container') && !siblingButton.classList.contains('combined')) {
         const buttonContainer = createTag('div', { class: 'buttons-container' });
         parent.insertBefore(buttonContainer, buttonGroup);
         buttonContainer.append(buttonGroup, siblingButton);
       }
-      // case for grouping 1 button P and 1 subtext button
       if (siblingUp && siblingUp.classList.contains('button-container') && !siblingUp.classList.contains('combined')) {
         const buttonContainer = createTag('div', { class: 'buttons-container' });
         parent.insertBefore(buttonContainer, buttonGroup);
-        buttonContainer.append(siblingUp);
-        buttonContainer.append(buttonGroup);
+        buttonContainer.append(siblingUp, buttonGroup);
       }
     }
   });
-
-  main.appendChild(fragment);
 }
 
 /**
@@ -228,18 +221,15 @@ export function buildMultipleButtons(main) {
  * breakpoint should be used.
  */
 
-const resizeListeners = new WeakMap();
-function getBackgroundImage(section) {
-  // look for "background" values in the section metadata
-  const bgImages = section.dataset.background.split(',');
-  if (bgImages.length === 1) {
-    return bgImages[0].trim();
-  } // if there are 2 images, first is for desktop and second is for mobile
-  return (window.innerWidth > 1024 && bgImages.length === 2)
-    ? bgImages[0].trim() : bgImages[1].trim();
+export const resizeListeners = new WeakMap();
+export function getBackgroundImage(element) {
+  const sectionData = element.dataset.background;
+  const bgImages = sectionData.split(',').map((img) => img.trim());
+  return (bgImages.length === 1
+    || (window.innerWidth > 1024 && bgImages.length === 2)) ? bgImages[0] : bgImages[1];
 }
 
-function createOptimizedBackgroundImage(section, breakpoints = [
+export function createOptimizedBackgroundImage(element, breakpoints = [
   { width: '450' },
   { media: '(min-width: 450px)', width: '768' },
   { media: '(min-width: 768px)', width: '1024' },
@@ -247,31 +237,33 @@ function createOptimizedBackgroundImage(section, breakpoints = [
   { media: '(min-width: 1600px)', width: '2000' },
 ]) {
   const updateBackground = () => {
-    const bgImage = getBackgroundImage(section);
-    const url = new URL(bgImage, window.location.href);
-    const pathname = encodeURI(url.pathname);
+    const bgImage = getBackgroundImage(element);
+    const pathname = EXT_IMAGE_URL.test(bgImage)
+      ? bgImage
+      : new URL(bgImage, window.location.href).pathname;
 
-    const matchedBreakpoints = breakpoints.filter(
-      (br) => !br.media || window.matchMedia(br.media).matches,
-    );
-    // If there are any matching breakpoints, pick the one with the highest resolution
-    const matchedBreakpoint = matchedBreakpoints.reduce(
-      (acc, curr) => (parseInt(curr.width, 10) > parseInt(acc.width, 10) ? curr : acc),
-      breakpoints[0],
-    );
+    const matchedBreakpoint = breakpoints
+      .filter((br) => !br.media || window.matchMedia(br.media).matches)
+      .reduce((acc, curr) => (parseInt(curr.width, 10)
+      > parseInt(acc.width, 10) ? curr : acc), breakpoints[0]);
 
     const adjustedWidth = matchedBreakpoint.width * window.devicePixelRatio;
-    section.style.backgroundImage = `url(${pathname}?width=${adjustedWidth}&format=webply&optimize=highest)`;
-    section.style.backgroundSize = 'cover';
+    element.style.backgroundImage = EXT_IMAGE_URL.test(bgImage) ? `url(${pathname}`
+      : `url(${pathname}?width=${adjustedWidth}&format=webply&optimize=highest)`;
   };
 
-  if (resizeListeners.has(section)) {
-    window.removeEventListener('resize', resizeListeners.get(section));
+  if (resizeListeners.has(element)) {
+    window.removeEventListener('resize', resizeListeners.get(element));
   }
-
-  resizeListeners.set(section, updateBackground);
+  resizeListeners.set(element, updateBackground);
   window.addEventListener('resize', updateBackground);
   updateBackground();
+}
+
+function decorateStyledSections(main) {
+  Array.from(main.querySelectorAll('.section[data-background]')).forEach((section) => {
+    createOptimizedBackgroundImage(section);
+  });
 }
 
 /**
@@ -290,13 +282,18 @@ function makeTwoColumns(main) {
     columnOne.classList.add('column-1');
     const columnTwo = document.createElement('div');
     columnTwo.classList.add('column-2');
+
     if (!fragmentSections) {
-      // 1 block div plus 1 default content div only
-      columnTarget = section.querySelector('div:nth-child(odd)');
-      columnOne.append(...columnTarget.children);
-      columnTwoItems = section.querySelector('div:nth-child(even)');
-      columnTwo.append(columnTwoItems);
-      section.innerHTML = ''; // any extra divs are removed
+      const children = Array.from(section.children);
+      children.forEach((child, index) => {
+        if (index % 2 === 0) {
+          columnOne.append(child);
+        } else {
+          columnTwo.append(child);
+        }
+      });
+
+      // section.innerHTML = ''; // any extra divs are removed
       section.append(columnOne, columnTwo);
     } else {
       // 1 fragment-wrapper div plus 1 default content div only
@@ -306,18 +303,6 @@ function makeTwoColumns(main) {
       columnTwo.append(columnTwoItems);
       section.append(columnOne, columnTwo);
     }
-  });
-}
-
-/**
- * Finds all sections in the main element of the document
- * that require adding a background image
- * @param {Element} main
- */
-
-function decorateStyledSections(main) {
-  Array.from(main.querySelectorAll('.section[data-background]')).forEach((section) => {
-    createOptimizedBackgroundImage(section);
   });
 }
 
@@ -349,105 +334,71 @@ async function setNavType() {
 }
 
 /**
-   * Decorates paragraphs containing a single link as buttons.
-   * @param {Element} element container element
-   */
+ * Decorates paragraphs containing a single link as buttons.
+ * @param {Element} element container element
+ */
 export function decorateButtons(element) {
   element.querySelectorAll('a').forEach((a) => {
-    // Set the title attribute if not already set
     a.title = a.title || a.textContent;
-    // Proceed only if href is different from textContent, is not a fragment link,
-    // and is not an external image
-    const extImageUrl = /dish\.scene7\.com|\/aemedge\/svgs\//;
-    if (a.href !== a.textContent && !a.href.includes('/fragments/') && !extImageUrl.test(a.href)) {
+    if (a.href !== a.textContent && !a.href.includes('/fragments/') && !EXT_IMAGE_URL.test(a.href)) {
       const hasIcon = a.querySelector('.icon');
+      if (hasIcon || a.querySelector('img')) return;
+
       const up = a.parentElement;
       const twoup = up.parentElement;
       const threeup = twoup.parentElement;
+      const childTag = a?.firstChild?.tagName?.toLowerCase();
+      const isSubscript = childTag === 'sub';
+      const isSuperscript = childTag === 'sup';
+      const isEm = up.tagName === 'EM';
 
-      // Skip processing if the <a> contains an icon
-      if (hasIcon) return;
+      if (isSubscript && !isEm) {
+        a.classList.add('blue');
+        up.classList.add('button-container', 'subtext');
+      } else if (isSubscript && isEm) {
+        a.classList.add('white');
+        twoup.classList.add('button-container', 'subtext');
+      } else if (isSuperscript) {
+        a.classList.add('black');
+        up.classList.add('button-container', 'subtext');
+      } else {
+        const linkText = a.textContent;
+        const linkTextEl = document.createElement('span');
+        linkTextEl.classList.add('link-button-text');
+        linkTextEl.textContent = linkText;
+        a.setAttribute('aria-label', linkText);
 
-      // Skip processing if the <a> contains an <img>
-      if (!a.querySelector('img')) {
-        // Detect if the <a> is inside <sub> or <sup>
-        const childTag = a?.firstChild?.tagName;
-        let Tagname = '';
-        if (childTag) {
-          Tagname = childTag.toLowerCase();
+        if (up.childNodes.length === 1 && (up.tagName === 'P' || up.tagName === 'DIV')) {
+          a.textContent = '';
+          a.className = 'button text';
+          up.classList.add('button-container');
+          a.append(linkTextEl);
         }
-        const isSubscript = Tagname === 'sub';
-        const isSuperscript = Tagname === 'sup';
-        const isEm = up.tagName === 'EM';
-        if (isSubscript && !isEm) {
-          a.classList.add('blue');
-          up.classList.add('button-container', 'subtext');
-        } else if (isSubscript && isEm) {
-          a.classList.add('white');
-          twoup.classList.add('button-container', 'subtext');
-        } else if (isSuperscript) {
-          a.classList.add('black');
-          up.classList.add('button-container', 'subtext');
-        } else {
-          const linkText = a.textContent;
-          const linkTextEl = document.createElement('span');
-          linkTextEl.classList.add('link-button-text');
-          linkTextEl.textContent = linkText;
 
-          // Set aria-label for accessibility
-          a.setAttribute('aria-label', linkText);
-
-          // Modify the <a> content based on its parent element
-          if (up.childNodes.length === 1 && (up.tagName === 'P' || up.tagName === 'DIV')) {
-            a.textContent = ''; // Clear existing text
-            a.className = 'button text'; // Assign default button classes
-            up.classList.add('button-container'); // Add container class to parent
-            a.append(linkTextEl); // Append the new span with link text
+        const pageType = getPageType();
+        if (pageType === 'blog') {
+          if (up.childNodes.length === 1 && up.tagName === 'DEL' && twoup.childNodes.length === 1 && (twoup.tagName === 'P' || twoup.tagName === 'DIV')) {
+            a.className = 'button primary';
+            if (a.href.includes('/cart/')) a.target = '_blank';
+            twoup.classList.add('button-container');
           }
-
-          // Handle specific button styles based on page type and parent tags
-          if (getPageType() === 'blog') {
-            // Primary buttons in blog pages
-            if (
-              up.childNodes.length === 1 && up.tagName === 'DEL' && twoup.childNodes.length === 1 && (twoup.tagName === 'P' || twoup.tagName === 'DIV')
-            ) {
-              a.className = 'button primary';
-              if (a.href.includes('/cart/')) a.target = '_blank';
-              twoup.classList.add('button-container');
-            }
-
-            // Secondary buttons in blog pages
-            if (
-              up.childNodes.length === 1 && up.tagName === 'EM' && threeup.childNodes.length === 1 && twoup.tagName === 'DEL' && (threeup.tagName === 'P' || threeup.tagName === 'DIV')
-            ) {
-              a.className = 'button secondary';
-              if (a.href.includes('/cart/')) a.target = '_blank';
-              threeup.classList.add('button-container');
-            }
-          } else {
-            // Primary buttons in non-blog pages
-            if (
-              up.childNodes.length === 1 && up.tagName === 'DEL' && twoup.childNodes.length === 1 && (twoup.tagName === 'P' || twoup.tagName === 'DIV')
-            ) {
-              a.className = 'button primary';
-              twoup.classList.add('button-container');
-            }
-
-            // Secondary buttons in non-blog pages
-            if (
-              up.childNodes.length === 1 && up.tagName === 'EM' && threeup.childNodes.length === 1 && twoup.tagName === 'DEL' && (threeup.tagName === 'P' || threeup.tagName === 'DIV')
-            ) {
-              a.className = 'button secondary';
-              threeup.classList.add('button-container');
-            }
-
-            // Dark buttons
-            if (
-              up.childNodes.length === 1 && up.tagName === 'EM' && twoup.tagName === 'STRONG' && threeup.tagName === 'DEL' && (threeup.parentElement.tagName === 'P' || threeup.parentElement.tagName === 'DIV')
-            ) {
-              a.className = 'button dark';
-              threeup.parentElement.classList.add('button-container');
-            }
+          if (up.childNodes.length === 1 && up.tagName === 'EM' && threeup.childNodes.length === 1 && twoup.tagName === 'DEL' && (threeup.tagName === 'P' || threeup.tagName === 'DIV')) {
+            a.className = 'button secondary';
+            if (a.href.includes('/cart/')) a.target = '_blank';
+            threeup.classList.add('button-container');
+          }
+        } else {
+          if (up.childNodes.length === 1 && up.tagName === 'DEL' && twoup.childNodes.length === 1 && (twoup.tagName === 'P' || twoup.tagName === 'DIV')) {
+            a.className = 'button primary';
+            twoup.classList.add('button-container');
+          }
+          if (up.childNodes.length === 1 && up.tagName === 'EM' && threeup.childNodes.length === 1 && twoup.tagName === 'DEL' && (threeup.tagName === 'P' || threeup.tagName === 'DIV')) {
+            a.className = 'button secondary';
+            threeup.classList.add('button-container');
+          }
+          if (up.childNodes.length === 1 && up.tagName === 'EM' && twoup.tagName === 'STRONG' && threeup.tagName === 'DEL' && (threeup.parentElement.tagName === 'P' || threeup.parentElement.tagName === 'DIV')) {
+            a.className = 'button dark';
+            threeup.parentElement.classList.add('button-container');
           }
         }
       }
@@ -573,12 +524,11 @@ function buildSpacer(main) {
 export function decorateExtImage() {
   // dynamic media link or images in /svg folder
   // not for bitmap images because we're not doing renditions here
-  const extImageUrl = /dish\.scene7\.com|\/aemedge\/svgs\//;
   const numberRegex = /\{(\d{1,2})?}/;
   const fragment = document.createDocumentFragment();
 
   document.querySelectorAll('a[href]').forEach((a) => {
-    if (extImageUrl.test(a.href) && linkTextIncludesHref(a)) {
+    if (EXT_IMAGE_URL.test(a.href) && linkTextIncludesHref(a)) {
       const extImageSrc = a.href;
       const picture = document.createElement('picture');
       const img = document.createElement('img');

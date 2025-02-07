@@ -173,7 +173,7 @@ export default async function decorate(block) {
   }
 
   // Call autoScroll every 3 seconds
-  if (variant.includes('medium')) {
+  if (variant.includes('autoscroll')) {
     setInterval(autoScroll, 3000);
   }
 }
