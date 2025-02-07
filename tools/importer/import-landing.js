@@ -49,104 +49,113 @@ const createMetadataBlock = (main, document) => {
 };
 
 const createMediaEle = (document, bgMediaUrl, altText = SLING_BG_IMG_ALT) => {
+  if (!bgMediaUrl) return '';
+  const isScene7 = bgMediaUrl.startsWith('https://dish.scene7.com');
+  const isVideo = bgMediaUrl.endsWith('.mp4');
+  const isInDAM = bgMediaUrl.startsWith('/content/dam');
   let element;
-  if (bgMediaUrl) {
-    if (bgMediaUrl.startsWith('https://dish.scene7.com') || bgMediaUrl.endsWith('.mp4')) {
-      element = document.createElement('a');
-      if (bgMediaUrl.startsWith('/content/dam')) {
-        element.href = `${SLING_BASE_URL}${bgMediaUrl}`;
-        element.innerText = element.href;
-      } else {
-        element.href = bgMediaUrl;
-        element.innerText = element.href;
-      }
+
+  if (isScene7 || isVideo) {
+    element = document.createElement('a');
+    if (isInDAM) {
+      element.href = `${SLING_BASE_URL}${bgMediaUrl}`;
+      element.innerText = element.href;
     } else {
-    // const existingImg = document.querySelector(`img[src='${bgMediaUrl}']`);
-    // if (existingImg) existingImg.remove();
-      element = document.createElement('img');
-      element.src = bgMediaUrl;
-      element.alt = altText;
-      element.loading = 'eager';
+      element.href = bgMediaUrl;
+      element.innerText = element.href;
     }
-    return element.outerHTML;
-  } return '';
+  } else {
+    element = document.createElement('img');
+    element.src = bgMediaUrl;
+    element.alt = altText;
+    element.loading = 'eager';
+  }
+  return element.outerHTML;
 };
 
 const createMarqueBlock = (main, document, marqueeEl) => {
-  let reactProps = marqueeEl.getAttribute(DATA_SLING_PROPS);
-  let marqueeCells = [];
-  if (reactProps) {
-    reactProps = JSON.parse(reactProps);
-    const {
-      backgroundColor,
-      backgroundMediaUrlDesktop,
-      backgroundMediaUrlMobile,
-      backgroundMediaUrlTablet,
-      ctaScrollIntoHeader,
-      ctaSubtext,
-      ctaText,
-      ctaUrl,
-      headlineText,
-      mediaUrlDesktop,
-      mediaUrlTablet,
-      mediaUrlMobile,
-      mediaAlt,
-      subHeadlineText,
-    } = reactProps;
-    const ctaLink = document.createElement('a');
-    ctaLink.title = ctaText;
-    ctaLink.href = ctaUrl;
-    ctaLink.innerHTML = `<del>${ctaText}</del>`;
-
-    const offerDetailsLink = document.createElement('a');
-    offerDetailsLink.title = ctaSubtext;
-    offerDetailsLink.href = `${OFFER_DETAIL_MODAL_URL}`;
-    offerDetailsLink.innerText = ctaSubtext;
-
-    const bgDesktop = backgroundMediaUrlDesktop ? createMediaEle(document, backgroundMediaUrlDesktop) : '';
-    const bgTablet = backgroundMediaUrlTablet ? createMediaEle(document, backgroundMediaUrlTablet) : '';
-    const bgMobile = backgroundMediaUrlMobile ? createMediaEle(document, backgroundMediaUrlMobile) : '';
-
-    const fgDesktop = mediaUrlDesktop ? createMediaEle(document, mediaUrlDesktop, mediaAlt) : '';
-    const fgTablet = mediaUrlTablet ? createMediaEle(document, mediaUrlTablet, mediaAlt) : '';
-    const fgMobile = mediaUrlMobile ? createMediaEle(document, mediaUrlMobile, mediaAlt) : '';
-
-    marqueeCells = [
-      ['Headline', headlineText],
-      ['Sub Headline', subHeadlineText],
-      ['Background', [bgDesktop, bgTablet, bgMobile].join('</br>')],
-      ['Background Color', backgroundColor],
-      ['Foreground', [fgDesktop, fgTablet, fgMobile].join('</br>')],
-      ['CTA', ctaLink],
-      ['Scroll CTA Into Header', ctaScrollIntoHeader],
-      ['Offer Details', offerDetailsLink],
-    ];
+  const reactProps = JSON.parse(marqueeEl.getAttribute(DATA_SLING_PROPS) || '{}');
+  if (!Object.keys(reactProps).length) {
+    return WebImporter.DOMUtils.createTable([['Marquee']], document);
   }
+
+  const {
+    backgroundColor,
+    backgroundMediaUrlDesktop,
+    backgroundMediaUrlMobile,
+    backgroundMediaUrlTablet,
+    ctaScrollIntoHeader,
+    ctaSubtext,
+    ctaText,
+    ctaUrl,
+    headlineText,
+    mediaUrlDesktop,
+    mediaUrlTablet,
+    mediaUrlMobile,
+    mediaAlt,
+    subHeadlineText,
+  } = reactProps;
+
+  const ctaLink = document.createElement('a');
+  ctaLink.title = ctaText;
+  ctaLink.href = ctaUrl;
+  ctaLink.innerHTML = `<del>${ctaText}</del>`;
+
+  const offerDetailsLink = document.createElement('a');
+  offerDetailsLink.title = ctaSubtext;
+  offerDetailsLink.href = `${OFFER_DETAIL_MODAL_URL}`;
+  offerDetailsLink.innerText = ctaSubtext;
+
+  const createMediaGroup = (urls, alt) => urls
+    .map((url) => (url ? createMediaEle(document, url, alt) : ''))
+    .join('<br></br>');
+
+  const backgroundMedia = createMediaGroup([
+    backgroundMediaUrlDesktop,
+    backgroundMediaUrlTablet,
+    backgroundMediaUrlMobile,
+  ]);
+
+  const foregroundMedia = createMediaGroup([
+    mediaUrlDesktop,
+    mediaUrlTablet,
+    mediaUrlMobile,
+  ], mediaAlt);
 
   const cells = [
     ['Marquee'],
-    ...marqueeCells,
+    ['Headline', headlineText],
+    ['Sub Headline', subHeadlineText],
+    ['Background', backgroundMedia],
+    ['Background Color', backgroundColor],
+    ['Foreground', foregroundMedia],
+    ['CTA', ctaLink],
+    ['Scroll CTA Into Header', ctaScrollIntoHeader],
+    ['Offer Details', offerDetailsLink],
   ];
+
   return WebImporter.DOMUtils.createTable(cells, document);
 };
 
 const createGameFinderBlock = (main, document, gamefinderEl) => {
-  let reactProps = gamefinderEl.getAttribute(DATA_SLING_PROPS);
-  if (reactProps) reactProps = JSON.parse(reactProps);
+  const reactProps = JSON.parse(gamefinderEl.getAttribute(DATA_SLING_PROPS) || '{}');
+  const excludedKeys = ['channelsLogoPath', 'modalChannelsLogoPath'];
+
   const cells = [
     ['Game Finder'],
+    ...Object.entries(reactProps)
+      .filter(([key]) => !excludedKeys.includes(key))
+      .map(([key, value]) => [key, value]),
   ];
-  Object.keys(reactProps).forEach((key) => {
-    if (key !== 'channelsLogoPath' && key !== 'modalChannelsLogoPath') cells.push([key, reactProps[key]]);
-  });
 
   return WebImporter.DOMUtils.createTable(cells, document);
 };
 
 const createFragmentLink = (document, main, fragPath) => {
   const fragLink = document.createElement('a');
-  fragLink.href = `${EDS_BASE_URL}${fragPath}`;
-  fragLink.innerText = fragLink.href;
+  const fullUrl = `${EDS_BASE_URL}${fragPath}`;
+  fragLink.href = fullUrl;
+  fragLink.innerText = fullUrl;
   return fragLink;
 };
 
@@ -159,32 +168,46 @@ const createFAQFrag = (main, document) => {
   return createFragmentLink(document, main, FAQ_GLOBAL_FRAG_PATH);
 };
 
-const creatCTALinks = (document, ctaElemProps) => {
+const creatCTALinks = (document, { ctaUrl, ctaText, ctaSubtext }) => {
   const container = document.createElement('div');
-  const tryusP = document.createElement('p');
+
   const tryUsLink = document.createElement('a');
-  tryUsLink.href = ctaElemProps.ctaUrl.startsWith('/') ? `${EDS_BASE_URL}${ctaElemProps.ctaUrl}` : ctaElemProps.ctaUrl;
-  tryUsLink.title = ctaElemProps.ctaText;
-  tryUsLink.innerHTML = `<del>${ctaElemProps.ctaText}</del>`;
-  tryusP.append(tryUsLink);
-  const offerP = document.createElement('p');
+  tryUsLink.href = ctaUrl.startsWith('/') ? `${EDS_BASE_URL}${ctaUrl}` : ctaUrl;
+  tryUsLink.title = ctaText;
+  tryUsLink.innerHTML = `<del>${ctaText}</del>`;
+
   const offerDetailsLink = document.createElement('a');
   offerDetailsLink.href = `${EDS_BASE_URL}${OFFER_DETAIL_MODAL_PATH}`;
-  offerDetailsLink.innerHTML = `<sup>${ctaElemProps.ctaSubtext}</sup>`;
-  offerP.append(offerDetailsLink);
-  container.append(tryusP, offerP);
+  offerDetailsLink.innerHTML = `<sup>${ctaSubtext}</sup>`;
+
+  const tryusP = document.createElement('p');
+  tryusP.append(tryUsLink);
+
+  const offerDetailsP = document.createElement('p');
+  offerDetailsP.append(offerDetailsLink);
+
+  container.append(
+    tryusP,
+    offerDetailsP,
+  );
+
   return container;
 };
 
 const createCTALink = (document, ctaUrl, ctaLinkTxt, ctaType) => {
-  if (ctaUrl) {
-    const cta = document.createElement('a');
-    cta.href = ctaUrl.startsWith('/') ? `${EDS_BASE_URL}${ctaUrl}` : ctaUrl;
-    cta.title = ctaLinkTxt;
-    if (ctaType === 'primary') cta.innerHTML = `<del>${ctaLinkTxt}</del>`;
-    if (ctaType === 'steam') cta.innerHTML = `<em><del>${ctaLinkTxt}</del></em>`;
-    return cta;
-  } return '';
+  if (!ctaUrl) return '';
+
+  const cta = document.createElement('a');
+  cta.href = ctaUrl.startsWith('/') ? `${EDS_BASE_URL}${ctaUrl}` : ctaUrl;
+  cta.title = ctaLinkTxt;
+
+  const innerHTML = {
+    primary: `<del>${ctaLinkTxt}</del>`,
+    steam: `<em><del>${ctaLinkTxt}</del></em>`,
+  };
+
+  cta.innerHTML = innerHTML[ctaType] || ctaLinkTxt;
+  return cta;
 };
 
 const createOfferDetailsLink = (document, offerLinkTxt) => {
@@ -198,8 +221,7 @@ const createCarouselBlock = (document, media) => {
   const cells = [
     ['Carousel'],
   ];
-
-  [...media].forEach((el) => cells.push([el.outerHTML]));
+  media.forEach((el) => cells.push([createMediaEle(document, el.src, el.alt)]));
   return WebImporter.DOMUtils.createTable(cells, document);
 };
 const addSectionBreak = (document) => {
@@ -217,100 +239,116 @@ const createSectionMetaData = (cells, document) => {
 
 const createTwoColumnsSection = (main, document, columnsEle) => {
   const style = columnsEle.getAttribute('style');
-  if (style) {
-    const url = style.slice(style.indexOf('(') + 1, style.lastIndexOf(')'));
-    const bImage = createMediaEle(document, url.replace(/2f/gi, '').replaceAll(' ', '').replace(/\\/g, '/'));
-    const sectionCell = [
-      ['style', 'columns-2,dark'],
-      ['background', bImage],
-    ];
-    return createSectionMetaData(sectionCell, document);
-  }
-  return '';
+  if (!style) return '';
+
+  const url = style.match(/\((.*?)\)/)?.[1];
+  if (!url) return '';
+
+  const bImage = createMediaEle(document, url.replace(/2f/gi, '').replaceAll(' ', '').replace(/\\/g, '/'));
+  const sectionCell = [
+    ['style', 'columns-2,dark'],
+    ['background', bImage],
+  ];
+  return createSectionMetaData(sectionCell, document);
 };
 const createPackageCardBlock = (document, packagecardEle) => {
-  const cells = [
-    ['Package Cards'],
-  ];
-  const propsMap = new Map([
-    ['data-sling-package-cards-plan-id', 'Plan Id'],
-    ['data-sling-package-cards-plan-identifier-a-c', 'Plan Identifier'],
-    ['data-sling-package-cards-plan-offer-identifier', 'Plan Offer Identifier'],
-    ['data-sling-package-cards-classification', 'Classification'],
-    ['data-sling-package-cards-classification-a-c', 'Classification A C'],
-    ['data-sling-package-cards-card-two-type', 'Card Two Type'],
-    ['data-sling-package-cards-card-one-config', 'Card One Config'],
-    ['data-sling-package-cards-card-two-config', 'Card Two Config'],
-  ]);
-  const cardProps = new Map([
-    ['packId', 'Pack Id'],
-    ['title', 'Ttiel'],
-    ['priceText', 'Price Text'],
-    ['showPromotionalPrice', 'Show Promotional Price'],
-    ['promotionalText', 'Promotional Text'],
-    ['channelNumber', 'Channel Number'],
-    ['singleChannelText', 'Single Channel Text'],
-    ['multipleChannelText', 'Multiple Channel Text'],
-    ['linkText', 'Link Text'],
-    ['overrideLogos', 'Override Logos'],
-    ['logos', 'Logos'],
-  ]);
-  const attributeNames = packagecardEle.getAttributeNames();
-  attributeNames.forEach((name) => {
-    if (propsMap.has(name)) {
+  const cells = [['Package Cards']];
+
+  const propsMap = {
+    'data-sling-package-cards-plan-id': 'Plan Id',
+    'data-sling-package-cards-plan-identifier-a-c': 'Plan Identifier',
+    'data-sling-package-cards-plan-offer-identifier': 'Plan Offer Identifier',
+    'data-sling-package-cards-classification': 'Classification',
+    'data-sling-package-cards-classification-a-c': 'Classification A C',
+    'data-sling-package-cards-card-two-type': 'Card Two Type',
+    'data-sling-package-cards-card-one-config': 'Card One Config',
+    'data-sling-package-cards-card-two-config': 'Card Two Config',
+  };
+
+  const cardProps = {
+    packId: 'Pack Id',
+    title: 'Title',
+    priceText: 'Price Text',
+    showPromotionalPrice: 'Show Promotional Price',
+    promotionalText: 'Promotional Text',
+    channelNumber: 'Channel Number',
+    singleChannelText: 'Single Channel Text',
+    multipleChannelText: 'Multiple Channel Text',
+    linkText: 'Link Text',
+    overrideLogos: 'Override Logos',
+    logos: 'Logos',
+  };
+
+  packagecardEle.getAttributeNames().forEach((name) => {
+    if (propsMap[name]) {
       if (!name.includes('-config')) {
-        cells.push([`${propsMap.get(name)}`, `${packagecardEle.getAttribute(name)}`]);
+        cells.push([propsMap[name], packagecardEle.getAttribute(name)]);
       } else {
-        let cardPrefix = 'C1 ';
-        if (name.includes('-card-two')) cardPrefix = 'C2 ';
-        cells.push([`${propsMap.get(name)}`]);
+        const cardPrefix = name.includes('-card-two') ? 'C2 ' : 'C1 ';
+        cells.push([propsMap[name]]);
+
         const configProps = JSON.parse(packagecardEle.getAttribute(name));
-        Object.entries(configProps).forEach((entry) => {
-          const [key, value] = entry;
-          if (key === 'logos') {
-            const logos = [];
-            if (value) {
-              value.forEach((logo) => {
-                logos.push(`${logo.channelSign} = ${logo.altText}`);
-              });
-            }
-            cells.push([`${cardPrefix}${cardProps.get(key)}`, logos.join('</br>')]);
-          } else cells.push([`${cardPrefix}${cardProps.get(key)}`, value || '']);
+        Object.entries(configProps).forEach(([key, value]) => {
+          if (key === 'logos' && value) {
+            const logos = value.map((logo) => `${logo.channelSign} = ${logo.altText}`);
+            cells.push([`${cardPrefix}${cardProps[key]}`, logos.join('<br></br>')]);
+          } else {
+            cells.push([`${cardPrefix}${cardProps[key]}`, value || '']);
+          }
         });
       }
-      // console.log(packagecardEle.getAttribute(name));
     }
   });
-  // attributes.forEach((attr) => console.log(`${attr.name} = ${attr.value}`));
 
   return WebImporter.DOMUtils.createTable(cells, document);
 };
 const createLandingColumnsBlock = (document, txtImgColumns) => {
-  const cells = [['Columns(landing,middle)']];
+  const cells = [['Columns(landing)']];
 
   txtImgColumns.forEach((txtImgColumn) => {
-    // keeping only one image for columns block as desktop & mobile are using the same
-    const images = txtImgColumn.querySelectorAll('img');
-    if (images?.length === 2) images[1].remove();
-    const reverse = txtImgColumn.querySelector('div.reverse-on-mobile');
-    const columns = txtImgColumn.querySelectorAll('div.js-column-carousel-column');
-    if (reverse) cells.push([...columns].reverse());
-    else cells.push([...columns]);
+    // Process responsive images
+    const images = Array.from(txtImgColumn.querySelectorAll('img'));
+    if (images?.length >= 2) {
+      // Keep desktop image and create media element
+      const desktopImage = images[0];
+      if (desktopImage.src?.startsWith('https://dish.scene7.com')) {
+        const mediaElement = document.createElement('a');
+        mediaElement.href = desktopImage.src;
+        mediaElement.innerText = desktopImage.src;
+        desktopImage.replaceWith(mediaElement);
+      }
+
+      // Remove all other responsive images
+      images.slice(1).forEach((img) => img.remove());
+    }
+
+    const columns = txtImgColumn.querySelectorAll('div.js-column-carousel-column').length > 0
+      ? txtImgColumn.querySelectorAll('div.js-column-carousel-column')
+      : txtImgColumn.children;
+
+    const isReversed = txtImgColumn.querySelector('div.reverse-on-mobile')
+                      || txtImgColumn.classList.contains('reverse-on-mobile');
+
+    cells.push(isReversed ? [...columns].reverse() : [...columns]);
   });
+
   return WebImporter.DOMUtils.createTable(cells, document);
 };
 
-const createBannerBlock = (document, bannerEl) => {
+const createBannerBlock = (document, bannerEl, variant) => {
   const props = JSON.parse(bannerEl.getAttribute(DATA_SLING_PROPS));
-  let blockName = 'Banner Image';
-  let variant;
-  if (variant) blockName = `${blockName}(${variant})`;
+
+  const blockName = variant ? `Banner Image(${variant})` : 'Banner Image';
+
   const cells = [
     [blockName],
     ['Headline', props.heading || ''],
     ['Sub headline', props.subHeading || ''],
     ['foreground', createMediaEle(document, props.contentImg) || ''],
-    ['background', [createMediaEle(document, props.desktopImg), createMediaEle(document, props.mobImg)].join('</br>')],
+    ['background', [
+      createMediaEle(document, props.desktopImg),
+      createMediaEle(document, props.mobImg),
+    ].join('<br></br>')],
     ['CTA', createCTALink(document, props.imgLink, props.ctaText, props.buttonStyle)],
     ['Offer details', createOfferDetailsLink(document, props.ctaSubtext)],
     ['Background fit', props.objectFit || ''],
@@ -321,10 +359,22 @@ const createBannerBlock = (document, bannerEl) => {
     ['ctaAnalyticsName', props.ctaAnalyticsName || ''],
     ['ctaAnalyticsTarget', props.ctaAnalyticsTarget || ''],
   ];
+
   return WebImporter.DOMUtils.createTable(cells, document);
 };
-// eslint-disable-next-line max-len
-// const createStillNeedsHelpFragment = (main, document) => createFragmentBlock(document, STILL_HAVE_QUESTIONS_FRAG);
+
+const createChannelShopperBlock = (document, channelShopper) => {
+  const props = channelShopper.getAttribute(DATA_SLING_PROPS) ? JSON.parse(channelShopper.getAttribute(DATA_SLING_PROPS)) : {};
+  const cells = [
+    ['Channel Shopper'],
+  ];
+  Object.entries(props).forEach((entry) => {
+    const [key, value] = entry;
+    cells.push([key, value]);
+  });
+  return WebImporter.DOMUtils.createTable(cells, document);
+};
+
 export default {
   /**
      * Apply DOM operations to the provided document and return
@@ -341,54 +391,76 @@ export default {
   }) => {
     // define the main element: the one that will be transformed to Markdown
     const main = document.querySelector('main');
-    // [...main.querySelectorAll('img')].forEach((img) => {
-    //  if (img.src?.includes('dish.scene7.com')) {
-    //    const srcLink = document.createElement('a');
-    //    srcLink.href = img.src;
-    //    srcLink.innerText = img.src;
-    //    img.replaceWith(srcLink);
-    //  }
-    // });
+
     // create marquee / hero block
     const marqueeEl = main.querySelector('div.js-react.js-react-marquee-template');
     if (marqueeEl) marqueeEl.parentElement.replaceWith(createMarqueBlock(main, document, marqueeEl), addSectionBreak(document));
 
     const bannerElems = main.querySelectorAll('div.js-react.js-react-banner');
     bannerElems.forEach((bannerEl) => {
-      bannerEl.replaceWith(createBannerBlock(document, bannerEl));
+      bannerEl.replaceWith(
+        createBannerBlock(document, bannerEl),
+        addSectionBreak(document),
+      );
     });
+    // create a channel shopper
+    // import single column carousel
+    const chShopperSections = [...document.querySelectorAll('div:not([id]).cmp-container')]
+      .filter((div) => div.querySelector('.js-react.js-react-channel-shopper'));
+    // console.log(length);
+    chShopperSections.forEach((chSection) => {
+      const channelShoppers = chSection.querySelectorAll('div.js-react.js-react-channel-shopper');
+      channelShoppers.forEach((channelShopper) => {
+        channelShopper.replaceWith(createChannelShopperBlock(document, channelShopper));
+      });
+      chSection.append(
+        createTwoColumnsSection(main, document, chSection),
+        addSectionBreak(document),
+      );
+    });
+
     // create package cards
     const packageCardElems = document.querySelectorAll('div.js-react.js-react-package-cards');
-    packageCardElems.forEach((packagecardEle) => {
-      packagecardEle.replaceWith(
-        addSectionBreak(document),
-        createPackageCardBlock(document, packagecardEle),
-      );
+    packageCardElems.forEach((packagecardEle, index) => {
+      if (index === 0) {
+        packagecardEle.replaceWith(
+          addSectionBreak(document),
+          createPackageCardBlock(document, packagecardEle),
+
+        );
+      } else {
+        packagecardEle.replaceWith(
+          createPackageCardBlock(document, packagecardEle),
+        );
+      }
+
+      if (!packagecardEle.querySelector('hr')) {
+        packagecardEle.append(addSectionBreak(document));
+      }
     });
     const packageCardcontainers = document.querySelectorAll('.cmp-container');
     packageCardcontainers.forEach((pContainer) => {
       const lastContainer = pContainer.querySelector('div.container:last-of-type');
-      if (lastContainer) {
-        if (!lastContainer.querySelector('table')) {
-          lastContainer.append(
-            createSectionMetaData([['style', 'columns-2']], document),
-            addSectionBreak(document),
-          );
-        }
-        if (lastContainer.querySelectorAll('hr')) {
-          addSectionBreak(document);
-        }
+      if (lastContainer && !lastContainer.querySelector('table')) {
+        lastContainer.append(
+          createSectionMetaData([['style', 'columns-2']], document),
+        );
+      }
+      if (lastContainer && lastContainer.querySelector('table') && !lastContainer.querySelector('hr')) {
+        lastContainer.append(
+          addSectionBreak(document),
+        );
       }
     });
     const faqEl = document.querySelector('div.js-react.js-react-faq') || document.querySelector('div.js-react.js-react-tabbed-faq');
     if (faqEl) faqEl.replaceWith(createFAQFrag(main, document), addSectionBreak(document));
-    const gamefinderEl = document.querySelector('div.js-react.js-react-gamefinder');
-    if (gamefinderEl) {
+    const gamefinderElems = document.querySelectorAll('div.js-react.js-react-gamefinder');
+    gamefinderElems.forEach((gamefinderEl) => {
       gamefinderEl.replaceWith(
         createGameFinderBlock(main, document, gamefinderEl),
         addSectionBreak(document),
       );
-    }
+    });
     // still needs help block
     const supportEl = document.querySelector('img[src="/content/dam/sling-tv/smart-choice/smart-choice-lp/support-icon_gray.svg"]')?.closest('div')?.parentElement?.parentElement?.parentElement?.parentElement;
     if (supportEl) {
@@ -419,30 +491,44 @@ export default {
     if (imgTxtColumns) {
       imgTxtColumns[0]?.parentElement?.replaceWith(
         createLandingColumnsBlock(document, imgTxtColumns),
+
+      );
+    }
+
+    const twoColumns = document.querySelectorAll('div.container-content');
+    if (twoColumns) {
+      twoColumns[0]?.parentElement?.replaceWith(
+        createLandingColumnsBlock(document, twoColumns),
         addSectionBreak(document),
       );
     }
+
     // import single column carousel
-    const columnElems = document.querySelectorAll('div:not([id]).cmp-container');
+    const columnElems = [...document.querySelectorAll('div:not([id]).cmp-container')]
+      .filter((div) => (div.querySelector('.js-react.js-react-carousel')));
+
     columnElems.forEach((columnEl) => {
-      const defaultContent = columnEl.querySelector('div.js-react.js-react-rich-text');
-      const ctaElement = columnEl.querySelector('div.js-react.js-react-action-component');
-      let cta = '';
-      if (ctaElement) {
-        let ctaEleProps = ctaElement.getAttribute(DATA_SLING_PROPS);
-        ctaEleProps = ctaEleProps ? JSON.parse(ctaEleProps) : '';
-        cta = creatCTALinks(document, ctaEleProps);
+      if (columnEl) {
+        const defaultContent = columnEl.querySelector('div.js-react.js-react-rich-text');
+        const ctaElement = columnEl.querySelector('div.js-react.js-react-action-component');
+        let cta = '';
+        if (ctaElement) {
+          let ctaEleProps = ctaElement.getAttribute(DATA_SLING_PROPS);
+          ctaEleProps = ctaEleProps ? JSON.parse(ctaEleProps) : '';
+          cta = creatCTALinks(document, ctaEleProps);
+        }
+        const media = columnEl.querySelectorAll('div.js-react.js-react-carousel img');
+        columnEl.replaceWith(
+          defaultContent || '',
+          cta || '',
+          createCarouselBlock(document, media),
+          createTwoColumnsSection(main, document, columnEl),
+          addSectionBreak(document),
+        );
       }
-      const media = columnEl.querySelectorAll('div.js-react.js-react-carousel img');
-      columnEl.replaceWith(
-        defaultContent || '',
-        cta || '',
-        createCarouselBlock(document, media),
-        createTwoColumnsSection(main, document, columnEl),
-        addSectionBreak(document),
-      );
     });
 
+    // removeEmptySections(main);
     // create metadata block
     createMetadataBlock(main, document);
 
@@ -462,6 +548,7 @@ export default {
       '.js-react.js-react-spacer',
       '.spacer',
       '.vspo-highlight-banner',
+      '.aem-GridColumn--default--hide',
     ]);
 
     // WebImporter.rules.createMetadata(main, document);
