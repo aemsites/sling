@@ -28,6 +28,7 @@ import {
 const LCP_BLOCKS = ['category']; // add your LCP blocks to the list
 const TEMPLATES = ['blog-article', 'blog-category']; // add your templates here
 const TEMPLATE_META = 'template';
+const EXT_IMAGE_URL = /dish\.scene7\.com|\/aemedge\/svgs\//;
 
 /**
  * Sanitizes a string for use as class name.
@@ -237,8 +238,7 @@ export function createOptimizedBackgroundImage(element, breakpoints = [
 ]) {
   const updateBackground = () => {
     const bgImage = getBackgroundImage(element);
-    const extImageUrl = /dish\.scene7\.com|\/aemedge\/svgs\//;
-    const pathname = extImageUrl.test(bgImage)
+    const pathname = EXT_IMAGE_URL.test(bgImage)
       ? bgImage
       : new URL(bgImage, window.location.href).pathname;
 
@@ -248,7 +248,7 @@ export function createOptimizedBackgroundImage(element, breakpoints = [
       > parseInt(acc.width, 10) ? curr : acc), breakpoints[0]);
 
     const adjustedWidth = matchedBreakpoint.width * window.devicePixelRatio;
-    element.style.backgroundImage = extImageUrl.test(bgImage) ? `url(${pathname}`
+    element.style.backgroundImage = EXT_IMAGE_URL.test(bgImage) ? `url(${pathname}`
       : `url(${pathname}?width=${adjustedWidth}&format=webply&optimize=highest)`;
   };
 
@@ -340,8 +340,7 @@ async function setNavType() {
 export function decorateButtons(element) {
   element.querySelectorAll('a').forEach((a) => {
     a.title = a.title || a.textContent;
-    const extImageUrl = /dish\.scene7\.com|\/aemedge\/svgs\//;
-    if (a.href !== a.textContent && !a.href.includes('/fragments/') && !extImageUrl.test(a.href)) {
+    if (a.href !== a.textContent && !a.href.includes('/fragments/') && !EXT_IMAGE_URL.test(a.href)) {
       const hasIcon = a.querySelector('.icon');
       if (hasIcon || a.querySelector('img')) return;
 
@@ -525,12 +524,11 @@ function buildSpacer(main) {
 export function decorateExtImage() {
   // dynamic media link or images in /svg folder
   // not for bitmap images because we're not doing renditions here
-  const extImageUrl = /dish\.scene7\.com|\/aemedge\/svgs\//;
   const numberRegex = /\{(\d{1,2})?}/;
   const fragment = document.createDocumentFragment();
 
   document.querySelectorAll('a[href]').forEach((a) => {
-    if (extImageUrl.test(a.href) && linkTextIncludesHref(a)) {
+    if (EXT_IMAGE_URL.test(a.href) && linkTextIncludesHref(a)) {
       const extImageSrc = a.href;
       const picture = document.createElement('picture');
       const img = document.createElement('img');
