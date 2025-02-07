@@ -23,6 +23,7 @@ import {
   loadGameFinders,
   loadPackageCards,
   linkTextIncludesHref,
+  centerHeadlines,
 } from './utils.js';
 
 const LCP_BLOCKS = ['category']; // add your LCP blocks to the list
@@ -591,6 +592,7 @@ function decorateLinkedImages() {
 // eslint-disable-next-line import/prefer-default-export
 export function decorateMain(main) {
   // hopefully forward compatible button decoration
+  centerHeadlines();
   decorateButtons(main);
   decorateIcons(main);
   buildAutoBlocks(main);
