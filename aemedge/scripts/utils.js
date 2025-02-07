@@ -737,11 +737,12 @@ export function configSideKick() {
         // eslint-disable-next-line prefer-destructuring
         blockName.innerText = block.className.split(' ')[0];
         blockName.classList.toggle('show');
-        block.parentElement.prepend(blockName);
+        block.prepend(blockName);
         copyAction.href = block.querySelector('a').href;
         copyAction.classList.add('copy-action');
         copyAction.target = '_blank';
         copyAction.textContent = 'Copy HTML';
+        copyAction.classList.toggle('show');
         copyAction.addEventListener('click', (event) => {
           event.preventDefault();
           const html = block.parentElement?.outerHTML?.replace(/\s/g, '');

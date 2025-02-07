@@ -127,7 +127,11 @@ header {
   display: none;
  }
 
- span.blockname.show {
+ a.copy-action.show {
+  color: red
+ }
+
+ span.blockname.show ,a.copy-action.show {
  display: flex;
  position: absolute;
  font-size: 24px;
