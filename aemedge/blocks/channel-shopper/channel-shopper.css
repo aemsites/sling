@@ -1,4 +1,7 @@
 /* stylelint-disable selector-class-pattern */
+.channel-shopper-container {
+    text-align: center;
+}
 
 .channel-shopper-container p {
     margin: 0;
@@ -27,17 +30,23 @@
     min-width: unset;
     margin-top: unset;
     margin-bottom: unset;
-}
-
-.channel-shopper.block #channel-shopper-app button.kBfRPX {
     background: var(--primary-button-color);
     border-radius: 1600px;
     border: transparent;
     font-size: 18px;
     line-height: inherit;
-    padding:0.938rem 1.2rem;
 }
 
 #channel-shopper-app img {
     width: 60px;
+}
+
+@media (width >= 768px) {
+    .section.columns-2.channel-shopper-container {
+        display: flex;
+    }
+
+    .channel-shopper-container {
+        text-align: unset;
+    }
 }

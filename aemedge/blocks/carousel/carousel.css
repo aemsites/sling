@@ -4,7 +4,6 @@
 
 .carousel .carousel-slides-container {
   position: relative;
-  width: calc(100% - 20px);
 }
 
 .rewards .carousel .carousel-slides-container {
@@ -121,7 +120,6 @@
   border-radius: 0.25em;
   object-fit: cover;
   background: rgb(239 239 241);
-  filter: drop-shadow(rgba(0 0 0 0.2) 0 4px 4px);
 }
 
 .carousel .carousel-slide .carousel-slide-content {
@@ -162,6 +160,10 @@
   align-items: center;
   justify-content: space-between;
   z-index: 1;
+}
+
+.carousel .carousel-navigation-buttons.hide{
+  display: none;
 }
 
 .carousel.medium .carousel-navigation-buttons {
@@ -243,6 +245,10 @@
 
   .rewards .carousel .carousel-slide {
     min-width: 25%;
+  }
+
+  .tabs.wide .carousel .carousel-slide {
+    min-width: 16.66%;
   }
 }
 

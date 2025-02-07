@@ -1,6 +1,6 @@
 /* header and nav layout */
 header {
-  height: 58px;
+  height: 60px;
   background: transparent;
 }
 
@@ -40,7 +40,6 @@ header nav[aria-expanded="false"] {
 }
 
 header nav .nav-brand {
-  position: fixed;
   top: 0;
 }
 
@@ -97,7 +96,6 @@ header nav .nav-hamburger {
   display: flex;
   align-items: center;
   justify-self: flex-end;
-  position: fixed;
   top: 16px;
 }
 
@@ -173,12 +171,11 @@ header nav .nav-sections .nav-top > ul li:first-child {
 
 @media (width >=1024px) {
   header {
-    height: 90px;
     -webkit-font-smoothing: antialiased;
   }
 
   header.nav-without-topnav{
-    height: 58px;
+    height: 60px;
   }
 
   header nav[aria-expanded="true"] {
@@ -189,7 +186,7 @@ header nav .nav-sections .nav-top > ul li:first-child {
   }
 
   header nav {
-    height: 58px;
+    height: 60px;
     display: flex;
     margin: 0;
     gap: 0;

@@ -184,7 +184,7 @@ export function getPageType() {
 }
 
 export function centerHeadlines() {
-  const headlines = document.querySelectorAll('h2 > strong, h3 > strong, h4 > strong');
+  const headlines = document.querySelectorAll('h1 > strong, h2 > strong, h3 > strong, h4 > strong');
   headlines.forEach((headline) => {
     headline.parentElement.classList.add('center');
   });

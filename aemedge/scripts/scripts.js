@@ -1,5 +1,4 @@
 import {
-  sampleRUM,
   buildBlock,
   loadFooter,
   decorateIcons,
@@ -12,6 +11,7 @@ import {
   getMetadata,
   decorateBlock,
   loadBlock,
+  toClassName,
 } from './aem.js';
 
 import {
@@ -24,11 +24,19 @@ import {
   loadPackageCards,
   linkTextIncludesHref,
   configSideKick,
+  centerHeadlines,
 } from './utils.js';
 
 const LCP_BLOCKS = ['category']; // add your LCP blocks to the list
 const TEMPLATES = ['blog-article', 'blog-category']; // add your templates here
 const TEMPLATE_META = 'template';
+const EXT_IMAGE_URL = /dish\.scene7\.com|\/aemedge\/svgs\//;
+
+/**
+ * Sanitizes a string for use as class name.
+ * @param {string} name The unsanitized string
+ * @returns {string} The class name
+ */
 
 /**
  * Builds hero block and prepends to main in a new section.
@@ -149,14 +157,49 @@ function autolinkModals(element) {
 }
 
 export function buildMultipleButtons(main) {
-  const buttons = main.querySelectorAll('p.button-container');
+  const buttons = main.querySelectorAll('.button-container:not(.subtext)');
+
   buttons.forEach((button) => {
-    if (button.nextElementSibling && button.nextElementSibling.classList.contains('button-container')) {
-      const siblingButton = button.nextElementSibling;
-      if (siblingButton && !button.parentElement.classList.contains('buttons-container')) {
+    const parent = button.parentElement;
+    const siblingButton = button.nextElementSibling;
+
+    if (siblingButton && siblingButton.classList.contains('subtext') && !parent.classList.contains('combined')) {
+      const buttonContainer = createTag('div', { class: 'button-container combined' });
+      parent.insertBefore(buttonContainer, button);
+      buttonContainer.append(button, siblingButton);
+    }
+
+    if (siblingButton && siblingButton.classList.contains('button-container') && !siblingButton.classList.contains('subtext')) {
+      const nextSibling = siblingButton.nextElementSibling;
+      if (nextSibling && !nextSibling.classList.contains('subtext') && !parent.classList.contains('buttons-container')) {
         const buttonContainer = createTag('div', { class: 'buttons-container' });
-        button.parentElement.insertBefore(buttonContainer, button);
+        parent.insertBefore(buttonContainer, button);
         buttonContainer.append(button, siblingButton);
+      }
+    }
+  });
+
+  const buttonGroups = main.querySelectorAll('div.button-container.combined');
+  buttonGroups.forEach((buttonGroup) => {
+    const parent = buttonGroup.parentElement;
+    const siblingButton = buttonGroup.nextElementSibling;
+    const siblingUp = buttonGroup.previousElementSibling;
+
+    if (!parent.classList.contains('buttons-container')) {
+      if (siblingButton && siblingButton.classList.contains('combined')) {
+        const buttonContainer = createTag('div', { class: 'buttons-container' });
+        parent.insertBefore(buttonContainer, buttonGroup);
+        buttonContainer.append(buttonGroup, siblingButton);
+      }
+      if (siblingButton && siblingButton.classList.contains('button-container') && !siblingButton.classList.contains('combined')) {
+        const buttonContainer = createTag('div', { class: 'buttons-container' });
+        parent.insertBefore(buttonContainer, buttonGroup);
+        buttonContainer.append(buttonGroup, siblingButton);
+      }
+      if (siblingUp && siblingUp.classList.contains('button-container') && !siblingUp.classList.contains('combined')) {
+        const buttonContainer = createTag('div', { class: 'buttons-container' });
+        parent.insertBefore(buttonContainer, buttonGroup);
+        buttonContainer.append(siblingUp, buttonGroup);
       }
     }
   });
@@ -180,18 +223,15 @@ export function buildMultipleButtons(main) {
  * breakpoint should be used.
  */
 
-const resizeListeners = new WeakMap();
-function getBackgroundImage(section) {
-  // look for "background" values in the section metadata
-  const bgImages = section.dataset.background.split(',');
-  if (bgImages.length === 1) {
-    return bgImages[0].trim();
-  } // if there are 2 images, first is for desktop and second is for mobile
-  return (window.innerWidth > 1024 && bgImages.length === 2)
-    ? bgImages[0].trim() : bgImages[1].trim();
+export const resizeListeners = new WeakMap();
+export function getBackgroundImage(element) {
+  const sectionData = element.dataset.background;
+  const bgImages = sectionData.split(',').map((img) => img.trim());
+  return (bgImages.length === 1
+    || (window.innerWidth > 1024 && bgImages.length === 2)) ? bgImages[0] : bgImages[1];
 }
 
-function createOptimizedBackgroundImage(section, breakpoints = [
+export function createOptimizedBackgroundImage(element, breakpoints = [
   { width: '450' },
   { media: '(min-width: 450px)', width: '768' },
   { media: '(min-width: 768px)', width: '1024' },
@@ -199,42 +239,72 @@ function createOptimizedBackgroundImage(section, breakpoints = [
   { media: '(min-width: 1600px)', width: '2000' },
 ]) {
   const updateBackground = () => {
-    const bgImage = getBackgroundImage(section);
-    const url = new URL(bgImage, window.location.href);
-    const pathname = encodeURI(url.pathname);
+    const bgImage = getBackgroundImage(element);
+    const pathname = EXT_IMAGE_URL.test(bgImage)
+      ? bgImage
+      : new URL(bgImage, window.location.href).pathname;
 
-    const matchedBreakpoints = breakpoints.filter(
-      (br) => !br.media || window.matchMedia(br.media).matches,
-    );
-    // If there are any matching breakpoints, pick the one with the highest resolution
-    const matchedBreakpoint = matchedBreakpoints.reduce(
-      (acc, curr) => (parseInt(curr.width, 10) > parseInt(acc.width, 10) ? curr : acc),
-      breakpoints[0],
-    );
+    const matchedBreakpoint = breakpoints
+      .filter((br) => !br.media || window.matchMedia(br.media).matches)
+      .reduce((acc, curr) => (parseInt(curr.width, 10)
+      > parseInt(acc.width, 10) ? curr : acc), breakpoints[0]);
 
     const adjustedWidth = matchedBreakpoint.width * window.devicePixelRatio;
-    section.style.backgroundImage = `url(${pathname}?width=${adjustedWidth}&format=webply&optimize=highest)`;
-    section.style.backgroundSize = 'cover';
+    element.style.backgroundImage = EXT_IMAGE_URL.test(bgImage) ? `url(${pathname}`
+      : `url(${pathname}?width=${adjustedWidth}&format=webply&optimize=highest)`;
   };
 
-  if (resizeListeners.has(section)) {
-    window.removeEventListener('resize', resizeListeners.get(section));
+  if (resizeListeners.has(element)) {
+    window.removeEventListener('resize', resizeListeners.get(element));
   }
-
-  resizeListeners.set(section, updateBackground);
+  resizeListeners.set(element, updateBackground);
   window.addEventListener('resize', updateBackground);
   updateBackground();
 }
 
-/**
- * Finds all sections in the main element of the document
- * that require adding a background image
- * @param {Element} main
- */
-
 function decorateStyledSections(main) {
   Array.from(main.querySelectorAll('.section[data-background]')).forEach((section) => {
     createOptimizedBackgroundImage(section);
+  });
+}
+
+/**
+ * consolidate the first two divs in a section into two columns
+ * Special case for when there is 1 fragment-wrapper
+ * @param main
+ */
+
+function makeTwoColumns(main) {
+  const sections = main.querySelectorAll('.section.columns-2');
+  let columnTarget;
+  let columnTwoItems;
+  sections.forEach((section) => {
+    const fragmentSections = section.querySelector('.fragment-wrapper');
+    const columnOne = document.createElement('div');
+    columnOne.classList.add('column-1');
+    const columnTwo = document.createElement('div');
+    columnTwo.classList.add('column-2');
+
+    if (!fragmentSections) {
+      const children = Array.from(section.children);
+      children.forEach((child, index) => {
+        if (index % 2 === 0) {
+          columnOne.append(child);
+        } else {
+          columnTwo.append(child);
+        }
+      });
+
+      // section.innerHTML = ''; // any extra divs are removed
+      section.append(columnOne, columnTwo);
+    } else {
+      // 1 fragment-wrapper div plus 1 default content div only
+      columnTarget = section.querySelector('.fragment-wrapper');
+      columnOne.append(...columnTarget.children);
+      columnTwoItems = section.querySelector('div');
+      columnTwo.append(columnTwoItems);
+      section.append(columnOne, columnTwo);
+    }
   });
 }
 
@@ -266,76 +336,78 @@ async function setNavType() {
 }
 
 /**
-   * Decorates paragraphs containing a single link as buttons.
-   * @param {Element} element container element
-   */
+ * Decorates paragraphs containing a single link as buttons.
+ * @param {Element} element container element
+ */
 export function decorateButtons(element) {
   element.querySelectorAll('a').forEach((a) => {
     a.title = a.title || a.textContent;
-    if (a.href !== a.textContent) {
+    if (a.href !== a.textContent && !a.href.includes('/fragments/') && !EXT_IMAGE_URL.test(a.href)) {
       const hasIcon = a.querySelector('.icon');
+      if (hasIcon || a.querySelector('img')) return;
+
       const up = a.parentElement;
-      const twoup = a.parentElement.parentElement;
-      const threeup = a.parentElement.parentElement.parentElement;
-      if (hasIcon) return;
-      if (!a.querySelector('img')) {
-        // let default button be text-only, no decoration
+      const twoup = up.parentElement;
+      const threeup = twoup.parentElement;
+      const childTag = a?.firstChild?.tagName?.toLowerCase();
+      const isSubscript = childTag === 'sub';
+      const isSuperscript = childTag === 'sup';
+      const isEm = up.tagName === 'EM';
+
+      if (isSubscript && !isEm) {
+        a.classList.add('blue');
+        up.classList.add('button-container', 'subtext');
+      } else if (isSubscript && isEm) {
+        a.classList.add('white');
+        twoup.classList.add('button-container', 'subtext');
+      } else if (isSuperscript) {
+        a.classList.add('black');
+        up.classList.add('button-container', 'subtext');
+      } else {
         const linkText = a.textContent;
         const linkTextEl = document.createElement('span');
         linkTextEl.classList.add('link-button-text');
-        linkTextEl.append(linkText);
-        a.textContent = `${linkText}`;
-        a.setAttribute('aria-label', `${linkText}`);
+        linkTextEl.textContent = linkText;
+        a.setAttribute('aria-label', linkText);
+
         if (up.childNodes.length === 1 && (up.tagName === 'P' || up.tagName === 'DIV')) {
           a.textContent = '';
-          a.className = 'button text'; // default
+          a.className = 'button text';
           up.classList.add('button-container');
           a.append(linkTextEl);
         }
-        // primary buttons in whatson pages
-        if (getPageType() === 'blog') {
-          if (
-            up.childNodes.length === 1
-            && up.tagName === 'DEL'
-            && twoup.childNodes.length === 1
-            && (twoup.tagName === 'P' || twoup.tagName === 'DIV')) {
+
+        const pageType = getPageType();
+        if (pageType === 'blog') {
+          if (up.childNodes.length === 1 && up.tagName === 'DEL' && twoup.childNodes.length === 1 && (twoup.tagName === 'P' || twoup.tagName === 'DIV')) {
             a.className = 'button primary';
             if (a.href.includes('/cart/')) a.target = '_blank';
             twoup.classList.add('button-container');
           }
-          // secondary button
-          if (
-            up.childNodes.length === 1
-              && up.tagName === 'EM'
-              && threeup.childNodes.length === 1
-              && (twoup && twoup.tagName === 'DEL')
-              && (threeup.tagName === 'P' || threeup.tagName === 'DIV')) {
+          if (up.childNodes.length === 1 && up.tagName === 'EM' && threeup.childNodes.length === 1 && twoup.tagName === 'DEL' && (threeup.tagName === 'P' || threeup.tagName === 'DIV')) {
             a.className = 'button secondary';
             if (a.href.includes('/cart/')) a.target = '_blank';
             threeup.classList.add('button-container');
           }
-        } else if (
-          up.childNodes.length === 1
-          && up.tagName === 'DEL'
-          && twoup.childNodes.length === 1
-          && (twoup.tagName === 'P' || twoup.tagName === 'DIV')) {
-          a.className = 'button primary';
-          twoup.classList.add('button-container');
-        }
-
-        if (
-          up.childNodes.length === 1
-          && up.tagName === 'EM'
-          && threeup.childNodes.length === 1
-          && (twoup && twoup.tagName === 'DEL')
-          && (threeup.tagName === 'P' || threeup.tagName === 'DIV')) {
-          a.className = 'button secondary';
-          threeup.classList.add('button-container');
+        } else {
+          if (up.childNodes.length === 1 && up.tagName === 'DEL' && twoup.childNodes.length === 1 && (twoup.tagName === 'P' || twoup.tagName === 'DIV')) {
+            a.className = 'button primary';
+            twoup.classList.add('button-container');
+          }
+          if (up.childNodes.length === 1 && up.tagName === 'EM' && threeup.childNodes.length === 1 && twoup.tagName === 'DEL' && (threeup.tagName === 'P' || threeup.tagName === 'DIV')) {
+            a.className = 'button secondary';
+            threeup.classList.add('button-container');
+          }
+          if (up.childNodes.length === 1 && up.tagName === 'EM' && twoup.tagName === 'STRONG' && threeup.tagName === 'DEL' && (threeup.parentElement.tagName === 'P' || threeup.parentElement.tagName === 'DIV')) {
+            a.className = 'button dark';
+            threeup.parentElement.classList.add('button-container');
+          }
         }
       }
     }
   });
 }
+
 // On blog pages, make the last primary button sticky in mobile
 export function makeLastButtonSticky() {
   if (getPageType() === 'blog') {
@@ -344,6 +416,59 @@ export function makeLastButtonSticky() {
       buttons[buttons.length - 1].classList.add('sticky');
     }
   }
+}
+
+/**
+ * Extracts color information from p text content in curly braces.
+ * @returns {Object|null} - An object containing the extracted color
+ * or null if no color information is found.
+ */
+export function extractElementsColor() {
+//  const textNodes = Array.from(document.querySelectorAll('div > p:first-child'));
+  const textNodes = Array.from(document.querySelectorAll('h1, h2, h3, h4, h5, h6, li, p'));
+  textNodes.forEach((node) => {
+    const up = node.parentElement;
+    const isParagraph = node.tagName === 'P';
+    const text = node.textContent;
+    // color must be letters or dashes
+    const colorRegex = text && /{([a-zA-Z-\s]+)?}/;
+    const numberRegex = text && /\{(\d{1,2})?}/;
+    const spanRegex = new RegExp(`\\[${colorRegex.source}([a-zA-Z0-9\\s]*.)\\]`);
+    const colorMatches = text.match(colorRegex);
+    const numberMatches = text.match(numberRegex);
+    const spanMatches = text.match(spanRegex);
+    // case where colored text is wrapped in a span.
+    // no HTML elements allowed (no bold, no links).
+    if (spanMatches) {
+      node.innerHTML = text.replace(new RegExp(spanRegex, 'g'), (match, color, spanText) => {
+        const span = createTag('span', { class: `${toClassName(color)}` }, spanText);
+        return span.outerHTML;
+      });
+    }
+
+    // case for buttons
+    if (isParagraph && node.querySelector('a')) {
+      const anchor = node.querySelector('a');
+      if (colorMatches) {
+        anchor.classList.add(`bg-${toClassName(colorMatches[1])}`);
+        // remove the color from the text
+        anchor.textContent = anchor.textContent.replace(colorMatches[0], '');
+      }
+    }
+
+    // case where only the color or width is in the first cell
+    if (isParagraph && up.tagName === 'DIV' && up.firstElementChild === node && text.trim().startsWith('{') && text.trim().endsWith('}')) {
+      if (colorMatches) {
+        const backgroundColor = colorMatches[1];
+        up.classList.add(`bg-${toClassName(backgroundColor)}`);
+      }
+      if (numberMatches) {
+        const percentWidth = numberMatches[1];
+        up.style.maxWidth = `${percentWidth}%`;
+      }
+      node.remove();
+    }
+  });
 }
 
 /**
@@ -357,20 +482,7 @@ async function loadFonts() {
     // do nothing
   }
 }
-/**
-   * Sanitizes a string for use as class name.
-   * @param {string} name The unsanitized string
-   * @returns {string} The class name
-   */
-export function toClassName(name) {
-  return typeof name === 'string'
-    ? name
-      .toLowerCase()
-      .replace(/[^0-9a-z]/gi, '-')
-      .replace(/-+/g, '-')
-      .replace(/^-|-$/g, '')
-    : '';
-}
+
 /**
    * load the template specific js and css
    */
@@ -398,22 +510,15 @@ async function loadTemplate(main) {
    * add up to 3 spacers with 'spacer1', 'spacer2', 'spacer3'
    */
 function buildSpacer(main) {
-  const allPageSpacers = main.querySelectorAll('code');
-
-  allPageSpacers.forEach((el) => {
-    const alt = el.innerText.trim();
-
-    if (alt === 'spacer' || alt === 'spacer1') {
-      el.innerText = '';
-      el.classList.add('spacer1');
-    }
-    if (alt === 'spacer2') {
-      el.innerText = '';
-      el.classList.add('spacer2');
-    }
-    if (alt === 'spacer3') {
-      el.innerText = '';
-      el.classList.add('spacer3');
+  const codeElements = main.querySelectorAll('code');
+  codeElements.forEach((code) => {
+    const spacerMatch = code.textContent.match(/spacer-(\d+)/);
+    if (spacerMatch) {
+      const spacerHeight = parseInt(spacerMatch[1], 10);
+      const spacerDiv = document.createElement('div');
+      spacerDiv.style.height = `${spacerHeight * 10}px`;
+      code.insertAdjacentElement('afterend', spacerDiv);
+      code.remove();
     }
   });
 }
@@ -421,9 +526,11 @@ function buildSpacer(main) {
 export function decorateExtImage() {
   // dynamic media link or images in /svg folder
   // not for bitmap images because we're not doing renditions here
-  const extImageUrl = /dish\.scene7\.com|\/aemedge\/svgs\//;
+  const numberRegex = /\{(\d{1,2})?}/;
+  const fragment = document.createDocumentFragment();
+
   document.querySelectorAll('a[href]').forEach((a) => {
-    if (extImageUrl.test(a.href) && linkTextIncludesHref(a)) {
+    if (EXT_IMAGE_URL.test(a.href) && linkTextIncludesHref(a)) {
       const extImageSrc = a.href;
       const picture = document.createElement('picture');
       const img = document.createElement('img');
@@ -434,7 +541,18 @@ export function decorateExtImage() {
       img.loading = 'lazy';
       img.src = extImageSrc;
       picture.append(img);
-      a.replaceWith(picture);
+
+      // Check if the link's text content matches numberRegex
+      const numberMatches = a.textContent.match(numberRegex);
+      if (numberMatches) {
+        const percentWidth = numberMatches[1];
+        img.style.maxWidth = `${percentWidth}%`;
+        // Remove the text content matching numberRegex
+        a.textContent = a.textContent.replace(numberRegex, '');
+      }
+
+      fragment.append(picture);
+      a.replaceWith(fragment);
     }
   });
 }
@@ -473,13 +591,16 @@ function decorateLinkedImages() {
 // eslint-disable-next-line import/prefer-default-export
 export function decorateMain(main) {
   // hopefully forward compatible button decoration
+  centerHeadlines();
   decorateButtons(main);
   decorateIcons(main);
   buildAutoBlocks(main);
   decorateSections(main);
   decorateBlocks(main);
+  makeTwoColumns(main);
   decorateStyledSections(main);
   buildSpacer(main);
+  extractElementsColor();
   decorateExtImage(main);
   decorateLinkedImages();
 }
@@ -547,6 +668,15 @@ async function loadLazy(doc) {
   if (packageCards && packageCards.length > 0) {
     await loadPackageCards(doc);
   }
+  // listen to zipcode changes and redecorate
+  document.addEventListener('zipupdate', async () => {
+    if (packageCards && packageCards.length > 0) {
+      await loadPackageCards(doc);
+    }
+    if (gameFinders && gameFinders.length > 0) {
+      await loadGameFinders(doc);
+    }
+  }, { once: true });
   buildMultipleButtons(main);
   const { hash } = window.location;
   const element = hash ? doc.getElementById(hash.substring(1)) : false;
@@ -557,9 +687,6 @@ async function loadLazy(doc) {
   buildGlobalBanner(main);
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
   loadFonts();
-  sampleRUM('lazy');
-  sampleRUM.observe(main.querySelectorAll('div[data-block-name]'));
-  sampleRUM.observe(main.querySelectorAll('picture > img'));
 }
 
 /**

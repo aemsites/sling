@@ -1,7 +1,32 @@
 /* stylelint-disable selector-class-pattern */
+.package-cards-container.section {
+    background-color: var(--clr-white);
+    border-radius: 4px;
+    box-shadow: 0 5px 15px 0 rgb(0 0 0 / 14%);
+    padding: 12px 40px 40px;
+    margin: 50px 8%;
 
-.package-cards.block > div:not([id]) p {
-    display: none;
+    p, li {
+        font-size: 1.125em;
+        line-height: 1.35em;
+    }
+
+    .buttons-container {
+        margin: 24px auto 0;
+    }
+
+    .package-cards-container {
+        box-shadow: none;
+        padding: unset;
+        margin: unset;
+        border-radius: 0;
+    }
+}
+
+.package-cards.block {
+    > div:not([id]) p {
+        display: none;
+    }
 }
 
 
@@ -9,7 +34,6 @@
 .package-cards.block #package-cards-app button.next-arrow-blue,
 .package-cards.block #package-cards-app button.back-arrow-orange,
 .package-cards.block #package-cards-app button.next-arrow-orange,
-.package-cards.block #package-cards-app button.sc-kgAjT,
 .package-cards.block #package-cards-app button[aria-label="close"]
  {
    padding: unset;
@@ -21,11 +45,6 @@
 .package-cards.block #package-cards-app a:any-link {
     color:initial;
     border-radius: 1600px;
-}
-
-.package-cards.block #package-cards-app div.VhpVA { 
-    inset: 50px 0;
-    height: 100vh;
 }
 
 .package-cards.block #package-cards-app a.blue-homepage-base-card-cart-link {
@@ -48,18 +67,46 @@
     z-index: 0;
 }
 
-.package-cards.block #package-cards-app div.eMQgdL > *{
-    height: 479px;
-}
-
 .package-cards.block #package-cards-app img {
     width: auto;
     height: auto;
 }
 
 @media (width >= 768px) {
-.package-cards.block #package-cards-app .fIvgai {
-    right: 12px;
-    top: 28px;
+    .package-cards-container.section {
+        padding: 48px;
+
+        .package-cards.block {
+            margin-bottom: 48px;
+        }
+    }
+
+    .PackageExtraCards {
+        display: flex;
+        justify-content: center;
+    }
 }
+
+@media (width >= 1024px) {
+    .package-cards-container.section.columns-2 {
+        flex-direction: column;
+
+        > div {
+            width: unset;
+        }
+    }
+}
+
+@media (width >= 1200px) {
+    .package-cards-container.section.columns-2 {
+        flex-direction: row;
+
+        .column-1 {
+            width: 60%;
+        }
+
+        .column-2 {
+            width: 40%;
+        }
+    }
 }

@@ -29,7 +29,17 @@ function setupVideo(url, block) {
 }
 
 function setupBGVideos(block) {
+  const extDamUrl = /content\/dam\//;
   const videoLinks = Array.from(block.querySelectorAll('a[href*=".mp4"]'));
+  const domain = 'https://www.sling.com';
+  videoLinks.forEach((link) => {
+    if (extDamUrl.test(link.href)) {
+      const fullDamUrl = `${domain}${link.pathname}`;
+      if (link.pathname.startsWith('/')) {
+        link.href = fullDamUrl;
+      }
+    }
+  });
   let currentVideoUrl = getVideoUrlByScreenWidth(videoLinks);
   // Remove video links from DOM to prevent them from showing up as text
   videoLinks.forEach((link) => link.parentElement.remove());
@@ -97,6 +107,7 @@ function processBlockConfig(block) {
   const marqueContent = createTag('div', { class: 'marquee-content' });
   const mediaDIV = createTag('div', { class: 'foreground-container' });
   const nonMediaDIV = createTag('div', { class: 'text-cta-container' });
+  const btnsDIV = createTag('div', { class: 'buttons-container' });
   block.querySelectorAll(':scope > div:not([id])').forEach((row) => {
     if (row.children) {
       const cols = [...row.children];
@@ -105,8 +116,12 @@ function processBlockConfig(block) {
         const name = toClassName(cols[0].textContent);
         cols[0].classList.add('config-property');
         col.classList.add(name);
-        if (name !== 'foreground') nonMediaDIV.append(col);
-        else mediaDIV.append(col);
+        if (name !== 'foreground') {
+          if (name.trim() === 'cta' || name.trim() === 'offer-details') {
+            btnsDIV.append(col);
+            nonMediaDIV.append(btnsDIV);
+          } else nonMediaDIV.append(col);
+        } else mediaDIV.append(col);
       }
     }
   });
