@@ -144,8 +144,11 @@ animation: fade-in 1s;
 
 a.copy-action.show {
   color: white;
-  left: 10%;
+  left: 35%;
+  top: 20%;
   z-index: 2;
+  position: absolute;
+  background-color: grey;
   background-image: url('../images/copy.svg');
   background-size: 20px;
   background-repeat: no-repeat;
