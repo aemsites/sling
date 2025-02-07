@@ -729,7 +729,7 @@ export function configSideKick() {
     const excludedBlockList = ['header', 'zipcode', 'footer'];
     blocks.forEach((block) => {
       const name = block.parentElement.querySelector('.blockname');
-
+      console.log('name', name);
       if (name && !excludedBlockList.includes(name)) {
         block.classList.toggle('highlight');
         const copyAction = document.createElement('a');
