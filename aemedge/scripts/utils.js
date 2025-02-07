@@ -730,6 +730,7 @@ export function configSideKick() {
     blocks.forEach((block) => {
       block.classList.toggle('highlight');
       let blockName = block.parentElement.querySelector('.blockname');
+      const copyAction = document.createElement('a');
       if (!blockName) blockName = document.createElement('span');
       if (block.classList.contains('highlight')) {
         blockName.classList.add('blockname');
@@ -737,8 +738,18 @@ export function configSideKick() {
         blockName.innerText = block.className.split(' ')[0];
         blockName.classList.toggle('show');
         block.parentElement.prepend(blockName);
+        copyAction.href = block.querySelector('a').href;
+        copyAction.target = '_blank';
+        copyAction.textContent = 'Copy HTML';
+        copyAction.addEventListener('click', (event) => {
+          event.preventDefault();
+          const html = block.parentElement?.outerHTML?.replace(/\s/g, '');
+          navigator.clipboard.writeText(html);
+        });
+        block.parentElement.prepend(copyAction);
       } else {
         blockName.remove();
+        copyAction.remove();
       }
     });
   };
