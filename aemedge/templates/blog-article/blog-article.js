@@ -3,7 +3,6 @@ import {
   buildVideoBlocks,
   buildFragmentBlocks,
   buildAuthorLink,
-  centerHeadlines,
 } from '../../scripts/utils.js';
 
 import {
