@@ -739,6 +739,7 @@ export function configSideKick() {
         blockName.classList.toggle('show');
         block.parentElement.prepend(blockName);
         copyAction.href = block.querySelector('a').href;
+        copyAction.classList.add('copy-action');
         copyAction.target = '_blank';
         copyAction.textContent = 'Copy HTML';
         copyAction.addEventListener('click', (event) => {
@@ -749,7 +750,7 @@ export function configSideKick() {
         block.prepend(copyAction);
       } else {
         blockName.remove();
-        copyAction.remove();
+        block.querySelector('.copy-action')?.remove();
       }
     });
   };
