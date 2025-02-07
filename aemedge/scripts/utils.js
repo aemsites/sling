@@ -746,7 +746,7 @@ export function configSideKick() {
           const html = block.parentElement?.outerHTML?.replace(/\s/g, '');
           navigator.clipboard.writeText(html);
         });
-        block.parentElement.prepend(copyAction);
+        block.prepend(copyAction);
       } else {
         blockName.remove();
         copyAction.remove();
