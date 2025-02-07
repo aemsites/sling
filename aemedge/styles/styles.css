@@ -127,9 +127,7 @@ header {
   display: none;
  }
 
- a.copy-action.show {
-  color: red
- }
+
 
  span.blockname.show ,a.copy-action.show {
  display: flex;
@@ -143,6 +141,13 @@ header {
 text-transform: capitalize;
 animation: fade-in 1s;
 }
+
+a.copy-action.show {
+  color: white;
+  left: 10%;
+  top: 10%;
+ }
+
 
 @keyframes fade-in {
   0% { opacity: 0; }
