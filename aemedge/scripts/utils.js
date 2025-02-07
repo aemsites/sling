@@ -728,7 +728,7 @@ export function configSideKick() {
     const blocks = document.querySelectorAll('div.block');
     const excludedBlockList = ['header', 'zipcode', 'footer'];
     blocks.forEach((block) => {
-      const name = block.className.split(' ')[0];
+      const name = block.classList.split(' ')[0];
       if (name && !excludedBlockList.includes(name)) {
         block.classList.toggle('highlight');
         const copyAction = document.createElement('a');
