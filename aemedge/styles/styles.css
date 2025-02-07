@@ -129,7 +129,7 @@ header {
 
 
 
- span.blockname.show ,a.copy-action.show {
+ span.blockname.show  {
  display: flex;
  position: absolute;
  font-size: 24px;
@@ -145,8 +145,13 @@ animation: fade-in 1s;
 a.copy-action.show {
   color: white;
   left: 10%;
-  top: 10%;
- }
+  z-index: 2;
+  background-image: url('../images/copy.svg');
+  background-size: 20px;
+  background-repeat: no-repeat;
+  background-position: left;
+  padding-left: 20px;
+}
 
 
 @keyframes fade-in {
