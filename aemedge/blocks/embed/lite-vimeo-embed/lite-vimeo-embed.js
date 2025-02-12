@@ -76,7 +76,7 @@ class LiteVimeo extends (globalThis.HTMLElement ?? class {}) {
     iframeEl.allowFullscreen = true;
     // AFAIK, the encoding here isn't necessary for XSS, but we'll do it only because this is a URL
     // https://stackoverflow.com/q/64959723/89484
-    iframeEl.src = `https://player.vimeo.com/video/${encodeURIComponent(this.videoId)}?${params.toString()}`;
+    iframeEl.src = `https://player.vimeo.com/video/${encodeURIComponent(this.videoId)}`;
     this.append(iframeEl);
 
     // Set focus for a11y
