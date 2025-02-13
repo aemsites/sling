@@ -111,7 +111,107 @@ header nav .nav-hamburger .nav-hamburger-icon {
   cursor: pointer;
 }
 
-@media (width >=1024px) {
+header nav .nav-sections {
+  background: linear-gradient(360deg, #292828fa 0%, #484848fa 100%);
+  display: flex;
+  width: 100vw;
+  position: absolute;
+  left: 0;
+  top: 90px;
+  flex-direction: column;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+  height: calc(-60px + 100dvh);
+  transform: translateY(0%);
+  transition: height 0.5s ease-in-out, transform 0.5s ease-in-out;
+}
+
+header nav .nav-sections .nav-heading {
+  padding: 19px 4px;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+  color: white;
+  cursor: pointer;
+}
+
+header nav .nav-sections .nav-heading::after {
+  content: '';
+  background: url('../../icons/forward-arrow.svg') no-repeat;
+  display: flex;
+  width: 20px;
+  height: 20px;
+  transition: width 200ms, left 200ms;
+  margin-right: 20px;
+}
+
+header nav .nav-sections ul:nth-child(1){
+  color: #d6d6d7;
+  font-size: 18px;
+  margin-left: 27px;
+  margin-right: 27px;
+  margin-bottom: 10px;
+  padding-top: 35px;
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out;
+}
+
+header nav .nav-sections ul:nth-child(2){
+  color: #d6d6d7;
+    position: static;
+    display: flex;
+    flex-direction: column;
+    margin-left: 27px;
+    margin-right: 27px;
+    padding-bottom: 15px;
+    padding-top: 20px;
+    padding-left: 5px;
+    border-top: 2px solid gray;
+    opacity: 1;
+    transition: opacity 0.2s ease-in-out;
+}
+
+header nav .nav-sections .nav-drop .items {
+  background: linear-gradient(360deg, #292828fa 0%, #484848fa 100%);
+  z-index: 999;
+  position: absolute;
+  top: 90px;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  transition: height 0.5s ease-in-out;
+  margin-left: 27px;
+}
+
+header nav .nav-sections .nav-drop .items .first-item {
+  font-weight: 500;
+  color: white;
+  padding-bottom: 20px;
+}
+
+header nav .nav-sections .nav-heading.hidden {
+  display: none;
+}
+
+header nav .nav-sections ul:nth-child(2).hidden {
+  display: none;
+}
+
+header nav .nav-sections .items .subitems .subGroup li {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  padding-bottom: 6px;
+  padding-left: 6px;
+  padding-right: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  margin: 10px 0 10px 6px;
+}
+
+@media (width >=1380px) {
   header nav {
     padding-left: 32px;
   }
@@ -142,17 +242,18 @@ header .nav-brand {
 }
 
 /* sections */
-header nav .nav-sections {
+
+/* header nav .nav-sections {
   grid-area: sections;
   flex: 1 1 auto;
   display: none;
   visibility: hidden;
-}
+} */
 
-header nav[aria-expanded="true"] .nav-sections {
+/* header nav[aria-expanded="true"] .nav-sections {
   display: block;
   visibility: visible;
-}
+} */
 
 header nav .nav-sections ul {
   list-style: none;
@@ -169,7 +270,7 @@ header nav .nav-sections .nav-top > ul li:first-child {
   margin-top: 20px
 }
 
-@media (width >=1024px) {
+@media (width >=1380px) {
   header {
     -webkit-font-smoothing: antialiased;
   }
@@ -209,14 +310,14 @@ header nav .nav-sections .nav-top > ul li:first-child {
     border: 0;
   }
 
-  header nav .nav-sections ul {
+  /* header nav .nav-sections ul {
     all: unset;
     display: flex;
     margin: 0 0 0 24px;
     flex-wrap: wrap;
-  }
+  } */
 
-  header nav .nav-sections .nav-drop::after {
+  /* header nav .nav-sections .nav-drop::after {
     content: "\f067";
     display: inline-block;
     font: normal normal normal 14px / 1 var(--font-awesome);
@@ -227,7 +328,7 @@ header nav .nav-sections .nav-top > ul li:first-child {
   header nav .nav-sections .nav-drop:hover::after,
   header nav .nav-sections .nav-drop[aria-expanded="true"]::after {
     content: "\f068";
-  }
+  } */
 
   header nav .nav-sections .nav-drop .nav-drop-icon {
     display: none;
@@ -329,7 +430,11 @@ header nav .nav-tools a:hover {
   cursor: pointer;
 }
 
-@media (width >=1024px) {
+header nav ul .hidden {
+  display: none;
+}
+
+@media (width >=1380px) {
   header nav .nav-tools {
     visibility: visible;
   }
@@ -345,4 +450,99 @@ header nav .nav-tools a:hover {
     width: 16px;
     padding-right: 0.313rem;
   }
+}
+
+@media (width >=1380px) {
+  header nav .nav-sections ul {
+    display: flex;
+  }
+  
+  header nav .nav-sections ul:nth-child(2) {
+    color: #d6d6d7;
+    position: absolute;
+    right: 78px;
+    top: 90px;
+    padding-top: 42px;
+    padding-bottom: 10px;
+    border: none;
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.5s ease-in-out, visibility linear;
+    display: flex;
+    flex-direction: column;
+  }
+
+  header nav .nav-sections ul li {
+    padding: 0px 4px 25px;
+    cursor: pointer;
+    z-index: 9999;
+    display: block;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    padding-bottom: 13px;
+    color: #d6d6d7;
+  }
+  
+
+  header nav .nav-sections ul .nav-drop{
+    margin-left: 20px;
+  }
+
+  header nav .nav-sections ul .nav-drop .nav-heading{
+    padding-left: 20px;
+    display: flex;
+  }
+
+  header nav .nav-sections ul .nav-drop .nav-heading::before{
+    content: '';
+    background: url('../../icons/caret-down.svg') no-repeat;
+    display: flex;
+    width: 20px;
+    height: 20px;
+    transition: width 200ms, left 200ms;
+    margin-right: 20px;
+  }
+
+  header nav .nav-sections ul .nav-drop[aria-expanded="true"] .nav-heading::before {
+    transform: rotate3d(1, 0, 0, -180deg);
+    transition: transform 0.5s ease 0s;
+  }
+
+  header nav .nav-sections .nav-drop .items.hidden {
+    height: 0;
+    transition: height 0.5s ease-in-out;
+  }
+
+  header nav .nav-sections .nav-drop .items {
+    background: linear-gradient(360deg, #292828fa 0%, #484848fa 100%);
+    z-index: 999;
+    position: absolute;
+    top: 90px;
+    left: 0;
+    width: 100vw;
+    height: 260px;
+    transition: height 0.5s ease-in-out;
+  }
+
+  .first-item {
+    display: block;
+    text-decoration: none;
+    padding-top: 43px;
+    font-weight: 600;
+    font-size: 18px;
+    color: #f5f5f6 !important;
+  }
+
+  .subitems{
+    display: flex;
+    padding-left: 12px;
+    padding-top: 22px;
+  }
+
+  .subitems .subgroups{
+    margin-right: 56px;
+  }
+
 }

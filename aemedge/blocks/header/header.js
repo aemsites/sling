@@ -168,29 +168,79 @@ export default async function decorate(block) {
 
   const navSections = nav.querySelector('.nav-sections');
   if (navSections) {
-    navSections
-      .querySelectorAll(':scope .default-content-wrapper > ul > li')
-      .forEach((navSection) => {
-        const children = navSection.querySelector('ul');
-        if (children) {
-          navSection.classList.add('nav-drop');
-          const navDropIcon = document.createElement('span');
-          navDropIcon.className = 'nav-drop-icon';
-          navSection.insertBefore(navDropIcon, children);
-          navDropIcon.addEventListener('click', () => {
-            const dropExpanded = navSection.getAttribute('aria-expanded') === 'true';
-            navSection.setAttribute('aria-expanded', dropExpanded ? 'false' : 'true');
+    navSections.querySelectorAll('li:has(ul)').forEach((li) => {
+      const { firstChild } = li;
+      if (firstChild && firstChild.nodeType === Node.TEXT_NODE) {
+        const menuText = firstChild.textContent.trim();
+        if (menuText) {
+          // Create the new structure
+          const navDrop = document.createElement('div');
+          navDrop.classList.add('nav-drop');
+          const navHeading = document.createElement('div');
+          navHeading.classList.add('nav-heading');
+          navHeading.textContent = menuText;
+          const items = document.createElement('div');
+          items.classList.add('items');
+          const submenu = li.querySelector('ul');
+          if (submenu) {
+            const lis = Array.from(submenu.children);
+            if (lis.length > 0) {
+              const firstItemWrapper = document.createElement('div');
+              firstItemWrapper.classList.add('first-item');
+              firstItemWrapper.appendChild(lis.shift());
+              items.appendChild(firstItemWrapper);
+            }
+            let group;
+            const subDiv = document.createElement('div');
+            subDiv.classList.add('subitems');
+            lis.forEach((listItem, index) => {
+              if (index % 4 === 0) {
+                group = document.createElement('div');
+                group.classList.add('subGroup');
+                subDiv.appendChild(group);
+              }
+              group.appendChild(listItem);
+            });
+            items.appendChild(subDiv);
+          }
+          navDrop.appendChild(navHeading);
+          navDrop.appendChild(items);
+          li.replaceWith(navDrop);
+          items.style.display = 'none';
+          navHeading.addEventListener('click', () => {
+            const screenWidth = window.innerWidth;
+            console.log(screenWidth);
+            if (screenWidth >= 1380) {
+              const dropExpanded = navDrop.getAttribute('aria-expanded') === 'true';
+              navDrop.setAttribute('aria-expanded', dropExpanded ? 'false' : 'true');
+              document.querySelectorAll('.items').forEach((el) => {
+                if (el !== items) el.style.display = 'none';
+              });
+              items.style.display = items.style.display === 'none' ? 'block' : 'none';
+            } else {
+              const navdrops = navSections.querySelectorAll('.default-content-wrapper > ul > .nav-drop');
+              navdrops.forEach((ul) => {
+                ul.querySelector('.nav-heading').classList.toggle('hidden');
+              });
+
+              const uls = navSections.querySelectorAll('.default-content-wrapper > ul');
+              uls.forEach((ul) => {
+                ul.classList.toggle('hidden');
+              });
+              items.style.display = 'block';
+            }
           });
         }
-      });
+      }
+    });
   }
 
   // hamburger for mobile
   const hamburger = document.createElement('div');
   hamburger.classList.add('nav-hamburger');
-  hamburger.innerHTML = `<button type="button" aria-controls="nav" aria-label="Open navigation">
-      <span class="nav-hamburger-icon">
-      <img src ="/aemedge/icons/menu-open.svg" /></span>
+  hamburger.innerHTML = `<button type='button' aria-controls='nav' aria-label='Open navigation'>
+      <span class='nav-hamburger-icon'>
+      <img src ='/aemedge/icons/menu-open.svg' /></span>
     </button>`;
   hamburger.addEventListener('click', () => toggleMenu(nav, navSections, null));
   nav.append(hamburger);
