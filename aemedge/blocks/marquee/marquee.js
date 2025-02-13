@@ -29,7 +29,17 @@ function setupVideo(url, block) {
 }
 
 function setupBGVideos(block) {
+  const extDamUrl = /content\/dam\//;
   const videoLinks = Array.from(block.querySelectorAll('a[href*=".mp4"]'));
+  const domain = 'https://www.sling.com';
+  videoLinks.forEach((link) => {
+    if (extDamUrl.test(link.href)) {
+      const fullDamUrl = `${domain}${link.pathname}`;
+      if (link.pathname.startsWith('/')) {
+        link.href = fullDamUrl;
+      }
+    }
+  });
   let currentVideoUrl = getVideoUrlByScreenWidth(videoLinks);
   // Remove video links from DOM to prevent them from showing up as text
   videoLinks.forEach((link) => link.parentElement.remove());

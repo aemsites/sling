@@ -8,38 +8,31 @@
   max-width: 100%;
   border-collapse: collapse;
   font-size: var(--body-font-size-xs);
-}
 
-@media (width >= 768px) {
-  .table table {
-    font-size: var(--body-font-size-s);
+  th, td {
+    padding: 0 6px;
+  }
+
+  thead tr {
+    border-top: 2px solid;
+    border-bottom: 2px solid;
+  }
+
+  td:not([data-align="right"], [data-align="justify"], [data-align="justify"]) {
+    text-align: center;
   }
 }
 
-@media (width >= 992px) {
-  .table table {
-    font-size: var(--body-font-size-m);
-  }
+
+/* bordered variant */
+.table.bordered table th,
+.table.bordered table td { /* stylelint-disable-line */
+  border: 1px solid;
 }
 
-.table table thead tr {
-  border-top: 2px solid;
-  border-bottom: 2px solid;
-}
 
-.table table tbody tr {
+.table:not(.playoffs, .schedule) table tbody tr {
   border-bottom: 1px solid;
-}
-
-.table table th {
-  font-weight: 700;
-}
-
-.table table th,
-.table table td {
-  padding: 0;
-  width: 25%;
-  text-align: center;
 }
 
 /* no header variant */
@@ -49,6 +42,7 @@
 
 .schedule.table table thead tr {
   background-color: rgb(0 30 120);
+  border-color: rgb(0 30 120);
   color: rgb(255 208 60);
 }
 
@@ -57,32 +51,16 @@
   display: inline;
 }
 
-.schedule.table table thead tr,
-.schedule.table table tbody tr,
-.schedule table tbody td,
-.schedule table thead tr th,
-.playoffs.table table thead tr,
-.playoffs.table table tbody tr,
-.playoffs table tbody td,
-.playoffs table thead tr th {
-  border: none;
-  text-align: center;
-}
-
 .playoffs.table table thead tr {
-  background-color: rgb(84 172 210);
-  color: white;
+  background-color: var(--dark-rock-candy);
+  border-color: var(--dark-rock-candy);
+  color: var(--clr-white);
+
 }
 
 /* striped variant */
 .table.striped tbody tr:nth-child(odd) {
-  background-color: var(--overlay-background-color);
-}
-
-/* bordered variant */
-.table.bordered table th,
-.table.bordered table td {
-  border: 1px solid;
+  background-color: var(--light-grey-color);
 }
 
 * {
@@ -103,8 +81,7 @@
 
 .playoffs.table table .single-column-row.lightgrey td, .schedule.table table .single-column-row.lightgrey td {
   background-color: var(--dark-color);
-  text-align: left;
-  padding-left: 6px;
+
 }
 
 .schedule.table p,
@@ -131,26 +108,14 @@ blockquote {
 
 .playoffs.table table,
 .schedule.table table {
-  font-size: 16px;
   table-layout: fixed;
 }
 
-div.section.table-container .default-content-wrapper .button-container {
-  text-align: left;
-  background-color: var(--background-color);
-}
-
-div.section.table-container .default-content-wrapper .button-container a {
-  text-align: left;
-  background-color: var(--background-color);
-  border: none;
-}
-
-div.section.table-container .default-content-wrapper .button-container ~ p {
-  text-align: left;
-}
-
 @media (width >= 768px) {
+  .table table {
+    font-size: var(--body-font-size-s);
+  }
+
   .blog-article > main div.section.table-container {
     padding: unset;
     width: unset;
