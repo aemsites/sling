@@ -8,7 +8,6 @@ header .nav-wrapper {
 
 header nav {
   box-sizing: border-box;
-  display: grid;
   grid-template:
     'hamburger brand tools' var(--nav-height)
     'sections sections sections' 1fr / auto 1fr auto;
@@ -36,6 +35,10 @@ header .icon.icon-logo-sling-rebrand {
 header .icon.icon-logo-sling-rebrand img {
   height: 32px;
   width: 55.77px;
+}
+
+header .section.signup {
+  display: none;
 }
 
 header nav[aria-expanded='true'] {
@@ -70,18 +73,21 @@ header nav .nav-sections ul > li > ul > li {
 }
 
 header nav[aria-expanded='true'] .nav-drop ul {
-  background: linear-gradient(360deg, #292828fa 0%, #484848fa 100%);
-    display: flex;
-    width: 100vw;
-    position: fixed;
-    flex-direction: column;
-    -webkit-box-pack: justify;
-    height: calc(-60px + 100dvh);
-    transform: translateX(100%);
-    left: 0;
-    top: 120px;
-    margin-left: 27px;
-    transition: height 0.5s ease-in-out, transform 0.5s ease-in-out;
+  display: flex;
+  width: 100vw;
+  position: fixed;
+  flex-direction: column;
+  -webkit-box-pack: justify;
+  height: calc(-60px + 100dvh);
+  transform: translateX(100%);
+  left: 0;
+  top: 120px;
+  margin-left: 27px;
+  transition: height 0.5s ease-in-out, transform 0.5s ease-in-out;
+}
+
+header nav[aria-expanded='true'] .navsecondary {
+  margin-top: 300px;
 }
 
 header nav[aria-expanded='true'] .navsecondary ul li {
@@ -90,7 +96,6 @@ header nav[aria-expanded='true'] .navsecondary ul li {
 }
 
 header nav[aria-expanded='true'] .nav-drop ul.show {
-    background: linear-gradient(360deg, #292828fa 0%, #484848fa 100%);
     display: flex;
     width: 100vw;
     position: fixed;
@@ -187,7 +192,7 @@ header nav[aria-expanded='false'] .backbutton , header nav[aria-expanded='false'
 header nav[aria-expanded='true'] .backbutton.show {
   color: white;
   position: absolute;
-  left: 65px;
+  left: 40px;
   top: 70px;
   align-items: center;
   display: flex;
@@ -339,6 +344,33 @@ header nav[aria-expanded='true'] .nav-sections {
     margin-left: 40px;
   }
 
+  header .profile .icon.icon-sign-in {
+    position: absolute;
+    top: 25px;
+    right: 160px;
+    width: 32px;
+    height: 32px;
+  }
+
+  header .section.signup {
+    display: block;
+  }
+  
+  header .section.signup a{
+    font-size: 18px;
+    padding: 0.938rem 1.2rem;
+    position: relative;
+    font-weight: 800;
+    box-sizing: border-box;
+    text-align: center;
+    background: linear-gradient(108.93deg, #0072ec 37.23%, #00b9ff 112.13%);
+    border: none;
+    border-radius: 1600px;
+    text-decoration: none;
+    min-width: 150px;
+    color: #f5f5f6 !important;
+  }
+
   header nav[aria-expanded='true'] .navprimary {
     position: absolute;
     left: 269px;
@@ -369,6 +401,7 @@ header nav[aria-expanded='true'] .nav-sections {
     position: absolute;
     right: 78px;
     top: 30px;
+    margin-top: 0;
     padding-top: 42px;
     padding-bottom: 10px;
     border: none;
@@ -428,27 +461,57 @@ header nav[aria-expanded='true'] .nav-sections {
   }
 
   header nav .nav-sections .default-content-wrapper > ul > li[aria-expanded='false'] > ul {
-    background: linear-gradient(360deg, #292828fa 0%, #484848fa 100%);
+    /* background: linear-gradient(360deg, #292828fa 0%, #484848fa 100%); */
     z-index: 999;
     position: absolute;
+    left: 0;
+    margin-left: 0;
     top: calc(70px);
-    width: 100vw;
+    width: max-content;
     height: 0;
     overflow: hidden;
-    display: block;
-    transition: height 0.5s ease-in-out;
+    transition: height 0.1s ease-in-out; 
   }
 
   header nav .nav-sections .default-content-wrapper > ul > li[aria-expanded='true'] > ul {
-    background: linear-gradient(360deg, #292828fa 0%, #484848fa 100%);
+    /* background: linear-gradient(360deg, #292828fa 0%, #484848fa 100%); */
     z-index: 999;
     position: absolute;
+    left: 0;
+    margin-left: 0;
+    top: calc(70px);
+    width: max-content;
+    overflow: hidden;
+    height: 260px;
+    display: flex;
+    flex-wrap: wrap;
+    transition: height 0.2s ease-in-out; 
+  }
+
+  header .navmenu {
+    background: linear-gradient(360deg, #292828fa 0%, #484848fa 100%);
+    position: absolute;
+    left: 0;
+    margin-left: 0;
+    top: calc(70px);
+    width: 100vw;
+    overflow: hidden;
+    height: 0;
+    display: flex;
+    transition: height 0.3s ease-in-out;
+  }
+
+  header .navmenu.show {
+    background: linear-gradient(360deg, #292828fa 0%, #484848fa 100%);
+    position: absolute;
+    left: 0;
+    margin-left: 0;
     top: calc(70px);
     width: 100vw;
     overflow: hidden;
     height: 260px;
-    display: block;
-    transition: height 0.5s ease-in-out;
+    display: flex;
+    transition: height 0.3s ease-in-out;
   }
 
   header nav .nav-sections .default-content-wrapper > ul > li > ul::before {
@@ -464,7 +527,13 @@ header nav[aria-expanded='true'] .nav-sections {
   }
 
   header nav .nav-sections .default-content-wrapper > ul > li > ul > li {
-    padding: 8px 0;
+    display: block;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    padding-bottom: 13px;
+    color: #d6d6d7;
+    cursor: pointer;
   }
 }
-

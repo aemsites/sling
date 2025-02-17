@@ -121,6 +121,8 @@ export default async function decorate(block) {
   block.textContent = '';
   const nav = document.createElement('nav');
   nav.id = 'nav';
+  const navmenu = document.createElement('div');
+  navmenu.classList.add('navmenu');
   while (fragment.firstElementChild) nav.append(fragment.firstElementChild);
 
   const classes = ['brand', 'sections', 'tools'];
@@ -163,8 +165,10 @@ export default async function decorate(block) {
           const isExpanded = Array.from(navs).some((section) => section.getAttribute('aria-expanded') === 'true');
           if (isExpanded) {
             navsecondary.classList.add('show');
+            navmenu.classList.add('show');
           } else {
             navsecondary.classList.remove('show');
+            navmenu.classList.remove('show');
           }
         } else {
           const navprimary = nav.querySelectorAll('.navprimary .nav-drop .nav-heading');
@@ -205,6 +209,7 @@ export default async function decorate(block) {
   const navWrapper = document.createElement('div');
   navWrapper.className = 'nav-wrapper';
   navWrapper.append(nav);
+  navWrapper.append(navmenu);
   const wrapper = createTag('div');
   const zipblock = buildBlock('zipcode', createTag('div'));
   wrapper.append(zipblock);
