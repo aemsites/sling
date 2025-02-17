@@ -38,23 +38,23 @@ export default function decorate(block) {
     faqData.push({
       questionName: summary.textContent.trim(),
       acceptedAnswer: {
-        text: body.textContent.trim()
-      }
+        text: body.textContent.trim(),
+      },
     });
   });
 
   // Add FAQ Schema
   const faqSchema = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": faqData.map(item => ({
-      "@type": "Question",
-      "name": item.questionName,
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": item.acceptedAnswer.text
-      }
-    }))
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqData.map((item) => ({
+      '@type': 'Question',
+      name: item.questionName,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: item.acceptedAnswer.text,
+      },
+    })),
   };
 
   // Check if FAQ schema already exists
