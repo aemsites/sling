@@ -158,6 +158,14 @@ export default async function decorate(block) {
           const expanded = navSection.getAttribute('aria-expanded') === 'true';
           toggleAllNavSections(navSections);
           navSection.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+          const navs = navSections.querySelectorAll(':scope .default-content-wrapper > ul > li');
+          const navsecondary = nav.querySelector('.navsecondary');
+          const isExpanded = Array.from(navs).some((section) => section.getAttribute('aria-expanded') === 'true');
+          if (isExpanded) {
+            navsecondary.classList.add('show');
+          } else {
+            navsecondary.classList.remove('show');
+          }
         } else {
           const navprimary = nav.querySelectorAll('.navprimary .nav-drop .nav-heading');
           const navsecondary = nav.querySelector('.navsecondary');

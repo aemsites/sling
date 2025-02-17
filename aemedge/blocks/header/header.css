@@ -159,7 +159,7 @@ header nav[aria-expanded='true'] .navprimary .nav-drop .nav-heading.hide ,  head
   display: none;
 }
 
-header nav[aria-expanded='false'] .backbutton , header nav[aria-expanded='false'] .backbutton::before {
+header nav[aria-expanded='false'] .backbutton , header nav[aria-expanded='false'] .backbutton::before , header nav[aria-expanded='true'] .backbutton {
   display: none;
 }
 
@@ -328,6 +328,31 @@ header nav[aria-expanded='true'] .nav-sections {
     display: none;
   }
 
+  header nav .nav-sections ul {
+    display: flex;
+    gap: 24px;
+    margin: 0;
+  }
+
+  header nav[aria-expanded='true'] .navsecondary ul {
+    border-top: none;
+  }
+
+  header nav[aria-expanded='true'] .navsecondary.show {
+    color: #d6d6d7;
+    position: absolute;
+    right: 78px;
+    top: 30px;
+    padding-top: 42px;
+    padding-bottom: 10px;
+    border: none;
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.5s ease-in-out, visibility linear;
+    z-index: 9999;
+    display: block;
+  }
+
   header nav .nav-hamburger {
     display: none;
     visibility: hidden;
@@ -365,12 +390,6 @@ header nav[aria-expanded='true'] .nav-sections {
     top: unset;
     bottom: 0.5em;
     transform: rotate(315deg);
-  }
-
-  header nav .nav-sections ul {
-    display: flex;
-    gap: 24px;
-    margin: 0;
   }
 
   header nav .nav-sections .default-content-wrapper > ul > li {
