@@ -1,8 +1,11 @@
-import { getMetadata } from '../../scripts/aem.js';
 import { loadFragment } from '../fragment/fragment.js';
-
+import { createTag } from '../../scripts/utils.js';
+import {
+  buildBlock, decorateBlock, getMetadata,
+  loadBlock,
+} from '../../scripts/aem.js';
 // media query match that indicates mobile/tablet width
-const isDesktop = window.matchMedia('(min-width: 900px)');
+const isDesktop = window.matchMedia('(min-width: 1380px)');
 
 function closeOnEscape(e) {
   if (e.code === 'Escape') {
@@ -134,29 +137,34 @@ export default async function decorate(block) {
   }
 
   const navSections = nav.querySelector('.nav-sections');
+  const backbutton = document.createElement('div');
+  backbutton.classList.add('backbutton');
+  backbutton.innerHTML = 'Back';
+  nav.append(backbutton);
   if (navSections) {
     navSections.querySelectorAll(':scope .default-content-wrapper > ul > li').forEach((navSection) => {
+      const navheading = Array.from(navSection.childNodes)
+        .find((node) => node.nodeType === Node.TEXT_NODE);
+      if (navheading) {
+        const aTag = document.createElement('a');
+        aTag.classList.add('nav-heading');
+        aTag.href = '#'; // Set your desired URL here
+        aTag.textContent = navheading.textContent;
+        navSection.replaceChild(aTag, navheading);
+      }
       if (navSection.querySelector('ul')) navSection.classList.add('nav-drop');
-      navSection.addEventListener('click', () => {
-        const secondarynav = nav.querySelector('.navsecondary');
-        const primarynav = nav.querySelector('.navprimary');
+      navSection.addEventListener('click', (event) => {
         if (isDesktop.matches) {
           const expanded = navSection.getAttribute('aria-expanded') === 'true';
           toggleAllNavSections(navSections);
           navSection.setAttribute('aria-expanded', expanded ? 'false' : 'true');
-          // Check if any nav-drop is expanded
-          const anyExpanded = [...navSections.querySelectorAll('.nav-drop')].some((section) => section.getAttribute('aria-expanded') === 'true');
-          if (anyExpanded) {
-            secondarynav.classList.add('show');
-          } else {
-            secondarynav.classList.remove('show');
-          }
         } else {
-          secondarynav.classList.add('hide');
-          primarynav.classList.add('hide');
-          const expanded = navSection.getAttribute('aria-expanded') === 'true';
-          toggleAllNavSections(navSections);
-          navSection.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+          const navprimary = nav.querySelectorAll('.navprimary .nav-drop .nav-heading');
+          const navsecondary = nav.querySelector('.navsecondary');
+          navprimary.forEach((item) => { item.classList.add('hide'); });
+          navsecondary.classList.add('hide');
+          backbutton.classList.toggle('show');
+          event.target.nextElementSibling.classList.add('show');
         }
       });
     });
@@ -168,14 +176,44 @@ export default async function decorate(block) {
   hamburger.innerHTML = `<button type="button" aria-controls="nav" aria-label="Open navigation">
       <span class="nav-hamburger-icon"></span>
     </button>`;
-  hamburger.addEventListener('click', () => toggleMenu(nav, navSections));
+  hamburger.addEventListener('click', () => {
+    const navprimary = nav.querySelectorAll('.navprimary .nav-drop .nav-heading');
+    const navsecondary = nav.querySelector('.navsecondary');
+    backbutton.classList.remove('show');
+    if (navsecondary) {
+      navsecondary.classList.remove('hide');
+    }
+    const uls = nav.querySelectorAll('.navprimary .nav-drop ul');
+    navprimary.forEach((item) => { item.classList.remove('hide'); });
+    uls.forEach((item) => { item.classList.remove('show'); });
+    toggleMenu(nav, navSections);
+  });
   nav.prepend(hamburger);
   nav.setAttribute('aria-expanded', 'false');
   // prevent mobile nav behavior on window resize
   toggleMenu(nav, navSections, isDesktop.matches);
   isDesktop.addEventListener('change', () => toggleMenu(nav, navSections, isDesktop.matches));
+
   const navWrapper = document.createElement('div');
   navWrapper.className = 'nav-wrapper';
   navWrapper.append(nav);
+  const wrapper = createTag('div');
+  const zipblock = buildBlock('zipcode', createTag('div'));
+  wrapper.append(zipblock);
+  decorateBlock(zipblock);
+  await loadBlock(zipblock);
+  nav.insertBefore(wrapper, navSections);
   block.append(navWrapper);
+
+  backbutton.addEventListener('click', () => {
+    const navprimary = nav.querySelectorAll('.navprimary .nav-drop .nav-heading');
+    const navsecondary = nav.querySelector('.navsecondary');
+    backbutton.classList.remove('show');
+    if (navsecondary) {
+      navsecondary.classList.remove('hide');
+    }
+    const uls = nav.querySelectorAll('.navprimary .nav-drop ul');
+    navprimary.forEach((item) => { item.classList.remove('hide'); });
+    uls.forEach((item) => { item.classList.remove('show'); });
+  });
 }
