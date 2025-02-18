@@ -6,6 +6,14 @@ header .nav-wrapper {
   position: fixed;
 }
 
+header nav .navprimary .nav-heading-title {
+  display: block;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 18px;
+  color: #f5f5f6 !important;
+}
+
 header nav {
   box-sizing: border-box;
   grid-template:
@@ -158,7 +166,7 @@ header nav[aria-expanded='true'] .navsecondary ul{
   padding-left: 5px;
   border-top: 2px solid gray;
   opacity: 1;
-  transition: opacity 0.2s ease-in-out;
+  transition: opacity 0.1s ease-in-out;
 }
 
 header nav .navprimary .nav-heading {
@@ -377,11 +385,24 @@ header nav[aria-expanded='true'] .nav-sections {
     padding: 0;
   }
 
+  header nav[aria-expanded='true'] .navprimary .nav-drop[aria-expanded='true'] {
+    border-bottom: 3px solid white;
+  }
+
   header nav .navprimary .nav-heading::after, header nav[aria-expanded='true'] .navsecondary {
     display: none;
   }
 
-  header nav .nav-sections ul {
+  header nav .navprimary .nav-heading-title {
+    display: block;
+    text-decoration: none;
+    padding-top: 43px;
+    font-weight: 600;
+    font-size: 18px;
+    color: #f5f5f6 !important;
+  }
+
+  header nav .nav-sections .default-content-wrapper > ul {
     display: flex;
     gap: 24px;
     margin: 0;
@@ -453,6 +474,12 @@ header nav[aria-expanded='true'] .nav-sections {
 
   header nav[aria-expanded='true'] .nav-drop ul {
     transform: none;
+    position: absolute;
+    visibility: visible;
+    opacity: 1;
+    height: 260px;
+    transition: height 0.5s ease-in-out, opacity 0.5s ease-in-out, visibility linear;
+    width: max-content;
   }
 
   header nav .nav-sections .default-content-wrapper > ul > li {
@@ -480,12 +507,10 @@ header nav[aria-expanded='true'] .nav-sections {
     left: 0;
     margin-left: 0;
     top: calc(70px);
-    width: max-content;
+    width: 30vw;;
     overflow: hidden;
     height: 260px;
-    display: flex;
-    flex-wrap: wrap;
-    transition: height 0.2s ease-in-out; 
+    transition: height 0.1s ease-in-out; 
   }
 
   header .navmenu {
@@ -536,4 +561,25 @@ header nav[aria-expanded='true'] .nav-sections {
     color: #d6d6d7;
     cursor: pointer;
   }
+  
+  header nav .navprimary .nav-drop ul .navitems {
+    display: flex;
+    flex-flow: column wrap;
+    overflow: hidden;
+    gap: 0 56px;
+    padding-left: 12px;
+  }
+
+  header nav .navprimary .nav-drop .navitems li {
+    width: max-content;
+    display: block;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    padding-bottom: 13px;
+    color: #d6d6d7;
+    cursor: pointer;
+  }
+
 }

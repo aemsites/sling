@@ -143,6 +143,23 @@ export default async function decorate(block) {
   backbutton.classList.add('backbutton');
   backbutton.innerHTML = 'Back';
   nav.append(backbutton);
+  const navlist = nav.querySelectorAll('.nav-sections .default-content-wrapper > ul > li > ul');
+  navlist.forEach((ul) => {
+    const listitems = ul.querySelectorAll('li');
+    const navitems = document.createElement('div');
+    navitems.classList.add('navitems');
+    listitems.forEach((li, index) => {
+      if (index === 0) {
+        const firstItem = document.createElement('h3');
+        firstItem.textContent = li.textContent;
+        firstItem.classList.add('nav-heading-title');
+        ul.replaceChild(firstItem, li);
+      } else {
+        navitems.append(li);
+      }
+      ul.append(navitems);
+    });
+  });
   if (navSections) {
     navSections.querySelectorAll(':scope .default-content-wrapper > ul > li').forEach((navSection) => {
       const navheading = Array.from(navSection.childNodes)
