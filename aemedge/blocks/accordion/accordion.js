@@ -11,6 +11,8 @@ function hasWrapper(el) {
 }
 
 export default function decorate(block) {
+  const faqData = []; // Array to collect FAQ data
+
   [...block.children].forEach((row) => {
     // decorate accordion item label
     const label = row.children[0];
@@ -31,7 +33,38 @@ export default function decorate(block) {
     details.classList.add('details', 'accordion-items');
     details.append(summary, body);
     row.replaceWith(details);
+
+    // Collect FAQ data while processing
+    faqData.push({
+      questionName: summary.textContent.trim(),
+      acceptedAnswer: {
+        text: body.textContent.trim(),
+      },
+    });
   });
+
+  // Add FAQ Schema
+  const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqData.map((item) => ({
+      '@type': 'Question',
+      name: item.questionName,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: item.acceptedAnswer.text,
+      },
+    })),
+  };
+
+  // Check if FAQ schema already exists
+  const existingSchema = document.querySelector('script[type="application/ld+json"]');
+  if (!existingSchema) {
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.textContent = JSON.stringify(faqSchema);
+    document.head.appendChild(script);
+  }
 
   const questions = block.querySelectorAll('.accordion-items .summary');
   questions.forEach((item) => {
