@@ -154,6 +154,12 @@ export default async function decorate(block) {
         aTag.textContent = navheading.textContent;
         navSection.replaceChild(aTag, navheading);
       }
+      // if (index === 0) {
+      //   const firstItem = document.createElement('h3');
+      //   firstItem.textContent = navSection.textContent;
+      //   firstItem.classList.add('nav-heading-title');
+      //   navSection.replaceWith(firstItem);
+      // }
       if (navSection.querySelector('ul')) navSection.classList.add('nav-drop');
       navSection.addEventListener('click', (event) => {
         if (isDesktop.matches) {
