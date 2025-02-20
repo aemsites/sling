@@ -1,0 +1,9 @@
+.block.slide {
+    background-color:#fff;
+    color: #000;
+    border: 1px solid #000;
+    border-radius: 10px;
+    padding: 50px;
+    font-size: 1.25rem;
+}
+
