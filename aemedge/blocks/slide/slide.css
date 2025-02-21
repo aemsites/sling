@@ -1,9 +1,29 @@
-.block.slide {
-    background-color:#fff;
-    color: #000;
-    border: 1px solid #000;
-    border-radius: 10px;
-    padding: 50px;
-    font-size: 1.25rem;
+.slide-container.section{
+    h1,h2 {
+        color: rgb(53 139 179)
+    }
+
+    .block.slide {
+        background-color:#fff;
+        color: #000;
+        border: 1px solid rgb(53 139 179);
+        border-radius: 10px;
+        padding: 50px;
+        font-size: 1.25rem;
+    
+        h2::after {
+            content: '';
+            display: inline-block;
+            height: 3px;
+            background: rgb(53 114 179);
+            width: 100%;
+        }
+    
+    }
 }
+
+
+
+
+
 
