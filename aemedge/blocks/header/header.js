@@ -198,7 +198,7 @@ export default async function decorate(block) {
         } else {
           const navprimary = nav.querySelectorAll('.navprimary .nav-drop .nav-heading');
           const navsecondary = nav.querySelector('.navsecondary');
-          backbutton.classList.toggle('show');
+          backbutton.classList.add('show');
           navprimary.forEach((item) => { item.classList.add('hide'); });
           navsecondary.classList.add('hide');
           if (event.target.closest('.nav-drop').querySelector('ul')) {
