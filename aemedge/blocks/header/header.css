@@ -76,7 +76,7 @@ header nav[aria-expanded='true'] .nav-drop ul {
   height: calc(-60px + 100dvh);
   transform: translateX(100%);
   left: 0;
-  top: 120px;
+  top: 140px;
   margin-left: 27px;
   transition: height 0.5s ease-in-out, transform 0.5s ease-in-out;
 }
@@ -99,7 +99,7 @@ header nav[aria-expanded='true'] .nav-drop ul.show {
     transform: translateX(0%);
     left: 0;
     margin-left: 27px;
-    top: 120px;
+    top: 140px;
     transition: height 0.5s ease-in-out, transform 0.5s ease-in-out;
 }
 
@@ -195,7 +195,7 @@ header nav[aria-expanded='true'] .backbutton.show {
   color: white;
   position: absolute;
   left: 40px;
-  top: 70px;
+  top: 100px;
   align-items: center;
   display: flex;
 }
@@ -311,6 +311,8 @@ header .nav-brand {
   font-size: var(--heading-font-size-s);
   font-weight: 700;
   line-height: 1;
+  background: linear-gradient(360deg, #292828fa 0%, #484848fa 100%);
+  height: 60px;
 }
 
 /* sections */
@@ -350,10 +352,13 @@ header nav[aria-expanded='true'] .nav-sections {
     right: 160px;
     width: 32px;
     height: 32px;
+    padding-right: 45px;
   }
 
   header .section.signup {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
   
   header .section.signup a{
@@ -369,6 +374,7 @@ header nav[aria-expanded='true'] .nav-sections {
     text-decoration: none;
     min-width: 150px;
     color: #f5f5f6 !important;
+    margin-right: 40px;
   }
 
   header nav[aria-expanded='true'] .navprimary {
