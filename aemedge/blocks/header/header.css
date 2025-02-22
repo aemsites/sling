@@ -6,26 +6,26 @@ header .nav-wrapper {
   position: fixed;
 }
 
-header nav .navprimary .nav-heading-title {
-  display: block;
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 18px;
-  color: #f5f5f6 !important;
-}
-
 header nav {
   box-sizing: border-box;
-  grid-template:
-    'hamburger brand tools' var(--nav-height)
-    'sections sections sections' 1fr / auto 1fr auto;
-  align-items: center;
   margin: auto;
   height: var(--nav-height);
   font-family: var(--body-font-family);
   overflow: hidden;
   transition: height 0.5s ease-in-out;
   background: linear-gradient(360deg, #292828fa 0%, #484848fa 100%);
+}
+
+header nav[aria-expanded='true'] {
+  height: 100dvh;
+}
+
+header nav .navprimary .nav-heading-title {
+  display: block;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 18px;
+  color: #f5f5f6 !important;
 }
 
 header .profile .icon.icon-sign-in {
@@ -47,19 +47,6 @@ header .icon.icon-logo-sling-rebrand img {
 
 header .section.signup {
   display: none;
-}
-
-header nav[aria-expanded='true'] {
-  grid-template:
-    'hamburger brand' var(--nav-height)
-    'sections sections' 1fr
-    'tools tools' var(--nav-height) / auto 1fr;
-  height: 100dvh;
-  width: 100vw;
-  position: relative;
-  overflow: hidden;
-  transition: height 0.5s ease-in-out;
-  background: linear-gradient(360deg, #292828fa 0%, #484848fa 100%);
 }
 
 header nav .nav-sections ul {
@@ -166,13 +153,20 @@ header nav[aria-expanded='true'] .navsecondary ul{
   padding-left: 5px;
   border-top: 2px solid gray;
   opacity: 1;
-  transition: opacity 0.1s ease-in-out;
+  transition: opacity 0.5s ease-in-out;
 }
 
-header nav .navprimary .nav-heading {
+/* header nav .navprimary .nav-heading {
   display: inline-flex;
-  justify-content: space-between;
   width: 100%;
+} */
+
+header nav .navprimary .nav-heading:hover {
+  border-bottom: 3px solid white;
+}
+
+header nav .navprimary .navitems li :hover {
+  color: #3abfed;
 }
 
 header nav .navprimary .nav-heading.hide {
@@ -184,9 +178,9 @@ header nav .navprimary .nav-heading::after {
   background: url('../../icons/forward-arrow.svg') no-repeat;
   width: 20px;
   height: 20px;
+  position: absolute;
   transition: width 200ms, left 200ms;
-  margin-right: 20px;
-  display: inline-block;
+  right: 27px;
 }
 
 header nav[aria-expanded='true'] .navprimary .nav-drop .nav-heading.hide ,  header nav[aria-expanded='true'] .navsecondary.hide{
@@ -321,7 +315,6 @@ header .nav-brand {
 
 /* sections */
 header nav .nav-sections {
-  grid-area: sections;
   flex: 1 1 auto;
   display: none;
   visibility: hidden;
@@ -330,7 +323,6 @@ header nav .nav-sections {
 header nav[aria-expanded='true'] .nav-sections {
   display: block;
   visibility: visible;
-  align-self: start;
 }
 
 @media (width >= 1380px) {
@@ -345,7 +337,7 @@ header nav[aria-expanded='true'] .nav-sections {
   header nav[aria-expanded='true'] {
     min-height: 0;
     overflow: visible;
-    height: 72px;
+    height: var(--nav-height);
   }
 
   header .icon.icon-logo-sling-rebrand {
@@ -383,6 +375,10 @@ header nav[aria-expanded='true'] .nav-sections {
     position: absolute;
     left: 269px;
     padding: 0;
+  }
+
+  header nav .navprimary .nav-heading:hover {
+    border-bottom: none;
   }
 
   header nav[aria-expanded='true'] .navprimary .nav-drop[aria-expanded='true'] {
@@ -497,7 +493,7 @@ header nav[aria-expanded='true'] .nav-sections {
     width: max-content;
     height: 0;
     overflow: hidden;
-    transition: height 0.1s ease-in-out; 
+    transition: height 0.5s ease-in-out; 
   }
 
   header nav .nav-sections .default-content-wrapper > ul > li[aria-expanded='true'] > ul {
@@ -510,7 +506,7 @@ header nav[aria-expanded='true'] .nav-sections {
     width: 30vw;;
     overflow: hidden;
     height: 260px;
-    transition: height 0.1s ease-in-out; 
+    transition: height 0.5s ease-in-out; 
   }
 
   header .navmenu {
@@ -523,7 +519,7 @@ header nav[aria-expanded='true'] .nav-sections {
     overflow: hidden;
     height: 0;
     display: flex;
-    transition: height 0.3s ease-in-out;
+    transition: height 0.5s ease-in-out;
   }
 
   header .navmenu.show {
@@ -536,7 +532,7 @@ header nav[aria-expanded='true'] .nav-sections {
     overflow: hidden;
     height: 260px;
     display: flex;
-    transition: height 0.3s ease-in-out;
+    transition: height 0.5s ease-in-out;
   }
 
   header nav .nav-sections .default-content-wrapper > ul > li > ul::before {
@@ -581,5 +577,4 @@ header nav[aria-expanded='true'] .nav-sections {
     color: #d6d6d7;
     cursor: pointer;
   }
-
 }

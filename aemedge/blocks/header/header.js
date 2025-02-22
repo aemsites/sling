@@ -4,6 +4,7 @@ import {
   buildBlock, decorateBlock, getMetadata,
   loadBlock,
 } from '../../scripts/aem.js';
+
 // media query match that indicates mobile/tablet width
 const isDesktop = window.matchMedia('(min-width: 1380px)');
 
@@ -107,6 +108,18 @@ function toggleMenu(nav, navSections, forceExpanded = null) {
   }
 }
 
+function showsubmenu(nav, backbutton) {
+  const navprimary = nav.querySelectorAll('.navprimary .nav-drop .nav-heading');
+  const navsecondary = nav.querySelector('.navsecondary');
+  backbutton.classList.remove('show');
+  if (navsecondary) {
+    navsecondary.classList.remove('hide');
+  }
+  const uls = nav.querySelectorAll('.navprimary .nav-drop ul');
+  navprimary.forEach((item) => { item.classList.remove('hide'); });
+  uls.forEach((item) => { item.classList.remove('show'); });
+}
+
 /**
  * loads and decorates the header, mainly the nav
  * @param {Element} block The header block element
@@ -116,7 +129,6 @@ export default async function decorate(block) {
   const navMeta = getMetadata('nav');
   const navPath = navMeta ? new URL(navMeta, window.location).pathname : '/nav';
   const fragment = await loadFragment(navPath);
-
   // decorate nav DOM
   block.textContent = '';
   const nav = document.createElement('nav');
@@ -124,7 +136,6 @@ export default async function decorate(block) {
   const navmenu = document.createElement('div');
   navmenu.classList.add('navmenu');
   while (fragment.firstElementChild) nav.append(fragment.firstElementChild);
-
   const classes = ['brand', 'sections', 'tools'];
   classes.forEach((c, i) => {
     const section = nav.children[i];
@@ -150,10 +161,7 @@ export default async function decorate(block) {
     navitems.classList.add('navitems');
     listitems.forEach((li, index) => {
       if (index === 0) {
-        const firstItem = document.createElement('h3');
-        firstItem.textContent = li.textContent;
-        firstItem.classList.add('nav-heading-title');
-        ul.replaceChild(firstItem, li);
+        li.classList.add('nav-heading-title');
       } else {
         navitems.append(li);
       }
@@ -171,14 +179,8 @@ export default async function decorate(block) {
         aTag.textContent = navheading.textContent;
         navSection.replaceChild(aTag, navheading);
       }
-      // if (index === 0) {
-      //   const firstItem = document.createElement('h3');
-      //   firstItem.textContent = navSection.textContent;
-      //   firstItem.classList.add('nav-heading-title');
-      //   navSection.replaceWith(firstItem);
-      // }
       if (navSection.querySelector('ul')) navSection.classList.add('nav-drop');
-      navSection.querySelector('.nav-heading').addEventListener('click', (event) => {
+      navSection.addEventListener('click', (event) => {
         if (isDesktop.matches) {
           const expanded = navSection.getAttribute('aria-expanded') === 'true';
           toggleAllNavSections(navSections);
@@ -196,10 +198,12 @@ export default async function decorate(block) {
         } else {
           const navprimary = nav.querySelectorAll('.navprimary .nav-drop .nav-heading');
           const navsecondary = nav.querySelector('.navsecondary');
+          backbutton.classList.toggle('show');
           navprimary.forEach((item) => { item.classList.add('hide'); });
           navsecondary.classList.add('hide');
-          backbutton.classList.toggle('show');
-          event.target.nextElementSibling.classList.add('show');
+          if (event.target.closest('.nav-drop').querySelector('ul')) {
+            event.target.closest('.nav-drop').querySelector('ul').classList.add('show');
+          }
         }
       });
     });
@@ -212,22 +216,20 @@ export default async function decorate(block) {
       <span class="nav-hamburger-icon"></span>
     </button>`;
   hamburger.addEventListener('click', () => {
-    const navprimary = nav.querySelectorAll('.navprimary .nav-drop .nav-heading');
-    const navsecondary = nav.querySelector('.navsecondary');
-    backbutton.classList.remove('show');
-    if (navsecondary) {
-      navsecondary.classList.remove('hide');
-    }
-    const uls = nav.querySelectorAll('.navprimary .nav-drop ul');
-    navprimary.forEach((item) => { item.classList.remove('hide'); });
-    uls.forEach((item) => { item.classList.remove('show'); });
+    showsubmenu(nav, backbutton);
     toggleMenu(nav, navSections);
   });
   nav.prepend(hamburger);
   nav.setAttribute('aria-expanded', 'false');
   // prevent mobile nav behavior on window resize
   toggleMenu(nav, navSections, isDesktop.matches);
-  isDesktop.addEventListener('change', () => toggleMenu(nav, navSections, isDesktop.matches));
+  isDesktop.addEventListener('change', () => {
+    toggleMenu(nav, navSections, isDesktop.matches);
+    showsubmenu(nav, backbutton);
+    navmenu.classList.remove('show');
+    const navsecondary = nav.querySelector('.navsecondary');
+    navsecondary.classList.remove('show');
+  });
 
   const navWrapper = document.createElement('div');
   navWrapper.className = 'nav-wrapper';
@@ -240,16 +242,7 @@ export default async function decorate(block) {
   await loadBlock(zipblock);
   nav.insertBefore(wrapper, navSections);
   block.append(navWrapper);
-
   backbutton.addEventListener('click', () => {
-    const navprimary = nav.querySelectorAll('.navprimary .nav-drop .nav-heading');
-    const navsecondary = nav.querySelector('.navsecondary');
-    backbutton.classList.remove('show');
-    if (navsecondary) {
-      navsecondary.classList.remove('hide');
-    }
-    const uls = nav.querySelectorAll('.navprimary .nav-drop ul');
-    navprimary.forEach((item) => { item.classList.remove('hide'); });
-    uls.forEach((item) => { item.classList.remove('show'); });
+    showsubmenu(nav, backbutton);
   });
 }
