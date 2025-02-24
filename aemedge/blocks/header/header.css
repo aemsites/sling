@@ -95,7 +95,6 @@ header nav[aria-expanded='true'] .navsecondary ul li {
 
 header nav[aria-expanded='true'] .nav-drop ul.show {
     transform: translateX(0%);
-    transition: height 0.5s ease-in-out, transform 0.5s ease-in-out;
 }
 
 header nav[aria-expanded='true'] .nav-drop ul.show li{
@@ -122,7 +121,6 @@ header nav[aria-expanded='true'] .navprimary {
     margin-bottom: 10px;
     padding-top: 35px;
     opacity: 1;
-    transition: opacity 0.5s ease-in-out;
 }
 
 header nav[aria-expanded='true'] .navprimary .nav-drop {
@@ -148,13 +146,7 @@ header nav[aria-expanded='true'] .navsecondary ul{
   padding-left: 5px;
   border-top: 2px solid gray;
   opacity: 1;
-  transition: opacity 0.5s ease-in-out;
 }
-
-/* header nav .navprimary .nav-heading {
-  display: inline-flex;
-  width: 100%;
-} */
 
 header nav .navprimary .nav-heading:hover {
   border-bottom: 3px solid white;
@@ -426,7 +418,6 @@ header nav[aria-expanded='true'] .nav-sections {
     border: none;
     opacity: 1;
     visibility: visible;
-    transition: opacity 0.5s ease-in-out, visibility linear;
     z-index: 9999;
     display: block;
   }
@@ -476,7 +467,7 @@ header nav[aria-expanded='true'] .nav-sections {
     visibility: visible;
     opacity: 1;
     height: 260px;
-    transition: height 0.5s ease-in-out, opacity 0.5s ease-in-out, visibility linear;
+    transition: none;
     width: max-content;
   }
 
@@ -486,7 +477,6 @@ header nav[aria-expanded='true'] .nav-sections {
   }
 
   header nav .nav-sections .default-content-wrapper > ul > li[aria-expanded='false'] > ul {
-    /* background: linear-gradient(360deg, #292828fa 0%, #484848fa 100%); */
     z-index: 999;
     position: absolute;
     left: 0;
@@ -495,20 +485,15 @@ header nav[aria-expanded='true'] .nav-sections {
     width: max-content;
     height: 0;
     overflow: hidden;
-    transition: height 0.5s ease-in-out; 
   }
 
   header nav .nav-sections .default-content-wrapper > ul > li[aria-expanded='true'] > ul {
-    /* background: linear-gradient(360deg, #292828fa 0%, #484848fa 100%); */
     z-index: 999;
-    position: absolute;
     left: 0;
     margin-left: 0;
     top: calc(70px);
-    width: 30vw;;
+    width: 30vw;
     overflow: hidden;
-    height: 260px;
-    transition: height 0.5s ease-in-out; 
   }
 
   header .navmenu {
@@ -550,13 +535,9 @@ header nav[aria-expanded='true'] .nav-sections {
   }
 
   header nav .nav-sections .default-content-wrapper > ul > li > ul > li {
-    display: block;
-    text-decoration: none;
     font-size: 16px;
-    font-weight: 500;
     line-height: 24px;
     padding-bottom: 13px;
-    color: #d6d6d7;
     cursor: pointer;
   }
   
