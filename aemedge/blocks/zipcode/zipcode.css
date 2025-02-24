@@ -2,16 +2,20 @@ header nav .zipcode-wrapper {
     position: absolute;
     background: #c3c3c340;
     z-index: 1000;
-    height: 59px;
+    height: 60px;
     padding-left: 5px;
     padding-right: 5px;
-    top: 5px;
+    top: 0;
     left: 95px;
     display: flex;
     place-content: center;
     place-items: center;
     box-sizing: border-box;
     width: 127px;
+}
+
+header nav[aria-expanded="true"] .zipcode-wrapper {
+    height: 60px;
 }
 
 header nav[aria-expanded="true"] .zipcode-wrapper.selected{
@@ -176,6 +180,11 @@ header nav[aria-expanded="true"] .zipcode-wrapper.selected{
 @media (width >=1380px) {
     header nav .zipcode-wrapper {
         left: 115px;
+        height: 70px;
+    }
+
+    header nav[aria-expanded="true"] .zipcode-wrapper {
+        height: 70px;
     }
 
     .geo-form-container {

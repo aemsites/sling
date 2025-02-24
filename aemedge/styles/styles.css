@@ -89,7 +89,7 @@
   --heading-font-size-xs: 14px;
 
   /* nav height */
-  --nav-height: 70px;
+  --nav-height: 60px;
 
   /* Color Variants */
   --blue-to-orange: linear-gradient(to right, #1b00a6, #eb550f);
