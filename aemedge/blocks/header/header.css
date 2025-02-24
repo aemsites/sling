@@ -9,6 +9,8 @@ header .nav-wrapper {
 header nav {
   box-sizing: border-box;
   margin: auto;
+  width: 100vw;
+  position: absolute;
   height: var(--nav-height);
   font-family: var(--body-font-family);
   overflow: hidden;
@@ -38,6 +40,7 @@ header .profile .icon.icon-sign-in {
 
 header .icon.icon-logo-sling-rebrand {
   margin-left: 16px;
+  margin-top: 20px;
 }
 
 header .icon.icon-logo-sling-rebrand img {
@@ -91,15 +94,7 @@ header nav[aria-expanded='true'] .navsecondary ul li {
 }
 
 header nav[aria-expanded='true'] .nav-drop ul.show {
-    display: flex;
-    width: 100vw;
-    position: fixed;
-    flex-direction: column;
-    height: calc(-60px + 100dvh);
     transform: translateX(0%);
-    left: 0;
-    margin-left: 27px;
-    top: 140px;
     transition: height 0.5s ease-in-out, transform 0.5s ease-in-out;
 }
 
@@ -230,7 +225,7 @@ header nav a:any-link {
 /* hamburger */
 header nav .nav-hamburger {
   grid-area: hamburger;
-  height: 22px;
+  height: 0;
   display: flex;
   align-items: center;
 }
@@ -312,7 +307,7 @@ header .nav-brand {
   font-weight: 700;
   line-height: 1;
   background: linear-gradient(360deg, #292828fa 0%, #484848fa 100%);
-  height: 60px;
+  height: 70px;
 }
 
 /* sections */
@@ -344,6 +339,7 @@ header nav[aria-expanded='true'] .nav-sections {
 
   header .icon.icon-logo-sling-rebrand {
     margin-left: 40px;
+    margin-top: 20px;
   }
 
   header .profile .icon.icon-sign-in {
