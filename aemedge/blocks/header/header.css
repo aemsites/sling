@@ -377,7 +377,13 @@ header nav[aria-expanded='true'] .nav-sections {
     border-bottom: none;
   }
 
-  header nav[aria-expanded='true'] .navprimary .nav-drop[aria-expanded='true'] {
+  header nav .nav-sections .nav-drop {
+    position: relative;
+    padding-right: 16px;
+    cursor: pointer;
+  }
+
+  header nav[aria-expanded='true'] .navprimary .nav-drop:hover {
     border-bottom: 3px solid white;
   }
 
@@ -441,12 +447,6 @@ header nav[aria-expanded='true'] .nav-sections {
 
   header nav[aria-expanded='true'] .nav-sections {
     align-self: unset;
-  }
-
-  header nav .nav-sections .nav-drop {
-    position: relative;
-    padding-right: 16px;
-    cursor: pointer;
   }
 
   header nav .nav-sections .nav-drop::after {
