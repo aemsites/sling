@@ -196,10 +196,10 @@ export default async function decorate(block) {
             navmenu.classList.remove('show');
           }
         } else {
-          const navprimary = nav.querySelectorAll('.navprimary .nav-drop .nav-heading');
+          const navheadings = nav.querySelectorAll('.navprimary .nav-drop .nav-heading');
           const navsecondary = nav.querySelector('.navsecondary');
           backbutton.classList.add('show');
-          navprimary.forEach((item) => { item.classList.add('hide'); });
+          navheadings.forEach((item) => { item.classList.add('hide'); });
           navsecondary.classList.add('hide');
           if (event.target.closest('.nav-drop').querySelector('ul')) {
             event.target.closest('.nav-drop').querySelector('ul').classList.add('show');

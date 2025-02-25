@@ -13,7 +13,6 @@ header nav {
   position: absolute;
   height: var(--nav-height);
   font-family: var(--body-font-family);
-  overflow: hidden;
   transition: height 0.5s ease-in-out;
   background: linear-gradient(360deg, #292828fa 0%, #484848fa 100%);
 }
@@ -33,7 +32,7 @@ header nav .navprimary .nav-heading-title {
 header .profile .icon.icon-sign-in {
   position: absolute;
   top: 15px;
-  right: 60px;
+  right: 65px;
   width: 32px;
   height: 32px;
 }
@@ -85,7 +84,9 @@ header nav[aria-expanded='true'] .nav-drop ul {
 }
 
 header nav[aria-expanded='true'] .navsecondary {
-  margin-top: 300px;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
 }
 
 header nav[aria-expanded='true'] .navsecondary ul li {
@@ -125,11 +126,6 @@ header nav[aria-expanded='true'] .navprimary {
 
 header nav[aria-expanded='true'] .navprimary .nav-drop {
   padding: 19px 4px;
-  display: flex;
-  -webkit-box-align: center;
-  align-items: center;
-  -webkit-box-pack: justify;
-  justify-content: space-between;
   color: white;
   cursor: pointer;
 }
@@ -148,16 +144,16 @@ header nav[aria-expanded='true'] .navsecondary ul{
   opacity: 1;
 }
 
+header nav .navprimary .nav-heading {
+  border-bottom: 3px solid transparent
+}
+
 header nav .navprimary .nav-heading:hover {
   border-bottom: 3px solid white;
 }
 
 header nav .navprimary .navitems li :hover {
   color: #3abfed;
-}
-
-header nav .navprimary .nav-heading.hide {
-  display: none;
 }
 
 header nav .navprimary .nav-heading::after {
@@ -170,11 +166,22 @@ header nav .navprimary .nav-heading::after {
   right: 27px;
 }
 
-header nav[aria-expanded='true'] .navprimary .nav-drop .nav-heading.hide ,  header nav[aria-expanded='true'] .navsecondary.hide{
-  display: none;
+header nav[aria-expanded='true'] .navprimary .nav-drop .nav-heading, header nav[aria-expanded='true'] .navsecondary{
+  transform: translateY(0%);
+  transition: height 0.5s ease-in-out, transform 0.5s ease-in-out;
 }
 
-header nav[aria-expanded='false'] .backbutton , header nav[aria-expanded='false'] .backbutton::before , header nav[aria-expanded='true'] .backbutton {
+
+header nav[aria-expanded='true'] .navsecondary.hide{
+    transform: translateX(-100%);
+}
+
+header nav[aria-expanded='true'] .navsecondary li:hover {
+  cursor: pointer;
+  color: white;
+}
+
+header nav[aria-expanded='false'] .backbutton , header nav[aria-expanded='false'] .backbutton::before , header nav[aria-expanded='true'] .backbutton , header nav[aria-expanded='true'] .navprimary .nav-drop .nav-heading.hide {
   display: none;
 }
 
@@ -220,72 +227,38 @@ header nav .nav-hamburger {
 }
 
 header nav .nav-hamburger button {
-  height: 22px;
   margin: 0;
   border: 0;
   border-radius: 0;
   padding: 0;
-  background-color: var(--background-color);
+  background-color: transparent;
   color: inherit;
   overflow: initial;
   text-overflow: initial;
   white-space: initial;
   position: absolute;
-  top: 20px;
+  top: 15px;
   right: 30px;
 }
 
-header nav .nav-hamburger-icon,
-header nav .nav-hamburger-icon::before,
-header nav .nav-hamburger-icon::after {
-  box-sizing: border-box;
-  display: block;
-  position: relative;
-  width: 20px;
-}
-
-header nav .nav-hamburger-icon::before,
-header nav .nav-hamburger-icon::after {
+header nav[aria-expanded='false'] .nav-hamburger-icon {
   content: '';
-  position: absolute;
-  background: currentcolor;
-}
-
-header nav[aria-expanded='false'] .nav-hamburger-icon,
-header nav[aria-expanded='false'] .nav-hamburger-icon::before,
-header nav[aria-expanded='false'] .nav-hamburger-icon::after {
-  height: 2px;
-  border-radius: 2px;
-  background: currentcolor;
-}
-
-header nav[aria-expanded='false'] .nav-hamburger-icon::before {
-  top: -6px;
-}
-
-header nav[aria-expanded='false'] .nav-hamburger-icon::after {
-  top: 6px;
+  background: url('../../icons/hamburger-open.svg') no-repeat;
+  rotate: 180deg;
+  width: 32px;
+  height: 32px;
+  transition: width 200ms, left 200ms;
+  display: inline-block;
 }
 
 header nav[aria-expanded='true'] .nav-hamburger-icon {
-  height: 22px;
-}
-
-header nav[aria-expanded='true'] .nav-hamburger-icon::before,
-header nav[aria-expanded='true'] .nav-hamburger-icon::after {
-  top: 3px;
-  left: 1px;
-  transform: rotate(45deg);
-  transform-origin: 2px 1px;
-  width: 24px;
-  height: 2px;
-  border-radius: 2px;
-}
-
-header nav[aria-expanded='true'] .nav-hamburger-icon::after {
-  top: unset;
-  bottom: 3px;
-  transform: rotate(-45deg);
+  content: '';
+  background: url('../../icons/close_hamburger.svg') no-repeat;
+  rotate: 180deg;
+  width: 32px;
+  height: 32px;
+  transition: width 200ms, left 200ms;
+  display: inline-block;
 }
 
 /* brand */
@@ -374,7 +347,7 @@ header nav[aria-expanded='true'] .nav-sections {
   }
 
   header nav .navprimary .nav-heading:hover {
-    border-bottom: none;
+    border-bottom: 3px solid transparent;
   }
 
   header nav .nav-sections .nav-drop {
@@ -382,6 +355,11 @@ header nav[aria-expanded='true'] .nav-sections {
     padding-right: 16px;
     cursor: pointer;
   }
+
+  header nav[aria-expanded='true'] .navprimary .nav-drop {
+    border-bottom: 3px solid transparent;
+  }
+  
 
   header nav[aria-expanded='true'] .navprimary .nav-drop:hover {
     border-bottom: 3px solid white;
@@ -432,6 +410,7 @@ header nav[aria-expanded='true'] .nav-sections {
     visibility: visible;
     z-index: 9999;
     display: block;
+    width: unset;
   }
 
   header nav .nav-hamburger {
