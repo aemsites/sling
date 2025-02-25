@@ -179,11 +179,6 @@ header nav[aria-expanded='true'] .navsecondary.hide{
     transform: translateX(-100%);
 }
 
-header nav[aria-expanded='true'] .navsecondary li:hover {
-  cursor: pointer;
-  color: white;
-}
-
 header nav[aria-expanded='false'] .backbutton , header nav[aria-expanded='false'] .backbutton::before , header nav[aria-expanded='true'] .backbutton , header nav[aria-expanded='true'] .navprimary .nav-drop .nav-heading.hide {
   display: none;
 }
@@ -473,6 +468,7 @@ header nav[aria-expanded='true'] .nav-sections {
     width: max-content;
     height: 0;
     overflow: hidden;
+    transition: none;
     animation: fade-in 2s;
   }
 
@@ -483,6 +479,7 @@ header nav[aria-expanded='true'] .nav-sections {
     top: calc(70px);
     width: 30vw;
     overflow: hidden;
+    transition: none;
   }
 
   header .navmenu {
