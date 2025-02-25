@@ -55,6 +55,7 @@ header nav .nav-sections ul {
   list-style: none;
   padding-left: 0;
   font-size: var(--body-font-size-s);
+  animation: fade-in 2s
 }
 
 header nav .nav-sections ul > li {
@@ -81,12 +82,14 @@ header nav[aria-expanded='true'] .nav-drop ul {
   top: 140px;
   margin-left: 27px;
   transition: height 0.5s ease-in-out, transform 0.5s ease-in-out;
+  animation: fade-in 2s;
 }
 
 header nav[aria-expanded='true'] .navsecondary {
   position: absolute;
   bottom: 0;
   width: 100%;
+  animation: fade-in 2s
 }
 
 header nav[aria-expanded='true'] .navsecondary ul li {
@@ -304,6 +307,10 @@ header nav[aria-expanded='true'] .nav-sections {
     height: 70px;
   }
 
+  header nav .nav-sections ul {
+    animation: none;
+  }
+
   header .icon.icon-logo-sling-rebrand {
     margin-left: 40px;
     margin-top: 20px;
@@ -450,10 +457,7 @@ header nav[aria-expanded='true'] .nav-sections {
     transform: none;
     position: absolute;
     visibility: visible;
-    opacity: 1;
     height: 260px;
-    transition: none;
-    width: max-content;
   }
 
   header nav .nav-sections .default-content-wrapper > ul > li {
@@ -461,18 +465,18 @@ header nav[aria-expanded='true'] .nav-sections {
     position: relative;
   }
 
-  header nav .nav-sections .default-content-wrapper > ul > li[aria-expanded='false'] > ul {
+  header nav .nav-sections .nav-drop[aria-expanded='false'] ul {
     z-index: 999;
-    position: absolute;
     left: 0;
     margin-left: 0;
     top: calc(70px);
     width: max-content;
     height: 0;
     overflow: hidden;
+    animation: fade-in 2s;
   }
 
-  header nav .nav-sections .default-content-wrapper > ul > li[aria-expanded='true'] > ul {
+  header nav .nav-sections .nav-drop[aria-expanded='true'] ul {
     z-index: 999;
     left: 0;
     margin-left: 0;
@@ -544,5 +548,15 @@ header nav[aria-expanded='true'] .nav-sections {
     padding-bottom: 13px;
     color: #d6d6d7;
     cursor: pointer;
+  }
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
   }
 }
