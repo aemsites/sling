@@ -8,7 +8,7 @@ function showErrorMessage() {
       <img src="${placeholders.erroriconurl}/error-icon.svg" id="icon" class="error-icon"/>
       <h3 class="error-heading">
       <span>
-      <p class="error-msg">${placeholders.promocodeerror}</p>
+      <p>${placeholders.promocodeerror}</p>
       </span>
       </h3>
     </div>`;

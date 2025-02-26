@@ -34,22 +34,12 @@
   -webkit-box-align: center;
   align-items: center;
   border-radius: 2px;
-  padding: 0.6rem 0 0 1rem;
   background-color: rgb(233 0 0 / 8%);
-  margin-bottom: 1rem;
   width:100%
 }
 
-.promo-code.block .error-msg {
-  font-size: 1.125rem;
-  line-height: 1.11;
-  font-weight: 600;
-  color: rgb(233 0 0);
-  padding: 0 1.5rem 0 0.75rem;
-}
-
 .promo-code .error-icon {
-  padding: 5px 0 0 20px;
+  padding: 5px 0 6px 20px;
 }
 
 .promo-code.block .error-heading {
@@ -178,8 +168,6 @@
  @media (width >= 1024px) {
    .promo-code.block .error-heading {
      display: inline;
-     font-size: 1rem;
-     font-weight: 400;
      text-align: center;
    }
 
