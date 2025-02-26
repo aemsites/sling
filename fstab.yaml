@@ -1,3 +1,4 @@
 mountpoints:
-  /: https://drive.google.com/drive/folders/17W6dq4NS_uWumAB-SQThQUIyuzMfuoGv?usp=drive_link
-
+  /:
+    url: https://content.da.live/da-pilot/da-sling/
+    type: markup
