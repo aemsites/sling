@@ -3,5 +3,5 @@ Please always provide the [GitHub issue(s)](../issues) your PR is for, as well a
 Fix #<gh-issue-id>
 
 Test URLs:
-- Before: https://main--sling--aemsites.aem.live/
-- After: https://<branch>--sling--aemsites.aem.live/
+- Before: https://main--da-sling--da-pilot.aem.live/
+- After: https://<branch>--da-sling--da-pilot.aem.live/
