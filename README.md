@@ -4,8 +4,8 @@ Implementation artifacts of the sling.com for EDS + Doc based authoring
 
 ## Environments
 
-- Preview: https://main--da-sling--da-pilot.aem.page/
-- Live: https://main--da-sling--da-pilot.aem.live/
+- Preview: https://main--sling--da-pilot.aem.page/
+- Live: https://main--sling--da-pilot.aem.live/
 
 ## Installation
 
