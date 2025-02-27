@@ -1,0 +1,34 @@
+{
+  "media": [
+    "utm_medium",
+    "utm_source",
+    "utm_campaign",
+    "utm_content",
+    "utm_site",
+    "utm_term",
+    "matchtype"
+  ],
+  "convertro": [
+    "cvosrc",
+    "cvo_crid",
+    "cvo_cid",
+    "cvo_pid",
+    "cvo_keyword",
+    "cvo_creative"
+  ],
+  "referral": [
+    "bp_e"
+  ],
+  "affiliate": [
+    "affiliate"
+  ],
+  "partner": [
+    "partner"
+  ],
+  "easy_code": [
+    "easy_code"
+  ],
+  "easy_device": [
+    "easy_device"
+  ]
+}
