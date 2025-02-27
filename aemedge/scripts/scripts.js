@@ -12,6 +12,7 @@ import {
   decorateBlock,
   loadBlock,
   toClassName,
+  loadScript,
 } from './aem.js';
 
 import {
@@ -583,6 +584,19 @@ function decorateLinkedImages() {
   });
 }
 
+async function loadLaunchEager() {
+  const isTarget = getMetadata('target');
+  if (isTarget && isTarget.toLowerCase() === 'true') {
+    await loadScript('/aemedge/scripts/sling-martech/analytics-lib.js');
+    if (window.location.host.startsWith('localhost')) {
+      await loadScript('https://assets.adobedtm.com/f4211b096882/26f71ad376c4/launch-b69ac51c7dcd-development.min.js');
+    } else if (window.location.host.startsWith('www.sling.com') || window.location.host.endsWith('.live')) {
+      await loadScript('https://assets.adobedtm.com/f4211b096882/26f71ad376c4/launch-c846c0e0cbc6.min.js');
+    } else if (window.location.host.endsWith('.page')) {
+      await loadScript('https://assets.adobedtm.com/f4211b096882/26f71ad376c4/launch-6367a8aeb307-staging.min.js');
+    }
+  }
+}
 /**
    * Decorates the main element.
    * @param {Element} main The main element
@@ -699,9 +713,16 @@ function loadDelayed() {
 }
 
 async function loadPage() {
+  // load everything that needs to be loaded eagerly
   await loadEager(document);
+
+  // load everything that can be postponed to the latest here
   await loadLazy(document);
+  // load launch eagerly when target metadata is set to true
+  await loadLaunchEager();
+  // load everything that needs to be loaded later
   loadDelayed();
+  // make the last button sticky on blog pages
   makeLastButtonSticky();
 }
 loadPage();
