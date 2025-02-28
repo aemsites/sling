@@ -9,7 +9,7 @@ import DA_SDK from 'https://da.live/nx/utils/sdk.js';
 // Base URL for Document Authoring source
 const DA_SOURCE = 'https://admin.da.live/source';
 const CRON_TAB_PATH = '.helix/crontab.json';
-
+const AEM_PREVIEW_REQUEST_URL = 'https://admin.hlx.page/preview';
 /**
  * Shows a message in the feedback container with optional error styling
  * @param {string} text - Message text to display
@@ -40,6 +40,16 @@ function showExistingSchedules(path, json) {
   showMessage(`Schedules for this page:\r\n${scheduleList}`, false);
 }
 
+async function previewCronTab(url, opts) {
+  const newOpts = { ...opts, method: 'POST' };
+  const previewReqUrl = url.replace(DA_SOURCE, AEM_PREVIEW_REQUEST_URL).replace(CRON_TAB_PATH, `main/${CRON_TAB_PATH}`);
+  console.log(previewReqUrl);
+  console.log(newOpts);
+  const resp = await fetch(previewReqUrl, newOpts);
+  if (!resp.ok) {
+    showMessage('Failed to preview crontab file , please check the validity of cron expression', true);
+  }
+}
 /**
  * Sends updated scheduling data to the server
  * @param {string} url - API endpoint URL
@@ -125,7 +135,7 @@ async function processCommand(url, opts, command, pagePath, cronExpression) {
   const newOpts = { ...opts, body, method: 'POST' };
   const newJson = await setSchedules(url, newOpts);
   if (!newJson) return;
-
+  await previewCronTab(url, opts);
   showExistingSchedules(pagePath, await getSchedules(url, opts));
 }
 
