@@ -1,0 +1,87 @@
+.scheduler-form-wrapper {
+    padding: 20px;
+    max-width: 400px;
+  }
+
+  .input-group, .message-wrapper {
+    margin-bottom: 15px;
+    font-family: 'Adobe Clean', adobe-clean, 'Trebuchet MS', sans-serif;
+    font-size: 14px;
+    line-height: 1.2;
+    word-wrap: break-word;
+  }
+
+  .message-wrapper.hidden {
+    display: none;
+  }
+
+  .message-wrapper {
+    padding: 15px;
+    border-radius: 16px;
+    margin: 0 40px 0 20px;
+    border: 1px solid #ccc;
+    min-height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: 500;
+  } 
+
+  .message-wrapper .feedback-message.error {
+    color: #800000;
+  } 
+
+
+  .input-group label {
+    display: block;
+    margin-bottom: 5px;
+  }
+
+  .input-group input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+
+
+  .help-text {
+    display: block;
+    margin-top: 5px;
+    color: #666;
+    font-size: 14px;
+    white-space: pre-line;
+    line-height: 1.4;
+  }
+
+  .button-group {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+  }
+
+  .button-group .schedule-btn {
+    padding: 5px 14px;
+    line-height: 18px;
+    font-size: 14px;
+    border: 2px solid rgb(0 0 0);
+    color: rgb(0 0 0);
+    border-radius: 16px;
+    outline-offset: 0;
+    transition: outline-offset 0.2s;
+    text-decoration: none;
+    font-weight: 700;
+    text-align: center;
+    cursor: pointer;
+    background:none;
+  } 
+
+  .button-group.schedule-btn:hover {
+    background-color: #1a4580;
+  }
+
+  .feedback-message {
+    white-space: pre-wrap;
+  }
