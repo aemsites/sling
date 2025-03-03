@@ -10,17 +10,30 @@ import DA_SDK from 'https://da.live/nx/utils/sdk.js';
 const DA_SOURCE = 'https://admin.da.live/source';
 const CRON_TAB_PATH = '.helix/crontab.json';
 const AEM_PREVIEW_REQUEST_URL = 'https://admin.hlx.page/preview';
+
+// Add overlay div to the body
+const overlay = document.createElement('div');
+overlay.className = 'overlay';
+document.body.appendChild(overlay);
+
 /**
  * Shows a message in the feedback container with optional error styling
  * @param {string} text - Message text to display
  * @param {boolean} [isError=false] - Whether to style as error message
+ * @param {boolean} [isLoading=false] - Whether to style as loading state
  */
-function showMessage(text, isError = false) {
+function showMessage(text, isError = false, isLoading = false) {
   const message = document.querySelector('.feedback-message');
   const msgContainer = document.querySelector('.message-wrapper');
 
   message.innerHTML = text.replace(/\r?\n/g, '<br>');
   message.classList.toggle('error', isError);
+
+  // Toggle loading state
+  msgContainer.classList.toggle('loading', isLoading);
+  msgContainer.classList.toggle('regular', !isLoading);
+  overlay.classList.toggle('active', isLoading);
+
   msgContainer.classList.remove('hidden');
 }
 
@@ -41,16 +54,25 @@ function showExistingSchedules(path, json) {
 }
 
 async function previewCronTab(url, opts, pagePath) {
-  showMessage(`Please wait while updating and activating the schedules for ${pagePath}...`);
+  showMessage(`Please wait while updating and activating the schedules for ${pagePath}...`, false, true);
 
   const newOpts = { ...opts, method: 'POST' };
   const previewReqUrl = url.replace(DA_SOURCE, AEM_PREVIEW_REQUEST_URL).replace(CRON_TAB_PATH, `main/${CRON_TAB_PATH}`);
 
-  const resp = await fetch(previewReqUrl, newOpts);
-  if (!resp.ok) {
-    showMessage('Failed to preview crontab file, please check the validity of cron expression', true);
+  try {
+    const resp = await fetch(previewReqUrl, newOpts);
+    if (!resp.ok) {
+      showMessage('Failed to preview crontab file, please check the validity of cron expression', true);
+    }
+  } finally {
+    // Remove loading state
+    const msgContainer = document.querySelector('.message-wrapper');
+    msgContainer.classList.remove('loading');
+    msgContainer.classList.add('regular');
+    overlay.classList.remove('active');
   }
 }
+
 /**
  * Sends updated scheduling data to the server
  * @param {string} url - API endpoint URL
