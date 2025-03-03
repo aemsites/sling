@@ -33,21 +33,22 @@ function showMessage(text, isError = false) {
 function showExistingSchedules(path, json) {
   const existingSchedules = json.data.filter((row) => row.command.includes(path));
   if (existingSchedules.length === 0) {
-    showMessage('No scheduling data available', true);
+    showMessage(`No scheduling data available for ${path}`, true);
     return;
   }
-  const scheduleList = existingSchedules.map((row) => `${row.command.split(' ')[0]}ing at ${row.when}`).join('\r\n');
-  showMessage(`Schedules for this page:\r\n${scheduleList}`, false);
+  const scheduleList = existingSchedules.map((row) => `${row.command.split(' ')[0]}ing  ${row.when}`).join('\r\n');
+  showMessage(`Schedules for ${path}:\r\n${scheduleList}`, false);
 }
 
-async function previewCronTab(url, opts) {
+async function previewCronTab(url, opts, pagePath) {
+  showMessage(`Please wait while updating and activating the schedules for ${pagePath}...`);
+
   const newOpts = { ...opts, method: 'POST' };
   const previewReqUrl = url.replace(DA_SOURCE, AEM_PREVIEW_REQUEST_URL).replace(CRON_TAB_PATH, `main/${CRON_TAB_PATH}`);
-  console.log(previewReqUrl);
-  console.log(newOpts);
+
   const resp = await fetch(previewReqUrl, newOpts);
   if (!resp.ok) {
-    showMessage('Failed to preview crontab file , please check the validity of cron expression', true);
+    showMessage('Failed to preview crontab file, please check the validity of cron expression', true);
   }
 }
 /**
@@ -135,16 +136,186 @@ async function processCommand(url, opts, command, pagePath, cronExpression) {
   const newOpts = { ...opts, body, method: 'POST' };
   const newJson = await setSchedules(url, newOpts);
   if (!newJson) return;
-  await previewCronTab(url, opts);
+
+  await previewCronTab(url, opts, pagePath);
   showExistingSchedules(pagePath, await getSchedules(url, opts));
 }
 
+// Move cron expression creation to a separate function
+function createCronExpression(date, timezone) {
+  // Convert to UTC if needed
+  const utcDate = timezone === 'UTC' ? date : new Date(date.toLocaleString('en-US', { timeZone: timezone }));
+
+  // Format time in 12-hour format with am/pm
+  const timeFormatter = new Intl.DateTimeFormat('en-US', {
+    hour: 'numeric',
+    minute: '2-digit',
+    hour12: true,
+  });
+  const formattedTime = timeFormatter.format(utcDate);
+
+  // Format date components
+  const monthFormatter = new Intl.DateTimeFormat('en-US', { month: 'long' });
+  const month = monthFormatter.format(utcDate);
+  const day = utcDate.getUTCDate();
+  const year = utcDate.getUTCFullYear();
+
+  // Add ordinal suffix to day
+  const ordinalSuffix = (d) => {
+    if (d > 3 && d < 21) return 'th';
+    switch (d % 10) {
+      case 1: return 'st';
+      case 2: return 'nd';
+      case 3: return 'rd';
+      default: return 'th';
+    }
+  };
+
+  return `at ${formattedTime} on the ${day}${ordinalSuffix(day)} day of ${month} in ${year}`;
+}
+
 /**
- * Initializes the scheduling interface and sets up event handlers
+ * Initializes the scheduler interface
  * @returns {Promise<void>}
  */
-(async function init() {
+async function init() {
   const { context, token } = await DA_SDK;
+
+  const form = document.createElement('form');
+  form.className = 'scheduler-form';
+  form.setAttribute('role', 'form');
+  form.setAttribute('aria-label', 'Schedule page publish/preview');
+
+  // Create datetime container
+  const datetimeContainer = document.createElement('div');
+  datetimeContainer.className = 'datetime-container';
+  datetimeContainer.setAttribute('role', 'group');
+  datetimeContainer.setAttribute('aria-label', 'Date and time selection');
+
+  // Create datetime row for Date and Time
+  const datetimeRow = document.createElement('div');
+  datetimeRow.className = 'datetime-row';
+
+  // Create timezone row
+  const timezoneRow = document.createElement('div');
+  timezoneRow.className = 'timezone-row';
+
+  // Create date picker
+  const dateInput = document.createElement('input');
+  dateInput.type = 'date';
+  dateInput.id = 'scheduleDate';
+  dateInput.className = 'schedule-input';
+  dateInput.required = true;
+  const [today] = new Date().toISOString().split('T'); // Today or later
+  dateInput.min = today;
+  dateInput.setAttribute('aria-required', 'true');
+  dateInput.setAttribute('aria-label', 'Select date');
+
+  // Create time picker
+  const timeInput = document.createElement('input');
+  timeInput.type = 'time';
+  timeInput.id = 'scheduleTime';
+  timeInput.className = 'schedule-input';
+  timeInput.required = true;
+  timeInput.setAttribute('aria-required', 'true');
+  timeInput.setAttribute('aria-label', 'Select time');
+
+  // Create timezone selector
+  const timezoneSelect = document.createElement('select');
+  timezoneSelect.id = 'scheduleTimezone';
+  timezoneSelect.className = 'schedule-input';
+  timezoneSelect.setAttribute('aria-label', 'Select timezone');
+
+  // Get all timezone options
+  const timeZones = Intl.supportedValuesOf('timeZone');
+
+  // Get user's timezone
+  const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+  // Function to get GMT offset for a timezone
+  function getTimezoneOffset(timeZone) {
+    const date = new Date();
+    // Get offset in minutes
+    const offset = -new Date(date.toLocaleString('en-US', { timeZone })).getTimezoneOffset();
+    const hours = Math.floor(Math.abs(offset) / 60);
+    const minutes = Math.abs(offset) % 60;
+    const sign = offset >= 0 ? '+' : '-';
+
+    return `(GMT${sign}${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')})`;
+  }
+
+  // Create timezone options with GMT offset
+  timeZones.forEach((tz) => {
+    const option = document.createElement('option');
+    option.value = tz;
+    const gmtOffset = getTimezoneOffset(tz);
+    option.textContent = `${tz.replace(/_/g, ' ')} ${gmtOffset}`;
+
+    // Set selected if it matches user's timezone
+    if (tz === userTimezone) {
+      option.selected = true;
+    }
+
+    timezoneSelect.appendChild(option);
+  });
+
+  // Sort options by GMT offset
+  const sortedOptions = Array.from(timezoneSelect.options)
+    .sort((a, b) => {
+      const offsetA = getTimezoneOffset(a.value);
+      const offsetB = getTimezoneOffset(b.value);
+      return offsetA.localeCompare(offsetB);
+    });
+
+  // Clear and re-add sorted options
+  timezoneSelect.innerHTML = '';
+  sortedOptions.forEach((option) => timezoneSelect.appendChild(option));
+
+  // Create labels
+  const dateLabel = document.createElement('label');
+  dateLabel.htmlFor = 'scheduleDate';
+  dateLabel.textContent = 'Date';
+
+  const timeLabel = document.createElement('label');
+  timeLabel.htmlFor = 'scheduleTime';
+  timeLabel.textContent = 'Time';
+
+  const timezoneLabel = document.createElement('label');
+  timezoneLabel.htmlFor = 'scheduleTimezone';
+  timezoneLabel.textContent = 'Timezone';
+
+  // Create input groups
+  const dateGroup = document.createElement('div');
+  dateGroup.className = 'input-group';
+  dateGroup.appendChild(dateLabel);
+  dateGroup.appendChild(dateInput);
+
+  const timeGroup = document.createElement('div');
+  timeGroup.className = 'input-group';
+  timeGroup.appendChild(timeLabel);
+  timeGroup.appendChild(timeInput);
+
+  const timezoneGroup = document.createElement('div');
+  timezoneGroup.className = 'input-group';
+  timezoneGroup.appendChild(timezoneLabel);
+  timezoneGroup.appendChild(timezoneSelect);
+
+  // Add Date and Time to first row
+  datetimeRow.append(dateGroup, timeGroup);
+
+  // Add Timezone to second row
+  timezoneRow.appendChild(timezoneGroup);
+
+  // Add both rows to container
+  datetimeContainer.append(datetimeRow, timezoneRow);
+
+  // Add to form
+  form.appendChild(datetimeContainer);
+
+  // Update form submission handler
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+  });
 
   // Create and style the form container
   const formContainer = document.createElement('div');
@@ -152,82 +323,45 @@ async function processCommand(url, opts, command, pagePath, cronExpression) {
 
   const msgContainer = document.createElement('div');
   msgContainer.className = 'message-wrapper hidden';
+  msgContainer.setAttribute('role', 'alert');
+  msgContainer.setAttribute('aria-live', 'polite');
 
   const message = document.createElement('div');
   message.className = 'feedback-message';
   message.textContent = '';
   msgContainer.append(message);
-  // Create the cron expression input group
-  const cronGroup = document.createElement('div');
-  cronGroup.className = 'input-group';
-
-  // Create text input for cron expression
-  const cronInput = document.createElement('input');
-  cronInput.type = 'text';
-  cronInput.id = 'cron-expression';
-  cronInput.placeholder = 'e.g.,at 3:00 pm on monday';
-  cronInput.required = true;
-
-  cronInput.addEventListener('invalid', () => {
-    cronInput.setCustomValidity('Enter a cron expression');
-  });
-  cronInput.addEventListener('input', () => {
-    cronInput.setCustomValidity('');
-  });
-  cronInput.addEventListener('valid', () => {
-    cronInput.setCustomValidity('');
-  });
-  // Create label for cron input
-  const cronLabel = document.createElement('label');
-  cronLabel.htmlFor = 'cron-expression';
-  cronLabel.textContent = 'Schedule Expression:';
-
-  // Create help text with examples
-  const helpText = document.createElement('small');
-  helpText.className = 'help-text';
-  helpText.textContent = `
-  Enter expressions like:
-    "at 3:00 pm"
-    "every day at 2:30 pm"
-    "at 10:00 am on monday and wednesday"
-    "every 60 minutes starting on the 55th minute"
-    "at 3:00 pm on the 18th day of May in 2025" `;
-
-  // Create form element
-  const form = document.createElement('form');
-  form.className = 'scheduler-form';
-
-  // Prevent default form submission
-  form.addEventListener('submit', (e) => e.preventDefault());
-  // Assemble the input group
-  cronGroup.append(cronLabel, cronInput, helpText);
 
   // Create button group container
   const buttonGroup = document.createElement('div');
   buttonGroup.className = 'button-group';
+  buttonGroup.setAttribute('role', 'group');
+  buttonGroup.setAttribute('aria-label', 'Form actions');
 
   // Create preview button
   const schedulePreviewBtn = document.createElement('button');
   schedulePreviewBtn.className = 'schedule-btn';
   schedulePreviewBtn.textContent = 'Preview';
   schedulePreviewBtn.type = 'submit';
+  schedulePreviewBtn.setAttribute('aria-label', 'Schedule preview');
 
   // Create publish button
   const schedulePublishBtn = document.createElement('button');
   schedulePublishBtn.className = 'schedule-btn';
   schedulePublishBtn.textContent = 'Publish';
   schedulePublishBtn.type = 'submit';
+  schedulePublishBtn.setAttribute('aria-label', 'Schedule publish');
 
   // Create reset button
   const resetBtn = document.createElement('button');
   resetBtn.className = 'schedule-btn';
   resetBtn.textContent = 'Reset';
   resetBtn.type = 'reset';
+  resetBtn.setAttribute('aria-label', 'Reset form');
   // Add all buttons to button group
   buttonGroup.append(schedulePreviewBtn, schedulePublishBtn, resetBtn);
 
   // Assemble the form
-  form.append(cronGroup, buttonGroup);
+  form.append(buttonGroup);
   formContainer.append(form);
   document.body.append(formContainer, msgContainer);
 
@@ -245,6 +379,32 @@ async function processCommand(url, opts, command, pagePath, cronExpression) {
   }
 
   // Handle schedule button click
-  schedulePublishBtn.addEventListener('click', () => processCommand(url, opts, 'publish', context.path, cronInput.value));
-  schedulePreviewBtn.addEventListener('click', () => processCommand(url, opts, 'preview', context.path, cronInput.value));
-}());
+  schedulePublishBtn.addEventListener('click', async () => {
+    if (!dateInput.value || !timeInput.value) {
+      showMessage('Please select both date and time', true);
+      return;
+    }
+    const date = new Date(`${dateInput.value}T${timeInput.value}`);
+    const expression = createCronExpression(date, timezoneSelect.value);
+    await processCommand(url, opts, 'publish', context.path, expression);
+  });
+
+  schedulePreviewBtn.addEventListener('click', async () => {
+    if (!dateInput.value || !timeInput.value) {
+      showMessage('Please select both date and time', true);
+      return;
+    }
+    const date = new Date(`${dateInput.value}T${timeInput.value}`);
+    const expression = createCronExpression(date, timezoneSelect.value);
+    await processCommand(url, opts, 'preview', context.path, expression);
+  });
+
+  // Add form reset handler
+  resetBtn.addEventListener('click', () => {
+    dateInput.value = '';
+    timeInput.value = '';
+    timezoneSelect.value = userTimezone;
+  });
+}
+
+init();
