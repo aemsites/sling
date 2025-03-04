@@ -38,7 +38,13 @@ function showExistingSchedules(path, json) {
   const scheduleList = existingSchedules.map((row) => `${row.command.split(' ')[0]}ing  ${row.when}`).join('\r\n');
   showMessage(`Schedules for ${path}:\r\n${scheduleList}`, false);
 }
-
+/**
+ * Previews the crontab file
+ * @param {string} url - API endpoint URL
+ * @param {Object} opts - Request options
+ * @param {string} opts.method - HTTP method (POST)
+ * @returns {Promise<void>}
+ */
 async function previewCronTab(url, opts) {
   const newOpts = { ...opts, method: 'POST' };
   const previewReqUrl = url.replace(DA_SOURCE, AEM_PREVIEW_REQUEST_URL).replace(CRON_TAB_PATH, `main/${CRON_TAB_PATH}`);
@@ -186,148 +192,6 @@ function createCronExpression(localDate) {
   return `at ${formattedTime} on the ${day}${ordinalSuffix(day)} day of ${month} in ${year}`;
 }
 
-function createFormElements() {
-  const form = document.createElement('form');
-  form.className = 'scheduler-form';
-
-  // Page Path Input
-  const pageGroup = document.createElement('div');
-  pageGroup.className = 'input-group';
-  const pageLabel = document.createElement('label');
-  pageLabel.textContent = 'Page';
-  const pageInput = document.createElement('input');
-  pageInput.type = 'text';
-  pageInput.readOnly = true;
-  pageGroup.append(pageLabel, pageInput);
-
-  // Action Select
-  const actionGroup = document.createElement('div');
-  actionGroup.className = 'input-group';
-  const actionLabel = document.createElement('label');
-  actionLabel.textContent = 'Action';
-  const actionSelect = document.createElement('select');
-  actionSelect.className = 'action-select';
-
-  // Available tasks from documentation
-  const availableTasks = [
-    'preview',
-    'publish',
-    'http',
-    'publish-index',
-    'publish-snapshot',
-    'process',
-    'unpublish',
-  ];
-
-  availableTasks.forEach((action) => {
-    const option = document.createElement('option');
-    option.value = action;
-    // Capitalize first letter for display
-    option.textContent = action.charAt(0).toUpperCase() + action.slice(1);
-    actionSelect.appendChild(option);
-  });
-
-  actionGroup.append(actionLabel, actionSelect);
-
-  // When Group
-  const whenGroup = document.createElement('div');
-  whenGroup.className = 'input-group';
-  const whenLabel = document.createElement('label');
-  whenLabel.textContent = 'When';
-
-  const cronExpressionContainer = document.createElement('div');
-  cronExpressionContainer.className = 'cron-expression-container';
-
-  const dateInput = document.createElement('input');
-  dateInput.type = 'date';
-  const timeInput = document.createElement('input');
-  timeInput.type = 'time';
-
-  // Set current date and time as default values
-  const now = new Date();
-  const [dateValue] = now.toISOString().split('T');
-  dateInput.value = dateValue; // Format: YYYY-MM-DD
-  timeInput.value = now.toTimeString().slice(0, 5); // Format: HH:MM
-
-  const customButton = document.createElement('button');
-  customButton.textContent = 'Custom';
-  customButton.type = 'button';
-  customButton.className = 'custom-button';
-
-  const customInput = document.createElement('input');
-  customInput.type = 'text';
-  customInput.className = 'custom-input';
-  customInput.placeholder = 'Enter cron expression';
-
-  cronExpressionContainer.append(dateInput, timeInput, customButton);
-  whenGroup.append(whenLabel, cronExpressionContainer, customInput);
-
-  // Current Schedule Label
-  const currentScheduleLabel = document.createElement('div');
-  currentScheduleLabel.className = 'current-schedule-label';
-
-  const labelText = document.createElement('span');
-  labelText.textContent = 'Current Schedule';
-
-  const infoIcon = document.createElement('img');
-  infoIcon.src = '/.da/icons/info-icon.png';
-  infoIcon.className = 'info-icon';
-  infoIcon.alt = 'Information';
-
-  currentScheduleLabel.append(labelText, infoIcon);
-
-  // Current Schedule Container
-  const currentScheduleContainer = document.createElement('div');
-  currentScheduleContainer.className = 'current-schedule';
-  const content = document.createElement('div');
-  content.className = 'schedule-content';
-  currentScheduleContainer.appendChild(content);
-
-  // Button Group
-  const buttonGroup = document.createElement('div');
-  buttonGroup.className = 'button-group';
-
-  // Message wrapper
-  const msgContainer = document.createElement('div');
-  msgContainer.className = 'message-wrapper';
-
-  const messageSpan = document.createElement('span');
-  messageSpan.className = 'message';
-  msgContainer.appendChild(messageSpan);
-
-  const buttonActions = document.createElement('div');
-  buttonActions.className = 'button-actions';
-
-  const docsButton = document.createElement('button');
-  docsButton.className = 'docs-button';
-  docsButton.textContent = 'Read Documentation';
-
-  const scheduleButton = document.createElement('button');
-  scheduleButton.className = 'schedule-button';
-  const scheduleIcon = document.createElement('img');
-  scheduleIcon.src = '/.da/icons/pending-icon.png';
-  scheduleButton.append(scheduleIcon, document.createTextNode('Schedule'));
-
-  buttonActions.append(docsButton, scheduleButton);
-  buttonGroup.append(msgContainer, buttonActions);
-
-  form.append(
-    pageGroup,
-    actionGroup,
-    whenGroup,
-    currentScheduleLabel,
-    currentScheduleContainer,
-    buttonGroup,
-  );
-
-  // Add input handlers to clear empty state
-  dateInput.addEventListener('input', () => dateInput.classList.remove('input-empty'));
-  timeInput.addEventListener('input', () => timeInput.classList.remove('input-empty'));
-  customInput.addEventListener('input', () => customInput.classList.remove('input-empty'));
-
-  return form;
-}
-
 // Update showCurrentSchedule function's date parsing logic:
 function showCurrentSchedule(path, json) {
   const schedules = json.data.filter((row) => row.command.includes(path));
@@ -406,27 +270,26 @@ function isDateTimeInFuture(dateStr, timeStr) {
 async function init() {
   const { context, token } = await DA_SDK;
 
-  const formContainer = document.createElement('div');
-  formContainer.className = 'scheduler-form-wrapper';
-
-  const form = createFormElements();
-
   // Set page path
-  const pageInput = form.querySelector('input[type="text"]');
+  const pageInput = document.getElementById('page-path');
   pageInput.value = context.path;
 
   // Handle custom button
-  const customButton = form.querySelector('button[type="button"]');
-  const cronExpressionContainer = form.querySelector('.cron-expression-container');
-  const customInput = form.querySelector('.custom-input');
+  const customButton = document.querySelector('.custom-button');
+  const cronExpressionContainer = document.querySelector('.cron-expression-container');
+  const customInput = document.querySelector('.custom-input');
+  const dateInput = document.querySelector('#date-input');
+  const timeInput = document.querySelector('#time-input');
+
+  // Set current date and time as default values
+  const now = new Date();
+  const [dateValue] = now.toISOString().split('T');
+  dateInput.value = dateValue;
+  timeInput.value = now.toTimeString().slice(0, 5);
 
   customButton.addEventListener('click', () => {
     const isCustom = !cronExpressionContainer.classList.contains('custom-mode');
     cronExpressionContainer.classList.toggle('custom-mode');
-
-    const dateInput = form.querySelector('input[type="date"]');
-    const timeInput = form.querySelector('input[type="time"]');
-    const whenGroup = form.querySelector('.input-group');
 
     // Clear any existing empty states
     [dateInput, timeInput, customInput].forEach((input) => {
@@ -436,17 +299,15 @@ async function init() {
     if (isCustom) {
       customInput.remove();
       cronExpressionContainer.insertBefore(customInput, customButton);
-
-      // Add input handler to clear empty state for custom input
-      customInput.addEventListener('input', () => customInput.classList.remove('input-empty'));
     } else {
       customInput.remove();
+      const whenGroup = document.querySelector('.input-group:has(#date-input)');
       whenGroup.appendChild(customInput);
     }
   });
 
   // Handle docs button
-  const docsButton = form.querySelector('.docs-button');
+  const docsButton = document.querySelector('.docs-button');
   docsButton.addEventListener('click', () => {
     window.open('https://www.aem.live/docs/scheduling', '_blank');
   });
@@ -457,13 +318,11 @@ async function init() {
     },
   };
   // Handle schedule button
-  const scheduleButton = form.querySelector('.schedule-button');
+  const scheduleButton = document.querySelector('.schedule-button');
   scheduleButton.addEventListener('click', async (e) => {
     e.preventDefault();
 
-    const action = form.querySelector('.action-select').value;
-    const dateInput = form.querySelector('input[type="date"]');
-    const timeInput = form.querySelector('input[type="time"]');
+    const action = document.querySelector('.action-select').value;
     const isCustomMode = cronExpressionContainer.classList.contains('custom-mode');
 
     // Clear previous empty states
@@ -517,11 +376,7 @@ async function init() {
     }
   });
 
-  formContainer.appendChild(form);
-  document.body.appendChild(formContainer);
-
   // Check existing schedules
-
   const json = await getSchedules(url, opts);
   if (json && json.data) {
     showCurrentSchedule(context.path, json);

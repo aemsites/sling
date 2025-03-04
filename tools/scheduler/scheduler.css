@@ -45,7 +45,7 @@
   box-shadow: none;
 }
 
-.message-wrapper .feedback-message.error {
+.message-wrapper .message.error {
   color: #800000;
 }
 
@@ -278,4 +278,29 @@ select.schedule-input {
 
 .input-empty {
   border-color: var(--error-color) !important;
+}
+
+.button-group button:focus-visible,
+.custom-button:focus-visible,
+.action-select:focus-visible,
+input:focus-visible {
+  outline: 2px solid var(--focus-outline);
+  outline-offset: 2px;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.schedule-row:focus-within {
+  outline: 2px solid var(--focus-outline);
+  outline-offset: -2px;
 }
