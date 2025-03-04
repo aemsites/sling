@@ -11,17 +11,19 @@ const DA_SOURCE = 'https://admin.da.live/source';
 const CRON_TAB_PATH = '.helix/crontab.json';
 const AEM_PREVIEW_REQUEST_URL = 'https://admin.hlx.page/preview';
 
-/**
- * Shows a message in the feedback container with optional error styling
- * @param {string} text - Message text to display
- * @param {boolean} [isError=false] - Whether to style as error message
- */
-function showMessage(text, isError = false) {
-  const msgContainer = document.querySelector('.message-wrapper');
-  const message = msgContainer.querySelector('.message');
-  message.innerHTML = text.replace(/\r?\n/g, '<br>');
-  message.classList.toggle('error', isError);
-}
+// Combine message handling into a single utility
+const messageUtils = {
+  container: document.querySelector('.message-wrapper'),
+  show(text, isError = false) {
+    const message = this.container.querySelector('.message');
+    message.innerHTML = text.replace(/\r?\n/g, '<br>');
+    message.classList.toggle('error', isError);
+  },
+  setLoading(loading) {
+    this.container.classList.toggle('loading', loading);
+    this.container.classList.toggle('regular', !loading);
+  },
+};
 
 /**
  * Shows existing schedules for the current path in the feedback container
@@ -29,15 +31,24 @@ function showMessage(text, isError = false) {
  * @param {Object} json - Crontab data object
  * @param {Array} json.data - Array of schedule entries
  */
-function showExistingSchedules(path, json) {
-  const existingSchedules = json.data.filter((row) => row.command.includes(path));
-  if (existingSchedules.length === 0) {
-    showMessage(`No scheduling data available for ${path}`, true);
+function displaySchedules(path, json) {
+  if (!json?.data?.length) {
+    messageUtils.show(`No scheduling data available for ${path}`, true);
     return;
   }
-  const scheduleList = existingSchedules.map((row) => `${row.command.split(' ')[0]}ing  ${row.when}`).join('\r\n');
-  showMessage(`Schedules for ${path}:\r\n${scheduleList}`, false);
+
+  const schedules = json.data.filter((row) => row.command.includes(path));
+  if (!schedules.length) {
+    messageUtils.show(`No scheduling data available for ${path}`, true);
+    return;
+  }
+
+  const scheduleList = schedules
+    .map((row) => `${row.command.split(' ')[0]}ing ${row.when}`)
+    .join('\r\n');
+  messageUtils.show(`Schedules for ${path}:\r\n${scheduleList}`);
 }
+
 /**
  * Previews the crontab file
  * @param {string} url - API endpoint URL
@@ -52,13 +63,11 @@ async function previewCronTab(url, opts) {
   try {
     const resp = await fetch(previewReqUrl, newOpts);
     if (!resp.ok) {
-      showMessage('Failed to preview crontab file, please check the validity of cron expression', true);
+      messageUtils.show('Failed to preview crontab file, please check the validity of cron expression', true);
     }
   } finally {
     // Remove loading state
-    const msgContainer = document.querySelector('.message-wrapper');
-    msgContainer.classList.remove('loading');
-    msgContainer.classList.add('regular');
+    messageUtils.setLoading(false);
   }
 }
 
@@ -80,7 +89,7 @@ async function setSchedules(url, opts) {
     return resp.json();
   } catch (error) {
     console.error(error.message);
-    showMessage('Failed to save schedule, please check console for more details', true);
+    messageUtils.show('Failed to save schedule, please check console for more details', true);
     return null;
   }
 }
@@ -102,94 +111,65 @@ async function getSchedules(url, opts) {
     return resp.json();
   } catch (error) {
     console.error(error.message);
-    showMessage('Failed to fetch, please check console for more details', true);
+    messageUtils.show('Failed to fetch, please check console for more details', true);
     return null;
   }
 }
 
-/**
- * Processes a schedule command by updating the crontab
- * @param {string} url - API endpoint URL
- * @param {Object} opts - Request options
- * @param {string} command - Command type ('preview' or 'publish')
- * @param {string} pagePath - Path of page to schedule
- * @param {string} cronExpression - Schedule expression (e.g. "at 3:00 pm")
- * @returns {Promise<void>}
- */
-async function processCommand(url, opts, command, pagePath, cronExpression) {
-  // Validate input
-  const expression = cronExpression.trim();
-  if (!expression) return;
-
-  const json = await getSchedules(url, opts);
-  if (!json) {
-    showMessage(`Please make sure ${CRON_TAB_PATH} is present and is accessible`, true);
-    return;
-  }
-
-  json.data = json.data.filter((row) => row.command !== `${command} ${pagePath}`);
-  const existingRow = json.data.find((row) => row.command === `${command} ${pagePath}`);
-  if (existingRow) {
-    showMessage(`Page at "${pagePath}" is already scheduled for "${command}ing ${expression} "`, true);
-    return;
-  }
-
-  const newRow = {
-    when: expression,
-    command: `${command} ${pagePath}`,
-  };
-  json.data.push(newRow);
-
-  // Prepare form data
-  const blob = new Blob([JSON.stringify(json)], { type: 'application/json' });
-  const body = new FormData();
-  body.append('data', blob);
-  const newOpts = { ...opts, body, method: 'POST' };
-  const newJson = await setSchedules(url, newOpts);
-  if (!newJson) return;
-
-  await previewCronTab(url, opts, pagePath);
-  showExistingSchedules(pagePath, await getSchedules(url, opts));
-}
-
-// Add timezone conversion helpers
-function convertToUTC(dateStr, timeStr) {
-  const localDate = new Date(`${dateStr}T${timeStr}`);
-  return new Date(localDate.toUTCString());
-}
-
-// Update createCronExpression to handle UTC conversion
+// Update the createCronExpression function
 function createCronExpression(localDate) {
-  // Convert to UTC
-  const utcDate = convertToUTC(localDate.toISOString().split('T')[0], localDate.toTimeString().slice(0, 5));
+  const utcDate = new Date(localDate.toUTCString());
+  const day = utcDate.getUTCDate();
+  const suffix = ['th', 'st', 'nd', 'rd'][(day % 10 > 3 || day < 21) ? 0 : day % 10];
 
-  // Format time in 12-hour format with am/pm
+  // Format time separately
   const timeFormatter = new Intl.DateTimeFormat('en-US', {
     hour: 'numeric',
     minute: '2-digit',
     hour12: true,
     timeZone: 'UTC',
   });
-  const formattedTime = timeFormatter.format(utcDate);
 
-  // Format date components using UTC
-  const monthFormatter = new Intl.DateTimeFormat('en-US', { month: 'long', timeZone: 'UTC' });
-  const month = monthFormatter.format(utcDate);
-  const day = utcDate.getUTCDate();
-  const year = utcDate.getUTCFullYear();
+  // Format month separately
+  const monthFormatter = new Intl.DateTimeFormat('en-US', {
+    month: 'long',
+    timeZone: 'UTC',
+  });
 
-  // Add ordinal suffix to day
-  const ordinalSuffix = (d) => {
-    if (d > 3 && d < 21) return 'th';
-    switch (d % 10) {
-      case 1: return 'st';
-      case 2: return 'nd';
-      case 3: return 'rd';
-      default: return 'th';
-    }
-  };
+  return `at ${timeFormatter.format(utcDate)} on the ${day}${suffix} day of ${
+    monthFormatter.format(utcDate)
+  } in ${utcDate.getUTCFullYear()}`;
+}
 
-  return `at ${formattedTime} on the ${day}${ordinalSuffix(day)} day of ${month} in ${year}`;
+// Restore original processCommand function
+async function processCommand(url, opts, command, pagePath, cronExpression) {
+  if (!cronExpression?.trim()) return;
+
+  const json = await getSchedules(url, opts);
+  if (!json) {
+    messageUtils.show(`Please make sure ${CRON_TAB_PATH} is present and is accessible`, true);
+    return;
+  }
+
+  const existingCommand = `${command} ${pagePath}`;
+  if (json.data.some((row) => row.command === existingCommand)) {
+    messageUtils.show(`Page already scheduled for "${command}ing ${cronExpression}"`, true);
+    return;
+  }
+
+  json.data = [
+    ...json.data.filter((row) => row.command !== existingCommand),
+    { when: cronExpression.trim(), command: existingCommand },
+  ];
+
+  const body = new FormData();
+  body.append('data', new Blob([JSON.stringify(json)], { type: 'application/json' }));
+
+  const newJson = await setSchedules(url, { ...opts, body, method: 'POST' });
+  if (!newJson) return;
+
+  await previewCronTab(url, opts);
+  displaySchedules(pagePath, await getSchedules(url, opts));
 }
 
 // Update showCurrentSchedule function's date parsing logic:
@@ -352,7 +332,7 @@ async function init() {
       if (!isDateTimeInFuture(dateInput.value, timeInput.value)) {
         dateInput.classList.add('input-empty');
         timeInput.classList.add('input-empty');
-        showMessage('Please select a future date and time', true);
+        messageUtils.show('Please select a future date and time', true);
         return;
       }
     }
@@ -365,9 +345,9 @@ async function init() {
       cronExpression = createCronExpression(localDate);
     }
 
-    showMessage('Scheduling page...');
+    messageUtils.show('Scheduling page...');
     await processCommand(url, opts, action, context.path, cronExpression);
-    showMessage('');
+    messageUtils.show('');
 
     // Fetch and update current schedules after successful scheduling
     const json = await getSchedules(url, opts);
