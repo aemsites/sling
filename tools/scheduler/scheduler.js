@@ -59,14 +59,14 @@ function displaySchedules(path, json) {
 async function previewCronTab(url, opts) {
   const newOpts = { ...opts, method: 'POST' };
   const previewReqUrl = url.replace(DA_SOURCE, AEM_PREVIEW_REQUEST_URL).replace(CRON_TAB_PATH, `main/${CRON_TAB_PATH}`);
-
   try {
     const resp = await fetch(previewReqUrl, newOpts);
     if (!resp.ok) {
-      messageUtils.show('Failed to preview crontab file, please check the validity of cron expression', true);
+      messageUtils.show('Failed to activate schedule , please check console for more details', true);
+      return false;
     }
+    return true;
   } finally {
-    // Remove loading state
     messageUtils.setLoading(false);
   }
 }
@@ -141,21 +141,25 @@ function createCronExpression(localDate) {
   } in ${utcDate.getUTCFullYear()}`;
 }
 
-// Restore original processCommand function
+/**
+ * Processes a schedule command by updating the crontab
+ * @param {string} url - API endpoint URL
+ * @param {Object} opts - Request options
+ * @param {string} command - Command type ('preview' or 'publish')
+ * @param {string} pagePath - Path of page to schedule
+ * @param {string} cronExpression - Schedule expression
+ * @returns {Promise<boolean>} True if successful, false otherwise
+ */
 async function processCommand(url, opts, command, pagePath, cronExpression) {
-  if (!cronExpression?.trim()) return;
+  if (!cronExpression?.trim()) return false;
 
   const json = await getSchedules(url, opts);
   if (!json) {
     messageUtils.show(`Please make sure ${CRON_TAB_PATH} is present and is accessible`, true);
-    return;
+    return false;
   }
 
   const existingCommand = `${command} ${pagePath}`;
-  if (json.data.some((row) => row.command === existingCommand)) {
-    messageUtils.show(`Page already scheduled for "${command}ing ${cronExpression}"`, true);
-    return;
-  }
 
   json.data = [
     ...json.data.filter((row) => row.command !== existingCommand),
@@ -166,10 +170,16 @@ async function processCommand(url, opts, command, pagePath, cronExpression) {
   body.append('data', new Blob([JSON.stringify(json)], { type: 'application/json' }));
 
   const newJson = await setSchedules(url, { ...opts, body, method: 'POST' });
-  if (!newJson) return;
+  if (!newJson) return false;
 
-  await previewCronTab(url, opts);
-  displaySchedules(pagePath, await getSchedules(url, opts));
+  // Only clear message and show schedules if preview is successful
+  const previewSuccess = await previewCronTab(url, opts);
+  if (previewSuccess) {
+    messageUtils.show('');
+    displaySchedules(pagePath, await getSchedules(url, opts));
+    return true;
+  }
+  return false;
 }
 
 // Update showCurrentSchedule function's date parsing logic:
@@ -346,13 +356,14 @@ async function init() {
     }
 
     messageUtils.show('Scheduling page...');
-    await processCommand(url, opts, action, context.path, cronExpression);
-    messageUtils.show('');
-
-    // Fetch and update current schedules after successful scheduling
-    const json = await getSchedules(url, opts);
-    if (json && json.data) {
-      showCurrentSchedule(context.path, json);
+    const success = await processCommand(url, opts, action, context.path, cronExpression);
+    if (success) {
+      messageUtils.show('');
+      // Fetch and update current schedules after successful scheduling
+      const json = await getSchedules(url, opts);
+      if (json && json.data) {
+        showCurrentSchedule(context.path, json);
+      }
     }
   });
 
