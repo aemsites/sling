@@ -146,21 +146,28 @@ async function processCommand(url, opts, command, pagePath, cronExpression) {
   showExistingSchedules(pagePath, await getSchedules(url, opts));
 }
 
-// Move cron expression creation to a separate function
-function createCronExpression(date, timezone) {
-  // Convert to UTC if needed
-  const utcDate = timezone === 'UTC' ? date : new Date(date.toLocaleString('en-US', { timeZone: timezone }));
+// Add timezone conversion helpers
+function convertToUTC(dateStr, timeStr) {
+  const localDate = new Date(`${dateStr}T${timeStr}`);
+  return new Date(localDate.toUTCString());
+}
+
+// Update createCronExpression to handle UTC conversion
+function createCronExpression(localDate) {
+  // Convert to UTC
+  const utcDate = convertToUTC(localDate.toISOString().split('T')[0], localDate.toTimeString().slice(0, 5));
 
   // Format time in 12-hour format with am/pm
   const timeFormatter = new Intl.DateTimeFormat('en-US', {
     hour: 'numeric',
     minute: '2-digit',
     hour12: true,
+    timeZone: 'UTC',
   });
   const formattedTime = timeFormatter.format(utcDate);
 
-  // Format date components
-  const monthFormatter = new Intl.DateTimeFormat('en-US', { month: 'long' });
+  // Format date components using UTC
+  const monthFormatter = new Intl.DateTimeFormat('en-US', { month: 'long', timeZone: 'UTC' });
   const month = monthFormatter.format(utcDate);
   const day = utcDate.getUTCDate();
   const year = utcDate.getUTCFullYear();
@@ -321,6 +328,7 @@ function createFormElements() {
   return form;
 }
 
+// Update showCurrentSchedule function's date parsing logic:
 function showCurrentSchedule(path, json) {
   const schedules = json.data.filter((row) => row.command.includes(path));
   const content = document.querySelector('.schedule-content');
@@ -328,7 +336,7 @@ function showCurrentSchedule(path, json) {
   if (schedules.length === 0) {
     content.textContent = 'No schedules found';
   } else {
-    content.innerHTML = ''; // Clear existing content
+    content.innerHTML = '';
     schedules.forEach((schedule) => {
       const row = document.createElement('div');
       row.className = 'schedule-row';
@@ -340,12 +348,55 @@ function showCurrentSchedule(path, json) {
 
       const time = document.createElement('div');
       time.className = 'schedule-time';
-      time.textContent = `${schedule.when}`;
+
+      // Convert UTC schedule time to local time for display
+      const whenParts = schedule.when.match(/at (.*?) on the/);
+      if (whenParts) {
+        const utcTimeStr = whenParts[1];
+        const utcDateStr = schedule.when.match(/the (\d+).*? day of (.*?) in (\d+)/);
+        if (utcDateStr) {
+          const [, day, month, year] = utcDateStr;
+          // Create a proper date string that JavaScript can parse
+          const monthIndex = new Date(`${month} 1, 2000`).getMonth(); // Get month index (0-11)
+          const utcDate = new Date(Date.UTC(
+            year,
+            monthIndex,
+            day,
+            ...utcTimeStr.match(/(\d+):(\d+)/).slice(1).map(Number),
+          ));
+
+          const timeFormatter = new Intl.DateTimeFormat('en-US', {
+            hour: 'numeric',
+            minute: '2-digit',
+            hour12: true,
+          });
+          const dateFormatter = new Intl.DateTimeFormat('en-US', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric',
+          });
+
+          const formattedTime = timeFormatter.format(utcDate);
+          const formattedDate = dateFormatter.format(utcDate);
+          time.textContent = `at ${formattedTime} on ${formattedDate}`;
+        } else {
+          time.textContent = schedule.when;
+        }
+      } else {
+        time.textContent = schedule.when;
+      }
 
       row.append(action, time);
       content.appendChild(row);
     });
   }
+}
+
+// Add validation function for future date/time
+function isDateTimeInFuture(dateStr, timeStr) {
+  const selectedDateTime = new Date(`${dateStr}T${timeStr}`);
+  const now = new Date();
+  return selectedDateTime > now;
 }
 
 /**
@@ -420,23 +471,31 @@ async function init() {
       input.classList.remove('input-empty');
     });
 
-    // Check for empty inputs based on mode
+    // Check for empty inputs and future date/time based on mode
     if (isCustomMode) {
       if (!customInput.value) {
         customInput.classList.add('input-empty');
         return;
       }
     } else {
-      let hasEmpty = false;
+      let hasError = false;
       if (!dateInput.value) {
         dateInput.classList.add('input-empty');
-        hasEmpty = true;
+        hasError = true;
       }
       if (!timeInput.value) {
         timeInput.classList.add('input-empty');
-        hasEmpty = true;
+        hasError = true;
       }
-      if (hasEmpty) return;
+      if (hasError) return;
+
+      // Validate if date/time is in the future
+      if (!isDateTimeInFuture(dateInput.value, timeInput.value)) {
+        dateInput.classList.add('input-empty');
+        timeInput.classList.add('input-empty');
+        showMessage('Please select a future date and time', true);
+        return;
+      }
     }
 
     let cronExpression;
@@ -446,9 +505,11 @@ async function init() {
       const localDate = new Date(`${dateInput.value}T${timeInput.value}`);
       cronExpression = createCronExpression(localDate);
     }
+
     showMessage('Scheduling page...');
     await processCommand(url, opts, action, context.path, cronExpression);
     showMessage('');
+
     // Fetch and update current schedules after successful scheduling
     const json = await getSchedules(url, opts);
     if (json && json.data) {

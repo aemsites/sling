@@ -1,351 +1,281 @@
 :root {
   --blue: #4d7bff;
   --font-family: 'Adobe Clean', adobe-clean, 'Trebuchet MS', sans-serif;
+  --border-color: #e0e0e0;
+  --error-color: #d92020;
+  --text-primary: #4b4b4b;
+  --text-secondary: #666;
+  --background-disabled: #f8f8f8;
+  --background-schedule: #f5f5f5;
+  --focus-outline: rgb(22 122 243);
+  --button-border: rgb(0 0 0);
+  --white: white;
 }
 
 .scheduler-form-wrapper {
-    padding: 20px;
-    font-family: var(--font-family);
-  }
+  padding: 20px;
+  font-family: var(--font-family);
+}
 
-  .input-group, .message-wrapper {
-    margin-bottom: 15px;
-    font-family: var(--font-family);
-    font-size: 14px;
-    line-height: 1.2;
-    word-wrap: break-word;
-  }
+.input-group, .message-wrapper {
+  margin-bottom: 15px;
+  font-family: var(--font-family);
+  font-size: 14px;
+  line-height: 1.2;
+  word-wrap: break-word;
+}
 
-  .message-wrapper.hidden {
-    display: none;
-  }
+.message-wrapper.hidden {
+  display: none;
+}
 
-  .message-wrapper {
-    font-style: italic;
-    font-size: 12px;
-    color: #666;
-    flex: 1;
-    margin-right: 20px;
-  }
+.message-wrapper {
+  font-style: italic;
+  font-size: 12px;
+  color: var(--text-secondary);
+  flex: 1;
+  margin-right: 20px;
+}
 
-  .message-wrapper .message {
-    display: inline-block;
-  }
+.message-wrapper .message {
+  display: inline-block;
+}
 
-  /* Style for loading state */
-  .message-wrapper.loading {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 1000;
-    text-align: center;
-    margin: 0;
-    min-width: 300px;
-  }
+.message-wrapper:hover {
+  box-shadow: none;
+}
 
-  /* Regular message position */
-  .message-wrapper.regular {
-    position: static;
-    margin: 0;
-  }
+.message-wrapper .feedback-message.error {
+  color: #800000;
+}
 
-  /* Remove overlay styles */
-  .overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background-color: rgb(0 0 0 / 20%);
-    z-index: 999;
-  }
+label {
+  font-family: var(--font-family);
+  font-size: 14px;
+  color: #444;
+}
 
-  .overlay.active {
-    display: block;
-  }
+.input-group label {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--text-primary);
+  font-size: 14px;
+}
 
-  /* Remove hover effect from message wrapper */
-  .message-wrapper:hover {
-    box-shadow: none;
-  }
+.input-group input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background-color: var(--white);
+}
 
-  .message-wrapper .feedback-message.error {
-    color: #800000;
-  } 
+.input-group input[readonly] {
+  background-color: var(--background-disabled);
+  max-width: 95%;
+}
 
-  label {
-    font-family: var(--font-family);
-    font-size: 14px;
-    color: #444;
-  }
-  
-  .input-group label {
-    display: block;
-    margin-bottom: 8px;
-    color: #4b4b4b;
-    font-size: 14px;
-  }
+.button-group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 20px -20px 0;
+  padding: 20px 20px 0;
+  border-top: 2px solid var(--border-color);
+}
 
-  .input-group input {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #e0e0e0;
-    border-radius: 4px;
-    background-color: white;
-  }
+.button-actions {
+  display: flex;
+  gap: 10px;
+}
 
-  .input-group input[readonly] {
-    background-color: #f8f8f8;
-  }
+.button-group button,
+.custom-button {
+  padding: 8px 16px;
+  line-height: 18px;
+  font-size: 14px;
+  border: 2px solid var(--button-border);
+  color: var(--button-border);
+  border-radius: 16px;
+  outline-offset: 0;
+  text-decoration: none;
+  font-weight: 700;
+  text-align: center;
+  cursor: pointer;
+  background: none;
+  height: 35px;
+}
 
-  .help-text {
-    display: block;
-    margin-top: 5px;
-    color: #666;
-    font-size: 14px;
-    white-space: pre-line;
-    line-height: 1.4;
-  }
+.button-group button:focus,
+.custom-button:focus {
+  outline: 2px solid var(--focus-outline);
+  outline-offset: 2px;
+}
 
-  .button-group {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 20px -20px 0;
-    padding: 20px 20px 0;
-    border-top: 2px solid #e0e0e0;
-  }
+.docs-button {
+  background-color: transparent;
+}
 
-  .button-actions {
-    display: flex;
-    gap: 10px;
-  }
+.button-group button.schedule-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-color: var(--blue);
+  background-color: var(--blue);
+  color: var(--white);
+  padding: 8px 16px;
+}
 
+.button-group button.schedule-button img {
+  width: 16px;
+  height: 16px;
+  filter: brightness(100);
+}
 
+.custom-input {
+  display: none;
+}
 
-  /* Update common button styles */
-  .button-group button,
-  .custom-button {
-    padding: 8px 16px;
-    line-height: 18px;
-    font-size: 14px;
-    border: 2px solid rgb(0 0 0);
-    color: rgb(0 0 0);
-    border-radius: 16px;
-    outline-offset: 0;
-    text-decoration: none;
-    font-weight: 700;
-    text-align: center;
-    cursor: pointer;
-    background: none;
-    height: 35px;
-  }
+.custom-input.visible {
+  display: block;
+}
 
-  .button-group button:focus,
-  .custom-button:focus {
-    outline: 2px solid rgb(22 122 243);
-    outline-offset: 2px;
-  }
+.cron-expression-container {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+  align-items: center;
+}
 
-  /* Remove previous button styles */
-  .docs-button {
-    background-color: transparent;
-  }
+.cron-expression-container input[type="date"],
+.cron-expression-container input[type="time"],
+.cron-expression-container .custom-input {
+  height: 35px;
+  padding: 0 8px;
+  box-sizing: border-box;
+  font-family: var(--font-family);
+}
 
-  /* Keep schedule button styles */
-  .button-group button.schedule-button {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    border-color: var(--blue);
-    background-color: var(--blue);
-    color: white;
-    padding: 8px 16px;
-  }
+.cron-expression-container.custom-mode {
+  display: flex;
+  gap: 10px;
+}
 
-  .button-group button.schedule-button img {
-    width: 16px;
-    height: 16px;
-    filter: brightness(100);
-  }
+.cron-expression-container.custom-mode .custom-input {
+  flex: 1;
+  display: block;
+  height: 35px;
+  padding: 0 8px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background-color: var(--white);
+  margin: 0;
+}
 
-  .custom-input {
-    display: none;
-  }
+.action-select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background-color: var(--white);
+  margin-bottom: 15px;
+}
 
-  .custom-input.visible {
-    display: block;
-  }
+.current-schedule {
+  background-color: var(--background-schedule);
+  padding: 15px;
+  border-radius: 4px;
+  margin: 15px 0;
+  border: 1px solid var(--border-color);
+}
 
-  .scheduling-message {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background-color: white;
-    padding: 15px;
-    border-radius: 4px;
-    box-shadow: 0 2px 4px rgb(0 0 0 / 10%);
-    display: none;
-  }
+.current-schedule-label {
+  font-size: 14px;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
 
-  .scheduling-message.visible {
-    display: block;
-  }
+.current-schedule-label .info-icon {
+  width: 16px;
+  height: 16px;
+  opacity: 0.7;
+}
 
-  .cron-expression-container {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 15px;
-    align-items: center;
-  }
+.schedule-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background-color: transparent;
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 0;
+}
 
-  .cron-expression-container input[type="date"],
-  .cron-expression-container input[type="time"],
-  .cron-expression-container .custom-input {
-    height: 35px;
-    padding: 0 8px;
-    box-sizing: border-box;
-  }
+.schedule-row:last-child {
+  border-bottom: none;
+}
 
-  .cron-expression-container.custom-mode {
-    display: flex;
-    gap: 10px;
-  }
+.schedule-action {
+  font-weight: normal;
+}
 
-  .cron-expression-container.custom-mode .custom-input {
-    flex: 1;
-    display: block;
-    height: 35px;
-    padding: 0 8px;
-    border: 1px solid #e0e0e0;
-    border-radius: 4px;
-    background-color: white;
-    margin: 0;
-  }
+.schedule-time {
+  color: var(--text-secondary);
+}
 
-  .action-select {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #e0e0e0;
-    border-radius: 4px;
-    background-color: white;
-    margin-bottom: 15px;
-  }
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
 
-  .current-schedule {
-    background-color: #f5f5f5;
-    padding: 15px;
-    border-radius: 4px;
-    margin: 15px 0;
-    border: 1px solid #e0e0e0;
-  }
+select.schedule-input {
+  appearance: none;
+  background-color: white;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  background-size: 16px;
+  padding-right: 32px;
+}
 
-  .current-schedule-label {
-    font-size: 14px;
-    color: #4b4b4b;
-    margin-bottom: 8px;
-    font-weight: 700;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-  }
+.input-group label::after {
+  content: ' *';
+  color: var(--error-color);
+}
 
-  .current-schedule-label .info-icon {
-    width: 16px;
-    height: 16px;
-    opacity: 0.7;
+@media (forced-colors: active) {
+  .schedule-input:focus,
+  .schedule-btn:focus {
+    outline: 2px solid CanvasText;
   }
+}
 
-  .schedule-row {
-    display: flex;
-    justify-content: space-between;
-    padding: 8px 12px;
-    background-color: transparent;
-    border-bottom: 1px solid #e0e0e0;
-    margin-bottom: 0;
-  }
+.cron-expression-container .custom-button {
+  padding: 8px 16px;
+  height: 35px;
+  margin-bottom: 0;
+}
 
-  .schedule-row:last-child {
-    border-bottom: none;
-  }
+.cron-expression-container input[disabled] {
+  background-color: var(--background-disabled);
+  cursor: not-allowed;
+  opacity: 0.7;
+}
 
-  .schedule-action {
-    font-weight: normal;
-  }
+.cron-expression-container input[disabled]:hover {
+  border-color: var(--border-color);
+}
 
-  .schedule-time {
-    color: #666;
-  }
+.cron-expression-container.custom-mode input[type="date"],
+.cron-expression-container.custom-mode input[type="time"] {
+  display: none;
+}
 
-  .input-group {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-  
-  .datetime-row .input-group {
-    flex: 1;
-  }
-
-  .timezone-row .input-group {
-    width: 100%;
-  }
-
-  select.schedule-input {
-    appearance: none;
-    background-color: white;
-    cursor: pointer;
-    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-    background-repeat: no-repeat;
-    background-position: right 8px center;
-    background-size: 16px;
-    padding-right: 32px;
-  }
-
-  /* Add focus-visible for better visual feedback */
-  .schedule-input:focus:not(:focus-visible),
-  .schedule-btn:focus:not(:focus-visible) {
-    outline: none;
-  }
-
-  /* Add required field indicator */
-  .input-group label::after {
-    content: ' *';
-    color: #d92020;
-  }
-
-  /* Add high contrast focus styles */
-  @media (forced-colors: active) {
-    .schedule-input:focus,
-    .schedule-btn:focus {
-      outline: 2px solid CanvasText;
-    }
-  }
-
-  /* Remove duplicate styles from custom button */
-  .cron-expression-container .custom-button {
-    padding: 8px 16px;
-    height: 35px;
-    margin-bottom: 0;
-  }
-
-  .cron-expression-container input[disabled] {
-    background-color: #f5f5f5;
-    cursor: not-allowed;
-    opacity: 0.7;
-  }
-
-  /* Remove any hover effects on disabled inputs */
-  .cron-expression-container input[disabled]:hover {
-    border-color: #e0e0e0;
-  }
-
-  /* Hide date/time inputs when in custom mode */
-  .cron-expression-container.custom-mode input[type="date"],
-  .cron-expression-container.custom-mode input[type="time"] {
-    display: none;
-  }
-
-  /* Add styles for empty input highlighting */
-  .input-empty {
-    border-color: #d92020 !important;
-  }
+.input-empty {
+  border-color: var(--error-color) !important;
+}
