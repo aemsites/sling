@@ -1,6 +1,5 @@
 import {
   createTag,
-  buildVideoBlocks,
   buildFragmentBlocks,
   buildAuthorLink,
 } from '../../scripts/utils.js';
@@ -165,6 +164,5 @@ export default async function buildBlogDetails(main) {
   const p = contentWrapper.querySelector('.default-content-wrapper:first-of-type > p:first-of-type');
   if (p) p.remove();
   buildFragmentBlocks(main);
-  buildVideoBlocks(main);
   decorateAwardIcons(main);
 }

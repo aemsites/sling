@@ -25,6 +25,7 @@ import {
   loadPackageCards,
   linkTextIncludesHref,
   centerHeadlines,
+  buildVideoBlocks,
 } from './utils.js';
 
 const LCP_BLOCKS = ['category']; // add your LCP blocks to the list
@@ -616,6 +617,7 @@ export function decorateMain(main) {
   extractElementsColor();
   decorateExtImage(main);
   decorateLinkedImages();
+  buildVideoBlocks(main);
 }
 
 /**
