@@ -48,6 +48,9 @@
   }
 }
 
+.columns.devices {
+  text-align: left;
+} 
 
 .columns.cards > div > div {
   border-radius: 4px;
@@ -531,6 +534,10 @@
       line-height: 30px;
       max-width: 1168px;
       margin: 0 auto;
+    }
+
+    .columns.devices {
+      max-width: 85%;
     }
 
     .columns.landing > div:nth-of-type(odd) {
