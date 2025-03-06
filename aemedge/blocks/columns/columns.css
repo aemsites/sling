@@ -332,6 +332,13 @@
     .tabs-panel .columns > div {
       flex-direction: column;
     }
+    
+    .columns.white > div {
+      background-color: white;
+      margin-top: 30px;
+      padding: 30px;
+    
+    }
 
     .columns.landing {
       margin: auto;
