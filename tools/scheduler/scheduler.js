@@ -94,6 +94,38 @@ async function setSchedules(url, opts) {
   }
 }
 
+// Add the cleanupPastSchedules function near the top with other utility functions
+function cleanupPastSchedules(json) {
+  if (!json?.data?.length) return json;
+
+  const now = new Date();
+  const cleanedData = json.data.filter((schedule) => {
+    const match = schedule.when.match(/at (\d+:\d+\s*(?:AM|PM)) on the (\d+)(?:st|nd|rd|th) day of (\w+) in (\d+)/i);
+    if (!match) return true;
+
+    const [, timeStr, day, month, year] = match;
+    const monthIndex = new Date(`${month} 1, 2000`).getMonth();
+
+    const [hours, minutes] = timeStr.match(/(\d+):(\d+)/).slice(1);
+    let hour = parseInt(hours, 10);
+    const minute = parseInt(minutes, 10);
+    if (timeStr.toUpperCase().includes('PM') && hour < 12) hour += 12;
+    if (timeStr.toUpperCase().includes('AM') && hour === 12) hour = 0;
+
+    const scheduleDate = new Date(Date.UTC(
+      parseInt(year, 10),
+      monthIndex,
+      parseInt(day, 10),
+      hour,
+      minute,
+    ));
+
+    return scheduleDate > now;
+  });
+
+  return { ...json, data: cleanedData };
+}
+
 /**
  * Fetches current scheduling data from the server
  * @param {string} url - API endpoint URL
@@ -108,7 +140,24 @@ async function getSchedules(url, opts) {
     if (!resp.ok) {
       throw new Error(`Failed to fetch schedules: ${resp.status}`);
     }
-    return resp.json();
+    const json = await resp.json();
+
+    // Clean up past schedules before returning
+    const cleanedJson = cleanupPastSchedules(json);
+
+    // If schedules were removed, update the crontab
+    if (cleanedJson.data.length < json.data.length) {
+      const body = new FormData();
+      body.append('data', new Blob([JSON.stringify(cleanedJson)], { type: 'application/json' }));
+
+      // Update crontab with cleaned data
+      await setSchedules(url, { ...opts, body, method: 'POST' });
+
+      // Preview the changes
+      await previewCronTab(url, opts);
+    }
+
+    return cleanedJson;
   } catch (error) {
     console.error(error.message);
     messageUtils.show('Failed to fetch, please check console for more details', true);
@@ -188,7 +237,7 @@ function showCurrentSchedule(path, json) {
   const content = document.querySelector('.schedule-content');
 
   if (schedules.length === 0) {
-    content.textContent = 'No schedules found';
+    content.textContent = 'No active schedules found';
   } else {
     content.innerHTML = '';
     schedules.forEach((schedule) => {
