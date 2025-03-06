@@ -48,6 +48,7 @@
   }
 }
 
+
 .columns.cards > div > div {
   border-radius: 4px;
   box-shadow: 0 5px 15px 0 rgb(0 0 0 / 14%);
@@ -327,6 +328,13 @@
 
     .tabs-panel .columns > div {
       flex-direction: column;
+    }
+    
+    .columns.white > div {
+      background-color: white;
+      margin-top: 30px;
+      padding: 30px;
+    
     }
 
     .columns.landing {
