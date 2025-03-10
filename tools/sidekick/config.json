@@ -1,5 +1,7 @@
 {
     "project": "Sling",
+    "editUrlLabel": "Document Authoring",
+    "editUrlPattern": "https://da.live/edit#/{{org}}/{{site}}{{pathname}}",
     "plugins": [
       {
         "id": "library",
@@ -16,6 +18,16 @@
           "edit"
         ],
         "url": "/tools/sidekick/tagger/tagger.html"
+      },
+      {
+        "id": "scheduler",
+        "title": "Scheduler",
+        "environments": ["edit"],
+        "daLibrary": true,
+        "includePaths": ["DA"],
+        "experience": "dialog",
+        "icon": "https://main--sling--da-pilot.aem.live/.da/icons/media_1b16054ca2df31c22b312d39dcc00109e7926ac4c.png",
+        "path": "/tools/scheduler/scheduler.html"
       }
     ]
   }
