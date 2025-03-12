@@ -294,10 +294,23 @@
 }
 
 .tabs.big .accordion .details .summary::before {
-  order: 2; /* Move arrow to end */
-  margin: 4px 0 0 2rem; /* Adjust margins for right alignment */
+  content: '';
+  border: solid #454550;
+  border-width: 0 3px 3px 0;
+  height: 10px;
+  width: 10px;
+  pointer-events: none;
   position: absolute;
-  right: 0;
+  right: 9px;
+  top: 50%;
+  transform: translateY(-50%) rotate(-135deg);
+  transition: transform 0.3s ease;
+  background: none;
+}
+
+/* Rotate arrow when accordion is open */
+.tabs.big .accordion .details.open .summary::before {
+  transform: translateY(-50%) rotate(45deg);
 }
 
 /* stylelint-disable-next-line no-descending-specificity */
