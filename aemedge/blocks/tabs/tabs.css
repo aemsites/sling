@@ -273,15 +273,8 @@
 
 }
 
-/* "big" variant */
-.tabs.big .tabs-list button {
-  font-size: 1.25rem; 
-  padding: 1rem 1.5rem; 
-}
-
 /* stylelint-disable-next-line no-descending-specificity */
 .tabs.big .tabs-list button p {
-  font-size: 1.25rem;
   font-weight: 600;
 }
 
@@ -314,7 +307,7 @@
   color: #454550;
   font-weight: bold;
   text-transform: uppercase;
-  font-size: 20px;
+  font-size: 16px;
 }
 
 .tabs.big .accordion .details .accordion-item-body {
@@ -337,12 +330,9 @@
   .tabs.big .tabs-list {
     margin-bottom: 2rem;
   }
-}
 
-/* Additional spacing for larger screens */
-@media (width >= 992px) {
-  .tabs.big .accordion-wrapper {
-    padding: 0 4rem;
+  .tabs.big .accordion .details .summary p {
+    font-size: 20px;
   }
 }
 
