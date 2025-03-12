@@ -455,7 +455,59 @@ button.text {
   border-radius: unset;
   line-height: inherit;
   text-transform: none;
-  color: var(--link-color);
+  color: var(--link-color); 
+
+  &.bg-dark {
+    color: var(--dark-button-color);
+  }
+
+  &.bg-white {
+    color: var(--clr-white);
+  }
+
+  &.bg-dark-rock-candy {
+    color: var(--dark-rock-candy);
+  }
+
+  &.bg-blueberry {
+    color: var(--blueberry);
+  }
+
+  &.bg-mac-and-cheese {
+    color: var(--mac-and-cheese);
+  }
+
+  &.bg-fire {
+    color: var(--clr-fire);
+  }
+
+  &.bg-charcoal {
+    color: var(--charcoal);
+  }
+
+  &.bg-coal {
+    color: var(--coal);
+  }
+
+  &.bg-dark-green {
+    color: var(--dark-green);
+  }
+
+  &.bg-shadow-blue {
+    color: var(--shadow-blue);
+  }
+
+  &.bg-steam {
+    color: var(--steam);
+  }
+
+  &.bg-steel {
+    color: var(--steel);
+  }
+
+  &.bg-cherry-red {
+    color: var(--cherry-red);
+  }
 }
 
 a.button.text:hover,
