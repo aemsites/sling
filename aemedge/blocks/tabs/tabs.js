@@ -5,7 +5,7 @@ import {
 
 import { decorateButtons } from '../../scripts/scripts.js';
 
-const AVAILABLE_SUB_BLOCKS = ['accordion', 'columns'];
+const AVAILABLE_SUB_BLOCKS = ['accordion', 'columns', 'carousel'];
 
 function hasWrapper(el) {
   return !!el.firstElementChild && window.getComputedStyle(el.firstElementChild).display === 'block';
@@ -30,17 +30,69 @@ export default async function decorate(block) {
       // build content for the sub block
       const rows = [...block.children];
       block.innerHTML = '';
-      if (isNonStandard) {
-        let currentTabCategory;
-        let oldTabCategory;
-        let subBlockContent = [];
-        rows.forEach((row, i) => {
-          const is3Col = row.children.length === 3;
-          if (is3Col || (i === (rows.length - 1))) {
-            oldTabCategory = currentTabCategory;
-            currentTabCategory = row.firstElementChild;
-          }
-          if (!is3Col && (i === (rows.length - 1))) {
+      if (subBlockToBuild === 'carousel') {
+        rows.forEach((row) => {
+          // Create carousel content structure
+          const carouselContent = [];
+          const images = [...row.children[1].querySelectorAll('picture')];
+          // Create proper carousel rows structure
+          images.forEach((image) => {
+            const carouselRow = document.createElement('div');
+            const imageDiv = document.createElement('div');
+            imageDiv.append(image.cloneNode(true));
+            carouselRow.append(imageDiv);
+            carouselContent.push([imageDiv.innerHTML]);
+          });
+          const subBlock = buildBlock(subBlockToBuild, carouselContent);
+          subBlock.classList.add('wide'); // Add wide class for full-width styling
+          const tabCategoryDiv = document.createElement('div');
+          tabCategoryDiv.innerHTML = row.firstElementChild.innerHTML;
+          const tabContentDiv = document.createElement('div');
+          tabContentDiv.append(subBlock);
+          const newRow = document.createElement('div');
+          newRow.append(tabCategoryDiv);
+          newRow.append(tabContentDiv);
+          newBlock.append(newRow);
+        });
+      } else {
+        if (isNonStandard) {
+          let currentTabCategory;
+          let oldTabCategory;
+          let subBlockContent = [];
+          rows.forEach((row, i) => {
+            const is3Col = row.children.length === 3;
+            if (is3Col || (i === (rows.length - 1))) {
+              oldTabCategory = currentTabCategory;
+              currentTabCategory = row.firstElementChild;
+            }
+            if (!is3Col && (i === (rows.length - 1))) {
+              let accKey;
+              let accValue;
+              if (is3Col) {
+                accKey = row.children[1].innerHTML;
+                accValue = row.children[2].innerHTML;
+              } else {
+                accKey = row.children[0].innerHTML;
+                accValue = row.children[1].innerHTML;
+              }
+              subBlockContent.push([accKey, accValue]);
+            }
+            if (oldTabCategory && (oldTabCategory.textContent !== currentTabCategory.textContent)) {
+              // new tab category found - build sub block with the existing content
+              const subBlock = buildBlock(subBlockToBuild, subBlockContent);
+              // add tabCategory and sub block content to newDiv
+              const tabCategoryDiv = document.createElement('div');
+              tabCategoryDiv.innerHTML = oldTabCategory.innerHTML;
+              const tabContentDiv = document.createElement('div');
+              tabContentDiv.append(subBlock);
+              const newRow = document.createElement('div');
+              newRow.append(tabCategoryDiv);
+              newRow.append(tabContentDiv);
+              newBlock.append(newRow);
+              // reset subBlockContent for the next set of rows
+              subBlockContent = [];
+              oldTabCategory = null;
+            }
             let accKey;
             let accValue;
             if (is3Col) {
@@ -51,53 +103,27 @@ export default async function decorate(block) {
               accValue = row.children[1].innerHTML;
             }
             subBlockContent.push([accKey, accValue]);
-          }
-          if (oldTabCategory && (oldTabCategory.textContent !== currentTabCategory.textContent)) {
-            // new tab category found - build sub block with the existing content
+          });
+        }
+        if (isStandard) {
+          rows.forEach((row) => {
+            const subBlockContent = [];
+            const contentKey = row.children[1].innerHTML;
+            const contentValue = row.children[2].innerHTML;
+            subBlockContent.push([contentKey, contentValue]);
+            // build sub block with the existing content
             const subBlock = buildBlock(subBlockToBuild, subBlockContent);
             // add tabCategory and sub block content to newDiv
             const tabCategoryDiv = document.createElement('div');
-            tabCategoryDiv.innerHTML = oldTabCategory.innerHTML;
+            tabCategoryDiv.innerHTML = row.firstElementChild.innerHTML;
             const tabContentDiv = document.createElement('div');
             tabContentDiv.append(subBlock);
             const newRow = document.createElement('div');
             newRow.append(tabCategoryDiv);
             newRow.append(tabContentDiv);
             newBlock.append(newRow);
-            // reset subBlockContent for the next set of rows
-            subBlockContent = [];
-            oldTabCategory = null;
-          }
-          let accKey;
-          let accValue;
-          if (is3Col) {
-            accKey = row.children[1].innerHTML;
-            accValue = row.children[2].innerHTML;
-          } else {
-            accKey = row.children[0].innerHTML;
-            accValue = row.children[1].innerHTML;
-          }
-          subBlockContent.push([accKey, accValue]);
-        });
-      }
-      if (isStandard) {
-        rows.forEach((row) => {
-          const subBlockContent = [];
-          const contentKey = row.children[1].innerHTML;
-          const contentValue = row.children[2].innerHTML;
-          subBlockContent.push([contentKey, contentValue]);
-          // build sub block with the existing content
-          const subBlock = buildBlock(subBlockToBuild, subBlockContent);
-          // add tabCategory and sub block content to newDiv
-          const tabCategoryDiv = document.createElement('div');
-          tabCategoryDiv.innerHTML = row.firstElementChild.innerHTML;
-          const tabContentDiv = document.createElement('div');
-          tabContentDiv.append(subBlock);
-          const newRow = document.createElement('div');
-          newRow.append(tabCategoryDiv);
-          newRow.append(tabContentDiv);
-          newBlock.append(newRow);
-        });
+          });
+        }
       }
       // set block to newBlock
       block.innerHTML = newBlock.innerHTML;
