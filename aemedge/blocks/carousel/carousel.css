@@ -170,7 +170,7 @@
   top: 45%;
 }
 /* stylelint-disable-next-line no-descending-specificity */
-.carousel .carousel-navigation-buttons button {
+.carousel:not(.wide) .carousel-navigation-buttons button {
   backface-visibility: hidden;
   top: calc(50% - 1.25rem);
   left: 0.625rem;
@@ -268,4 +268,139 @@
   .rewards .carousel-navigation-buttons{
     display: none;
   }
+}
+
+/* Wide carousel variant */
+.carousel.wide {
+  padding: 0;
+  width: 100%;
+  position: relative;
+}
+
+.carousel.wide .carousel-slides-container {
+  width: 100%;
+  margin: 0;
+}
+
+.carousel.wide .carousel-slides {
+  scroll-snap-type: x mandatory;
+  overflow: hidden;
+}
+/* stylelint-disable-next-line no-descending-specificity */
+.carousel.wide .carousel-slide {
+  min-width: 100%; /* Full width slides */
+  height: 400px; /* Adjust height as needed */
+  position: relative;
+}
+
+.carousel.wide .carousel-slide .carousel-slide-image {
+  aspect-ratio: auto;
+  width: 100%;
+  height: 100%;
+}
+
+.carousel.wide .carousel-slide .carousel-slide-image picture {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.carousel.wide .carousel-slide .carousel-slide-image picture > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  margin: 0;
+  border-radius: 0;
+  filter: none;
+}
+
+/* Navigation buttons for wide variant */
+.carousel.wide .carousel-navigation-buttons {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 100%;
+  padding: 0 16px;
+}
+
+/* Remove hide class from navigation buttons in wide variant */
+.carousel.wide .carousel-navigation-buttons.hide {
+  display: flex; /* Override the hide class */
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+.carousel.wide .carousel-navigation-buttons button {
+  background: rgb(255 255 255 / 80%);
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  position: relative;
+  transition: background-color 0.3s;
+}
+
+.carousel.wide .carousel-navigation-buttons button:hover {
+  background: #dbc76a;
+}
+
+.carousel.wide .carousel-slide-indicators {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  position: absolute;
+  bottom: 20px;
+  width: 100%;
+  z-index: 2;
+}
+/* stylelint-disable-next-line no-descending-specificity */
+.carousel.wide .carousel-slide-indicators button {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid white;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.carousel.wide .carousel-slide-indicators button[disabled] {
+  background: #dbc76a;
+}
+
+/* Hide the text inside indicators */
+.carousel.wide .carousel-slide-indicators span {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+  white-space: nowrap;
+}
+
+/* Navigation arrows */
+.carousel.wide .carousel-navigation-buttons .slide-prev::after,
+.carousel.wide .carousel-navigation-buttons .slide-next::after {
+  content: '';
+  display: block;
+  width: 8px;
+  height: 8px;
+  border: solid #000;
+  border-width: 0 3px 3px 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+
+.carousel.wide .carousel-navigation-buttons .slide-prev::after {
+  transform: translate(-25%, -50%) rotate(135deg);
+}
+
+.carousel.wide .carousel-navigation-buttons .slide-next::after {
+  transform: translate(-75%, -50%) rotate(-45deg);
 }
