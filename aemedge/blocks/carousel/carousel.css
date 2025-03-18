@@ -331,7 +331,7 @@
 
 /* stylelint-disable-next-line no-descending-specificity */
 .carousel.wide .carousel-navigation-buttons button {
-  background: rgb(255 255 255 / 80%);
+  background-color: #9e9b9b;
   border: none;
   border-radius: 50%;
   width: 32px;
@@ -339,10 +339,11 @@
   cursor: pointer;
   position: relative;
   transition: background-color 0.3s;
+  margin: 0 20px;
 }
 
 .carousel.wide .carousel-navigation-buttons button:hover {
-  background: #dbc76a;
+  background: rgb(252 191 56);
 }
 
 .carousel.wide .carousel-slide-indicators {
