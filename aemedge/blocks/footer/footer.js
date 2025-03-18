@@ -31,8 +31,14 @@ export default async function decorate(block) {
   const footerMeta = getMetadata('footer');
   block.textContent = '';
   // load footer fragment
-  const footerPath = footerMeta.footer || '/aemedge/footer';
+  const footerPath = footerMeta ? new URL(footerMeta, window.location).pathname : '/aemedge/footer';
   const fragment = await loadFragment(footerPath);
+  if (footerMeta) {
+    const footerVariant = footerMeta.split('/').pop(); // Gets 'footer-latino-es' from '/aemedge/footer-latino-es'
+    if (footerVariant && footerVariant !== 'footer') {
+      block.classList.add(footerVariant);
+    }
+  }
   // decorate footer DOM
   const footer = document.createElement('div');
   while (fragment.firstElementChild) footer.append(fragment.firstElementChild);
