@@ -588,7 +588,7 @@
   }
 
   @media (width >=1200px) {
-    .tabs.columns {
+    .tabs.columns:not(.background) {
       width: 88%;
       margin: 0 auto;
     }

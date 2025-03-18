@@ -132,10 +132,29 @@ export default async function decorate(block) {
   tabs.forEach((tab, i) => {
     const id = toClassName(tab.textContent);
 
+    // Check for images in any p tag within the tab button
+    const tabImage = tab.querySelector('picture img');
+    
     // decorate tabpanel
     const tabpanel = block.children[i];
     tabpanel.className = 'tabs-panel';
     tabpanel.id = `tabpanel-${id}`;
+    
+    // Debug log to check each tab
+    console.log(`Tab ${i}:`, {
+      hasTabImage: !!tabImage,
+      imageSource: tabImage?.src
+    });
+    
+    // Add background if image exists in the tab
+    if (tabImage) {
+      // Add class and set background image directly
+      tabpanel.style.backgroundImage = `url(${tabImage.src})`;
+      
+      // Remove image from tab button
+      tabImage.closest('picture').remove();
+    }
+
     tabpanel.setAttribute('aria-hidden', !!i);
     tabpanel.setAttribute('aria-labelledby', `tab-${id}`);
     tabpanel.setAttribute('role', 'tabpanel');

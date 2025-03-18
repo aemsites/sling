@@ -551,7 +551,7 @@ main img {
 }
 
 /* sections */
-main > .section {
+main > .section:not(.wide) {
   padding: 0 8%;
   margin: 64px 0;
 }
@@ -784,7 +784,7 @@ a.black {
 }
 
 @media (width >=768px) {
-    main .section {
+    main .section:not(.wide) {
         padding: 0 48px;
     }
 
