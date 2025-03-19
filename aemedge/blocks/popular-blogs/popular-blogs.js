@@ -122,6 +122,7 @@ export default async function decorate(block) {
       const curPage = categories.pop();
       categories = categories.map(toTag);
       const blogs = await getBlogs(categories, 7);
+      if (blogs.length <= 1) return;
       // create the dom structure
       const container = block.querySelector('.slides-container');
       const headlineWrapper = createTag('div', { class: 'heading-wrapper' });
