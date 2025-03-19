@@ -303,14 +303,14 @@
   position: absolute;
   right: 9px;
   top: 50%;
-  transform: translateY(-50%) rotate(-135deg);
+  transform: translateY(-50%) rotate(45deg);
   transition: transform 0.3s ease;
   background: none;
 }
 
 /* Rotate arrow when accordion is open */
 .tabs.big .accordion .details.open .summary::before {
-  transform: translateY(-50%) rotate(45deg);
+  transform: translateY(-50%) rotate(-135deg);
 }
 
 /* stylelint-disable-next-line no-descending-specificity */
