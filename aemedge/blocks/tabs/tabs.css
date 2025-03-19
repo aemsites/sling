@@ -76,6 +76,7 @@
   cursor: pointer;
 }
 
+/* stylelint-disable-next-line no-descending-specificity */
 .tabs .tabs-list button[aria-selected="false"]:hover p,
 .tabs .tabs-list button[aria-selected="false"]:focus p {
   opacity: 0.8;
@@ -271,3 +272,98 @@
   }
 
 }
+
+/* stylelint-disable-next-line no-descending-specificity */
+.tabs.big .tabs-list button p {
+  font-weight: 600;
+}
+
+.tabs.big .accordion-wrapper {
+  max-width: 1130px;
+  margin: 1rem auto;
+  padding: 0 1rem;
+}
+
+.tabs.big .accordion .details .summary {
+  padding: 1.25rem 2rem 1.25rem 0;
+  border-bottom: 1px solid rgb(23 23 37 / 10%);
+  font-size: 1.5rem; 
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tabs.big .accordion .details .summary::before {
+  content: '';
+  border: solid #454550;
+  border-width: 0 3px 3px 0;
+  height: 10px;
+  width: 10px;
+  pointer-events: none;
+  position: absolute;
+  right: 9px;
+  top: 50%;
+  transform: translateY(-50%) rotate(45deg);
+  transition: transform 0.3s ease;
+  background: none;
+}
+
+/* Rotate arrow when accordion is open */
+.tabs.big .accordion .details.open .summary::before {
+  transform: translateY(-50%) rotate(-135deg);
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+.tabs.big .accordion .details .summary p {
+  order: 1;
+  flex: 1;
+  color: #454550;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 16px;
+}
+
+.tabs.big .accordion .details .accordion-item-body {
+  font-size: 1.125rem; 
+  padding-left: 0;
+  line-height: 1.5;
+}
+
+/* Media query adjustments */
+@media (width >= 768px) {
+  .tabs.big .accordion .details .accordion-item-body {
+    padding-left: .5rem;
+    padding-right: .5rem;
+  }
+
+  .tabs.big .accordion-wrapper {
+    padding: 0 3rem;
+  }
+  
+  .tabs.big .tabs-list {
+    margin-bottom: 2rem;
+  }
+
+  .tabs.big .accordion .details .summary p {
+    font-size: 20px;
+  }
+}
+
+.tabs.big .accordion .details .accordion-item-body span.icon img,
+.tabs.big .accordion .details .accordion-item-body span.icon {
+  width: 128px;
+  height: 128px;
+  object-fit: contain;
+  display: block;
+}
+
+
+/* Handle picture elements with regular images */
+/* stylelint-disable-next-line no-descending-specificity */
+.tabs.big .accordion .details .accordion-item-body picture img {
+  width: 128px;
+  height: 128px;
+  object-fit: contain;
+  margin: 1rem 0;
+}
+

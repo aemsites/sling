@@ -17,7 +17,6 @@
 /* stylelint-disable-next-line no-descending-specificity */
 .accordion .details + .details {
   margin-top: 10px;
-  width: 100%;
 }
 
 .accordion .details .summary {
