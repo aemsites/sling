@@ -556,7 +556,7 @@ main > .section {
   margin: 64px 0;
 }
 
-.section.wide {
+.section.full {
   padding: 0;
 }
 
@@ -792,7 +792,7 @@ a.black {
         padding: 0 48px;
     }
 
-    .section.wide {
+    .section.full {
       padding: 0;
     }
 
