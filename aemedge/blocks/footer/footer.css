@@ -234,6 +234,10 @@ footer .landing.footer .footer-primary .footer-primary-links .icon-arrow-down.cl
     margin-left: 16px;
   }
 
+  footer .footer-latino-es .footer-primary-links {
+    max-width: 1150px;
+  }
+
   footer li.nav-item.nav-heading {
     margin-bottom: 24px;
   }
