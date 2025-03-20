@@ -342,8 +342,7 @@
   object-fit: contain;
   margin: 0 auto;
 }
-=======
-/* stylelint-disable-next-line no-descending-specificity */
+
 .tabs.big .tabs-list button p {
   font-weight: 600;
 }
@@ -383,7 +382,6 @@
   transform: translateY(-50%) rotate(-135deg);
 }
 
-/* stylelint-disable-next-line no-descending-specificity */
 .tabs.big .accordion .details .summary p {
   order: 1;
   flex: 1;
@@ -427,9 +425,6 @@
   display: block;
 }
 
-
-/* Handle picture elements with regular images */
-/* stylelint-disable-next-line no-descending-specificity */
 .tabs.big .accordion .details .accordion-item-body picture img {
   width: 128px;
   height: 128px;
