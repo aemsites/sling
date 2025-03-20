@@ -551,9 +551,13 @@ main img {
 }
 
 /* sections */
-main > .section:not(.wide) {
+main > .section {
   padding: 0 8%;
   margin: 64px 0;
+}
+
+.section.wide {
+  padding: 0;
 }
 
 .section > .default-content-wrapper > p.fragment-wrapper {
@@ -784,8 +788,12 @@ a.black {
 }
 
 @media (width >=768px) {
-    main .section:not(.wide) {
+    main .section {
         padding: 0 48px;
+    }
+
+    .section.wide {
+      padding: 0;
     }
 
     .international main .icons .icon img {

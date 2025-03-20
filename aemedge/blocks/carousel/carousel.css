@@ -289,7 +289,7 @@
 /* stylelint-disable-next-line no-descending-specificity */
 .carousel.wide .carousel-slide {
   min-width: 100%; /* Full width slides */
-  height: 400px; /* Adjust height as needed */
+  aspect-ratio: 15 / 4; /* Adjust height as needed */
   position: relative;
 }
 
@@ -308,7 +308,6 @@
 
 .carousel.wide .carousel-slide .carousel-slide-image picture > img {
   width: 100%;
-  height: 100%;
   object-fit: cover;
   margin: 0;
   border-radius: 0;
@@ -404,4 +403,10 @@
 
 .carousel.wide .carousel-navigation-buttons .slide-next::after {
   transform: translate(-75%, -50%) rotate(-45deg);
+}
+
+@media (width < 768px) {
+  .carousel.wide{
+    display: none;
+  }
 }
