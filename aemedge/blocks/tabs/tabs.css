@@ -293,43 +293,51 @@
   justify-content: center;
 }
 
+/* Mobile view (default) - 1 image */
 .tabs.carousel .carousel {
-  max-width: 1200px; /* Or your desired width */
+  width: 90%;
   margin: 0 auto;
 }
 
-/* Standardize carousel image dimensions without cropping */
+.tabs.carousel .carousel-slides {
+  display: flex;
+  overflow: hidden;
+}
+
+.tabs.carousel .carousel-slide {
+  flex: 0 0 100%; /* Take full width in mobile */
+}
+
+/* Tablet view (768px to 991px) - 2 images */
+@media (width >=768px) {
+  .tabs.carousel .carousel {
+    width:66%;
+  }
+
+  .tabs.carousel .carousel-slide {
+    flex: 0 0 50%; /* Take half width in tablet */
+  }
+}
+
+/* Desktop view (992px and above) - 3 images */
+@media (width >= 1024px) {
+  .tabs.carousel .carousel-slide {
+    flex: 0 0 33.333%; /* Take one-third width in desktop */
+  }
+}
+
+/* Keep other existing carousel styles */
 .tabs.carousel .carousel-slide-image {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 600px; /* Increased height to prevent cropping */
-}
-
-.tabs.carousel .carousel-slide-image picture {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px; /* Add some padding around images */
 }
 
 .tabs.carousel .carousel-slide-image img {
   width: auto;
-  height: auto; /* Allow natural height */
-  max-height: 100%; /* Constrain to container height */
-  max-width: 400px; /* Increased max-width */
-  object-fit: contain; /* Ensure no cropping */
+  height: auto;
+  max-width: 400px;
+  object-fit: contain;
   margin: 0 auto;
-}
-
-/* Ensure consistent slide dimensions */
-.tabs.carousel .carousel-slide {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 600px; /* Match the image container height */
 }
