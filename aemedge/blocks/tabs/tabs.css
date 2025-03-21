@@ -273,7 +273,76 @@
 
 }
 
-/* stylelint-disable-next-line no-descending-specificity */
+/* Center alignment specifically for carousel variant */
+.tabs.carousel .tabs-list {
+  justify-content: center;
+}
+
+.tabs.carousel .tabs-list button {
+  justify-content: center;
+  text-align: center;
+}
+/* stylelint-disable no-descending-specificity */
+.tabs.carousel .tabs-list button p {
+  text-align: center;
+  margin: 0 auto;
+}
+
+/* Center the carousel content */
+.tabs.carousel .carousel-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+/* Mobile view (default) - 1 image */
+.tabs.carousel .carousel {
+  width: 90%;
+  margin: 0 auto;
+}
+
+.tabs.carousel .carousel-slides {
+  display: flex;
+  overflow: hidden;
+}
+
+.tabs.carousel .carousel-slide {
+  flex: 0 0 100%; /* Take full width in mobile */
+}
+
+/* Tablet view (768px to 991px) - 2 images */
+@media (width >=768px) {
+  .tabs.carousel .carousel {
+    width:66%;
+  }
+
+  .tabs.carousel .carousel-slide {
+    flex: 0 0 50%; /* Take half width in tablet */
+  }
+}
+
+/* Desktop view (992px and above) - 3 images */
+@media (width >= 1024px) {
+  .tabs.carousel .carousel-slide {
+    flex: 0 0 33.333%; /* Take one-third width in desktop */
+  }
+}
+
+/* Keep other existing carousel styles */
+.tabs.carousel .carousel-slide-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.tabs.carousel .carousel-slide-image img {
+  width: auto;
+  height: auto;
+  max-width: 400px;
+  object-fit: contain;
+  margin: 0 auto;
+}
+
 .tabs.big .tabs-list button p {
   font-weight: 600;
 }
@@ -313,7 +382,6 @@
   transform: translateY(-50%) rotate(-135deg);
 }
 
-/* stylelint-disable-next-line no-descending-specificity */
 .tabs.big .accordion .details .summary p {
   order: 1;
   flex: 1;
@@ -357,13 +425,9 @@
   display: block;
 }
 
-
-/* Handle picture elements with regular images */
-/* stylelint-disable-next-line no-descending-specificity */
 .tabs.big .accordion .details .accordion-item-body picture img {
   width: 128px;
   height: 128px;
   object-fit: contain;
   margin: 1rem 0;
 }
-
