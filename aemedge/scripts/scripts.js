@@ -419,55 +419,63 @@ export function makeLastButtonSticky() {
   }
 }
 
+/* LOOKING FOR CURLY BRACES */
+
 /**
- * Extracts color information from p text content in curly braces.
+ * Extracts color + number information from text content in curly braces.
  * @returns {Object|null} - An object containing the extracted color
  * or null if no color information is found.
  */
-export function extractElementsColor() {
-//  const textNodes = Array.from(document.querySelectorAll('div > p:first-child'));
+export function extractStyleVariables() {
   const textNodes = Array.from(document.querySelectorAll('h1, h2, h3, h4, h5, h6, li, p'));
   textNodes.forEach((node) => {
     const up = node.parentElement;
     const isParagraph = node.tagName === 'P';
     const text = node.textContent;
-    // color must be letters or dashes
-    const colorRegex = text && /{([a-zA-Z-\s]+)?}/;
+    const colorRegex = text && /{([a-zA-Z-\s]+)?}/; // color must be letters or dashes
     const numberRegex = text && /\{(\d{1,2})?}/;
-    const spanRegex = new RegExp(`\\[${colorRegex.source}([a-zA-Z0-9\\s]*.)\\]`);
+    const spanRegex = new RegExp(`\\[([\\s\\S]*?)\\]${colorRegex.source}`);
+
+    const spacerMatch = text.match(/\{spacer-(\d+)}/); // {spacer-5}
     const colorMatches = text.match(colorRegex);
     const numberMatches = text.match(numberRegex);
     const spanMatches = text.match(spanRegex);
-    // case where colored text is wrapped in a span.
-    // no HTML elements allowed (no bold, no links).
+
+    if (isParagraph && spacerMatch) {
+      const spacerHeight = parseInt(spacerMatch[1], 10);
+      node.style.height = `${spacerHeight * 10}px`;
+      node.className = 'spacer';
+      node.innerHTML = '';
+    } else
+      // case where only the color or width is in the first cell
+      if (isParagraph && up.tagName === 'DIV' && up.firstElementChild === node && text.trim().startsWith('{') && text.trim().endsWith('}')) {
+        if (colorMatches) {
+          const backgroundColor = colorMatches[1];
+          up.classList.add(`bg-${toClassName(backgroundColor)}`);
+        }
+        if (numberMatches) {
+          const percentWidth = numberMatches[1];
+          up.style.maxWidth = `${percentWidth}%`;
+        }
+        node.remove();
+      }
+    const anchor = node.querySelector('a');
+    // First handle span wrapping
     if (spanMatches) {
-      node.innerHTML = text.replace(new RegExp(spanRegex, 'g'), (match, color, spanText) => {
+      const currentHTML = node.innerHTML;
+      node.innerHTML = currentHTML.replace(new RegExp(spanRegex, 'g'), (match, spanText, color) => {
         const span = createTag('span', { class: `${toClassName(color)}` }, spanText);
         return span.outerHTML;
       });
     }
 
-    // case for buttons
-    if (isParagraph && node.querySelector('a')) {
-      const anchor = node.querySelector('a');
-      if (colorMatches) {
+    // Then handle anchor tag coloring
+    if (anchor) {
+      if (colorMatches && anchor.textContent.endsWith(colorMatches[0])) {
         anchor.classList.add(`bg-${toClassName(colorMatches[1])}`);
-        // remove the color from the text
         anchor.textContent = anchor.textContent.replace(colorMatches[0], '');
+        anchor.title = anchor.title.replace(colorMatches[0], '');
       }
-    }
-
-    // case where only the color or width is in the first cell
-    if (isParagraph && up.tagName === 'DIV' && up.firstElementChild === node && text.trim().startsWith('{') && text.trim().endsWith('}')) {
-      if (colorMatches) {
-        const backgroundColor = colorMatches[1];
-        up.classList.add(`bg-${toClassName(backgroundColor)}`);
-      }
-      if (numberMatches) {
-        const percentWidth = numberMatches[1];
-        up.style.maxWidth = `${percentWidth}%`;
-      }
-      node.remove();
     }
   });
 }
@@ -614,7 +622,7 @@ export function decorateMain(main) {
   makeTwoColumns(main);
   decorateStyledSections(main);
   buildSpacer(main);
-  extractElementsColor();
+  extractStyleVariables(main);
   decorateExtImage(main);
   decorateLinkedImages();
   buildVideoBlocks(main);
