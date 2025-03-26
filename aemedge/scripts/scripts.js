@@ -459,23 +459,23 @@ export function extractStyleVariables() {
         }
         node.remove();
       }
+    const anchor = node.querySelector('a');
+    // First handle span wrapping
+    if (spanMatches) {
+      const currentHTML = node.innerHTML;
+      node.innerHTML = currentHTML.replace(new RegExp(spanRegex, 'g'), (match, spanText, color) => {
+        const span = createTag('span', { class: `${toClassName(color)}` }, spanText);
+        return span.outerHTML;
+      });
+    }
 
-    if (node.querySelector('a')) {
-      const anchor = node.querySelector('a');
+    // Then handle anchor tag coloring
+    if (anchor) {
       if (colorMatches && anchor.textContent.endsWith(colorMatches[0])) {
         anchor.classList.add(`bg-${toClassName(colorMatches[1])}`);
         anchor.textContent = anchor.textContent.replace(colorMatches[0], '');
         anchor.title = anchor.title.replace(colorMatches[0], '');
       }
-    }
-    // case where colored text will be wrapped in a span.
-    // BROKEN - it will kill off any existing links or bold in the same node
-    if (spanMatches) {
-      node.innerHTML = text.replace(new RegExp(spanRegex, 'g'), (match, spanText, color) => {
-        const span = createTag('span', { class: `${toClassName(color)}` }, spanText);
-        console.log(span.innerHTML, 'outer', span.outerHTML);
-        return span.outerHTML;
-      });
     }
   });
 }

@@ -456,57 +456,61 @@ button.text {
   line-height: inherit;
   text-transform: none;
   color: var(--link-color); 
+}
 
+a:not(.button),
+button.text,
+a.button.text {
   &.bg-dark {
-    color: var(--dark-button-color);
+    color: var(--dark-button-color) !important;;
   }
 
   &.bg-white {
-    color: var(--clr-white);
+    color: var(--clr-white)!important;;
   }
 
   &.bg-dark-rock-candy {
-    color: var(--dark-rock-candy);
+    color: var(--dark-rock-candy) !important;;
   }
 
   &.bg-blueberry {
-    color: var(--blueberry);
+    color: var(--blueberry) !important;;
   }
 
   &.bg-mac-and-cheese {
-    color: var(--mac-and-cheese);
+    color: var(--mac-and-cheese) !important;;
   }
 
   &.bg-fire {
-    color: var(--clr-fire);
+    color: var(--clr-fire) !important;
   }
 
   &.bg-charcoal {
-    color: var(--charcoal);
+    color: var(--charcoal) !important;
   }
 
   &.bg-coal {
-    color: var(--coal);
+    color: var(--coal) !important;
   }
 
   &.bg-dark-green {
-    color: var(--dark-green);
+    color: var(--dark-green) !important;
   }
 
   &.bg-shadow-blue {
-    color: var(--shadow-blue);
+    color: var(--shadow-blue) !important;
   }
 
   &.bg-steam {
-    color: var(--steam);
+    color: var(--steam) !important;
   }
 
   &.bg-steel {
-    color: var(--steel);
+    color: var(--steel) !important;
   }
 
   &.bg-cherry-red {
-    color: var(--cherry-red);
+    color: var(--cherry-red) !important;
   }
 }
 
