@@ -114,7 +114,7 @@
        margin-right: 12px;
      }
 
-    h1, h2, h3, h4, h5, h6, p, li {
+    h1, h2, h3, h4, h5, h6, p, li, a {
       color: var(--clr-white);
     }
     }
@@ -130,7 +130,6 @@
   }
 
     a:not(.button, .blue, .black, .white) {
-      color: var(--clr-white);
       text-decoration: underline;
     }
   }
