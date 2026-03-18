@@ -200,7 +200,8 @@ export async function fetchData(path) {
   const json = await response.json();
 
   return json.data.map((row) => {
-    if (row.image.startsWith('/default-meta-image.png')) {
+    const img = row.image;
+    if (typeof img === 'string' && img.startsWith('/default-meta-image.png')) {
       row.image = `/${window.hlx.codeBasePath}${row.image}`;
     }
     return row;
@@ -224,28 +225,37 @@ function compareArrays(arr, arr2) {
 }
 
 /**
+ * Returns true if the entry has a renderable blog image.
+ * Excludes missing, empty, '0', and default-meta-image to avoid underfill or runtime errors.
+ * @param {Object} entry - Query-index row
+ * @returns {boolean}
+ */
+function hasValidBlogImage(entry) {
+  return typeof entry.image === 'string'
+    && entry.image !== ''
+    && entry.image !== '0'
+    && !entry.image.includes('default-meta-image.png');
+}
+
+const QUERY_INDEX_PATH = '/whatson/query-index.json';
+
+/**
  * Retrieves blogs matching specific tags
  * @param {Array} categories - An array of categories to filter by
  * @param {number} num - The number of blogs to retrieve
- * @param {string} limit - The limit of blogs to retrieve from the query-index
  * @returns {Promise<Array>} - A promise resolving to the filtered blogs array
  */
-export async function getBlogs(categories, num, limit = '') {
-  if (!window.allBlogs) {
-    window.allBlogs = await fetchData(`/whatson/query-index.json${limit ? `?limit=${limit}` : ''}`);
-  }
+export async function getBlogs(categories, num) {
   const isBlogsHome = (window.location.pathname === '/whatson' || window.location.pathname === '/whatson/');
+  if (!window.allBlogs) {
+    window.allBlogs = await fetchData(QUERY_INDEX_PATH);
+  }
   const blogArticles = isBlogsHome
     ? window.allBlogs.filter(
-      (e) => (e.template === 'blog-article'
-        && e.image !== ''
-        && !e.image.startsWith('//aemedge/default-meta-image.png')
-        && (e.hideFromHome !== 'yes')),
+      (e) => (e.template === 'blog-article' && hasValidBlogImage(e) && (e.hideFromHome !== 'yes')),
     )
     : window.allBlogs.filter(
-      (e) => (e.template === 'blog-article'
-        && e.image !== ''
-        && !e.image.startsWith('//aemedge/default-meta-image.png')),
+      (e) => (e.template === 'blog-article' && hasValidBlogImage(e)),
     );
 
   if ((categories && categories.length > 0)) {
@@ -265,12 +275,12 @@ export async function getBlogs(categories, num, limit = '') {
   return blogArticles;
 }
 
-export async function getBlogsByPaths(paths, limit = '') {
+export async function getBlogsByPaths(paths) {
   if (!window.allBlogs) {
-    window.allBlogs = await fetchData(`/whatson/query-index.json${limit ? `?limit=${limit}` : ''}`);
+    window.allBlogs = await fetchData(QUERY_INDEX_PATH);
   }
   const blogArticles = window.allBlogs.filter(
-    (e) => (e.template !== 'blog-category' && e.image !== '' && !e.image.startsWith('//aemedge/default-meta-image.png')),
+    (e) => (e.template !== 'blog-category' && hasValidBlogImage(e)),
   );
   let filterArticles = [];
   if (paths && paths.length > 0) {
