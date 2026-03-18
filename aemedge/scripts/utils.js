@@ -237,19 +237,19 @@ function hasValidBlogImage(entry) {
     && !entry.image.includes('default-meta-image.png');
 }
 
+const QUERY_INDEX_PATH = '/whatson/query-index.json';
+
 /**
  * Retrieves blogs matching specific tags
  * @param {Array} categories - An array of categories to filter by
  * @param {number} num - The number of blogs to retrieve
- * @param {string} _limit - Unused; query-index does not support limit param
  * @returns {Promise<Array>} - A promise resolving to the filtered blogs array
  */
-export async function getBlogs(categories, num, _limit = '') {
-  // Note: query-index.json does not support ?limit= param; always returns full index
-  if (!window.allBlogs) {
-    window.allBlogs = await fetchData('/whatson/query-index.json');
-  }
+export async function getBlogs(categories, num) {
   const isBlogsHome = (window.location.pathname === '/whatson' || window.location.pathname === '/whatson/');
+  if (!window.allBlogs) {
+    window.allBlogs = await fetchData(QUERY_INDEX_PATH);
+  }
   const blogArticles = isBlogsHome
     ? window.allBlogs.filter(
       (e) => (e.template === 'blog-article' && hasValidBlogImage(e) && (e.hideFromHome !== 'yes')),
@@ -275,10 +275,9 @@ export async function getBlogs(categories, num, _limit = '') {
   return blogArticles;
 }
 
-export async function getBlogsByPaths(paths, _limit = '') {
-  // Note: query-index.json does not honor ?limit= query param
+export async function getBlogsByPaths(paths) {
   if (!window.allBlogs) {
-    window.allBlogs = await fetchData('/whatson/query-index.json');
+    window.allBlogs = await fetchData(QUERY_INDEX_PATH);
   }
   const blogArticles = window.allBlogs.filter(
     (e) => (e.template !== 'blog-category' && hasValidBlogImage(e)),
