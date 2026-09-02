@@ -1,4 +1,4 @@
-import { loadScript } from '../../scripts/aem.js';
+import { loadScript, getMetadata } from '../../scripts/aem.js';
 
 const getDefaultEmbed = (url) => `<div style="left: 0; width: 100%; height: 0; position: relative; padding-bottom: 56.25%;">
     <iframe src="${url.href}" style="border: 0; top: 0; left: 0; width: 100%; height: 100%; position: absolute;" allowfullscreen=""
@@ -74,6 +74,7 @@ const getVideoId = (url) => {
     return url.pathname.substring(1);
   }
   if (url.hostname.includes('youtube.com')) {
+    /* eslint-disable-next-line */
     console.log('videoId', url);
     return new URLSearchParams(url.search).get('v') || url.pathname.split('/').pop();
   }
@@ -96,10 +97,13 @@ const embedYoutube = async (url) => {
   try {
     const response = await fetch(`https://www.youtube.com/oembed?url=http://www.youtube.com/watch?v=${videoId}`);
     const json = await response.json();
+    const publicationDate = getMetadata('publication-date');
+    const uploadDate = publicationDate ? `${publicationDate}T00:00:00Z` : '';
     wrapper.innerHTML = `
       <meta itemprop="name" content="${json.title}"/>
       <link itemprop="embedUrl" href="https://www.youtube.com/embed/${videoId}"/>
       <link itemprop="thumbnailUrl" href="${json.thumbnail_url}"/>
+      ${uploadDate ? `<meta itemprop="uploadDate" content="${uploadDate}"/>` : ''}
       ${wrapper.innerHTML}
     `;
   } catch (err) {
@@ -122,10 +126,13 @@ const embedVimeo = async (url) => {
   try {
     const response = await fetch(`https://vimeo.com/api/oembed.json?url=https://player.vimeo.com/video/${videoId}`);
     const json = await response.json();
+    const publicationDate = getMetadata('publication-date');
+    const uploadDate = publicationDate ? `${publicationDate}T00:00:00Z` : '';
     wrapper.innerHTML = `
       <meta itemprop="name" content="${json.title}"/>
       <link itemprop="embedUrl" href="https://player.vimeo.com/video/${videoId}"/>
       <link itemprop="thumbnailUrl" href="${json.thumbnail_url}"/>
+      ${uploadDate ? `<meta itemprop="uploadDate" content="${uploadDate}"/>` : ''}
       ${wrapper.innerHTML}
     `;
   } catch (err) {
