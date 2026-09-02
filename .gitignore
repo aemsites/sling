@@ -3,6 +3,8 @@ coverage/*
 logs/*
 node_modules/*
 package-lock.json
+.claude/rules/*
+.cursor/*
 
 helix-importer-ui
 .DS_Store
